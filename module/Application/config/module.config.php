@@ -84,12 +84,17 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'layout/head'           => __DIR__ . '/../view/layout/head.phtml',
+            'layout/head'             => __DIR__ . '/../view/layout/head.phtml',
             'layout/header'           => __DIR__ . '/../view/layout/header.phtml',
             'layout/footer'           => __DIR__ . '/../view/layout/footer.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            //Layout Backend
+            'layout/admin'            => __DIR__ . '/../view/layout/admin.phtml',
+            'layout/admin_head'       => __DIR__ . '/../view/layout/admin_head.phtml',
+            'layout/admin_header'     => __DIR__ . '/../view/layout/admin_header.phtml',
+            'layout/admin_sidebar'     => __DIR__ . '/../view/layout/admin_sidebar.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

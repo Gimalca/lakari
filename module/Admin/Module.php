@@ -45,8 +45,18 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener->attach($eventManager);
     }
     
-   
-    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Model\Dao\UsuarioDao' => function($sm) {
+                    $dao = New \Admin\Model\Dao\UsuarioDao();
+                    return $dao;
+                }
+            ),
+        );
+    }
+  
     public function getControllerConfig()
     {
         return array(

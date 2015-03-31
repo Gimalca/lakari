@@ -13,7 +13,7 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 //Adicionales
-use Usuarios\Model\Dao\UsuarioDao;
+use Admin\Model\Dao\UsuarioDao;
 use Admin\Form\Login as LoginForm;
 use Admin\Form\LoginValidator;
 

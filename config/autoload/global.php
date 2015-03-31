@@ -14,7 +14,7 @@
 return array(
    'db' => array(
          'driver'         => 'Pdo',
-         'dsn'            => 'mysql:dbname=lakari;host=200.47.182.254',
+         'dsn'            => 'mysql:dbname=lakari;host=131.72.168.242',
          'username' => 'admin',
          'password' => 'admin',
          'driver_options' => array(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -11,25 +12,26 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
 //Adicionales Pakage
 use Zend\Config\Reader\Ini;
 use Zend\Validator\AbstractValidator;
 
 class Module
 {
+
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        
+
         //Inicializaciones 
         $this->initConfig($e);
         $this->initViewRender($e);
         $this->initEnviroment($e);
-        
-        
+
+        $app = $e->getApplication()->getEventManager();
+        $app->attach('dispatch', array($this, 'initLayout'), -100);
     }
 
     public function getConfig()
@@ -47,10 +49,11 @@ class Module
             ),
         );
     }
-    
+
     //Adicionales
-    
-     protected function initConfig($e) {
+
+    protected function initConfig($e)
+    {
         $application = $e->getApplication();
         $services = $application->getServiceManager();
         $services->setFactory('ConfigIni', function ($services) {
@@ -59,43 +62,54 @@ class Module
             return $data;
         });
     }
-    
-    protected function initViewRender($e) {
+
+    protected function initViewRender($e)
+    {
         $application = $e->getApplication();
         $sm = $application->getServiceManager();
         $viewRender = $sm->get('ViewManager')->getRenderer();
         $config = $sm->get('ConfigIni');
-        
+
         $viewRender->headTitle($config['params']['titulo']);
     }
-    
-    protected function initEnviroment($e) {
-        
+
+    public function initLayout($e)
+    {
+        $matches = $e->getRouteMatch();
+        $module = $matches->getParam('__NAMESPACE__');
+        //var_dump($module);die;
+        if ($module == 'Admin\Controller') {
+            $layout = $e->getViewModel();
+            $layout->setTemplate('layout/admin');
+        }
+    }
+
+    protected function initEnviroment($e)
+    {
+
         error_reporting(E_ALL | E_STRICT);
         ini_set("display_errors", TRUE);
-        
+
         $application = $e->getApplication();
         $config = $application->getServiceManager()->get('ConfigIni');
-        
+
         $timeZone = (string) $config['params']['timezone'];
-        
-        if(empty($timeZone)){
-            $timeZone= 'America/Caracas';
+
+        if (empty($timeZone)) {
+            $timeZone = 'America/Caracas';
         }
         date_default_timezone_set($timeZone);
-        
+
         //Translator Formulario
         $serviceManager = $e->getApplication()->getServiceManager();
         $translator = $serviceManager->get('translator');
-       
-        $locale = $config['application']['locale']; 
+
+        $locale = $config['application']['locale'];
         $translator->setLocale(\Locale::acceptFromHttp($locale));
         $translator->addTranslationFile(
-            'phpArray',
-            __DIR__ . '/language/formValidator/es.php',
-            'default',
-            'es_ES'
+                'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
         );
         AbstractValidator::setDefaultTranslator($translator);
     }
+
 }
