@@ -11,21 +11,34 @@
 namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Admin\Form\Product as ProductForm;
 
-class IndexController extends AbstractActionController
+class ProductController extends AbstractActionController
 {
+    private $productForm;
+    
 
     public function indexAction()
     {
-       
+        //return $this->forward()->dispatch('Admin\Controller\Login', array('action' => 'index'));
         return array();
     }
 
-    public function fooAction()
+    public function listAction()
     {
         // This shows the :controller and :action parameters in default route
         // are working when you browse to /module-specific-root/skeleton/foo
         return array();
+    }
+    public function addAction()
+    {
+        $this->productForm = new ProductForm;
+        
+        
+        return new ViewModel(array(
+            'productForm' => $this->productForm,
+        ));
     }
 
 }

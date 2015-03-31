@@ -21,9 +21,9 @@
 .admin-form {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   line-height: 1.231;
-  font-weight: 400;
-  font-size: 14px;
-  color: #626262;
+  font-weight: 200;
+  font-size: 13px;
+  color: #394263;
 }
 /*==================================================================
   B. Browser Styling Reset
@@ -74,10 +74,10 @@
 .admin-form select,
 .admin-form textarea {
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  color: #626262;
+  font-weight: 200;
+  color: #394263;
   outline: none;
 }
 /*==================================================================
@@ -102,7 +102,7 @@
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
-  border-radius: 0;
+  border-radius: 2px;
   outline: none;
 }
 .admin-form .smart-link,
@@ -344,9 +344,9 @@
   display: -moz-inline-stack;
   display: inline-block;
   *display: inline;
-  color: #626262;
+  color: #394263;
   outline: none;
-  height: 42px;
+  height: 40px;
   width: 100%;
   *zoom: 1;
 }
