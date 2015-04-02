@@ -1,4 +1,4 @@
-Lakari Home
+Lakari Home ZF2
 =======================
 
 Introduction
