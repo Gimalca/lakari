@@ -35,6 +35,12 @@ class ProductController extends AbstractActionController
     {
         $this->productForm = new ProductForm;
         
+        if ($this->getRequest()->isPost()) {
+            
+            $postData = $this->request->getPost();
+            
+        }
+        
         
         return new ViewModel(array(
             'productForm' => $this->productForm,

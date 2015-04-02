@@ -41,9 +41,9 @@ class Product extends Form {
        $this->add(array(
             'name' => 'productDescription',
             'attributes' => array(
-                'type' => 'text',
+                'type' => 'textarea',
                 'id' => 'productDescription',
-                'class' => 'form-control gui-input',
+                'class' => 'form-control gui-textarea',
                 'placeholder' => 'Product Description',
                 'required' => true,       
             ),
@@ -53,19 +53,19 @@ class Product extends Form {
             'attributes' => array(
                 'type' => 'text',
                 'id' => 'productModel',
-                'class' => 'form-control gui-textarea',
+                'class' => 'form-control gui-input',
                 'placeholder' => 'Product Model',
                 'required' => false,       
             ),
         ));
        
        $this->add(array(
-            'name' => 'productModel',
+            'name' => 'productPrice',
             'attributes' => array(
                 'type' => 'text',
-                'id' => 'productModel',
+                'id' => 'productPrice',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'Product Model',
+                'placeholder' => 'Product Price',
                 'required' => false,       
             ),
         ));
