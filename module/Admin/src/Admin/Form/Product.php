@@ -20,7 +20,7 @@ class Product extends Form {
         $this->setAttribute('method', 'post');
 
         $this->add(array(
-            'name' => 'id',
+            'name' => 'productId',
             'attributes' => array(
                 'type' => 'hidden',
             ),
@@ -43,7 +43,7 @@ class Product extends Form {
             'attributes' => array(
                 'type' => 'textarea',
                 'id' => 'productDescription',
-                'class' => 'form-control gui-textarea',
+                'class' => 'gui-textarea',
                 'placeholder' => 'Product Description',
                 'required' => true,       
             ),
@@ -66,7 +66,7 @@ class Product extends Form {
                 'id' => 'productPrice',
                 'class' => 'form-control gui-input',
                 'placeholder' => 'Product Price',
-                'required' => false,       
+                'required' => true,       
             ),
         ));
       

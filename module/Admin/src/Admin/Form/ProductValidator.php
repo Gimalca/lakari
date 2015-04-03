@@ -5,7 +5,6 @@
  *
  * @author Pedro
  */
-
 namespace Admin\Form;
 
 use Zend\Validator\StringLength;
@@ -22,11 +21,19 @@ class ProductValidator extends InputFilter
 {
 
     protected $opcionesAlnum = array(
-        'allowWhiteSpace' => false,
+        'allowWhiteSpace' => true,
         'messages' => array(
-            'notAlnum' => "El valor no es alfanúmerico",
+            'notAlnum' => "El valor no es alfanumerico"
         )
     );
+    
+    protected $opcionesAlnum2 = array(
+        'allowWhiteSpace' => false,
+        'messages' => array(
+            'notAlnum' => "Solo numeros, letras y sin espacio "
+        )
+    );
+    
 
     public function __construct()
     {
@@ -36,23 +43,55 @@ class ProductValidator extends InputFilter
             'validators' => array(
                 array(
                     'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum,
-                ),
-            ),
+                    'options' => $this->opcionesAlnum
                 )
-        );
+            ),
+            'filters' => array(
+                array(
+                    'name' => 'StripTags'
+                ),
+                array(
+                    'name' => 'StringTrim'
+                )
+            )
+        ));
         
         $this->add(array(
-            'name' => 'productName',
+            'name' => 'productModel',
             'required' => true,
             'validators' => array(
                 array(
                     'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum,
-                ),
-            ),
+                    'options' => $this->opcionesAlnum2
                 )
-        );
+            )
+        ));
+        $this->add(array(
+            'name' => 'productPrice',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'float',
+                    'options' => array(
+                        'locale' => 'en_US'
+                    )
+                ),
+                array(
+                    'name' => 'stringLength',
+                    'options' => array(
+                        'min' => 1,
+                        'max' => 10
+                    )
+                )
+            ),
+            'filters' => array(
+                array(
+                    'name' => 'StripTags'
+                ),
+                array(
+                    'name' => 'StringTrim'
+                )
+            )
+        ));
     }
-
 }

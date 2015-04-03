@@ -13,6 +13,8 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\Product as ProductForm;
+use Admin\Form;
+use Admin\Form\ProductValidator;
 
 class ProductController extends AbstractActionController
 {
@@ -34,10 +36,22 @@ class ProductController extends AbstractActionController
     public function addAction()
     {
         $this->productForm = new ProductForm;
-        
+      
         if ($this->getRequest()->isPost()) {
             
             $postData = $this->request->getPost();
+            
+            $this->productForm->setInputFilter(new ProductValidator());
+            $this->productForm->setData($postData);
+            
+            if($this->productForm->isValid()){
+                $productData = $this->productForm->getData();
+                print_r($productData);die;
+                
+            }else {
+               $messages = $this->productForm->getMessages();
+               print_r($messages);die;
+            }               
             
         }
         
@@ -45,6 +59,10 @@ class ProductController extends AbstractActionController
         return new ViewModel(array(
             'productForm' => $this->productForm,
         ));
+    }
+    
+    private function getProductFormData(){
+        
     }
 
 }
