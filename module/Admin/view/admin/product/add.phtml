@@ -375,19 +375,15 @@ $this->inlineScript()->captureStart();
                             $(element).closest('.field').addClass(errorClass).removeClass(validClass);
                     },
                     invalidHandler: function(e,validator) {
-                        // loop through the errors:
-                        
-                        for (var i=0;i<validator.errorList.length;i++){
+                        // loop through the errors:                
                           $('.tab-pane').closest('.active').removeClass('active');
                           $('.panel-tabs li').closest('.active').removeClass('active');
                             // "uncollapse" section containing invalid input/s:
                             $(validator.errorList[0].element).closest('.tab-pane').addClass('active');
                             tab =  $(validator.errorList[0].element).closest('.tab-pane').attr('id');
-                           
-                            //tab ='#'+tab;
-        alert(tab);
-                          $('a[href=#+tab]').addClass('active');
-                        }
+                            tab ='#'+tab;
+                          $('a[href='+tab+']').closest('li').addClass('active');
+                        
                     },
                     unhighlight: function(element, errorClass, validClass) {
                             $(element).closest('.field').removeClass(errorClass).addClass(validClass);
