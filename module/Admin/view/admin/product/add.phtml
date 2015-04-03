@@ -50,13 +50,9 @@
             <div class="panel-body p20 pb10">
                 <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post">
                 <?php echo $this->formhidden($this->productForm->get('productId'))?>
-                    <div class="tab-content pn br-n admin-form theme-primary">
-                             
-                        
+                    <div class="tab-content pn br-n admin-form theme-primary">  
                         <div id="tab1_1" class="tab-pane active">
-
                             <div class="section row mbn">
-
                                 <div class="col-md-4">
                                     <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
                                         <div class="fileupload-preview thumbnail mb20">
@@ -79,12 +75,15 @@
                                 </div>
 
                                 <div class="col-md-8 pl15">
-                                    <div class="section mb10">
+                                    <div class="section mb10 form-group">
                                         <label for="productName" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productName'));?>
                                             <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
                                             </label>
                                         </label>
+                                         <div class="help-block">
+                                           <?php echo $this->formelementerrors($this->productForm->get('productName'))?> 
+                                         </div>
                                     </div>
                                     <div class="section mb10">
                                         <label class="field prepend-icon">
@@ -325,6 +324,10 @@ $this->inlineScript()->captureStart();
             $.validator.methods.smartCaptcha = function(value, element, param) {
                     return value == param;
             };
+            
+            $.validator.addMethod("Alnum", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\-\s]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
                     
             $( "#form" ).validate({
             
@@ -341,7 +344,8 @@ $this->inlineScript()->captureStart();
                         
                     rules: {
                             productName: {
-                                    required: true
+                                    required: true,
+                                    Alnum: true,
                             },
                             productDescription: {
                                     required: true
@@ -357,7 +361,8 @@ $this->inlineScript()->captureStart();
                         
                     messages:{
                             productName: {
-                                    required: 'Campo Obligatorio'
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
                             },
                             productDescription: {
                                     required: 'Campo Obligatorio'

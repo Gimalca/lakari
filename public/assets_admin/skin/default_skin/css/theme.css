@@ -10394,7 +10394,17 @@ select[multiple].input-lg {
   display: block;
   margin-top: 5px;
   margin-bottom: 10px;
-  color: #a6a6a6;
+  color: #de888a;
+}
+.help-block ul  {
+	margin:0;
+	padding:0;
+}
+.help-block ul li {
+	font-family: Arial,Helvetica,sans-serif;
+    font-size: 0.85em;
+    list-style: outside none none;
+    padding-left: 4px;
 }
 @media (min-width: 768px) {
   .form-inline .form-group {

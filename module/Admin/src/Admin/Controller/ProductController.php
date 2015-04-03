@@ -50,7 +50,7 @@ class ProductController extends AbstractActionController
                 
             }else {
                $messages = $this->productForm->getMessages();
-               print_r($messages);die;
+               //print_r($messages);die;
             }               
             
         }
