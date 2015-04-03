@@ -48,10 +48,11 @@
                 </ul>
             </div>
             <div class="panel-body p20 pb10">
-                <form role="form" action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post">
+                <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post">
                 <?php echo $this->formhidden($this->productForm->get('productId'))?>
                     <div class="tab-content pn br-n admin-form theme-primary">
-
+                             
+                        
                         <div id="tab1_1" class="tab-pane active">
 
                             <div class="section row mbn">
@@ -79,7 +80,7 @@
 
                                 <div class="col-md-8 pl15">
                                     <div class="section mb10">
-                                        <label for="name" class="field prepend-icon">
+                                        <label for="productName" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productName'));?>
                                             <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
                                             </label>
@@ -88,7 +89,7 @@
                                     <div class="section mb10">
                                         <label class="field prepend-icon">
                                            <?php echo $this->formTextarea($this->productForm->get('productDescription')); ?>
-                                            <label for="comment" class="field-icon"><i class="fa fa-comments"></i>
+                                            <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
                                             </label>
                                             <span class="input-footer hidden">
                                                 <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span>
@@ -101,7 +102,6 @@
 
                         </div>
                         <div id="tab1_2" class="tab-pane">
-
                             <div class="section row">
                                 <div class="col-md-6">
                                     <label for="product-category" class="field select">
@@ -138,7 +138,7 @@
                                 <div class="col-md-4">
                                     <label for="product-price" class="field prepend-icon">
                                         <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
-                                        <label for="product-price" class="field-icon"><i class="fa fa-usd"></i>
+                                        <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
                                         </label>
                                     </label>
                                 </div>
@@ -147,7 +147,7 @@
                                 <div class="col-md-4">
                                     <label for="product-vendor" class="field prepend-icon">
                                         <?php echo $this->formInput($this->productForm->get('productModel')); ?>
-                                        <label for="product-vendor" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                        <label for="productModel" class="field-icon"><i class="fa fa-shopping-cart"></i>
                                         </label>
                                     </label>
                                 </div>
@@ -284,10 +284,15 @@ $this->headScript()
         ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
         ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
         ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
 ;
 
+
+
 $this->inlineScript()->captureStart();
-echo <<<JS
+ echo <<<JS
    jQuery(document).ready(function() {
 
             // grant file-upload preview onclick functionality
@@ -313,6 +318,91 @@ echo <<<JS
                     return 'label bg-primary light';
                 }
             });
+        
+           /* @custom validation method (smartCaptcha) 
+            ------------------------------------------------------------------ */
+                
+            $.validator.methods.smartCaptcha = function(value, element, param) {
+                    return value == param;
+            };
+                    
+            $( "#form" ).validate({
+            
+                    /* @validation states + elements 
+                    ------------------------------------------- */
+                    
+                    errorClass: "state-error",
+                    validClass: "state-success",
+                    errorElement: "em",
+                    ignore: false,
+                    
+                    /* @validation rules 
+                    ------------------------------------------ */
+                        
+                    rules: {
+                            productName: {
+                                    required: true
+                            },
+                            productDescription: {
+                                    required: true
+                            },                                                                
+                            productModel: {
+                                    required: true
+                            },                                                                
+                        
+                    },
+                    
+                    /* @validation error messages 
+                    ---------------------------------------------- */
+                        
+                    messages:{
+                            productName: {
+                                    required: 'Campo Obligatorio'
+                            },
+                            productDescription: {
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            productModel: {
+                                    required: 'Campo Obligatorio'
+                            },                  
+                           
+                    },
+
+                    /* @validation highlighting + error placement  
+                    ---------------------------------------------------- */ 
+                    
+                    highlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                    },
+                    invalidHandler: function(e,validator) {
+                        // loop through the errors:
+                        
+                        for (var i=0;i<validator.errorList.length;i++){
+                          $('.tab-pane').closest('.active').removeClass('active');
+                          $('.panel-tabs li').closest('.active').removeClass('active');
+                            // "uncollapse" section containing invalid input/s:
+                            $(validator.errorList[0].element).closest('.tab-pane').addClass('active');
+                            tab =  $(validator.errorList[0].element).closest('.tab-pane').attr('id');
+                           
+                            //tab ='#'+tab;
+        alert(tab);
+                          $('a[href=#+tab]').addClass('active');
+                        }
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                    },
+                    errorPlacement: function(error, element) {
+                       if (element.is(":radio") || element.is(":checkbox")) {
+                                element.closest('.option-group').after(error);
+                       } else {
+                                error.insertAfter(element.parent());
+                       }
+                    }
+                            
+            });     
+        
+        
 
         });
 JS;
