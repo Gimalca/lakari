@@ -40,7 +40,7 @@ class IndexController extends AbstractActionController
         $url = $this->params()->fromRoute('product');
         $id = $this->getUrlAliasDao()->getKeywordId($url);
        
-        $product = $this->getProductDao()->getById($id->id);
+        $product = $this->getProductDao()->getProductById($id->id);
          
         return new ViewModel(array(
             'product' => $product,

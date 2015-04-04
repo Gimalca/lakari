@@ -67,9 +67,9 @@ class ProductDao implements IProductDao
         return $images;
     }
 
-    public function getById($id)
+    public function getProductById($id)
     {
-        $ide = (int) $id;
+        $id = (int) $id;
         //$rowset = $this->tableGateway->select(array('id' => $ide));
         
         $query = $this->tableGateway->getSql()->select();
@@ -79,21 +79,70 @@ class ProductDao implements IProductDao
                 "lk_product.product_id = url.id"
                 );
         $query->where(array("url.type = 'product'"));
-        $query->where(array('lk_product.product_id' => $ide));
+        $query->where(array('lk_product.product_id' => $id));
        
         $rowset = $this->tableGateway->selectWith($query);
  
         //var_dump($rowset);die;
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $ide");
+            throw new \Exception("Could not find row $id");
         }
         return $row;
+    }
+    
+    public function getById($id){
+        
+        $id = (int) $id;
+        
+        $rowset = $this->tableGateway->select(array('product_id' => $id));
+
+        $row = $rowset->current();
+        
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        //print_r($row);die;
+        return $row;  
     }
 
     public function saveProduct(Product $product)
     {
-        return $product;
+        $id =(int) $product->getProduct_id();
+        //print_r($product);die;
+        $data_product = array(
+            'model' => $product->getModel(),
+            'price' => $product->getPrice(),
+        );
+        
+        $data_product_description = array(            
+            'name' => $product->getProductDescription()->getName(),
+            'description' => $product->getProductDescription()->getDescription(),
+        );
+
+       
+        if($id == 0){
+            //insert Product Table
+            $data['date_added'] = date("Y-m-d H:i:s");
+            $this->tableGateway->insert($data_product);
+            $lastProductId = $this->tableGateway->getLastInsertValue();
+            //Insert Product Description
+            $data_product_description['product_id'] = $lastProductId;
+            $table = $this->getTable('lk_product_description');
+            $table->insert($data_product_description);
+            return $lastProductId;
+        }else {
+           
+            if($this->getById($id)){
+                $data['date_modified'] = date("Y-m-d H:i:s");
+                $this->tableGateway->update($data,array('product_id' => $id));
+                return $id;
+            }else {
+                throw new \Exception('Form id does not exist');
+            }
+        }     
+       
+        
     }
 
     public function deleteProduct(Product $product)
@@ -102,4 +151,11 @@ class ProductDao implements IProductDao
     }
 
     //put your code here
+    
+    public function getTable($table){    
+        $adapter = $this->tableGateway->getAdapter();
+        $table = new TableGateway($table, $adapter);
+
+        return $table;     
+    }
 }

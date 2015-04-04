@@ -51,6 +51,32 @@ class Product
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['keyword'])) ? $data['keyword'] : null;
     }
+    
+    function exchangeArrayForm($data = NULL)
+    {
+        $this->product_id = (isset($data['productId'])) ? $data['productId'] : null;
+        $this->model = (isset($data['productModel'])) ? $data['productModel'] : null;
+        $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
+        $this->image = (isset($data['image'])) ? $data['image'] : null;
+        $this->price = (isset($data['productPrice'])) ? $data['productPrice'] : null;
+        $this->date_available = (isset($data['date_available'])) ? $data['date_available'] : null;
+        $this->status = (isset($data['status'])) ? $data['status'] : null;
+        $this->description = (isset($data['description'])) ? $data['description'] : null;
+        $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
+        $this->date_modified = (isset($data['date_modified'])) ? $data['date_modified'] : null;
+    
+        $this->productDescription = new ProductDescription();
+        $this->productDescription->setName((isset($data['productName'])) ? $data['productName'] : null);
+        $this->productDescription->setLanguage_id((isset($data['language_id'])) ? $data['language_id'] : null);
+        $this->productDescription->setDescription((isset($data['productDescription'])) ? $data['productDescription'] : null);
+        $this->productDescription->setMeta_description((isset($data['meta_description'])) ? $data['meta_description'] : null);
+        $this->productDescription->setMeta_keyword((isset($data['meta_keyword'])) ? $data['meta_keyword'] : null);
+    
+        $this->productImage = (isset($data['date_modified'])) ? $data['date_modified'] : null;
+    
+        $this->urlAlias = New UrlAlias;
+        $this->urlAlias->keyword = (isset($data['keyword'])) ? $data['keyword'] : null;
+    }
 
     function getProduct_id()
     {
@@ -131,6 +157,8 @@ class Product
     {
         $this->urlAlias = $urlAlias;
     }
+    
+    
 
     //put your code here
 }
