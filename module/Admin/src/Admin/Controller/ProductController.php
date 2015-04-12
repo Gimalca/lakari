@@ -19,7 +19,7 @@ use Zend\Json\Json;
 
 class ProductController extends AbstractActionController
 {
-
+   
     private $productTable;
 
     private $productForm;
@@ -40,17 +40,24 @@ class ProductController extends AbstractActionController
     public function addAction()
     {
         $this->productForm = new ProductForm();
+       
         
-        if ($this->getRequest()->isPost()) {
+        if ($this->request->isPost()) {
             
-            $postData = $this->request->getPost();
-            print_r($postData);die;
+           //$postData = $this->request->getPost();
+           //$fileData = $this->request->getFiles()->toArray();
+           $postData = array_merge_recursive(
+               $this->request->getPost()->toArray(),
+               $this->request->getFiles()->toArray()
+           );
+            //print_r($postData);die;
+               
             $this->productForm->setInputFilter(new ProductValidator());
             $this->productForm->setData($postData);
             
             if ($this->productForm->isValid()) {
                 $productData = $this->productForm->getData();
-                //print_r($productData);die;
+                print_r($productData);die;
                 $productEntity = new Product();
                 //$productData['productId'] = 9;
                 $productEntity->exchangeArrayForm($productData);
@@ -63,7 +70,7 @@ class ProductController extends AbstractActionController
                 }
             } else {
                 $messages = $this->productForm->getMessages();
-                // print_r($messages);die;
+                 print_r($messages);die;
             }
         }
         

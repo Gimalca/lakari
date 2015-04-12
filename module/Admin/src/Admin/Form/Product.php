@@ -39,6 +39,14 @@ class Product extends Form {
             ),
         ));
        $this->add(array(
+            'name' => 'productImage',
+            'attributes' => array(
+                'type' => 'file',
+                'id' => 'productImage',             
+                'required' => true,       
+            ),
+        ));
+       $this->add(array(
             'name' => 'productDescription',
             'attributes' => array(
                 'type' => 'textarea',

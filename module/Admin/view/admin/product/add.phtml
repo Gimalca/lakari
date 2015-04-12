@@ -67,7 +67,7 @@
                                                 <span class="button btn-system btn-file btn-block">
                                                     <span class="fileupload-new">Select</span>
                                                     <span class="fileupload-exists">Change</span>
-                                                    <input name="fileupload" id="fileupload" type="file">
+                                                     
                                                 </span>
                                             </div>
                                         </div>
@@ -77,6 +77,7 @@
                                 <div class="col-md-8 pl15">
                                     <div class="section mb10 form-group">
                                         <label for="productName" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productImage'));?>
                                             <?php echo $this->formInput($this->productForm->get('productName'));?>
                                             <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
                                             </label>
