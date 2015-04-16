@@ -1,3 +1,7 @@
+<?php
+$this->headlink()
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/dropzone/css/dropzone.css');
+?>
 <!-- Start: Topbar -->
 <header id="topbar" class="ph10">
     <div class="topbar-left">
@@ -37,21 +41,26 @@
                 <span class="panel-title"> Add New Product</span>
                 <ul class="nav panel-tabs-border panel-tabs">
                     <li class="active">
-                        <a href="#tab1_1" data-toggle="tab">General</a>
+                        <a href="#tab1_1" data-toggle="tab">Description</a>
                     </li>
                     <li>
-                        <a href="#tab1_2" data-toggle="tab">Description</a>
+                        <a href="#tab1_2" data-toggle="tab">Data</a>
                     </li>
                     <li>
-                        <a href="#tab1_3" data-toggle="tab">Description</a>
+                        <a href="#tab1_3" data-toggle="tab">Meta-Data</a>
+                    </li>
+
+                    <li>
+                        <a href="#tab1_4" data-toggle="tab">Images</a>
                     </li>
                 </ul>
             </div>
-            <div class="panel-body p20 pb10">
-                <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post">
-                <?php echo $this->formhidden($this->productForm->get('productId'))?>
+            <div class="panel-body p20 pb10 form-horizontal">     
+                <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
+                    <?php echo $this->formhidden($this->productForm->get('productId')) ?>
                     <div class="tab-content pn br-n admin-form theme-primary">  
-                        <div id="tab1_1" class="tab-pane active">
+
+                        <div id="tab1_1" class="tab-pane active">                           
                             <div class="section row mbn">
                                 <div class="col-md-4">
                                     <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
@@ -67,7 +76,7 @@
                                                 <span class="button btn-system btn-file btn-block">
                                                     <span class="fileupload-new">Select</span>
                                                     <span class="fileupload-exists">Change</span>
-                                                     
+                                                    <?php echo $this->formFile($this->productForm->get('productImage')); ?>
                                                 </span>
                                             </div>
                                         </div>
@@ -75,25 +84,36 @@
                                 </div>
 
                                 <div class="col-md-8 pl15">
-                                    <div class="section mb10 form-group">
-                                        <label for="productName" class="field prepend-icon">
-                                            <?php echo $this->formInput($this->productForm->get('productImage'));?>
-                                            <?php echo $this->formInput($this->productForm->get('productName'));?>
-                                            <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
-                                            </label>
-                                        </label>
-                                         <div class="help-block">
-                                           <?php echo $this->formelementerrors($this->productForm->get('productName'))?> 
-                                         </div>
+
+                                    <div class="section mb10 form-group ">
+
+                                        <label class="col-lg-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <label for="productName" class="field prepend-icon">                                       
+                                                <?php echo $this->formInput($this->productForm->get('productName')); ?>
+                                                <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
+                                                </label>
+                                            </label> 
+                                            <div class="help-block">
+                                                <?php echo $this->formelementerrors($this->productForm->get('productName')) ?> 
+                                            </div>
+                                        </div>     
                                     </div>
-                                    <div class="section mb10">
-                                        <label class="field prepend-icon">
-                                           <?php echo $this->formTextarea($this->productForm->get('productDescription')); ?>
-                                            <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                    <div class="section mb10 form-group">
+                                        <label class="col-lg-3 control-label" for="productName">Descripción <span class="text-danger">*</span></label>
+                                        <div class="col-md-8">
+                                            <label class="field prepend-icon">
+                                                <?php echo $this->formTextarea($this->productForm->get('productDescription')); ?>
+                                                <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                                </label>
+                                                <span class="input-footer hidden ">
+                                                    <strong>Hint</strong>Don't be negative or off topic! just be awesome...</span>
                                             </label>
-                                            <span class="input-footer hidden">
-                                                <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span>
-                                        </label>
+                                            <div class="help-block">
+                                                <?php echo $this->formelementerrors($this->productForm->get('productDescription')) ?> 
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -103,173 +123,279 @@
                         </div>
                         <div id="tab1_2" class="tab-pane">
                             <div class="section row">
-                                <div class="col-md-6">
-                                    <label for="product-category" class="field select">
-                                        <select id="product-category" name="product-category">
-                                            <option value="0" selected="selected">Product Category...</option>
-                                            <option value="1">Software</option>
-                                            <option value="2">Computers</option>
-                                            <option value="3">Gadgets</option>
-                                            <option value="4">Clothing</option>
-                                        </select>
-                                        <i class="arrow double"></i>
-                                    </label>
-                                </div>
-                                <!-- end section -->
 
-                                <div class="col-md-6">
-                                    <label class="field select">
-                                        <select id="product-status" name="product-status">
-                                            <option value="0" selected="selected">Product Availability</option>
-                                            <option value="1">Available</option>
-                                            <option value="2">Unavailable</option>
-                                            <option value="3">Discontinued</option>
-                                            <option value="4">Out of Stock</option>
-                                        </select>
-                                        <i class="arrow double"></i>
-                                    </label>
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productModel">Modelo <span class="text-danger">*</span></label>
+                                    <div class="col-md-8"> 
+                                        <label for="productModel" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productModel')); ?>
+                                            <label for="productModel" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productModel')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- end section -->
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productModel">SKU </label>
+                                    <div class="col-md-8"> 
+                                        <label for="productSku" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productSku')); ?>
+                                            <label for="productSku" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productSku')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productIsbn">ISBN </label>
+                                    <div class="col-md-8"> 
+                                        <label for="productIsbn" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productIsbn')); ?>
+                                            <label for="productIsbn" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productIsbn')) ?> 
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- end section -->
 
                             </div>
-                            <!-- end section row section -->
-
                             <div class="section row">
-                                <div class="col-md-4">
-                                    <label for="product-price" class="field prepend-icon">
-                                        <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
-                                        <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
-                                        </label>
-                                    </label>
-                                </div>
-                                <!-- end section -->
+                                <div class="col-md-4 form-group ">
 
-                                <div class="col-md-4">
-                                    <label for="product-vendor" class="field prepend-icon">
-                                        <?php echo $this->formInput($this->productForm->get('productModel')); ?>
-                                        <label for="productModel" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                    <label class="col-lg-3 control-label" for="productPrice">Precio <span class="text-danger">*</span></label>
+                                    <div class="col-md-8">
+                                        <label for="productPrice" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
+                                            <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
+                                            </label>
                                         </label>
-                                    </label>
-                                </div>
-                                <!-- end section -->
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productPrice')) ?> 
+                                        </div>
+                                    </div>
 
-                                <div class="col-md-4">
-                                    <label for="product-sku" class="field prepend-icon">
-                                        <input type="text" name="product-sku" id="product-sku" class="gui-input" placeholder="Product SKU...">
-                                        <label for="product-sku" class="field-icon"><i class="fa fa-barcode"></i>
-                                        </label>
-                                    </label>
                                 </div>
-                                <!-- end section -->
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productStore">Pais <span class="text-danger">*</span></label>
+                                    <div class="col-md-8 "> 
+                                        <label class="field select">
+                                            <?php echo $this->formSelect($this->productForm->get('productStore')) ?>
+                                            <i class="arrow double "></i>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productStore')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 form-group ">
+
+                                    <label class="col-lg-5 control-label" for="productMinimun">Orden Minima </label>
+                                    <div class="col-md-7">
+                                        <label for="productMinimun" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productMinimun')); ?>
+                                            <label for="productMinimun" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMinimun')) ?> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="section row">
+                                <div class="col-md-4 form-group ">
+
+                                    <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
+                                    <div class="col-md-8">
+                                        <label for="productQuantity" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productQuantity')); ?>
+                                            <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productQuantity')) ?> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
+                                    <div class="col-md-8 "> 
+                                        <label class="field select">
+                                            <?php echo $this->formSelect($this->productForm->get('productStock')) ?>
+                                            <i class="arrow double "></i>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productStock')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-5 control-label" for="productStockStatus">Estatus Stock  <span class="text-danger">*</span></label>
+                                    <div class="col-md-7 "> 
+                                        <label class="field select">
+                                            <?php echo $this->formSelect($this->productForm->get('productStockStatus')) ?>
+                                            <i class="arrow double "></i>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
+                                        </div>
+                                    </div>
+                                </div> 
 
                             </div>
                             <!-- end section row section -->
 
-                            <div class="section">
-                                <input id="tagsinput" type="text" value="Software, Adobe, Photoshop, Editor, Commercial">
-                            </div>
+
                             <!-- end section row section -->
-
-                            <hr class="short alt">
-
-                            <div class="section row mbn">
-                                <div class="col-sm-8">
-                                    <label class="field option mt10">
-                                        <input type="checkbox" name="info" checked>
-                                        <span class="checkbox"></span>Save Customer
-                                        <em class="small-text text-muted">- A Random Unique ID will be generated</em>
-                                    </label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <p class="text-right">
-                                        <button class="btn btn-primary" type="button">Save Order</button>
-                                    </p>
+                            <div class="section row">
+                                <div class="col-md-4"> 
+                                    <label class="col-md-3 control-label">Round Switches</label>
+                                    <div class="switch switch-primary round switch-inline">
+                                        <input id="exampleCheckboxSwitch7" type="checkbox" checked>
+                                        <label for="exampleCheckboxSwitch7"></label>
+                                    </div>
+                                    <!-- end section -->
                                 </div>
                             </div>
-                            <!-- end section -->
-
                         </div>
                         <div id="tab1_3" class="tab-pane">
 
-                            <div class="section">
-                                <label for="lastaddr" class="field prepend-icon">
-                                    <input type="text" name="lastaddr" id="lastaddr" class="gui-input" placeholder="Street address 2">
-                                    <label for="lastaddr" class="field-icon"><i class="fa fa-map-marker"></i>
-                                    </label>
-                                </label>
-                            </div>
-                            <!-- end section -->
-
-                            <div class="section">
-                                <label class="field select">
-                                    <select id="location" name="location">
-                                        <option value="">Select country...</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-                                        <option value="AO">Angola</option>
-                                        <option value="AI">Anguilla</option>
-                                        <option value="AG">Antigua and Barbuda</option>
-                                        <option value="AR">Argentina</option>
-                                        <option value="AM">Armenia</option>
-                                        <option value="AW">Aruba</option>
-                                        <option value="AU">Australia</option>
-                                        <option value="AT">Austria</option>
-
-
-
-                                    </select>
-                                    <i class="arrow double"></i>
-                                </label>
-                            </div>
                             <!-- end section -->
 
                             <div class="section row">
-                                <div class="col-md-3">
-                                    <label for="zip" class="field prepend-icon">
-                                        <input type="text" name="zip" id="zip" class="gui-input" placeholder="Zip">
-                                        <label for="zip" class="field-icon"><i class="fa fa-certificate"></i>
-                                        </label>
-                                    </label>
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productMetaTittle">Meta Titulo  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <label for="productMetaTittle" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productMetaTittle')) ?> 
+                                            <label for="productMetaTittle" class="field-icon"><i class=" fa fa-tag"></i>
+                                            </label> 
+                                        </label>  
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMetaTittle')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productSeoUrl">SEO URL  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <label for="productSeoUrl" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productSeoUrl')) ?> 
+                                            <label for="productUrlSeo" class="field-icon"><i class=" fa fa-tag"></i>
+                                            </label> 
+                                        </label>  
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productSeoUrl')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="section row">
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productTags">Tags  </label>
+                                    <div class="col-md-9">
+                                        <label for="productTags" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productTags')) ?> 
+
+                                        </label>  
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productTags')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end section  -->
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productCategories">Categorias  </label>
+                                    <div class="col-md-9 form-group">
+                                     
+                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productCategories')) ?> 
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- end section -->
 
-                                <div class="col-md-4">
-                                    <label for="city" class="field prepend-icon">
-                                        <input type="text" name="city" id="city" class="gui-input" placeholder="City">
-                                        <label for="city" class="field-icon"><i class="fa fa-building-o"></i>
+                            </div>
+                            <div class="section row">
+
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productMetaDescription">Meta Descripción  </label>
+                                    <div class="col-md-9">
+                                        <label class="field prepend-icon">
+                                            <?php echo $this->formTextarea($this->productForm->get('productMetaDescription')); ?>
+                                            <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                            </label>
+
                                         </label>
-                                    </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMetaDescription')) ?> 
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- end section -->
 
-                                <div class="col-md-5">
-                                    <label for="states" class="field select">
-                                        <select id="states" name="states">
-                                            <option value="">Choose state</option>
-                                            <option value="AL">Alabama</option>
-                                            <option value="AK">Alaska</option>
-                                            <option value="AZ">Arizona</option>
-                                            <option value="AR">Arkansas</option>
-                                            <option value="CA">California</option>
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productMetaKeywords">Meta Keywords  </label>
+                                    <div class="col-md-9">
+                                        <label class="field prepend-icon">
+                                            <?php echo $this->formTextarea($this->productForm->get('productMetaKeywords')); ?>
+                                            <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                            </label>
 
-
-                                        </select>
-                                        <i class="arrow double"></i>
-                                    </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMetaKeywords')) ?> 
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- end .col8 section -->
+                                <!-- end section -->
+
 
                             </div>
                             <!-- end section row section -->
 
                         </div>
-
-                    </div> 
-                    <hr class="short alt">
-                    <div class="panel-footer text-right">
-                        <button class="btn btn-primary text-right"> Saved </button>
-                    </div>
+                        <div id="tab1_4" class="tab-pane" style="height: 400px">
+                            <div class="col-xs-12 col-sm-8 pl30">
+                                <div class="tray-bin pl10 mb10" style="min-height: 250px;">
+                                    <h5 class="text-muted mt10 fw600 pl10"><i class="fa fa-exclamation-circle text-info fa-lg pr10"></i> Portlet Drag and Drop Uploader </h5>
+                                    <div class="dropzone dropzone-sm" id="dropzone">
+                                        <div class="fallback">
+                                            <input name="file-drop" type="file" multiple />
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <input type="hidden" id="upload_images" name="upload_images[]" multiple />
+                        <hr class="short alt">
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-primary text-right"> Saved </button>
+                        </div>
                 </form>
             </div>
         </div>
@@ -278,28 +404,69 @@
 
 
 </section>
-
+<style>
+    /*dropzone demo css*/
+    .dz-demo .dz-message {
+        opacity: 0 !important;
+    }
+    .dropzone .dz-preview.example-preview .dz-success-mark,
+    .dropzone-previews .dz-preview.example-preview .dz-success-mark {
+        opacity: 1;
+    }
+    .dropzone .dz-preview.example-preview .dz-error-mark,
+    .dropzone-previews .dz-preview.example-preview .dz-error-mark {
+        opacity: 0;
+    }
+</style>
 <?php
 $this->headScript()
         ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
         ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/dropzone/dropzone.min.js')
         ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
-        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+// ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
 ;
 
 
 
 $this->inlineScript()->captureStart();
- echo <<<JS
+echo <<<JS
    jQuery(document).ready(function() {
+
+             // Dropzone autoattaches to "dropzone" class.
+            // Configure Dropzone options
+           Dropzone.autoDiscover = false;
+            $("#dropzone").dropzone({
+                init: function() {
+                 //this.on("addedfile", function(file) { alert("Added file."); }); 
+                 var myDropzone = this;
+
+                   this.on("addedfile", function(file, xhr, data) {
+                     // add headers with xhr.setRequestHeader() or
+                     // form data with formData.append(name, value);
+                     $("input[name='upload_images[]']").val('ver');
+                   });
+                 },
+                paramName: 'upload_images',
+                url: 'add',
+                dictDefaultMessage: "Drag your images",
+                clickable: true,
+                addRemoveLinks: true,
+
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                
+            });
 
             // grant file-upload preview onclick functionality
             $('.fileupload-preview').on('click', function() {
                 $('.btn-file > input').click();
             });
-
+            $('#multiselect3').multiselect({
+              enableFiltering: true,  
+            });
             // select dropdowns - placeholder like creation
             var selectList = $('.admin-form select');
             selectList.each(function(i, e) {
@@ -327,7 +494,11 @@ $this->inlineScript()->captureStart();
             };
             
             $.validator.addMethod("Alnum", function(value, element) {
-             return this.optional(element) || /^[a-z0-9\-\s]+$/i.test(value);
+             return this.optional(element) || /^[a-z0-9\s]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+
+            $.validator.addMethod("AlnumOf", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
             }, "Username must contain only letters, numbers, or dashes.");
                     
             $( "#form" ).validate({
@@ -353,7 +524,16 @@ $this->inlineScript()->captureStart();
                             },                                                                
                             productModel: {
                                     required: true
-                            },                                                                
+                            },
+                            productMetaTittle: {
+                                    required: true,
+                                    Alnum: true,
+                            },
+                            productSeoUrl: {
+                                    required: true,
+                                    AlnumOf: true,
+                            },
+                                
                         
                     },
                     
@@ -370,6 +550,14 @@ $this->inlineScript()->captureStart();
                             },                  
                             productModel: {
                                     required: 'Campo Obligatorio'
+                            },                  
+                            productMetaTittle: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },                  
+                            productSeoUrl: {
+                                    required: 'Campo Obligatorio',
+                                    AlnumOf: 'Solo letras, numeros y guion '
                             },                  
                            
                     },

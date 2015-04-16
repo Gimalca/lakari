@@ -74,12 +74,20 @@
 .admin-form select,
 .admin-form textarea {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-weight: 200;
   color: #394263;
   outline: none;
 }
+.admin-form label{
+  font-size: 14px;
+  font-weight: 500;  
+  color: #394263;
+  padding-left: 0;
+    padding-right: 0;
+}
+
 /*==================================================================
   B. Input Animations
 ===================================================================*/
@@ -331,7 +339,7 @@
 }
 .admin-form .gui-input,
 .admin-form .gui-textarea {
-  padding: 10px;
+  padding: 5px 10px 5px 30px;
 }
 .admin-form .select,
 .admin-form .gui-input,
@@ -346,7 +354,7 @@
   *display: inline;
   color: #394263;
   outline: none;
-  height: 40px;
+  height: 30px;
   width: 100%;
   *zoom: 1;
 }
@@ -376,8 +384,8 @@
 }
 .admin-form .select > select {
   display: block;
-  padding: 9px 10px;
-  color: #626262;
+  padding:4px 10px;
+  color: #394263;
   background: #FFF;
   border: 1px solid #DDD;
   -webkit-appearance: none;
@@ -394,11 +402,11 @@
 }
 .admin-form .select .arrow {
   position: absolute;
-  top: 9px;
+  top:4px;
   right: 4px;
   width: 24px;
   height: 24px;
-  color: #9F9F9F;
+  color: #394263;
   pointer-events: none;
   z-index: 16;
 }
@@ -537,8 +545,8 @@
   opacity: 0;
   left: 0;
 }
-.admin-form .checkbox,
-.admin-form .radio {
+.admin-form .checkbox2,
+.admin-form .radio2 {
   cursor: pointer;
   position: relative;
   margin-right: 5px;
@@ -840,10 +848,10 @@
 .admin-form .prepend-icon .field-icon {
   top: 0;
   z-index: 4;
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   color: inherit;
-  line-height: 42px;
+  line-height: 30px;
   position: absolute;
   text-align: center;
   -webkit-transition: all 0.5s ease-out;
@@ -864,10 +872,7 @@
 .admin-form .append-icon .field-icon {
   right: 0;
 }
-.admin-form .prepend-icon > input,
-.admin-form .prepend-icon > textarea {
-  padding-left: 36px;
-}
+
 .admin-form .append-icon > input,
 .admin-form .append-icon > textarea {
   padding-right: 36px;
@@ -2857,7 +2862,7 @@
   B. Grid Misc
 ===================================================================*/
 .admin-form .section {
-  margin-bottom: 22px;
+  margin-bottom: 5px;
 }
 /*==================================================================
   B. Panel

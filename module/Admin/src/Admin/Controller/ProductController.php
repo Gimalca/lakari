@@ -16,6 +16,7 @@ use Admin\Form;
 use Admin\Form\ProductValidator;
 use Catalog\Model\Entity\Product;
 use Zend\Json\Json;
+use Zend\File\Transfer\Adapter\Http as FileTransferAdapter;
 
 class ProductController extends AbstractActionController
 {
@@ -45,19 +46,19 @@ class ProductController extends AbstractActionController
         if ($this->request->isPost()) {
             
            //$postData = $this->request->getPost();
-           //$fileData = $this->request->getFiles()->toArray();
+           $fileData = $this->request->getFiles()->toArray();
            $postData = array_merge_recursive(
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-            //print_r($postData);die;
-               
+           //print_r($postData);die;
+           
             $this->productForm->setInputFilter(new ProductValidator());
             $this->productForm->setData($postData);
             
             if ($this->productForm->isValid()) {
                 $productData = $this->productForm->getData();
-                print_r($productData);die;
+                print_r($productData);die;         
                 $productEntity = new Product();
                 //$productData['productId'] = 9;
                 $productEntity->exchangeArrayForm($productData);
@@ -70,6 +71,7 @@ class ProductController extends AbstractActionController
                 }
             } else {
                 $messages = $this->productForm->getMessages();
+                 echo 'error filter';
                  print_r($messages);die;
             }
         }
