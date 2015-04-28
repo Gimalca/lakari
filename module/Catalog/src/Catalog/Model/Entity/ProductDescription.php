@@ -17,6 +17,7 @@ class ProductDescription
     private $description;
     private $meta_description;
     private $meta_keyword;
+    private $meta_tittle;
     private $tag;
 
     public function exchangeArray($data)
@@ -28,6 +29,7 @@ class ProductDescription
         $this->meta_description = (isset($data['meta_description'])) ? $data['meta_description'] : null;
         $this->meta_keyword = (isset($data['meta_keyword'])) ? $data['meta_keyword'] : null;
         $this->tag = (isset($data['tag'])) ? $data['tag'] : null;
+        $this->meta_tittle = (isset($data['meta_tittle'])) ? $data['meta_tittle'] : null;
     }
 
     function getProduct_id()
@@ -99,5 +101,22 @@ class ProductDescription
     {
         $this->tag = $tag;
     }
+ /**
+     * @return the $meta_tittle
+     */
+    public function getMeta_tittle()
+    {
+        return $this->meta_tittle;
+    }
+
+ /**
+     * @param Ambigous <NULL, unknown> $meta_tittle
+     */
+    public function setMeta_tittle($meta_tittle)
+    {
+        $this->meta_tittle = $meta_tittle;
+    }
+
+    
 
 }

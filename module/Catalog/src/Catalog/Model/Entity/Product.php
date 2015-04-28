@@ -45,6 +45,8 @@ class Product
         $this->productDescription->setDescription((isset($data['description'])) ? $data['description'] : null);
         $this->productDescription->setMeta_description((isset($data['meta_description'])) ? $data['meta_description'] : null);
         $this->productDescription->setMeta_keyword((isset($data['meta_keyword'])) ? $data['meta_keyword'] : null);
+        $this->productDescription->setMeta_tittle((isset($data['meta_tittle'])) ? $data['meta_tittle'] : null);
+        
 
         $this->productImage = (isset($data['date_modified'])) ? $data['date_modified'] : null;
 
@@ -69,13 +71,26 @@ class Product
         $this->productDescription->setName((isset($data['productName'])) ? $data['productName'] : null);
         $this->productDescription->setLanguage_id((isset($data['language_id'])) ? $data['language_id'] : null);
         $this->productDescription->setDescription((isset($data['productDescription'])) ? $data['productDescription'] : null);
-        $this->productDescription->setMeta_description((isset($data['meta_description'])) ? $data['meta_description'] : null);
-        $this->productDescription->setMeta_keyword((isset($data['meta_keyword'])) ? $data['meta_keyword'] : null);
+        $this->productDescription->setMeta_description((isset($data['productMetaDescription'])) ? $data['productMetaDescription'] : null);
+        $this->productDescription->setMeta_keyword((isset($data['productMetaKeywords'])) ? $data['productMetaKeywords'] : null);
+        $this->productDescription->setMeta_tittle((isset($data['productMetaTittle'])) ? $data['productMetaTittle'] : null);
     
-        $this->productImage = (isset($data['date_modified'])) ? $data['date_modified'] : null;
+        
+         $images = new \ArrayObject(); $i=1;
+         foreach ($data['productImage'] as $image){
+             list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
+            
+             $productImage = new ProductImage();
+             $productImage->image = $nameImage;
+             $productImage->sort_order = $i++;
+             $images->append($productImage);
+         }
+         
+        $this->productImage = (isset($images)) ? $images : null;
     
         $this->urlAlias = New UrlAlias;
-        $this->urlAlias->keyword = (isset($data['keyword'])) ? $data['keyword'] : null;
+        $this->urlAlias->keyword = (isset($data['productSeoUrl'])) ? $data['productSeoUrl'] : null;
+        $this->urlAlias->type = 'product';
     }
 
     function getProduct_id()

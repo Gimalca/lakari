@@ -53,6 +53,9 @@ $this->headlink()
                     <li>
                         <a href="#tab1_4" data-toggle="tab">Images</a>
                     </li>
+                    <li>
+                        <a href="#tab1_5" data-toggle="tab">Stock</a>
+                    </li>
                 </ul>
             </div>
             <div class="panel-body p20 pb10 form-horizontal">     
@@ -217,51 +220,7 @@ $this->headlink()
 
                                 </div>
                             </div>
-                            <div class="section row">
-                                <div class="col-md-4 form-group ">
 
-                                    <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
-                                    <div class="col-md-8">
-                                        <label for="productQuantity" class="field prepend-icon">
-                                            <?php echo $this->formInput($this->productForm->get('productQuantity')); ?>
-                                            <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
-                                            </label>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productQuantity')) ?> 
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4 form-group">
-
-                                    <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
-                                    <div class="col-md-8 "> 
-                                        <label class="field select">
-                                            <?php echo $this->formSelect($this->productForm->get('productStock')) ?>
-                                            <i class="arrow double "></i>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productStock')) ?> 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 form-group">
-
-                                    <label class="col-lg-5 control-label" for="productStockStatus">Estatus Stock  <span class="text-danger">*</span></label>
-                                    <div class="col-md-7 "> 
-                                        <label class="field select">
-                                            <?php echo $this->formSelect($this->productForm->get('productStockStatus')) ?>
-                                            <i class="arrow double "></i>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
-                                        </div>
-                                    </div>
-                                </div> 
-
-                            </div>
                             <!-- end section row section -->
 
 
@@ -330,7 +289,7 @@ $this->headlink()
                                 <div class="col-md-6 form-group">
                                     <label class="col-lg-3 control-label" for="productCategories">Categorias  </label>
                                     <div class="col-md-9 form-group">
-                                     
+
                                         <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
                                         <div class="help-block">
                                             <?php echo $this->formelementerrors($this->productForm->get('productCategories')) ?> 
@@ -390,7 +349,113 @@ $this->headlink()
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
+                        <div id="tab1_5" class="tab-pane">
+
+                            <div class="multi-field-wrapper">
+                                <div class="multi-fields">
+                                    <div class="multi-field"> 
+
+                                        <div class="section row">
+                                            <div class="col-md-3 form-group ">
+
+                                                <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
+                                                <div class="col-md-8">
+                                                    <label for="productQuantity" class="field prepend-icon">
+                                                        <?php echo $this->formInput($this->productForm->get('productQuantity')); ?>
+                                                        <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
+                                                        </label>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productQuantity')) ?> 
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 form-group">
+
+                                                <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
+                                                <div class="col-md-8 "> 
+                                                    <label class="field select">
+                                                        <?php echo $this->formSelect($this->productForm->get('productStock')) ?>
+                                                        <i class="arrow double "></i>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productStock')) ?> 
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 form-group">
+
+                                                <label class="col-lg-5 control-label" for="productStockStatus">Estatus Stock  <span class="text-danger">*</span></label>
+                                                <div class="col-md-7 "> 
+                                                    <label class="field select">
+                                                        <?php echo $this->formSelect($this->productForm->get('productStockStatus')) ?>
+                                                        <i class="arrow double "></i>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-3 form-group ">
+                                              <button type="button" class="remove-field">Remove</button>
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                </div><button type="button" class="add-field">Add field</button>
+                            </div>
+                            <!--div class="section row">
+                                <div class="col-md-3 form-group ">
+
+                                    <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
+                                    <div class="col-md-8">
+                                        <label for="productQuantity" class="field prepend-icon">
+                            <?php echo $this->formInput($this->productForm->get('productQuantity')); ?>
+                                            <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                            <?php echo $this->formelementerrors($this->productForm->get('productQuantity')) ?> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
+                                    <div class="col-md-8 "> 
+                                        <label class="field select">
+                            <?php echo $this->formSelect($this->productForm->get('productStock')) ?>
+                                            <i class="arrow double "></i>
+                                        </label>
+                                        <div class="help-block">
+                            <?php echo $this->formelementerrors($this->productForm->get('productStock')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 form-group">
+
+                                    <label class="col-lg-5 control-label" for="productStockStatus">Estatus Stock  <span class="text-danger">*</span></label>
+                                    <div class="col-md-7 "> 
+                                        <label class="field select">
+                            <?php echo $this->formSelect($this->productForm->get('productStockStatus')) ?>
+                                            <i class="arrow double "></i>
+                                        </label>
+                                        <div class="help-block">
+                            <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <button type="button" class="add-field btn-sm ">Add field</button>
+                                </div>
+
+                            </div-->
+                        </div>
                         <input type="hidden" id="upload_images" name="upload_images[]" multiple />
                         <hr class="short alt">
                         <div class="panel-footer text-right">
@@ -434,6 +499,17 @@ $this->headScript()
 $this->inlineScript()->captureStart();
 echo <<<JS
    jQuery(document).ready(function() {
+            $('.multi-field-wrapper').each(function() {
+                var wrapper = $('.multi-fields', this);
+                $(".add-field", $(this)).click(function(e) {
+                $('.multi-field:first-child', wrapper).clone(true).appendTo(wrapper).find('input').val('').focus();
+            });
+            $('.multi-field .remove-field', wrapper).click(function() {
+                if ($('.multi-field', wrapper).length > 1)
+                $(this).closest('.multi-field').remove();
+                });
+            });
+        
 
              // Dropzone autoattaches to "dropzone" class.
             // Configure Dropzone options

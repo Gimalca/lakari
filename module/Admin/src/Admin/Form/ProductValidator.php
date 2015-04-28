@@ -73,7 +73,7 @@ class ProductValidator extends InputFilter
         $productImage->getValidatorChain()->attach($mimeType);
 
         /** Move File to Uploads/product **/
-        $nameFile = sprintf("%simg_%s",'./public/assets/images/products/catalog/uploads/', time());
+        $nameFile = sprintf("%simg_%s",'./public/assets/images/products/catalog/', time());
         $rename = new RenameUpload($nameFile);
         //$rename->setTarget($nameFile);
         $rename->setUseUploadExtension(true);

@@ -58,16 +58,17 @@ class ProductController extends AbstractActionController
             
             if ($this->productForm->isValid()) {
                 $productData = $this->productForm->getData();
-                print_r($productData);die;         
+                //print_r($productData);die;         
                 $productEntity = new Product();
                 //$productData['productId'] = 9;
                 $productEntity->exchangeArrayForm($productData);
-                // var_dump($productEntity);die;
+                //var_dump($productEntity);die;
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProduct($productEntity);
                 
                 if ($saved) {
-                  return $this->redirect()->toRoute('admin', array('controller' => 'product', 'action' => 'list'));
+                    echo 'Saved';die;
+                  //return $this->redirect()->toRoute('admin', array('controller' => 'product', 'action' => 'list'));
                 }
             } else {
                 $messages = $this->productForm->getMessages();
