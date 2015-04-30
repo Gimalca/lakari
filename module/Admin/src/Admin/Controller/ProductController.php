@@ -67,9 +67,11 @@ class ProductController extends AbstractActionController
                 $saved = $productDao->saveProduct($productEntity);
                 
                 if ($saved) {
-                    echo 'Saved';die;
-                  //return $this->redirect()->toRoute('admin', array('controller' => 'product', 'action' => 'list'));
+                    
+                  return $this->redirect()->toRoute('admin', array('controller' => 'product', 'action' => 'list'));
                 }
+                echo 'Saved';die;
+                
             } else {
                 $messages = $this->productForm->getMessages();
                  echo 'error filter';

@@ -2472,6 +2472,7 @@ a {
 .product .product-image .tag {
   position: absolute;
 }
+
 .product .product-info .name {
   font-size: 16px;
   font-family: 'FjallaOneRegular';
@@ -3369,6 +3370,7 @@ a {
   font-family: 'FjallaOneRegular';
   color: #555;
   margin-top: 5px;
+  text-transform: uppercase;
 }
 .single-product .product-info .rating-reviews .reviews .lnk {
   color: #aaaaaa;

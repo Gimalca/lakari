@@ -31,12 +31,16 @@ class ProductDao implements IProductDao
         $query->join(array(
             'url' => 'lk_url_alias'
         ), "lk_product.product_id = url.id");
+        $query->join(array(
+            'img' => 'lk_product_image'
+        ), "lk_product.product_id = img.product_id");
         $query->where(array(
-            "url.type = 'product'"
+            'url.type' => 'product',
+            'img.sort_order' => 1
         ));
         
         $query->order("lk_product.product_id");
-        // echo $query->getSqlString();
+        // echo $query->getSqlString();die;
         
         $resultSet = $this->tableGateway->selectWith($query);
         // var_dump($resultSet);
@@ -88,8 +92,14 @@ class ProductDao implements IProductDao
         
         $rowset = $this->tableGateway->selectWith($query);
         
-        // var_dump($rowset);die;
+       
         $row = $rowset->current();
+
+        $images = $this->getImages($id);
+        
+        $row->setProductImage($images);
+       
+        
         if (! $row) {
             throw new \Exception("Could not find row $id");
         }
@@ -164,8 +174,6 @@ class ProductDao implements IProductDao
         }
         
         return $table->getLastInsertValue();
-        
-        
     }
 
     public function saveProduct(Product $product)
@@ -204,8 +212,11 @@ class ProductDao implements IProductDao
                 $sDescription = $this->saveProductDescription($productId, $data_product_description);
                 // Insert Images
                 $sImage = $this->saveProductImage($productId, $data_product_image);
-                //insert Url Alias
-                $sUrlAlias = $this->saveUrlAlias($productId,$data_product_urlAlias);
+                // insert Url Alias
+                $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias);
+
+                    return $productId;        
+                
             } else {
                 return false;
             }

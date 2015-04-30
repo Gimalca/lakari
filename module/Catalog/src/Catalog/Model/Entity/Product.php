@@ -48,7 +48,7 @@ class Product
         $this->productDescription->setMeta_tittle((isset($data['meta_tittle'])) ? $data['meta_tittle'] : null);
         
 
-        $this->productImage = (isset($data['date_modified'])) ? $data['date_modified'] : null;
+        $this->productImage = (isset($data['image'])) ? $data['image'] : null;
 
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['keyword'])) ? $data['keyword'] : null;

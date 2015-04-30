@@ -41,7 +41,8 @@ class IndexController extends AbstractActionController
         $id = $this->getUrlAliasDao()->getKeywordId($url);
        
         $product = $this->getProductDao()->getProductById($id->id);
-         
+        
+        //var_dump($product);die;
         return new ViewModel(array(
             'product' => $product,
         ));

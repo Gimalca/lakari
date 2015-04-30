@@ -107,4 +107,11 @@ return array(
             ),
         ),
     ),
+'view_helpers' => array(
+'invokables' => array(
+	    'MyHelper' =>  __DIR__ . '/../view/helper/MyHelper',
+		'truncateWords' =>  __DIR__ . '/../view/helper/TruncateWords.php',
+		),
+	)
+
 );
