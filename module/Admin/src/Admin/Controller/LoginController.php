@@ -32,6 +32,8 @@ class LoginController extends AbstractActionController
 
     public function indexAction()
     {
+        
+        
         $this->loginForm = new LoginForm;
         // $email = $this->loginForm->get()
         $this->loginForm->setInputFilter(new LoginValidator());
@@ -44,13 +46,17 @@ class LoginController extends AbstractActionController
             if (!$this->loginForm->isValid()) {
                 //$this->loginForm->bind($postParams);
                 // Falla la validación; volvemos a generar el formulario 
+                
                 $modelView = new ViewModel(array('loginForm' => $this->loginForm));
+                
                 //$modelView->setTemplate('admin/login/index');
                 return $modelView;
             }
         }
+        
+        $viewModel = new ViewModel(array('loginForm' => $this->loginForm));
 
-        return new ViewModel(array('loginForm' => $this->loginForm));
+        return $viewModel;
     }
 
     public function autenticarAction()

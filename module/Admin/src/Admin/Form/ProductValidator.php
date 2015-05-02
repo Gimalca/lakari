@@ -137,7 +137,7 @@ class ProductValidator extends InputFilter
             'required' => true,
             'validators' => array(
                 array(
-                    'name' => 'float',
+                    'name' => 'Alnum',
                     'options' => array(
                         'locale' => 'en_US'
                     )

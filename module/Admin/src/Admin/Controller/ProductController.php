@@ -33,6 +33,12 @@ class ProductController extends AbstractActionController
 
     public function listAction()
     {
+        $productDao = $this->getProductDao();
+        
+          return new ViewModel(array(
+            'products' => $productDao->getAll(),
+          
+        ));
         // This shows the :controller and :action parameters in default route
         // are working when you browse to /module-specific-root/skeleton/foo
         return array();

@@ -76,11 +76,15 @@ class Module
     public function initLayout($e)
     {
         $matches = $e->getRouteMatch();
-        $module = $matches->getParam('__NAMESPACE__');
-        //var_dump($module);die;
-        if ($module == 'Admin\Controller') {
+        $module = $matches->getParams();
+        //print_r($module);die;
+        if ($module['__NAMESPACE__'] == 'Admin\Controller') {
             $layout = $e->getViewModel();
             $layout->setTemplate('layout/admin');
+        }
+        if ($module['controller'] == 'Admin\Controller\Login') {
+            $layout = $e->getViewModel();
+            $layout->setTemplate('layout/layout');
         }
     }
 

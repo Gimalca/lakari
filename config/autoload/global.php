@@ -14,9 +14,9 @@
 return array(
    'db' => array(
          'driver'         => 'Pdo',
-         'dsn'            => 'mysql:dbname=lakari;host=131.72.168.242',
-         'username' => 'admin',
-         'password' => 'admin',
+         'dsn'            => 'mysql:dbname=lakari;host=127.0.0.1',
+         'username' => 'root',
+         'password' => 'root',
          'driver_options' => array(
              PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
          ),
