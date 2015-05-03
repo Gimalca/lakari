@@ -46,27 +46,9 @@ class LoginValidator extends InputFilter
             'filters' => array(
                 array('name' => 'StripTags'),
                 array('name' => 'StringTrim'),
-                array('name' => 'Alnum'),
+               
             ),
-            'validators' => array(
-//                array(
-//                    'name' => 'NotEmpty', 'options' => array(
-//                        'messages' => array(NotEmpty::IS_EMPTY => 'El campo no puede quedar vacío.'),
-//                    ),
-//                ),
-                array(
-                    'name' => 'StringLength',
-                    'options' => array(
-                        'encoding' => 'UTF-8',
-                        'min' => 4,
-                        'max' => 8,
-                        'messages' => array(
-                                'stringLengthTooShort' => 'Debe contener de 4 a 8 caracteres!', 
-                                'stringLengthTooLong' => 'Debe contener de 4 a 8 caracteres!' 
-                            ),
-                    ),
-                ),
-            ),
+            
         ));
     }
 

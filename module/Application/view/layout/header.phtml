@@ -11,7 +11,7 @@
                                 <li><a href="#"><i class="icon fa fa-heart"></i>Lista</a></li>
                                 <li><a href="#"><i class="icon fa fa-shopping-cart"></i>Mi Compra</a></li>
                                 <!--li><a href="#"><i class="icon fa fa-key"></i>Checkout</a></li-->
-                                <li><a href="#"><i class="icon fa fa-sign-in"></i>Login</a></li>
+                                <li><a href="<?php echo $this->basePath('admin/login') ?>"><i class="icon fa fa-sign-in"></i>Login</a></li>
                                 <li style="padding:0">
                                     <div id="fb-root"></div>
                                     <script>(function (d, s, id) {
@@ -199,26 +199,26 @@
 
                                         <li class="dropdown">
 
-                                            <a href="#">Muebles
+                                            <a href="<?php echo $this->basePath('catalogo/categoria/muebles') ?>">Muebles
                                                 <span class="menu-label hot-menu hidden-xs">Ofertas</span>
                                             </a>
                                         </li>
 
                                         <li class="dropdown">
 
-                                            <a href="#">Griferías
+                                            <a href="<?php echo $this->basePath('catalogo/categoria/griferias') ?>">Griferías
 
                                             </a>
                                         </li>
                                         <li class="dropdown hidden-sm">
 
-                                            <a href="#">Iluminación
+                                            <a href="<?php echo $this->basePath('catalogo/categoria/iluminacion') ?>">Iluminación
                                                 <span class="menu-label new-menu hidden-xs">Nuevo</span>
                                             </a>
                                         </li>
                                         <li class="dropdown hidden-sm">
 
-                                            <a href="#">Utensilios
+                                            <a href="<?php echo $this->basePath('catalogo/categoria/utensilios') ?>">Utensilios
 
                                             </a>
                                         </li>
@@ -251,7 +251,12 @@
 
                                             </ul>
                                         </li>
+                                        <li class="dropdown hidden-sm">
 
+                                            <a href="<?php echo $this->basePath('catalogo') ?>">Todas
+
+                                            </a>
+                                        </li>
 
                                     </ul><!-- /.navbar-nav -->
                                     <div class="clearfix"></div>				

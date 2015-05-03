@@ -66,7 +66,6 @@ class ProductController extends AbstractActionController
                 $productData = $this->productForm->getData();
                 //print_r($productData);die;         
                 $productEntity = new Product();
-                //$productData['productId'] = 9;
                 $productEntity->exchangeArrayForm($productData);
                 //var_dump($productEntity);die;
                 $productDao = $this->getProductDao();

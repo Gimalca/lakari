@@ -77,8 +77,10 @@ class Module
     {
         $matches = $e->getRouteMatch();
         $module = $matches->getParams();
+        
+       
         //print_r($module);die;
-        if ($module['__NAMESPACE__'] == 'Admin\Controller') {
+        if ($matches->getParam('__NAMESPACE__') == 'Admin\Controller') {
             $layout = $e->getViewModel();
             $layout->setTemplate('layout/admin');
         }
@@ -108,12 +110,12 @@ class Module
         $serviceManager = $e->getApplication()->getServiceManager();
         $translator = $serviceManager->get('translator');
 
-        $locale = $config['application']['locale'];
-        $translator->setLocale(\Locale::acceptFromHttp($locale));
-        $translator->addTranslationFile(
-                'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
-        );
-        AbstractValidator::setDefaultTranslator($translator);
+//         $locale = $config['application']['locale'];
+//         $translator->setLocale(\Locale::acceptFromHttp($locale));
+//         $translator->addTranslationFile(
+//                 'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
+//         );
+//         AbstractValidator::setDefaultTranslator($translator);
     }
 
 }

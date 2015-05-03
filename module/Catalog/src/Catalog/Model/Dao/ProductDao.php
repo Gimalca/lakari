@@ -39,12 +39,50 @@ class ProductDao implements IProductDao
             'img.sort_order' => 1
         ));
         
-        $query->order("lk_product.product_id");
+        $query->order("lk_product.product_id DESC");
         // echo $query->getSqlString();die;
         
         $resultSet = $this->tableGateway->selectWith($query);
         // var_dump($resultSet);
         
+        return $resultSet;
+    }
+    public function getProductsByCategory($categoryId)
+    {
+        $query = $this->tableGateway->getSql()->select();
+        $query->join(array(
+            'pd' => 'lk_product_description'
+        ), 'pd.product_id = lk_product.product_id');
+        $query->join(array(
+            'phc' => 'lk_product_has_category'
+        ),  'phc.product_id = lk_product.product_id');
+        $query->join(array(
+            'c' => 'lk_category'
+        ),  'c.category_id = phc.category_id');
+        /*$query->join(array(
+            'cd' => 'lk_category_description'
+        ),  'c.category_id = cd.category_id');*/
+        $query->join(array(
+            'pm' => 'lk_product_image'
+        ), 'pm.product_id = lk_product.product_id');
+        $query->join(array(
+            'url' => 'lk_url_alias'
+        ),  'lk_product.product_id = url.id');
+        
+        $query->where(array(
+            'c.category_id' => $categoryId,
+            'url.type' => 'product',
+            'pm.sort_order' => 1
+        ));
+        
+        $query->order("lk_product.product_id DESC");
+        // echo $query->getSqlString();die;
+        
+        $resultSet = $this->tableGateway->selectWith($query);
+        // var_dump($resultSet);
+        if (!$resultSet) {
+            throw new \Exception("Could not find row $id");
+        }
         return $resultSet;
     }
 
@@ -159,6 +197,27 @@ class ProductDao implements IProductDao
         
         return $table->getLastInsertValue();
     }
+    protected function saveProductCategories($productId, $data = Null)
+    {
+        $id = (int) $productId;
+        
+        $table = $this->getTable('lk_product_has_category');
+        
+        foreach ($data as $category) {
+            $insertCategories = array(
+                'product_id' => $id,
+                'category_id' => $category,
+                
+            );
+            
+            $saved = $table->insert($insertCategories);
+            if (! $saved) {
+                throw new \Exception("Could not find row $id - Insert ProductDescription");
+            }
+        }
+        
+        return $table->getLastInsertValue();
+    }
 
     protected function saveUrlAlias($productId, $data = NULL)
     {
@@ -178,7 +237,7 @@ class ProductDao implements IProductDao
 
     public function saveProduct(Product $product)
     {
-        $id = (int) $product->getProduct_id();
+        $id = (int) $product->getProductId();
         // print_r($product);die;
         $data_product = array(
             'model' => $product->getModel(),
@@ -193,6 +252,8 @@ class ProductDao implements IProductDao
             'meta_keyword' => $product->getProductDescription()->getMeta_keyword(),
             'meta_tittle' => $product->getProductDescription()->getMeta_tittle()
         );
+        
+        $data_product_categories = $product->getProductCategories();
         
         $data_product_image = $product->getProductImage();
         
@@ -214,6 +275,8 @@ class ProductDao implements IProductDao
                 $sImage = $this->saveProductImage($productId, $data_product_image);
                 // insert Url Alias
                 $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias);
+                // insert Categories
+                $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories);
 
                     return $productId;        
                 

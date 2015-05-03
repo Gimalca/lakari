@@ -47,6 +47,21 @@ class IndexController extends AbstractActionController
             'product' => $product,
         ));
     }
+    public function categoryListAction()
+    {
+        $url = $this->params()->fromRoute('category');
+        $id = $this->getUrlAliasDao()->getKeywordId($url);
+ 
+        $products = $this->getProductDao()->getProductsByCategory($id->id);
+        //$products = $this->getProductDao()->getAll(),;
+        //var_dump($product);die;
+        $modelView = new ViewModel(array(
+            'products' => $products,
+        ));
+         $modelView->setTemplate('catalog/index/index');
+         
+        return $modelView; 
+    }
 
     public function getProductDao()
     {

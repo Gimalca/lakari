@@ -1,6 +1,7 @@
 <?php
 $this->headlink()
-        ->prependStylesheet($this->basePath() . '/vendor/plugins/dropzone/css/dropzone.css');
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/dropzone/css/dropzone.css')
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
 ?>
 <!-- Start: Topbar -->
 <header id="topbar" class="ph10">
@@ -50,9 +51,9 @@ $this->headlink()
                         <a href="#tab1_3" data-toggle="tab">Meta-Data</a>
                     </li>
 
-                    <li>
+                    <!--li>
                         <a href="#tab1_4" data-toggle="tab">Images</a>
-                    </li>
+                    </li-->
                     <li>
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
@@ -273,6 +274,16 @@ $this->headlink()
 
                             </div>
                             <div class="section row">
+                                 <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productCategories">Categorias  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9 form-group">
+
+                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
+                                        
+                                    </div>
+                                </div>
+                                <!-- end section -->
+                                
                                 <div class="col-md-6 form-group">
                                     <label class="col-lg-3 control-label" for="productTags">Tags  </label>
                                     <div class="col-md-9">
@@ -286,19 +297,10 @@ $this->headlink()
                                     </div>
                                 </div>
                                 <!-- end section  -->
-                                <div class="col-md-6 form-group">
-                                    <label class="col-lg-3 control-label" for="productCategories">Categorias  </label>
-                                    <div class="col-md-9 form-group">
-
-                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productCategories')) ?> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end section -->
+                               
 
                             </div>
+                           
                             <div class="section row">
 
                                 <div class="col-md-6 form-group">
@@ -488,6 +490,7 @@ $this->headScript()
         ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
         ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
         ->prependFile($this->basePath() . '/vendor/plugins/dropzone/dropzone.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
         ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
@@ -540,8 +543,18 @@ echo <<<JS
             $('.fileupload-preview').on('click', function() {
                 $('.btn-file > input').click();
             });
-            $('#multiselect3').multiselect({
+            /*$('#multiselec').multiselect({
               enableFiltering: true,  
+            });*/
+            // Init Select2 - Basic Multiple
+            $("#multiselect3").select2({
+              placeholder: "Select Categories",
+               allowClear: true,
+               style: "bg-primary light"
+            });
+            $(".select2-multiple").select2({
+              placeholder: "Select a state",
+               allowClear: true
             });
             // select dropdowns - placeholder like creation
             var selectList = $('.admin-form select');
@@ -609,6 +622,9 @@ echo <<<JS
                                     required: true,
                                     AlnumOf: true,
                             },
+                            productCategories: {
+                                    required: true
+                            },  
                                 
                         
                     },
@@ -622,6 +638,9 @@ echo <<<JS
                                     Alnum: 'Solo letras y numeros'
                             },
                             productDescription: {
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            productCategories: {
                                     required: 'Campo Obligatorio'
                             },                  
                             productModel: {

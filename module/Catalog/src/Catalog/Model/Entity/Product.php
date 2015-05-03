@@ -25,8 +25,11 @@ class Product
     private $productDescription;
     private $productImage;
     private $urlAlias;
+    private $productCategories;
 
-    function exchangeArray($data = NULL)
+   
+
+ function exchangeArray($data = NULL)
     {
         $this->product_id = (isset($data['product_id'])) ? $data['product_id'] : null;
         $this->model = (isset($data['model'])) ? $data['model'] : null;
@@ -66,7 +69,8 @@ class Product
         $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
         $this->date_modified = (isset($data['date_modified'])) ? $data['date_modified'] : null;
-    
+        $this->productCategories = (isset($data['productCategories'])) ? $data['productCategories'] : null;
+        
         $this->productDescription = new ProductDescription();
         $this->productDescription->setName((isset($data['productName'])) ? $data['productName'] : null);
         $this->productDescription->setLanguage_id((isset($data['language_id'])) ? $data['language_id'] : null);
@@ -74,26 +78,29 @@ class Product
         $this->productDescription->setMeta_description((isset($data['productMetaDescription'])) ? $data['productMetaDescription'] : null);
         $this->productDescription->setMeta_keyword((isset($data['productMetaKeywords'])) ? $data['productMetaKeywords'] : null);
         $this->productDescription->setMeta_tittle((isset($data['productMetaTittle'])) ? $data['productMetaTittle'] : null);
-    
+        
         
          $images = new \ArrayObject(); $i=1;
          foreach ($data['productImage'] as $image){
-             list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
+             //list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
+             $explo = explode("/", $image['tmp_name']);
             
              $productImage = new ProductImage();
-             $productImage->image = $nameImage;
+             $productImage->image = $explo[6];
              $productImage->sort_order = $i++;
              $images->append($productImage);
          }
          
         $this->productImage = (isset($images)) ? $images : null;
+        
+       
     
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['productSeoUrl'])) ? $data['productSeoUrl'] : null;
         $this->urlAlias->type = 'product';
     }
 
-    function getProduct_id()
+    function getProductId()
     {
         return $this->product_id;
     }
@@ -126,6 +133,16 @@ class Product
     function getStatus()
     {
         return $this->status;
+    }
+   
+    public function getProductCategories()
+    {
+        return $this->productCategories;
+    }
+    
+    public function setProductCategories($productCategories)
+    {
+        $this->productCategories = $productCategories;
     }
 
     function getDescription()

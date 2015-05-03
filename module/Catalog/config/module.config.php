@@ -43,7 +43,7 @@ return array(
                                 'category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
-                                'action' => 'index',
+                                'action' => 'categoryList',
                             ),
                         ),
                     ),

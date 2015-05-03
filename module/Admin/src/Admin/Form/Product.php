@@ -232,27 +232,30 @@ class Product extends Form {
             'attributes' => array(
                 'id' => 'multiselect3',
                 'class' => 'form-control gui-input',
+                'style' => 'width: 100%',
                 'multiple' => true,
-                'value' => 0
+                'required' => true,
+                //'value' => 0
             ),
             'options' => array(
                 
                 'value_options' => array(
-                    '0' => 'Please choose Product Categories',
+                    //'' => 'Please choose Product Categories',
                     'type' => array(
                         'label' => 'Tipo de Producto',
                         'options' => array(
                             '1' => 'Muebles',
                             '2' => 'Griferías',
                             '3' => 'Iluminación',
+                            '4' => 'Utensilios',
                         )
                     ),
                     'ambiente' => array(
                         'label' => 'Ambiente',
                         'options' => array(
-                            '4' => 'Sala',
-                            '5' => 'Dormitorio',
-                            '6' => 'Baño'
+                            '5' => 'Sala',
+                            '6' => 'Dormitorio',
+                            '7' => 'Baño'
                         )
                     )
                 )
