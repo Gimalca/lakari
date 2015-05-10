@@ -237,29 +237,29 @@ class Product extends Form {
                 'required' => true,
                 //'value' => 0
             ),
-            'options' => array(
-                
-                'value_options' => array(
-                    //'' => 'Please choose Product Categories',
-                    'type' => array(
-                        'label' => 'Tipo de Producto',
-                        'options' => array(
-                            '1' => 'Muebles',
-                            '2' => 'Griferías',
-                            '3' => 'Iluminación',
-                            '4' => 'Utensilios',
-                        )
-                    ),
-                    'ambiente' => array(
-                        'label' => 'Ambiente',
-                        'options' => array(
-                            '5' => 'Sala',
-                            '6' => 'Dormitorio',
-                            '7' => 'Baño'
-                        )
-                    )
-                )
-            )
+//            'options' => array(
+//                
+//                'value_options' => array(
+//                    //'' => 'Please choose Product Categories',
+//                    'type' => array(
+//                        'label' => 'Tipo de Producto',
+//                        'options' => array(
+//                            '1' => 'Muebles',
+//                            '2' => 'Griferías',
+//                            '3' => 'Iluminación',
+//                            '4' => 'Utensilios',
+//                        )
+//                    ),
+//                    'ambiente' => array(
+//                        'label' => 'Ambiente',
+//                        'options' => array(
+//                            '5' => 'Sala',
+//                            '6' => 'Dormitorio',
+//                            '7' => 'Baño'
+//                        )
+//                    )
+//                )
+//            )
             
         ));
        

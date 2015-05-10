@@ -15,6 +15,8 @@ use Admin\Form\Product as ProductForm;
 use Admin\Form;
 use Admin\Form\ProductValidator;
 use Catalog\Model\Entity\Product;
+use Admin\Model\Dao\CategoryDao;
+use Admin\Model\Entity\Category;
 use Zend\Json\Json;
 use Zend\File\Transfer\Adapter\Http as FileTransferAdapter;
 
@@ -22,7 +24,7 @@ class ProductController extends AbstractActionController
 {
    
     private $productTable;
-
+    private $categoryDao;
     private $productForm;
 
     public function indexAction()
@@ -46,8 +48,10 @@ class ProductController extends AbstractActionController
 
     public function addAction()
     {
+        $cat = $this->getCategorySelect();
+        
         $this->productForm = new ProductForm();
-       
+        $this->productForm->get('productCategories')->setValueOptions($cat);
         
         if ($this->request->isPost()) {
             
@@ -88,6 +92,41 @@ class ProductController extends AbstractActionController
             'productForm' => $this->productForm
         ));
     }
+    
+    public function getCategorySelect() {
+        
+        $categoryDao = $this->getCategoryDao();
+        $results = $categoryDao->getAll();
+        
+        $result = array();
+        foreach ($results as $cat) {
+           //$result[] = $row->getArrayCopy();
+           $result[$cat->category_id] = $cat->name;
+        }
+    
+       return $result;
+        
+    }
+    
+    function buildTree( $ar, $pid = null ) {
+        $op = array();
+        foreach( $ar as $item ) {
+            //print_r($item);
+            if( $item['parent_id'] == $pid ) {
+                $op[$item['category_id']] = array(
+                    'date_added' => $item['date_added'],
+                    'parent_Id' => $item['parent_Id']
+                );
+                // using recursion
+                $children =  $this->buildTree( $ar, $item['category_id'] );
+                if( $children ) {
+                    $op[$item['parent_id']]['children'] = $children;
+                }
+            }
+        }
+        return $op;
+    }
+    
 
     public function getProductDao()
     {
@@ -96,5 +135,15 @@ class ProductController extends AbstractActionController
             $this->productTable = $sm->get('Catalog\Model\Dao\ProductDao');
         }
         return $this->productTable;
+    }
+    
+    public function getCategoryDao()
+    {
+        if (! $this->categoryDao) {
+            $sm = $this->getServiceLocator();       
+            $tableGateway = $sm->get('CategoryTableGateway');
+            $this->categoryDao = new CategoryDao($tableGateway);                
+        }
+        return $this->categoryDao;
     }
 }

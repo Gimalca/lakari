@@ -13,6 +13,12 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
+use Admin\Model\Dao\CategoryDao;
+use Admin\Model\Entity\Category;
+
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
 class Module implements AutoloaderProviderInterface
 {
     
@@ -49,13 +55,22 @@ class Module implements AutoloaderProviderInterface
     {
         return array(
             'factories' => array(
-                'Model\Dao\UsuarioDao' => function($sm) {
-                    $dao = New \Admin\Model\Dao\UsuarioDao();
+                'Model\Dao\UsuarioDao' => function ($sm) {
+                    $dao = new \Admin\Model\Dao\UsuarioDao();
                     return $dao;
+                },
+                
+                'CategoryTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Category());
+                    return new TableGateway('lk_category', $dbAdapter, null, $resultSetPrototype);
                 }
-            ),
-        );
+            )
+        )
+        ;
     }
+    
   
     public function getControllerConfig()
     {
