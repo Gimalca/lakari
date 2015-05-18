@@ -81,8 +81,7 @@ class Product extends Form {
            'name' => 'productImage',
            'attributes' => array(
                'type' => 'File',
-               'id' => 'productModel',
-               'class' => 'form-control gui-input',
+               'id' => 'productModel',   
                'placeholder' => 'Product Model',
                'required' => true,
                'multiple' => true
@@ -107,7 +106,8 @@ class Product extends Form {
                 'id' => 'productSku',
                 'class' => 'form-control gui-input',
                 'placeholder' => 'Product SKU',
-                'required' => false,       
+                'required' => false, 
+                      
             ),
         ));
        $this->add(array(

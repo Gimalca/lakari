@@ -22459,7 +22459,6 @@ body.error-page .error-text {
 }
 .ecommerce-page .fileupload .thumbnail {
   position: relative;
-  cursor: pointer;
   overflow: hidden;
 }
 .ecommerce-page .fileupload .thumbnail:empty {

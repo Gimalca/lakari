@@ -1,6 +1,6 @@
 <?php
 $this->headlink()
-        ->prependStylesheet($this->basePath() . '/vendor/plugins/dropzone/css/dropzone.css')
+        
         ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
 ?>
 <!-- Start: Topbar -->
@@ -51,9 +51,9 @@ $this->headlink()
                         <a href="#tab1_3" data-toggle="tab">Meta-Data</a>
                     </li>
 
-                    <!--li>
+                    <li>
                         <a href="#tab1_4" data-toggle="tab">Images</a>
-                    </li-->
+                    </li>
                     <li>
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
@@ -324,17 +324,55 @@ $this->headlink()
                             <!-- end section row section -->
 
                         </div>
-                        <div id="tab1_4" class="tab-pane" style="height: 400px">
-                            <div class="col-xs-12 col-sm-8 pl30">
-                                <div class="tray-bin pl10 mb10" style="min-height: 250px;">
-                                    <h5 class="text-muted mt10 fw600 pl10"><i class="fa fa-exclamation-circle text-info fa-lg pr10"></i> Portlet Drag and Drop Uploader </h5>
-                                    <div class="dropzone dropzone-sm" id="dropzone">
-                                        <div class="fallback">
-                                            <input name="file-drop" type="file" multiple />
-                                        </div>   
+                      
+                        <div id="tab1_4" class="tab-pane">
+
+                            <div class="multi-field-wrapper">
+                                <div class="multi-fields">
+                                    <div class="multi-field"> 
+
+                                        <div class="section row">
+                                            <div class="col-md-3 form-group ">
+
+                                             
+
+                                            </div>
+                                            <div class="col-md-3 form-group">
+
+                                               
+                                            </div>
+
+                                            <div class="col-md-2 form-group imgUpload">
+                                              
+                                                <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
+                                                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                         <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+                                                     </div>
+                                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <span class="button btn-system btn-file btn-block">
+                                                                <span class="fileupload-new">Select</span>
+                                                                <span class="fileupload-exists">Change</span>
+                                                                <?php echo $this->formFile($this->productForm->get('productImage')); ?>
+                                                                
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>  
+                                            
+                                           
+                                            <div class="col-md-3 form-group ">
+                                              <button type="button" class="remove-field">Remove</button>
+                                           </div>
+                                        </div>
                                     </div>
-                                </div>
+
+                                </div><button type="button" class="add-field">Add field</button>
                             </div>
+                            
                         </div>
                         <div id="tab1_5" class="tab-pane">
 
@@ -374,35 +412,20 @@ $this->headlink()
 
                                             <div class="col-md-2 form-group">
                                               
-                                                <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
-                                                    <div class="fileupload-preview thumbnail mb20">
-                                                        <img data-src="http://www.placehold.it/100x100" alt="holder">
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <span class="button btn-system btn-file btn-block">
-                                                                <span class="fileupload-new">Select</span>
-                                                                <span class="fileupload-exists">Change</span>
-                                                                <?php echo $this->formFile($this->productForm->get('productImage')); ?>
-                                                                
-                                                            </span>
-                                                        </div>
+                                               <label class="col-lg-3 control-label" for="productStockStatus">Stock <span class="text-danger">*</span></label>
+                                                <div class="col-md-8 "> 
+                                                    <label class="field select">
+                                                        <?php echo $this->formRow($this->productForm->get('productStockStatus')) ?>
+                                                        <i class="arrow double "></i>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
                                                     </div>
                                                 </div>
                                                 
                                             </div>  
                                             
-                                            <div class="col-md-2 form-group">
-                                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-                                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                <div>
-                                                    <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
-                                                        <input name="image[]" type="file" id="iknna" /></span>
-                                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                                </div>
-                                            </div>
-                                            </div>
+                                           
                                             <div class="col-md-3 form-group ">
                                               <button type="button" class="remove-field">Remove</button>
                                            </div>
@@ -444,7 +467,6 @@ $this->headlink()
 $this->headScript()
         ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
         ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
-        ->prependFile($this->basePath() . '/vendor/plugins/dropzone/dropzone.min.js')
         ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
         ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
@@ -462,17 +484,32 @@ echo <<<JS
                 var wrapper = $('.multi-fields', this);
                 $(".add-field", $(this)).click(function(e) {
                 newgroup = $('.multi-field:last-child', wrapper).clone(true)
-
-                newgroup.find('input, select, file').each(function(){
+                    
+   
+                  html = '<div class="fileupload fileupload-new admin-form" data-provides="fileupload">';
+                  html +=  ' <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">';
+                  html +=   '<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />';
+                  html +=  '</div>';
+                  html +=  '<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height:150px; line-height: 20px;"></div>';
+                  html +=   '<div class="row">';
+                  html +=      '<div class="col-xs-12">';
+                  html +=          '<span class="button btn-system btn-file btn-block">';
+                  html +=          '<span class="fileupload-new">Select</span>';
+                  html +=          '<span class="fileupload-exists">Change</span>';
+                  html +=            '<input name="productImage[]" type="file" id="productModel" class="form-control gui-input" required="required">';     
+                  html +=          '</span>';
+                  html +=      '</div>';
+                  html +=   '</div>';
+                  html += ' </div>';
+                newgroup.find('.imgUpload').html(html);
+                newgroup.find('input, select, file ').each(function(){ 
+                    
                  //code increment name Array
                  this.name = this.name.replace(/\[(\d+)\]/,function(str,p1){return '[' + (parseInt(p1,10)+1) + ']'});
+ 
+                 }).end().appendTo(wrapper).find('input, select, file, hide').val('').focus();
                 
-                 //Code Increment id
-                 var idnum = this.id + 1;
-                 var num = parseInt( idnum.match(/\d+/g), 10 ) +1;      
-                 this.id = this.id + num;
-                 this.name = this.name + num;
-                 }).end().appendTo(wrapper).find('input').val('').focus();
+                  
             });
             $('.multi-field .remove-field', wrapper).click(function() {
                 if ($('.multi-field', wrapper).length > 1)
