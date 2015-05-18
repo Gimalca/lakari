@@ -49,4 +49,10 @@ return array(
             'Admin' => __DIR__ . '/../view',
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'MyHelper' => 'Admin\Helpers\MyHelper',
+            'FormCollection' => 'Admin\Helpers\FormCollection'
+        )
+    )
 );

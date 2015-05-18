@@ -4,6 +4,8 @@ namespace Admin\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
+use Zend\InputFilter\InputFilter;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 
 /**
@@ -18,6 +20,15 @@ class Product extends Form {
         
         $this->setAttribute('action', 'admin/product/add');
         $this->setAttribute('method', 'post');
+        $this->setHydrator(new ClassMethodsHydrator(false));
+        $this->setInputFilter(new InputFilter());
+        
+//         $this->add(array(
+//             'type' => 'Admin\Form\ProductFieldset',
+//             'options' => array(
+//                 'use_as_base_fieldset' => false,
+//             ),
+//         ));   
 
         $this->add(array(
             'name' => 'productId',
@@ -50,13 +61,29 @@ class Product extends Form {
             ),
         ));
        
+       $inputImage = new Element\File();
+       $inputImage->setAttributes(array(
+               'type' => 'file',
+               'id' => 'image',
+               'required' => true, 
+           ));
       
+       $this->add(array(         
+           'type' => 'Zend\Form\Element\Collection',
+           'name' => 'productImage3',
+           'options' => array(
+               'should_create_template' => false,
+               'target_element' =>  $inputImage
+           )
+       ));
+       
        $this->add(array(
            'name' => 'productImage',
            'attributes' => array(
-               'type' => 'file',
-               'id' => 'fileupload',
-               
+               'type' => 'File',
+               'id' => 'productModel',
+               'class' => 'form-control gui-input',
+               'placeholder' => 'Product Model',
                'required' => true,
                'multiple' => true
            ),
@@ -104,18 +131,22 @@ class Product extends Form {
                 'required' => true,       
             ),
         ));
+       
+       $inputProductQuantity =  new Element\Text();
+       $inputProductQuantity->setAttribute('class', 'form-control gui-input');
+       
        $this->add(array(
+           'type' => 'Zend\Form\Element\Collection',
             'name' => 'productQuantity',
-            'attributes' => array(
-                'type' => 'text',
-                'id' => 'productQuantity',
-                'maxlength' => 6,
-                'class' => 'form-control gui-input',
-                'placeholder' => 'Product quantity in stock',
-                'required' => false,
-                      
-            ),
+           'options' => array(
+               
+               'should_create_template' => false,
+               'target_element' =>  $inputProductQuantity
+           )
+          
         ));
+
+     
        $this->add(array(
             'name' => 'productMinimun',
             'attributes' => array(
@@ -129,24 +160,32 @@ class Product extends Form {
             ),
         ));
        
-       $this->add(array(
-            'name' => 'productStock',
-            'type' => 'select',
-            'attributes' => array(
+       $selectProducStock = new Element\Select();
+       $selectProducStock->setAttributes(array(
                 'id' => 'productStock',
                 'class' => 'form-control gui-input',
                 'required' => true,
               
-            ),
-            'options' => array(
-                'empty_option' => 'Please choose',
-                'value_options' => array(                    
-                    '1' => 'Panama',
-                    '2' => 'Colombia',
-                    '3' => 'Venezuela',
-                    '4' => 'Miami',
-                )
-            )
+            ));
+       $selectProducStock->setOptions(array(
+               'empty_option' => 'Please choose',
+               'value_options' => array(
+                   '1' => 'Panama',
+                   '2' => 'Colombia',
+                   '3' => 'Venezuela',
+                   '4' => 'Miami',
+               )
+           ));
+       
+       $this->add(array(
+          'name' => 'productStock',
+          'type' => 'Zend\Form\Element\Collection',   
+           'options' => array(  
+               'should_create_template' => false,
+               'target_element' => $selectProducStock
+           )
+          
+            
         ));
        
        $this->add(array(

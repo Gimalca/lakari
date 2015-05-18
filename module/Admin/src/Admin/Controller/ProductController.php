@@ -51,6 +51,9 @@ class ProductController extends AbstractActionController
         $cat = $this->getCategorySelect();
         
         $this->productForm = new ProductForm();
+        $product = new Product();
+        $this->productForm->bind($product);
+        
         $this->productForm->get('productCategories')->setValueOptions($cat);
         
         if ($this->request->isPost()) {
@@ -61,7 +64,7 @@ class ProductController extends AbstractActionController
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-           //print_r($postData);die;
+           print_r($postData);die;
            
             $this->productForm->setInputFilter(new ProductValidator());
             $this->productForm->setData($postData);

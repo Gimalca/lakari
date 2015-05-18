@@ -26,9 +26,9 @@ class Module
         $moduleRouteListener->attach($eventManager);
 
         //Inicializaciones 
-        $this->initConfig($e);
-        $this->initViewRender($e);
-        $this->initEnviroment($e);
+//         $this->initConfig($e);
+//         $this->initViewRender($e);
+//         $this->initEnviroment($e);
 
         $app = $e->getApplication()->getEventManager();
         $app->attach('dispatch', array($this, 'initLayout'), -100);
@@ -110,12 +110,23 @@ class Module
         $serviceManager = $e->getApplication()->getServiceManager();
         $translator = $serviceManager->get('translator');
 
-//         $locale = $config['application']['locale'];
-//         $translator->setLocale(\Locale::acceptFromHttp($locale));
-//         $translator->addTranslationFile(
-//                 'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
-//         );
-//         AbstractValidator::setDefaultTranslator($translator);
+        $locale = $config['application']['locale'];
+        $translator->setLocale(\Locale::acceptFromHttp($locale));
+        $translator->addTranslationFile(
+                'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
+        );
+        AbstractValidator::setDefaultTranslator($translator);
     }
+//     public function getViewHelperConfig()
+//     {
+//         return array(
+//             'factories' => array(
+//                 'myhelper' => function($sm) {
+//                     $helper = new View\Helper\MyHelper ;
+//                     return $helper;
+//                 }
+//             )
+//         );
+//     }
 
 }

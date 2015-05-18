@@ -8,6 +8,10 @@
 
 namespace Catalog\Model\Entity;
 
+/**
+ * @author Pedro
+ *
+ */
 class Product
 {
 
@@ -189,8 +193,8 @@ class Product
     {
         $this->urlAlias = $urlAlias;
     }
-    
-    
-
-    //put your code here
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
 }

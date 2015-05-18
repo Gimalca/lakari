@@ -59,7 +59,8 @@ $this->headlink()
                     </li>
                 </ul>
             </div>
-            <div class="panel-body p20 pb10 form-horizontal">     
+            <div class="panel-body p20 pb10 form-horizontal">   
+                <?php $this->productForm->prepare() ?>
                 <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
                     <?php echo $this->formhidden($this->productForm->get('productId')) ?>
                     <div class="tab-content pn br-n admin-form theme-primary">  
@@ -67,24 +68,7 @@ $this->headlink()
                         <div id="tab1_1" class="tab-pane active">                           
                             <div class="section row mbn">
                                 <div class="col-md-4">
-                                    <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
-                                        <div class="fileupload-preview thumbnail mb20">
-                                            <img data-src="holder.js/100%x140" alt="holder">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-7 pr5">
-                                                <input type="text" name="imgkey" id="imgkey" class="text-center gui-input" placeholder="Img Keywords">
-                                                <label for="name2" class="field-icon"></label>
-                                            </div>
-                                            <div class="col-xs-5">
-                                                <span class="button btn-system btn-file btn-block">
-                                                    <span class="fileupload-new">Select</span>
-                                                    <span class="fileupload-exists">Change</span>
-                                                    <?php echo $this->formFile($this->productForm->get('productImage')); ?>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                 </div>
 
                                 <div class="col-md-8 pl15">
@@ -364,7 +348,7 @@ $this->headlink()
                                                 <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
                                                 <div class="col-md-8">
                                                     <label for="productQuantity" class="field prepend-icon">
-                                                        <?php echo $this->formInput($this->productForm->get('productQuantity')); ?>
+                                                        <?php echo $this->formRow($this->productForm->get('productQuantity')); ?>
                                                         <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
                                                         </label>
                                                     </label>
@@ -379,7 +363,7 @@ $this->headlink()
                                                 <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
                                                 <div class="col-md-8 "> 
                                                     <label class="field select">
-                                                        <?php echo $this->formSelect($this->productForm->get('productStock')) ?>
+                                                        <?php echo $this->formRow($this->productForm->get('productStock')) ?>
                                                         <i class="arrow double "></i>
                                                     </label>
                                                     <div class="help-block">
@@ -388,19 +372,37 @@ $this->headlink()
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3 form-group">
-
-                                                <label class="col-lg-5 control-label" for="productStockStatus">Estatus Stock  <span class="text-danger">*</span></label>
-                                                <div class="col-md-7 "> 
-                                                    <label class="field select">
-                                                        <?php echo $this->formSelect($this->productForm->get('productStockStatus')) ?>
-                                                        <i class="arrow double "></i>
-                                                    </label>
-                                                    <div class="help-block">
-                                                        <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
+                                            <div class="col-md-2 form-group">
+                                              
+                                                <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
+                                                    <div class="fileupload-preview thumbnail mb20">
+                                                        <img data-src="http://www.placehold.it/100x100" alt="holder">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <span class="button btn-system btn-file btn-block">
+                                                                <span class="fileupload-new">Select</span>
+                                                                <span class="fileupload-exists">Change</span>
+                                                                <?php echo $this->formFile($this->productForm->get('productImage')); ?>
+                                                                
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                                
+                                            </div>  
+                                            
+                                            <div class="col-md-2 form-group">
+                                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+                                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                <div>
+                                                    <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
+                                                        <input name="image[]" type="file" id="iknna" /></span>
+                                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                                </div>
+                                            </div>
+                                            </div>
                                             <div class="col-md-3 form-group ">
                                               <button type="button" class="remove-field">Remove</button>
                                            </div>
@@ -409,56 +411,9 @@ $this->headlink()
 
                                 </div><button type="button" class="add-field">Add field</button>
                             </div>
-                            <!--div class="section row">
-                                <div class="col-md-3 form-group ">
-
-                                    <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
-                                    <div class="col-md-8">
-                                        <label for="productQuantity" class="field prepend-icon">
-                            <?php echo $this->formInput($this->productForm->get('productQuantity')); ?>
-                                            <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
-                                            </label>
-                                        </label>
-                                        <div class="help-block">
-                            <?php echo $this->formelementerrors($this->productForm->get('productQuantity')) ?> 
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-3 form-group">
-
-                                    <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
-                                    <div class="col-md-8 "> 
-                                        <label class="field select">
-                            <?php echo $this->formSelect($this->productForm->get('productStock')) ?>
-                                            <i class="arrow double "></i>
-                                        </label>
-                                        <div class="help-block">
-                            <?php echo $this->formelementerrors($this->productForm->get('productStock')) ?> 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 form-group">
-
-                                    <label class="col-lg-5 control-label" for="productStockStatus">Estatus Stock  <span class="text-danger">*</span></label>
-                                    <div class="col-md-7 "> 
-                                        <label class="field select">
-                            <?php echo $this->formSelect($this->productForm->get('productStockStatus')) ?>
-                                            <i class="arrow double "></i>
-                                        </label>
-                                        <div class="help-block">
-                            <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 form-group">
-                                    <button type="button" class="add-field btn-sm ">Add field</button>
-                                </div>
-
-                            </div-->
+                            
                         </div>
-                        <input type="hidden" id="upload_images" name="upload_images[]" multiple />
+                       
                         <hr class="short alt">
                         <div class="panel-footer text-right">
                             <button class="btn btn-primary text-right"> Saved </button>
@@ -502,10 +457,22 @@ $this->headScript()
 $this->inlineScript()->captureStart();
 echo <<<JS
    jQuery(document).ready(function() {
+
             $('.multi-field-wrapper').each(function() {
                 var wrapper = $('.multi-fields', this);
                 $(".add-field", $(this)).click(function(e) {
-                $('.multi-field:first-child', wrapper).clone(true).appendTo(wrapper).find('input').val('').focus();
+                newgroup = $('.multi-field:last-child', wrapper).clone(true)
+
+                newgroup.find('input, select, file').each(function(){
+                 //code increment name Array
+                 this.name = this.name.replace(/\[(\d+)\]/,function(str,p1){return '[' + (parseInt(p1,10)+1) + ']'});
+                
+                 //Code Increment id
+                 var idnum = this.id + 1;
+                 var num = parseInt( idnum.match(/\d+/g), 10 ) +1;      
+                 this.id = this.id + num;
+                 this.name = this.name + num;
+                 }).end().appendTo(wrapper).find('input').val('').focus();
             });
             $('.multi-field .remove-field', wrapper).click(function() {
                 if ($('.multi-field', wrapper).length > 1)
@@ -514,35 +481,12 @@ echo <<<JS
             });
         
 
-             // Dropzone autoattaches to "dropzone" class.
-            // Configure Dropzone options
-           Dropzone.autoDiscover = false;
-            $("#dropzone").dropzone({
-                init: function() {
-                 //this.on("addedfile", function(file) { alert("Added file."); }); 
-                 var myDropzone = this;
-
-                   this.on("addedfile", function(file, xhr, data) {
-                     // add headers with xhr.setRequestHeader() or
-                     // form data with formData.append(name, value);
-                     $("input[name='upload_images[]']").val('ver');
-                   });
-                 },
-                paramName: 'upload_images',
-                url: 'add',
-                dictDefaultMessage: "Drag your images",
-                clickable: true,
-                addRemoveLinks: true,
-
-                autoProcessQueue: false,
-                uploadMultiple: true,
-                
-            });
-
+            
             // grant file-upload preview onclick functionality
-            $('.fileupload-preview').on('click', function() {
-                $('.btn-file > input').click();
-            });
+            // $('.fileupload-preview').on('click', function() {
+            // $('.btn-file > input').click();
+            // });
+
             /*$('#multiselec').multiselect({
               enableFiltering: true,  
             });*/
