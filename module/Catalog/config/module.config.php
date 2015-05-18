@@ -59,7 +59,7 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
-            
+            'TruncateWords' => 'Catalog\View\Helper\TruncateWords',
         ),
     )
 );

@@ -7,21 +7,7 @@
                 <?php //var_dump($this->product); ?>
             </div>
     </div><!-- /.sidebar -->
-   <?php 
-           function truncateWords($words, $limit, $append = ' &hellip;') {
-               // Add 1 to the specified limit becuase arrays start at 0
-               $limit = $limit+1;
-               // Store each individual word as an array element
-               // Up to the limit
-               $words = explode(' ', $words, $limit);
-               // Shorten the array by 1 because that final element will be the sum of all the words after the limit
-               array_pop($words);
-               // Implode the array for output, and append an ellipse
-               $words = implode(' ', $words) . $append;
-               // Return the result
-               return $words;
-           }
-   ?>
+  
     <div class="col-md-9">
         <div class="row  wow fadeInUp">
                             <div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
@@ -100,7 +86,7 @@
                  
                                             $description = $this->product->getProductDescription()->getDescription();
                                                   
-                                           echo truncateWords($description, 30,' ...');
+                                           echo $this->TruncateWords($description, 30,' ...');
                                         ?>
                                     </div><!-- /.description-container -->
 

@@ -5,7 +5,7 @@
  * @author
  * @version 
  */
-namespace  Admin\Helpers;
+namespace  Admin\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 

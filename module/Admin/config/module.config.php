@@ -51,8 +51,8 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'MyHelper' => 'Admin\Helpers\MyHelper',
-            'FormCollection' => 'Admin\Helpers\FormCollection'
+            'MyHelper' => 'Admin\View\Helper\MyHelper',
+            'FormCollection' => 'Admin\View\Helper\FormCollection'
         )
     )
 );
