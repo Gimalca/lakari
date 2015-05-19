@@ -85,165 +85,165 @@ class ProductValidator extends InputFilter
         $this->add($productImage );
        
         
-        $this->add(array(
-            'name' => 'productName',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
+//         $this->add(array(
+//             'name' => 'productName',
+//             'required' => true,
+//             'validators' => array(
+//                 array(
+//                     'name' => 'Alnum',
+//                     'options' => $this->opcionesAlnum
+//                 )
+//             ),
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 )
+//             )
+//         ));
         
-        $this->add(array(
-            'name' => 'productDescription',
-            'required' => true,
-            'validators' => array(
-                array(
-                   'name' => 'not_empty',      
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
+//         $this->add(array(
+//             'name' => 'productDescription',
+//             'required' => true,
+//             'validators' => array(
+//                 array(
+//                    'name' => 'not_empty',      
+//                 )
+//             ),
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 )
+//             )
+//         ));
         
-        $this->add(array(
-            'name' => 'productModel',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum2
-                )
-            )
-        ));
-        $this->add(array(
-            'name' => 'productPrice',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Alnum',
-                    'options' => array(
-                        'locale' => 'en_US'
-                    )
-                ),
-                array(
-                    'name' => 'stringLength',
-                    'options' => array(
-                        'min' => 1,
-                        'max' => 10
-                    )
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
+//         $this->add(array(
+//             'name' => 'productModel',
+//             'required' => true,
+//             'validators' => array(
+//                 array(
+//                     'name' => 'Alnum',
+//                     'options' => $this->opcionesAlnum2
+//                 )
+//             )
+//         ));
+//         $this->add(array(
+//             'name' => 'productPrice',
+//             'required' => true,
+//             'validators' => array(
+//                 array(
+//                     'name' => 'Alnum',
+//                     'options' => array(
+//                         'locale' => 'en_US'
+//                     )
+//                 ),
+//                 array(
+//                     'name' => 'stringLength',
+//                     'options' => array(
+//                         'min' => 1,
+//                         'max' => 10
+//                     )
+//                 )
+//             ),
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 )
+//             )
+//         ));
         
-        $productQuantity = new Input('productQuantity');
-        $productQuantity->setAllowEmpty(true);
-        $productQuantity->getValidatorChain()
-            ->attach(new Digits());
+// //         $productQuantity = new Input('productQuantity');
+// //         $productQuantity->setAllowEmpty(true);
+// //         $productQuantity->getValidatorChain()
+// //             ->attach(new Digits());
         
-        $this->add($productQuantity);
+// //         $this->add($productQuantity);
         
-        $this->add(array(
-            'name' => 'productMinimun',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'Digits',     
-                )
-            )
-        ));
+//         $this->add(array(
+//             'name' => 'productMinimun',
+//             'required' => false,
+//             'validators' => array(
+//                 array(
+//                     'name' => 'Digits',     
+//                 )
+//             )
+//         ));
         
 
-        // Meta-Data Form
-        $this->add(array(
-            'name' => 'productMetaTittle',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
-        $this->add(array(
-            'name' => 'productSeoUrl',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'not_empty',
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                ),
-                array(
-                    'name' => 'StringToLower'
-                ),
+//         // Meta-Data Form
+//         $this->add(array(
+//             'name' => 'productMetaTittle',
+//             'required' => true,
+//             'validators' => array(
+//                 array(
+//                     'name' => 'Alnum',
+//                     'options' => $this->opcionesAlnum
+//                 )
+//             ),
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 )
+//             )
+//         ));
+//         $this->add(array(
+//             'name' => 'productSeoUrl',
+//             'required' => true,
+//             'validators' => array(
+//                 array(
+//                     'name' => 'not_empty',
+//                 )
+//             ),
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 ),
+//                 array(
+//                     'name' => 'StringToLower'
+//                 ),
                 
-            )
-        ));
-        $this->add(array(
-            'name' => 'productMetaDescription',
-            'continue_if_empty' => true,
+//             )
+//         ));
+//         $this->add(array(
+//             'name' => 'productMetaDescription',
+//             'continue_if_empty' => true,
             
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
-        $this->add(array(
-            'name' => 'productMetaKeywords',
-            'continue_if_empty' => true,
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 )
+//             )
+//         ));
+//         $this->add(array(
+//             'name' => 'productMetaKeywords',
+//             'continue_if_empty' => true,
             
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
+//             'filters' => array(
+//                 array(
+//                     'name' => 'StripTags'
+//                 ),
+//                 array(
+//                     'name' => 'StringTrim'
+//                 )
+//             )
+//         ));
   
     }
 }

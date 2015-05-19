@@ -87,10 +87,11 @@ class Product
          $images = new \ArrayObject(); $i=1;
          foreach ($data['productImage'] as $image){
              //list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
-             $explo = explode("/", $image['tmp_name']);
-            
+             //echo $image['tmp_name'].'<br/>';
+             $explo = explode("\\", $image['tmp_name']);
+             //print_r($explo);
              $productImage = new ProductImage();
-             $productImage->image = $explo[6];
+             $productImage->image = $explo[1];
              $productImage->sort_order = $i++;
              $images->append($productImage);
          }

@@ -51,8 +51,6 @@ class ProductController extends AbstractActionController
         $cat = $this->getCategorySelect();
         
         $this->productForm = new ProductForm();
-        $product = new Product();
-        $this->productForm->bind($product);
         
         $this->productForm->get('productCategories')->setValueOptions($cat);
         
@@ -64,7 +62,7 @@ class ProductController extends AbstractActionController
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-           print_r($postData);die;
+           //print_r($postData);die;
            
             $this->productForm->setInputFilter(new ProductValidator());
             $this->productForm->setData($postData);
@@ -86,8 +84,9 @@ class ProductController extends AbstractActionController
                 
             } else {
                 $messages = $this->productForm->getMessages();
-                 echo 'error filter';
-                 print_r($messages);die;
+//                  echo 'error filter';
+//                  print_r($messages);die;
+                 $this->productForm->populateValues($postData);
             }
         }
         
