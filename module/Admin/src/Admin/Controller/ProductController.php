@@ -14,12 +14,12 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\Product as ProductForm;
 use Admin\Form;
 use Admin\Form\ProductValidator;
-use Catalog\Model\Entity\Product;
+use Admin\Model\Entity\Product;
 use Admin\Model\Dao\CategoryDao;
 use Admin\Model\Entity\Category;
 use Zend\Json\Json;
 use Zend\File\Transfer\Adapter\Http as FileTransferAdapter;
-
+use ArrayObject;
 class ProductController extends AbstractActionController
 {
    
@@ -72,7 +72,7 @@ class ProductController extends AbstractActionController
                 //print_r($productData);die;         
                 $productEntity = new Product();
                 $productEntity->exchangeArrayForm($productData);
-                //var_dump($productEntity);die;
+                var_dump($productEntity);die;
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProduct($productEntity);
                 
@@ -95,6 +95,32 @@ class ProductController extends AbstractActionController
         ));
     }
     
+    public function editAction() 
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('admin/list'); 
+        }
+        
+        $this->productForm = new ProductForm();
+        $productDao = $this->getProductDao();
+        $productData = $productDao->getProductById($id);
+        
+        //print_r($productData); die;
+        
+        $contact = new ArrayObject;
+        $contact['productModel'] = '25';
+        $contact['productName'] = 'Type your message here';
+        //print_r($productBind); die;
+        $this->productForm->bind($contact);
+        //$this->productForm->setData($contact);
+       
+        return new ViewModel(array(
+            'productForm' => $this->productForm
+        ));;
+      
+    }
+    
     public function getCategorySelect() {
         
         $categoryDao = $this->getCategoryDao();
@@ -110,31 +136,12 @@ class ProductController extends AbstractActionController
         
     }
     
-    function buildTree( $ar, $pid = null ) {
-        $op = array();
-        foreach( $ar as $item ) {
-            //print_r($item);
-            if( $item['parent_id'] == $pid ) {
-                $op[$item['category_id']] = array(
-                    'date_added' => $item['date_added'],
-                    'parent_Id' => $item['parent_Id']
-                );
-                // using recursion
-                $children =  $this->buildTree( $ar, $item['category_id'] );
-                if( $children ) {
-                    $op[$item['parent_id']]['children'] = $children;
-                }
-            }
-        }
-        return $op;
-    }
-    
 
     public function getProductDao()
     {
         if (! $this->productTable) {
             $sm = $this->getServiceLocator();
-            $this->productTable = $sm->get('Catalog\Model\Dao\ProductDao');
+            $this->productTable = $sm->get('Admin\Model\Dao\ProductDao');
         }
         return $this->productTable;
     }

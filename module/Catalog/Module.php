@@ -13,8 +13,7 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
-use Catalog\Model\Entity\Product;
-use Catalog\Model\Dao\ProductDao;
+
 use Catalog\Model\Entity\UrlAlias;
 use Catalog\Model\Dao\UrlAliasDao;
 
@@ -42,17 +41,7 @@ class Module implements AutoloaderProviderInterface
      {
          return array(
              'factories' => array(
-                 'Catalog\Model\Dao\ProductDao' =>  function($sm) {
-                     $tableGateway = $sm->get('ProductTableGateway');
-                     $table = new ProductDao($tableGateway);
-                     return $table;
-                 },
-                 'ProductTableGateway' => function ($sm) {
-                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                     $resultSetPrototype = new ResultSet();
-                     $resultSetPrototype->setArrayObjectPrototype(new Product());
-                     return new TableGateway('lk_product', $dbAdapter, null, $resultSetPrototype);
-                 },
+                
                  'Catalog\Model\Dao\UrlAliasDao' =>  function($sm) {
                      $tableGateway = $sm->get('UrlAliasTableGateway');
                      $table = new UrlAliasDao($tableGateway);

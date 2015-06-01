@@ -6,7 +6,7 @@
                 <a href="#">Dashboard</a>
             </li>
             <li class="active">
-                <a href="<?php echo $this->url('admin/default', array('controller' => 'product', 'action' => 'list')); ?>">Products</a>
+                <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'list')); ?>">Products</a>
             </li>
             <li>
                 <a href="#">Orders</a>
@@ -20,7 +20,7 @@
         </ul>
     </div>
     <div class="topbar-right">  
-        <a href="<?php echo $this->url('admin/default', array('controller' => 'product', 'action' => 'add')); ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
+        <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'add')); ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
     </div>
 </header>
 <!-- End: Topbar -->

@@ -6,8 +6,11 @@
  * @author Pedro
  */
 
-namespace Catalog\Model\Entity;
+namespace Admin\Model\Entity;
 
+use Admin\Model\Entity\ProductDescription;
+use Admin\Model\Entity\ProductImage;
+use Catalog\Model\Entity\UrlAlias;
 /**
  * @author Pedro
  *
@@ -17,6 +20,7 @@ class Product
 
     private $product_id;
     private $model;
+    private $productModel;
     private $quantity;
     private $image;
     private $price;
@@ -88,14 +92,15 @@ class Product
          foreach ($data['productImage'] as $image){
              //list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
              //echo $image['tmp_name'].'<br/>';
-             $explo = explode("\\", $image['tmp_name']);
+             $explo = explode('img_', $image['tmp_name']);
              //print_r($explo);
+             $img = 'img_'. $explo[1];
              $productImage = new ProductImage();
-             $productImage->image = $explo[1];
+             $productImage->image = $img;
              $productImage->sort_order = $i++;
              $images->append($productImage);
          }
-         
+          //die;
         $this->productImage = (isset($images)) ? $images : null;
         
        
@@ -103,6 +108,11 @@ class Product
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['productSeoUrl'])) ? $data['productSeoUrl'] : null;
         $this->urlAlias->type = 'product';
+    }
+    
+    function setProductModel($model)
+    {
+        $this->productModel = $model;
     }
 
     function getProductId()
@@ -198,4 +208,8 @@ class Product
     {
         $this->quantity = $quantity;
     }
+    public function getArrayCopy() {
+        return get_object_vars($this);
+    }
+    
 }

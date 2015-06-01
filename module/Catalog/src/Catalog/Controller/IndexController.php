@@ -67,7 +67,7 @@ class IndexController extends AbstractActionController
     {
         if (!$this->productTable) {
             $sm = $this->getServiceLocator();
-            $this->productTable = $sm->get('Catalog\Model\Dao\ProductDao');
+            $this->productTable = $sm->get('Admin\Model\Dao\ProductDao');
         }
         return $this->productTable;
     }
