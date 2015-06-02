@@ -108,6 +108,24 @@ class ProductDao implements IProductDao
         
         return $images;
     }
+    
+    public function getCategories($productId)
+    {
+        $table = $this->getTable('lk_product_has_category');
+        $query = $table->getSql()->select();
+        
+        if ($productId) {
+            $query->where('product_id = ' . $productId);
+        }
+        $resultSet = $table->selectWith($query);
+        
+        $categories = array();
+        foreach ($resultSet as $row) {
+            $categories[] = $row->category_id;
+        }
+        
+        return $categories;
+    }
 
     public function getProductById($id)
     {
@@ -121,21 +139,27 @@ class ProductDao implements IProductDao
         $query->join(array(
             'url' => 'lk_url_alias'
         ), "lk_product.product_id = url.id");
+        $query->join(array(
+            'phc' => 'lk_product_has_category'
+        ), "lk_product.product_id = phc.product_id");
         $query->where(array(
             "url.type = 'product'"
         ));
         $query->where(array(
             'lk_product.product_id' => $id
         ));
-        
+        // echo $query->getSqlString();die;
+       
         $rowset = $this->tableGateway->selectWith($query);
-        
+        //var_dump($rowset);die;
        
         $row = $rowset->current();
 
         $images = $this->getImages($id);
+        $categories = $this->getCategories($id);
         
         $row->setProductImage($images);
+        $row->setProductCategories($categories);
        
         
         if (! $row) {
@@ -241,8 +265,12 @@ class ProductDao implements IProductDao
         // print_r($product);die;
         $data_product = array(
             'model' => $product->getModel(),
+            'sku' => $product->getSku(),
+            'isbn' => $product->getIsbn(),
             'price' => $product->getPrice(),
-            'date_added' => date("Y-m-d H:i:s")
+            'minimum' => $product->getMinimum(),
+            'date_available' => date("Y-m-d H:i:s"),
+            'date_added' => date("Y-m-d H:i:s"),
         );
         
         $data_product_description = array(
@@ -296,7 +324,8 @@ class ProductDao implements IProductDao
             }
         }
     }
-
+    
+   
     public function deleteProduct(Product $product)
     {
         return $product;

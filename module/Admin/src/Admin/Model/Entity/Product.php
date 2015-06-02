@@ -20,11 +20,13 @@ class Product
 
     private $product_id;
     private $model;
-    private $productModel;
+    private $sku;
+    private $isbn;
     private $quantity;
     private $image;
     private $price;
     private $date_available;
+    private $minimum;
     private $status;
     private $description;
     private $date_added;
@@ -41,14 +43,19 @@ class Product
     {
         $this->product_id = (isset($data['product_id'])) ? $data['product_id'] : null;
         $this->model = (isset($data['model'])) ? $data['model'] : null;
+        $this->sku = (isset($data['sku'])) ? $data['sku'] : null;
+        $this->isbn = (isset($data['isbn'])) ? $data['isbn'] : null;
         $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
         $this->image = (isset($data['image'])) ? $data['image'] : null;
         $this->price = (isset($data['price'])) ? $data['price'] : null;
+        $this->minimum = (isset($data['minimum'])) ? $data['minimum'] : null;
         $this->date_available = (isset($data['date_available'])) ? $data['date_available'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
         $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
         $this->date_modified = (isset($data['date_modified'])) ? $data['date_modified'] : null;
+        
+        $this->productCategories = (isset($data['category_id'])) ? $data['category_id'] : null;
 
         $this->productDescription = new ProductDescription();
         $this->productDescription->setName((isset($data['name'])) ? $data['name'] : null);
@@ -69,10 +76,13 @@ class Product
     {
         $this->product_id = (isset($data['productId'])) ? $data['productId'] : null;
         $this->model = (isset($data['productModel'])) ? $data['productModel'] : null;
+        $this->sku = (isset($data['productSku'])) ? $data['productSku'] : null;
+        $this->isbn = (isset($data['productIsbn'])) ? $data['productIsbn'] : null;
         $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
         $this->image = (isset($data['image'])) ? $data['image'] : null;
         $this->price = (isset($data['productPrice'])) ? $data['productPrice'] : null;
         $this->date_available = (isset($data['date_available'])) ? $data['date_available'] : null;
+        $this->minimum = (isset($data['productMinimum'])) ? $data['productMinimum'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
         $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
@@ -124,8 +134,22 @@ class Product
     {
         return $this->model;
     }
+    function getSku()
+    {
+        return $this->sku;
+    }
 
-    function getQuantity()
+    function getIsbn()
+    {
+        return $this->isbn;
+    }
+
+    function getMinimum()
+    {
+        return $this->minimum;
+    }
+
+        function getQuantity()
     {
         return $this->quantity;
     }
@@ -189,6 +213,7 @@ class Product
     {
         return $this->productImage;
     }
+    
 
     function setProductDescription(ProductDescription $productDescription)
     {

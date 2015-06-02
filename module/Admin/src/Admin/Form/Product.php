@@ -61,21 +61,21 @@ class Product extends Form {
             ),
         ));
        
-       $inputImage = new Element\File();
-       $inputImage->setAttributes(array(
-               'type' => 'file',
-               'id' => 'image',
-               'required' => true, 
-           ));
+//        $inputImage = new Element\File();
+//        $inputImage->setAttributes(array(
+//                'type' => 'file',
+//                'id' => 'image',
+//                'required' => true, 
+//            ));
       
-       $this->add(array(         
-           'type' => 'Zend\Form\Element\Collection',
-           'name' => 'productImage3',
-           'options' => array(
-               'should_create_template' => false,
-               'target_element' =>  $inputImage
-           )
-       ));
+//        $this->add(array(         
+//            'type' => 'Zend\Form\Element\Collection',
+//            'name' => 'productImage3',
+//            'options' => array(
+//                'should_create_template' => false,
+//                'target_element' =>  $inputImage
+//            )
+//        ));
        
        $this->add(array(
            'name' => 'productImage',
@@ -148,10 +148,10 @@ class Product extends Form {
 
      
        $this->add(array(
-            'name' => 'productMinimun',
+            'name' => 'productMinimum',
             'attributes' => array(
                 'type' => 'text',
-                'id' => 'productMinimun',
+                'id' => 'productMinimum',
                 'maxlength' => 6,
                 'class' => 'form-control gui-input',
                 'placeholder' => 'minimum shop',

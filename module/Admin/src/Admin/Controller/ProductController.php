@@ -106,14 +106,36 @@ class ProductController extends AbstractActionController
         $productDao = $this->getProductDao();
         $productData = $productDao->getProductById($id);
         
+       
         //print_r($productData); die;
+        $cat = $this->getCategorySelect();
+        $this->productForm->get('productCategories')->setValueOptions($cat);
         
-        $contact = new ArrayObject;
-        $contact['productModel'] = '25';
-        $contact['productName'] = 'Type your message here';
-        //print_r($productBind); die;
-        $this->productForm->bind($contact);
-        //$this->productForm->setData($contact);
+        $productFormData = new ArrayObject;
+        $productFormData['productId']           = $productData->getProductId();
+        $productFormData['productName']         = $productData->getProductDescription()->getName();
+        $productFormData['productDescription']  = $productData->getProductDescription()->getDescription();
+        $productFormData['productModel']        = $productData->getModel();
+        $productFormData['productSku']          = $productData->getSku();
+        $productFormData['productIsbn']         = $productData->getIsbn();
+        $productFormData['productPrice']        = $productData->getPrice();
+        $productFormData['productMinimum']      = $productData->getMinimum();
+        $productFormData['productCategories']   = $productData->getProductCategories();
+        $productFormData['productMetaTittle']   = $productData->getProductDescription()->getMeta_tittle();
+        $productFormData['productMetaDescription']   = $productData->getProductDescription()->getMeta_Description();
+        $productFormData['productMetaKeywords']   = $productData->getProductDescription()->getMeta_Keyword();
+        $productFormData['productSeoUrl']       = $productData->getUrlAlias()->keyword;
+        
+        $images = array();
+        $imageData = $productData->getProductImage();
+        foreach ($imageData as $image) {
+            $images[] = $image->image;
+        };
+        $productFormData['productImage']       = $images;
+        
+        //print_r($images); die;
+        //$this->productForm->bind($contact);
+        $this->productForm->setData($productFormData);
        
         return new ViewModel(array(
             'productForm' => $this->productForm
