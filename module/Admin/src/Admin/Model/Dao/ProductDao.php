@@ -185,35 +185,48 @@ class ProductDao implements IProductDao
         return $row;
     }
 
-    protected function saveProductDescription($productId, $data = Null)
+    protected function saveProductDescription($productId, $data = Null, $update = Null )
     {
         $id = (int) $productId;
         $data['product_id'] = $id;
         
         $table = $this->getTable('lk_product_description');
-        $saved = $table->insert($data);
         
-        if (! $saved) {
-            throw new \Exception("Could not find row $id - Insert ProductDescription");
+        if (!$update){
+            
+          $saved = $table->insert($data);
+          
+          if (!$saved) {
+              throw new \Exception("Could not find row $id - Insert ProductDescription");
+          }
+          
+        }else {
+           $table->update($data, array(
+                    'product_id' => $id
+                ));
         }
+       
+        
         
         return $table->getLastInsertValue();
     }
 
-    protected function saveProductImage($productId, $data = Null)
+    public function saveProductImage($productId, $data = Null)
     {
         $id = (int) $productId;
         
         $table = $this->getTable('lk_product_image');
         
-        foreach ($data as $image) {
+           foreach ($data as $image) {
             $insertImage = array(
                 'product_id' => $id,
                 'image' => $image->image,
                 'sort_order' => $image->sort_order
             );
             
-            $saved = $table->insert($insertImage);
+            $saved = $table->insert($insertImage);         
+           
+            
             if (! $saved) {
                 throw new \Exception("Could not find row $id - Insert ProductDescription");
             }
@@ -221,11 +234,24 @@ class ProductDao implements IProductDao
         
         return $table->getLastInsertValue();
     }
-    protected function saveProductCategories($productId, $data = Null)
+    
+    public function deleteProductImage($imageId){
+        
+        $id = (int) $imageId;
+        
+        $table = $this->getTable('lk_product_image');
+        return $table->delete(array('product_image_id' => $imageId)) ;
+    }
+    
+    protected function saveProductCategories($productId, $data = Null, $update = Null)
     {
         $id = (int) $productId;
         
         $table = $this->getTable('lk_product_has_category');
+        
+        if($update == 1){
+            $table->delete(array('product_id' => $id)) ;
+        }
         
         foreach ($data as $category) {
             $insertCategories = array(
@@ -234,34 +260,45 @@ class ProductDao implements IProductDao
                 
             );
             
+          
             $saved = $table->insert($insertCategories);
-            if (! $saved) {
-                throw new \Exception("Could not find row $id - Insert ProductDescription");
-            }
-        }
+        }   
+            
+            
+        
         
         return $table->getLastInsertValue();
     }
 
-    protected function saveUrlAlias($productId, $data = NULL)
+    protected function saveUrlAlias($productId, $data = NULL, $update = NULL)
     {
         $id = (int) $productId;
         $data['id'] = $id;
         
         $table = $this->getTable('lk_url_alias');
+       
         
-        $saved = $table->insert($data);
-        
-        if (! $saved) {
-            throw new \Exception("Could not find row $id - Insert ProductDescription");
+        if (!$update){
+            $saved = $table->insert($data);
+            
+            if (! $saved) {
+                throw new \Exception("Could not find row $id - Insert ProductUrlAlias");
+            }
+            
+        }else {
+            $saved = $table->update($data, array(
+                'id' => $id
+            ));
         }
+        
+       
         
         return $table->getLastInsertValue();
     }
 
     public function saveProduct(Product $product)
     {
-        $id = (int) $product->getProductId();
+        $productId = (int) $product->getProductId();
         // print_r($product);die;
         $data_product = array(
             'model' => $product->getModel(),
@@ -290,7 +327,7 @@ class ProductDao implements IProductDao
             'keyword' => $product->getUrlAlias()->keyword
         );
         
-        if ($id == 0) {
+        if ($productId == 0) {
             // insert Product Table
             $sProduct = $this->tableGateway->insert($data_product);
             
@@ -309,16 +346,28 @@ class ProductDao implements IProductDao
                     return $productId;        
                 
             } else {
-                return false;
+                throw new \Exception('Form id does not exist');
             }
         } else {
             
-            if ($this->getById($id)) {
-                $data['date_modified'] = date("Y-m-d H:i:s");
-                $this->tableGateway->update($data, array(
-                    'product_id' => $id
+            if ($this->getById($productId)) {
+                
+                $data_product['date_modified'] = date("Y-m-d H:i:s");         
+                
+                $this->tableGateway->update($data_product, array(
+                    'product_id' => $productId
                 ));
-                return $id;
+                // update Product Description
+                $sDescription = $this->saveProductDescription($productId, $data_product_description, 1);
+                // update Images ( AJAX )
+                //$sImage = $this->saveProductImage($productId, $data_product_image);
+                // update Url Alias
+                $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias, 1);
+                // update Categories
+                $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories, 1);
+            
+                return $productId;
+                
             } else {
                 throw new \Exception('Form id does not exist');
             }

@@ -34,6 +34,7 @@ class Product extends Form {
             'name' => 'productId',
             'attributes' => array(
                 'type' => 'hidden',
+                'id' => 'productId',
             ),
         ));
         
@@ -81,8 +82,8 @@ class Product extends Form {
            'name' => 'productImage',
            'attributes' => array(
                'type' => 'File',
-               'id' => 'productModel',   
-               'placeholder' => 'Product Model',
+               'id' => 'productImage',   
+               'placeholder' => 'Product Image',
                'required' => true,
                'multiple' => true
            ),
@@ -163,8 +164,7 @@ class Product extends Form {
        $selectProducStock = new Element\Select();
        $selectProducStock->setAttributes(array(
                 'id' => 'productStock',
-                'class' => 'form-control gui-input',
-                'required' => true,
+                'class' => 'form-control gui-input',  
               
             ));
        $selectProducStock->setOptions(array(
@@ -194,11 +194,10 @@ class Product extends Form {
            'attributes' => array(
                'id' => 'productStockStatus',
                'class' => 'form-control gui-input',
-               'required' => true,
-       
+ 
            ),
            'options' => array(
-               'empty_option' => 'Please choose',
+              
                'value_options' => array(
                    '1' => 'Available',
                    '2' => 'Unavailable',
@@ -208,25 +207,19 @@ class Product extends Form {
            )
        ));
        
-       $this->add(array(
-            'name' => 'productStore',
-            'type' => 'select',
-            'attributes' => array(
-                'id' => 'productStore',
-                'class' => 'form-control gui-input',
-                'required' => true,
-              
-            ),
-            'options' => array(
-                'empty_option' => 'Please choose',
-                'value_options' => array(                    
-                    '1' => 'Panama',
-                    '2' => 'Colombia',
-                    '3' => 'Venezuela',
-                    '4' => 'Miami',
-                )
-            )
-        ));
+//        $this->add(array(
+//             'name' => 'productStore',
+//             'type' => 'select',
+//             'attributes' => array(
+//               'type' => 'text',
+//                 'id' => 'productMinimum',
+//                 'maxlength' => 6,
+//                 'class' => 'form-control gui-input',
+//                 'placeholder' => 'minimum shop',
+//                 'required' => false,
+//         )
+//            )
+//        );
        
        
        // Meta-Data form
@@ -268,38 +261,18 @@ class Product extends Form {
        $this->add(array(
             'name' => 'productCategories',
             'type' => 'select',
+            'options' => array(
+                'disable_inarray_validator' => true,
+            ),
             'attributes' => array(
                 'id' => 'multiselect3',
                 'class' => 'form-control gui-input',
                 'style' => 'width: 100%',
                 'multiple' => true,
                 'required' => true,
-                //'value' => 0
+                
             ),
-//            'options' => array(
-//                
-//                'value_options' => array(
-//                    //'' => 'Please choose Product Categories',
-//                    'type' => array(
-//                        'label' => 'Tipo de Producto',
-//                        'options' => array(
-//                            '1' => 'Muebles',
-//                            '2' => 'Griferías',
-//                            '3' => 'Iluminación',
-//                            '4' => 'Utensilios',
-//                        )
-//                    ),
-//                    'ambiente' => array(
-//                        'label' => 'Ambiente',
-//                        'options' => array(
-//                            '5' => 'Sala',
-//                            '6' => 'Dormitorio',
-//                            '7' => 'Baño'
-//                        )
-//                    )
-//                )
-//            )
-            
+           
         ));
        
        $this->add(array(

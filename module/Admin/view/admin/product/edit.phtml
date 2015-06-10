@@ -21,7 +21,7 @@ $this->headlink()
                 <a href="#">Customers</a>
             </li>
             <li>
-                <a href="#">Settings</a>
+                <a href="#">Settings </a>
             </li>
         </ul>
     </div>
@@ -36,46 +36,40 @@ $this->headlink()
 
     <!-- begin: .tray-center -->
     <div class="tray tray-center p25 va-t posr">
-
+              <div class="alert alert-success pastel alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <i class="fa fa-trophy pr10"></i>
+                <strong>The Pastel Shade!</strong> Style this way using the class
+                <code class="ml5">.pastel</code>
+            </div>
         <!-- create new order panel -->
         <div class="panel mb25 mt5">
+      
             <div class="panel-heading">
-                <span class="panel-title"> Add New Product</span>
+                <span class="panel-title">Edit Product #<?php echo $this->productModel ?> <?php echo $this->update ?></span>
                 <ul class="nav panel-tabs-border panel-tabs">
                     <li class="active">
                         <a href="#tab1_1" data-toggle="tab">Description</a>
                     </li>
-                    <li>
+                    <!--li>
                         <a href="#tab1_2" data-toggle="tab">Data</a>
-                    </li>
+                    </li-->
                     <li>
                         <a href="#tab1_3" data-toggle="tab">Meta-Data</a>
                     </li>
 
-                    <li>
+                    <!--li>
                         <a href="#tab1_4" data-toggle="tab">Images</a>
-                    </li>
+                    </li-->
                     <li>
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
                 </ul>
                 
             </div>
+            
             <div class="panel-body p20 pb10 form-horizontal">   
-               <div class="section row">
-                                <div class="col-md-8 ">
-                                    <div class="tray-bin pl10 mb10" style="min-height: 250px;">
-                                        <h5 class="text-muted mt10 fw600 pl10">
-                                            <i class="fa fa-exclamation-circle text-info fa-lg pr10"></i> Portlet Drag and Drop Uploader </h5>
-                                        <form action="/file-upload" class="dropzone dropzone-sm" id="dropZone">
-                                            <div class="fallback">
-                                                <input name="file" type="file" multiple />
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                </div>     
-                            </div>
+               
                 <?php $this->productForm->prepare() ?>
                 <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
                     <?php echo $this->formhidden($this->productForm->get('productId')) ?>
@@ -84,31 +78,37 @@ $this->headlink()
                         <div id="tab1_1" class="tab-pane active">  
                             
                             
-                            <div class="section row mbn">
-                                <div class="col-md-4">
-                                   
+                            <div class="section row">
+ 
+                                <div class="col-md-5 form-group">
+
+                                    <label class="col-md-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-9">
+                                        <label for="productName" class="field prepend-icon">                                       
+                                            <?php echo $this->formInput($this->productForm->get('productName')); ?>
+                                            <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
+                                            </label>
+                                        </label> 
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productName')) ?> 
+                                        </div>
+                                    </div>     
                                 </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="col-md-3 control-label" for="productCategories">Categorias  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9 form-group">
 
-                                <div class="col-md-8 pl15">
-
-                                    <div class="section mb10 form-group ">
-
-                                        <label class="col-lg-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
-
-                                        <div class="col-md-8">
-                                            <label for="productName" class="field prepend-icon">                                       
-                                                <?php echo $this->formInput($this->productForm->get('productName')); ?>
-                                                <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
-                                                </label>
-                                            </label> 
-                                            <div class="help-block">
-                                                <?php echo $this->formelementerrors($this->productForm->get('productName')) ?> 
-                                            </div>
-                                        </div>     
+                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
+                                        
                                     </div>
-                                    <div class="section mb10 form-group">
-                                        <label class="col-lg-3 control-label" for="productName">Descripción <span class="text-danger">*</span></label>
-                                        <div class="col-md-8">
+                                </div>
+                                
+                            </div>
+                            <div class="section row">     
+                                    <div class="col-md-5 form-group">
+                                        <label class="col-md-3 control-label" for="productName">Descripción <span class="text-danger">*</span></label>
+                                        <div class="col-md-9">
                                             <label class="field prepend-icon">
                                                 <?php echo $this->formTextarea($this->productForm->get('productDescription')); ?>
                                                 <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
@@ -121,19 +121,9 @@ $this->headlink()
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                        <div id="tab1_2" class="tab-pane">
-                            <div class="section row">
-
-                                <div class="col-md-4 form-group">
-
-                                    <label class="col-lg-3 control-label" for="productModel">Modelo <span class="text-danger">*</span></label>
-                                    <div class="col-md-8"> 
+                                <div class="col-md-6 form-group ">
+                                     <label class="col-md-3 control-label" for="productModel">Modelo <span class="text-danger">*</span></label>
+                                    <div class="col-md-7"> 
                                         <label for="productModel" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productModel')); ?>
                                             <label for="productModel" class="field-icon"><i class="fa fa-shopping-cart"></i>
@@ -143,13 +133,89 @@ $this->headlink()
                                             <?php echo $this->formelementerrors($this->productForm->get('productModel')) ?> 
                                         </div>
                                     </div>
+
+                                    <label class="col-md-3 control-label" for="productPrice">Precio <span class="text-danger">*</span></label>
+                                    <div class="col-md-3">
+                                        <label for="productPrice" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
+                                            <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productPrice')) ?> 
+                                        </div>
+                                    </div>
+                                   
+                                    <label class="col-lg-3 control-label" for="productMinimun">Orden Minima </label>
+                                    <div class="col-md-3">
+                                        <label for="productMinimum" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productMinimum')); ?>
+                                            <label for="productMinimum" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMinimum')) ?> 
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                            </div>
+                            <div class="section row mbn">            
+
+                               <div class="col-md-12">
+                                            <div class="tray-bin">
+                                                <h5 class="text-muted mt10 fw600 pl10"><i class="fa fa-cloud-upload text-info fa-lg pr10"></i> Images  </h5>
+                                                <div class="dropzone dropzone-sm" id="dropzone" style=" min-height: 275px">
+                                                    <div class="fallback">
+                                                        <input name="file-drop" type="file" multiple />
+                                                    </div>
+                                                 <?php  foreach ($this->productImage as $image): ?>
+                                                    
+                                                    <div class="dz-preview dz-processing dz-error dz-image-preview hidden example-preview">
+                                                        <div class="dz-details">
+                                                            <div class="dz-filename">
+                                                                <span data-dz-name=""></span>
+                                                            </div>
+                                                            <div class="dz-size" data-dz-size="">
+                                                                <strong>50</strong> KiB</div>
+                                                            <img data-dz-thumbnail="" alt="avatar" src="<?php echo $this->basePath() .'/assets/images/products/catalog/'.$image->image ?>" class="img-responsive">
+                                                        </div>
+                                                        <div class="dz-progress">
+                                                            <span class="dz-upload" data-dz-uploadprogress=""></span>
+                                                        </div>
+                                                        <div class="dz-success-mark">
+                                                            <span>✔</span>
+                                                        </div>
+                                                        <div class="dz-error-mark">
+                                                            <span>✘</span>
+                                                        </div>
+                                                        <div class="dz-error-message">
+                                                            <span data-dz-errormessage="">Server responded with 0 code.</span>
+                                                        </div>
+                                                        <a class="dz-remove" href="javascript:undefined;" data-dz-remove>Remove file</a>
+                                                        <span class="imageid"><?php echo $image->product_image_id ?></span>
+                                                    </div>
+                                                    
+                                                 <?php endforeach;?>
+                                                </div>
+                                            </div>
+                                        </div>    
+
+                            </div>
+
+
+                        </div>
+                       
+                        <div id="tab1_3" class="tab-pane">
+                            <div class="section row">
+
+                                
 
                                 <!-- end section -->
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
 
                                     <label class="col-lg-3 control-label" for="productModel">SKU </label>
-                                    <div class="col-md-8"> 
+                                    <div class="col-md-9"> 
                                         <label for="productSku" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productSku')); ?>
                                             <label for="productSku" class="field-icon"><i class="fa fa-shopping-cart"></i>
@@ -160,10 +226,10 @@ $this->headlink()
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
 
                                     <label class="col-lg-3 control-label" for="productIsbn">ISBN </label>
-                                    <div class="col-md-8"> 
+                                    <div class="col-md-9"> 
                                         <label for="productIsbn" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productIsbn')); ?>
                                             <label for="productIsbn" class="field-icon"><i class="fa fa-shopping-cart"></i>
@@ -174,72 +240,7 @@ $this->headlink()
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end section -->
-
                             </div>
-                            <div class="section row">
-                                <div class="col-md-4 form-group ">
-
-                                    <label class="col-lg-3 control-label" for="productPrice">Precio <span class="text-danger">*</span></label>
-                                    <div class="col-md-8">
-                                        <label for="productPrice" class="field prepend-icon">
-                                            <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
-                                            <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
-                                            </label>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productPrice')) ?> 
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4 form-group">
-
-                                    <label class="col-lg-3 control-label" for="productStore">Pais <span class="text-danger">*</span></label>
-                                    <div class="col-md-8 "> 
-                                        <label class="field select">
-                                            <?php echo $this->formSelect($this->productForm->get('productStore')) ?>
-                                            <i class="arrow double "></i>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productStore')) ?> 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 form-group ">
-
-                                    <label class="col-lg-5 control-label" for="productMinimun">Orden Minima </label>
-                                    <div class="col-md-7">
-                                        <label for="productMinimum" class="field prepend-icon">
-                                            <?php echo $this->formInput($this->productForm->get('productMinimum')); ?>
-                                            <label for="productMinimum" class="field-icon"><i class="fa fa-shopping-cart"></i>
-                                            </label>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productMinimum')) ?> 
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- end section row section -->
-
-
-                            <!-- end section row section -->
-                            <div class="section row">
-                                <div class="col-md-4"> 
-                                    <label class="col-md-3 control-label">Round Switches</label>
-                                    <div class="switch switch-primary round switch-inline">
-                                        <input id="exampleCheckboxSwitch7" type="checkbox" checked>
-                                        <label for="exampleCheckboxSwitch7"></label>
-                                    </div>
-                                    <!-- end section -->
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab1_3" class="tab-pane">
 
                             <!-- end section -->
 
@@ -276,14 +277,7 @@ $this->headlink()
 
                             </div>
                             <div class="section row">
-                                 <div class="col-md-6 form-group">
-                                    <label class="col-lg-3 control-label" for="productCategories">Categorias  <span class="text-danger">*</span></label>
-                                    <div class="col-md-9 form-group">
-
-                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
-                                        
-                                    </div>
-                                </div>
+                                 
                                 <!-- end section -->
                                 
                                 <div class="col-md-6 form-group">
@@ -345,15 +339,7 @@ $this->headlink()
                       
                         <div id="tab1_4" class="tab-pane">
 
-                            <div class="multi-field-wrapper">
-                                <div class="multi-fields">
-                                    <div class="multi-field"> 
-
-                                        
-                                    </div>
-
-                                </div>
-                            </div>
+                            
                             
                         </div>
                         <div id="tab1_5" class="tab-pane">
@@ -432,6 +418,12 @@ $this->headlink()
 
 </section>
 <style>
+    .server_file{
+        display: none;
+    }
+    .dropzone .dz-default.dz-message{
+        display: none;
+    }
     /*dropzone demo css*/
     .dz-demo .dz-message {
         opacity: 0 !important;
@@ -463,31 +455,116 @@ $this->inlineScript()->captureStart();
 echo <<<JS
    jQuery(document).ready(function() {
 
-            // Dropzone autoattaches to "dropzone" class.
-    // Configure Dropzone options
-    Dropzone.options.dropZone = {
-      paramName: "file", // The name that will be used to transfer the file
-      maxFilesize: 0, // MB
+     // Dropzone autoattaches to "dropzone" class.
+            // Configure Dropzone options
+           //Dropzone.autoDiscover = false;
+            $("#dropzone").dropzone({
+                init: function() {
+                 this.on("sending", function(file, xhr, data) {
+                        data.append("productId", $("#productId").val());
+                    });
+                 this.on("success", function(file, response) {
+                       
+                        $(file.previewTemplate).append('<span class="imageid">'+response.id+'</span>');
+                    });
+                
+                 this.on("removedfile", function(file) { 
+                    var imageid = $(file.previewTemplate).children('.imageid').text();
+                            bootbox.confirm("Are You Sure?!", function(e) {
 
-      addRemoveLinks: true,
-      dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> \
-         <span class="main-text"><b>Drop Files</b> to upload</span> <br /> \
-         <span class="sub-text">(or click)</span> \
-        ',
-      dictResponseError: 'Server not Configured'
-    };
+                            // e returns true if user clicks "accept"
+                            // false if "cancel" or dismiss icon are clicked
+                            if (e) {
+                            // Timeout simply gives the user a second for the modal to
+                            // fade away so they can visibly see the options reset
+                           
+                                $.ajax({
+                                type: 'POST',
+                                url: '../deleteimage/'+imageid,
+                                data: "id="+imageid,
+                                dataType: 'html'
+                              });
 
-    Dropzone.options.dropZone2 = {
-      paramName: "file", // The name that will be used to transfer the file
-      maxFilesize: 0, // MB
+                            } else {
+                            return;
+                            }
+                            });
+                 
+                         
+                          
+                   });     
+                 },
+                 
+                paramName: 'productImage',
+                url: '../addimage',
+                dictDefaultMessage: "Drag your images",
+                clickable: true,
+                addRemoveLinks: true,   
+                uploadMultiple: true,
+                
+            });
 
-      addRemoveLinks: true,
-      dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> \
-         <span class="main-text"><b>Drop Files</b> to upload</span> <br /> \
-         <span class="sub-text">(or click)</span> \
-        ',
-      dictResponseError: 'Server not Configured'
-    };
+            // DEMO CODE - creates mock uploads upon pageload
+                  setTimeout(function() {
+                    var Drop = $('#dropZone');
+                    Drop.addClass('dz-started dz-demo');
+
+                    setTimeout(function() {
+                      $('.example-preview').each(function(i, e) {
+                        var This = $(e);
+
+                        var thumbOut = setTimeout(function() {
+                          Drop.append(This);
+                          This.addClass('animated fadeInRight').removeClass('hidden');
+                        }, i * 135);
+
+                      });
+                    }, 750);
+
+                  }, 800);
+
+                  // Demo code 
+                  $('.example-preview').on('click', 'a.dz-remove', function() {
+                    $(this).parent('.example-preview').remove();
+                  });
+
+            $(".dz-remove").on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                 var imageId = $(this).next(".imageid").text();
+                 var url_img = "../deleteimage/"+imageId
+                 var preview = $(this).closest('.dz-preview');
+
+                 if (bootbox.confirm) {
+                        bootbox.confirm("Are You Sure?!", function(e) {
+
+                          // e returns true if user clicks "accept"
+                          // false if "cancel" or dismiss icon are clicked
+                          if (e) {
+                            // Timeout simply gives the user a second for the modal to
+                            // fade away so they can visibly see the options reset
+                            $.ajax({
+                                url: url_img,
+                                data: { imageId: imageId},
+                                type: 'POST',
+                                success: function (data) {
+                                   preview.remove(); 
+                                },
+                                error: function (data) {
+                                    toastr.error(data.Message);
+                                }
+                            })
+    
+                          } else {
+                            return;
+                          }
+                        });
+
+                      }
+               
+               
+
+            });
 
 
             $('.multi-field-wrapper').each(function() {

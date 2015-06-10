@@ -5,6 +5,7 @@ return array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
             'Admin\Controller\Usuario' => 'Admin\Controller\UsuarioController',
             'Admin\Controller\Product' => 'Admin\Controller\ProductController',
+            'Admin\Controller\Product' => 'Admin\Controller\ProductController',
         ),
     ),
      'router' => array(

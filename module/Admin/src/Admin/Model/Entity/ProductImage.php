@@ -24,6 +24,7 @@ class ProductImage {
         $this->product_id = (isset($data['product_id'])) ? $data['product_id'] : null;
         $this->image = (isset($data['image'])) ? $data['image'] : null;
         $this->sort_order = (isset($data['sort_order'])) ? $data['sort_order'] : null;
+        
     }
 
     public function getArrayCopy() {

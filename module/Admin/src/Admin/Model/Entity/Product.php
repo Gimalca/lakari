@@ -97,7 +97,7 @@ class Product
         $this->productDescription->setMeta_keyword((isset($data['productMetaKeywords'])) ? $data['productMetaKeywords'] : null);
         $this->productDescription->setMeta_tittle((isset($data['productMetaTittle'])) ? $data['productMetaTittle'] : null);
         
-        
+        if ($data['productImage']){
          $images = new \ArrayObject(); $i=1;
          foreach ($data['productImage'] as $image){
              //list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
@@ -110,7 +110,7 @@ class Product
              $productImage->sort_order = $i++;
              $images->append($productImage);
          }
-          //die;
+        } //die;
         $this->productImage = (isset($images)) ? $images : null;
         
        
