@@ -7,7 +7,6 @@ use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
-
 /**
  * Description of Contacto
  *
@@ -30,6 +29,7 @@ class Product extends Form {
 //             ),
 //         ));   
 
+        
         $this->add(array(
             'name' => 'productId',
             'attributes' => array(
@@ -37,8 +37,8 @@ class Product extends Form {
                 'id' => 'productId',
             ),
         ));
-        
-       $this->add(array(
+
+        $this->add(array(
             'name' => 'productName',
             'attributes' => array(
                 'type' => 'text',

@@ -375,9 +375,11 @@ class ProductDao implements IProductDao
     }
     
    
-    public function deleteProduct(Product $product)
-    {
-        return $product;
+    public function deleteProduct($productId){
+        
+        $id = (int) $productId;
+     
+        return $this->tableGateway->delete(array('product_id' => $productId)) ;
     }
     
     // put your code here

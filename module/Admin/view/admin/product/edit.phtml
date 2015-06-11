@@ -36,17 +36,16 @@ $this->headlink()
 
     <!-- begin: .tray-center -->
     <div class="tray tray-center p25 va-t posr">
-              <div class="alert alert-success pastel alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <i class="fa fa-trophy pr10"></i>
-                <strong>The Pastel Shade!</strong> Style this way using the class
-                <code class="ml5">.pastel</code>
-            </div>
+              <?php if($this->update == 1) {
+                        $message = "Producto <strong> $this->productModel </strong> Actualizado Satifcatoriamente";
+                        echo $this->alert('succes',$message);
+                    }
+                ?>
         <!-- create new order panel -->
         <div class="panel mb25 mt5">
       
             <div class="panel-heading">
-                <span class="panel-title">Edit Product #<?php echo $this->productModel ?> <?php echo $this->update ?></span>
+                <span class="panel-title">Edit Product #<?php echo $this->productModel ?> </span>
                 <ul class="nav panel-tabs-border panel-tabs">
                     <li class="active">
                         <a href="#tab1_1" data-toggle="tab">Description</a>

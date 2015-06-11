@@ -192,6 +192,35 @@ class ProductController extends AbstractActionController
       
     }
     
+    public function deleteAction(){
+        
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        
+        $id = $request->getPost('id');
+        
+        $productDao = $this->getProductDao();
+        $delete = $productDao->deleteProduct($id);
+        
+        if ($delete){
+                
+            if ($request->isXmlHttpRequest()){
+                
+                $response->setStatusCode(200);
+                $response->setContent(\Zend\Json\Json::encode(array('response' => $delete)));
+            }
+            
+        }else{
+            
+                $response->setStatusCode(400);
+                $response->setContent(\Zend\Json\Json::encode(array('response' => $delete)));
+            
+            }
+        
+        return $response;
+        
+    }
+    
     
     public function deleteImageAction() {
         $id = (int) $this->params()->fromRoute('id', 0);

@@ -36,6 +36,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'MyHelper' => 'Admin\View\Helper\MyHelper',
+            'Alert' => 'Admin\View\Helper\AlertHelper',
             'FormCollection' => 'Admin\View\Helper\FormCollection'
         )
     )
