@@ -49,6 +49,15 @@ class ProductValidator extends InputFilter
         )
     );
     
+    protected $filterGeneric = array(
+                array(
+                    'name' => 'StripTags'
+                ),
+                array(
+                    'name' => 'StringTrim'
+                )
+            );
+    
 
     public function __construct()
     {
@@ -119,14 +128,7 @@ class ProductValidator extends InputFilter
                    'name' => 'not_empty',      
                 )
             ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
+            'filters' => $this->filterGeneric;
         ));
         
         $this->add(array(

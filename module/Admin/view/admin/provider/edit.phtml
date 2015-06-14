@@ -1,0 +1,743 @@
+<?php
+$this->headlink()
+        
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css')
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/dropzone/css/dropzone.css');
+?>
+<!-- Start: Topbar -->
+<header id="topbar" class="ph10">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+            <li >
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'list')); ?>">Products</a>
+            </li>
+            <li>
+                <a href="#">Orders</a>
+            </li>
+            <li>
+                <a href="#">Customers</a>
+            </li>
+            <li>
+                <a href="#">Settings </a>
+            </li>
+        </ul>
+    </div>
+    <div class="topbar-right">  
+        <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'add')); ?>" class="btn btn-default btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
+    </div>
+</header>
+<!-- End: Topbar -->
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center p25 va-t posr">
+              <?php if($this->update == 1) {
+                        $message = "Producto <strong> $this->productModel </strong> Actualizado Satifcatoriamente";
+                        echo $this->alert('succes',$message);
+                    }
+                ?>
+        <!-- create new order panel -->
+        <div class="panel mb25 mt5">
+      
+            <div class="panel-heading">
+                <span class="panel-title">Edit Product #<?php echo $this->productModel ?> </span>
+                <ul class="nav panel-tabs-border panel-tabs">
+                    <li class="active">
+                        <a href="#tab1_1" data-toggle="tab">Description</a>
+                    </li>
+                    <!--li>
+                        <a href="#tab1_2" data-toggle="tab">Data</a>
+                    </li-->
+                    <li>
+                        <a href="#tab1_3" data-toggle="tab">Meta-Data</a>
+                    </li>
+
+                    <!--li>
+                        <a href="#tab1_4" data-toggle="tab">Images</a>
+                    </li-->
+                    <li>
+                        <a href="#tab1_5" data-toggle="tab">Stock</a>
+                    </li>
+                </ul>
+                
+            </div>
+            
+            <div class="panel-body p20 pb10 form-horizontal">   
+               
+                <?php $this->productForm->prepare() ?>
+                <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
+                    <?php echo $this->formhidden($this->productForm->get('productId')) ?>
+                    <div class="tab-content pn br-n admin-form theme-primary">  
+
+                        <div id="tab1_1" class="tab-pane active">  
+                            
+                            
+                            <div class="section row">
+ 
+                                <div class="col-md-5 form-group">
+
+                                    <label class="col-md-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-9">
+                                        <label for="productName" class="field prepend-icon">                                       
+                                            <?php echo $this->formInput($this->productForm->get('productName')); ?>
+                                            <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
+                                            </label>
+                                        </label> 
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productName')) ?> 
+                                        </div>
+                                    </div>     
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="col-md-3 control-label" for="productCategories">Categorias  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9 form-group">
+
+                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="section row">     
+                                    <div class="col-md-5 form-group">
+                                        <label class="col-md-3 control-label" for="productName">Descripción <span class="text-danger">*</span></label>
+                                        <div class="col-md-9">
+                                            <label class="field prepend-icon">
+                                                <?php echo $this->formTextarea($this->productForm->get('productDescription')); ?>
+                                                <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                                </label>
+                                                <span class="input-footer hidden ">
+                                                    <strong>Hint</strong>Don't be negative or off topic! just be awesome...</span>
+                                            </label>
+                                            <div class="help-block">
+                                                <?php echo $this->formelementerrors($this->productForm->get('productDescription')) ?> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-md-6 form-group ">
+                                     <label class="col-md-3 control-label" for="productModel">Modelo <span class="text-danger">*</span></label>
+                                    <div class="col-md-7"> 
+                                        <label for="productModel" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productModel')); ?>
+                                            <label for="productModel" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productModel')) ?> 
+                                        </div>
+                                    </div>
+
+                                    <label class="col-md-3 control-label" for="productPrice">Precio <span class="text-danger">*</span></label>
+                                    <div class="col-md-3">
+                                        <label for="productPrice" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
+                                            <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productPrice')) ?> 
+                                        </div>
+                                    </div>
+                                   
+                                    <label class="col-lg-3 control-label" for="productMinimun">Orden Minima </label>
+                                    <div class="col-md-3">
+                                        <label for="productMinimum" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productMinimum')); ?>
+                                            <label for="productMinimum" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMinimum')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="section row mbn">            
+
+                               <div class="col-md-12">
+                                            <div class="tray-bin">
+                                                <h5 class="text-muted mt10 fw600 pl10"><i class="fa fa-cloud-upload text-info fa-lg pr10"></i> Images  </h5>
+                                                <div class="dropzone dropzone-sm" id="dropzone" style=" min-height: 275px">
+                                                    <div class="fallback">
+                                                        <input name="file-drop" type="file" multiple />
+                                                    </div>
+                                                 <?php  foreach ($this->productImage as $image): ?>
+                                                    
+                                                    <div class="dz-preview dz-processing dz-error dz-image-preview hidden example-preview">
+                                                        <div class="dz-details">
+                                                            <div class="dz-filename">
+                                                                <span data-dz-name=""></span>
+                                                            </div>
+                                                            <div class="dz-size" data-dz-size="">
+                                                                <strong>50</strong> KiB</div>
+                                                            <img data-dz-thumbnail="" alt="avatar" src="<?php echo $this->basePath() .'/assets/images/products/catalog/'.$image->image ?>" class="img-responsive">
+                                                        </div>
+                                                        <div class="dz-progress">
+                                                            <span class="dz-upload" data-dz-uploadprogress=""></span>
+                                                        </div>
+                                                        <div class="dz-success-mark">
+                                                            <span>✔</span>
+                                                        </div>
+                                                        <div class="dz-error-mark">
+                                                            <span>✘</span>
+                                                        </div>
+                                                        <div class="dz-error-message">
+                                                            <span data-dz-errormessage="">Server responded with 0 code.</span>
+                                                        </div>
+                                                        <a class="dz-remove" href="javascript:undefined;" data-dz-remove>Remove file</a>
+                                                        <span class="imageid"><?php echo $image->product_image_id ?></span>
+                                                    </div>
+                                                    
+                                                 <?php endforeach;?>
+                                                </div>
+                                            </div>
+                                        </div>    
+
+                            </div>
+
+
+                        </div>
+                       
+                        <div id="tab1_3" class="tab-pane">
+                            <div class="section row">
+
+                                
+
+                                <!-- end section -->
+                                <div class="col-md-6 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productModel">SKU </label>
+                                    <div class="col-md-9"> 
+                                        <label for="productSku" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productSku')); ?>
+                                            <label for="productSku" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productSku')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+
+                                    <label class="col-lg-3 control-label" for="productIsbn">ISBN </label>
+                                    <div class="col-md-9"> 
+                                        <label for="productIsbn" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productIsbn')); ?>
+                                            <label for="productIsbn" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productIsbn')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- end section -->
+
+                            <div class="section row">
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productMetaTittle">Meta Titulo  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <label for="productMetaTittle" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productMetaTittle')) ?> 
+                                            <label for="productMetaTittle" class="field-icon"><i class=" fa fa-tag"></i>
+                                            </label> 
+                                        </label>  
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMetaTittle')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productSeoUrl">SEO URL  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <label for="productSeoUrl" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productSeoUrl')) ?> 
+                                            <label for="productUrlSeo" class="field-icon"><i class=" fa fa-tag"></i>
+                                            </label> 
+                                        </label>  
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productSeoUrl')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="section row">
+                                 
+                                <!-- end section -->
+                                
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productTags">Tags  </label>
+                                    <div class="col-md-9">
+                                        <label for="productTags" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productTags')) ?> 
+
+                                        </label>  
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productTags')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end section  -->
+                               
+
+                            </div>
+                           
+                            <div class="section row">
+
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productMetaDescription">Meta Descripción  </label>
+                                    <div class="col-md-9">
+                                        <label class="field prepend-icon">
+                                            <?php echo $this->formTextarea($this->productForm->get('productMetaDescription')); ?>
+                                            <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                            </label>
+
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMetaDescription')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end section -->
+
+                                <div class="col-md-6 form-group">
+                                    <label class="col-lg-3 control-label" for="productMetaKeywords">Meta Keywords  </label>
+                                    <div class="col-md-9">
+                                        <label class="field prepend-icon">
+                                            <?php echo $this->formTextarea($this->productForm->get('productMetaKeywords')); ?>
+                                            <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
+                                            </label>
+
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMetaKeywords')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end section -->
+
+
+                            </div>
+                            <!-- end section row section -->
+
+                        </div>
+                      
+                        <div id="tab1_4" class="tab-pane">
+
+                            
+                            
+                        </div>
+                        <div id="tab1_5" class="tab-pane">
+
+                            <div class="multi-field-wrapper">
+                                <div class="multi-fields">
+                                    <div class="multi-field"> 
+
+                                        <div class="section row">
+                                            <div class="col-md-3 form-group ">
+
+                                                <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
+                                                <div class="col-md-8">
+                                                    <label for="productQuantity" class="field prepend-icon">
+                                                        <?php echo $this->formRow($this->productForm->get('productQuantity')); ?>
+                                                        <label for="productQuantity" class="field-icon"><i class="fa fa-barcode"></i>
+                                                        </label>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productQuantity')) ?> 
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 form-group">
+
+                                                <label class="col-lg-3 control-label" for="productStock">Stock <span class="text-danger">*</span></label>
+                                                <div class="col-md-8 "> 
+                                                    <label class="field select">
+                                                        <?php echo $this->formRow($this->productForm->get('productStock')) ?>
+                                                        <i class="arrow double "></i>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productStock')) ?> 
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 form-group">
+                                              
+                                               <label class="col-lg-3 control-label" for="productStockStatus">Stock <span class="text-danger">*</span></label>
+                                                <div class="col-md-8 "> 
+                                                    <label class="field select">
+                                                        <?php echo $this->formRow($this->productForm->get('productStockStatus')) ?>
+                                                        <i class="arrow double "></i>
+                                                    </label>
+                                                    <div class="help-block">
+                                                        <?php echo $this->formelementerrors($this->productForm->get('productStockStatus')) ?> 
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>  
+                                            
+                                           
+                                            <div class="col-md-3 form-group ">
+                                              <button type="button" class="remove-field">Remove</button>
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                </div><button type="button" class="add-field">Add field</button>
+                            </div>
+                            
+                        </div>
+                       
+                        <hr class="short alt">
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-primary text-right"> Saved </button>
+                        </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+<style>
+    .server_file{
+        display: none;
+    }
+    .dropzone .dz-default.dz-message{
+        display: none;
+    }
+    /*dropzone demo css*/
+    .dz-demo .dz-message {
+        opacity: 0 !important;
+    }
+    .dropzone .dz-preview.example-preview .dz-success-mark,
+    .dropzone-previews .dz-preview.example-preview .dz-success-mark {
+        opacity: 1;
+    }
+    .dropzone .dz-preview.example-preview .dz-error-mark,
+    .dropzone-previews .dz-preview.example-preview .dz-error-mark {
+        opacity: 0;
+    }
+</style>
+<?php
+$this->headScript()
+        ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')     
+        ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
+        ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/dropzone/dropzone.min.js')
+// ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+;
+
+
+
+$this->inlineScript()->captureStart();
+echo <<<JS
+   jQuery(document).ready(function() {
+
+     // Dropzone autoattaches to "dropzone" class.
+            // Configure Dropzone options
+           //Dropzone.autoDiscover = false;
+            $("#dropzone").dropzone({
+                init: function() {
+                 this.on("sending", function(file, xhr, data) {
+                        data.append("productId", $("#productId").val());
+                    });
+                 this.on("success", function(file, response) {
+                       
+                        $(file.previewTemplate).append('<span class="imageid">'+response.id+'</span>');
+                    });
+                
+                 this.on("removedfile", function(file) { 
+                    var imageid = $(file.previewTemplate).children('.imageid').text();
+                            bootbox.confirm("Are You Sure?!", function(e) {
+
+                            // e returns true if user clicks "accept"
+                            // false if "cancel" or dismiss icon are clicked
+                            if (e) {
+                            // Timeout simply gives the user a second for the modal to
+                            // fade away so they can visibly see the options reset
+                           
+                                $.ajax({
+                                type: 'POST',
+                                url: '../deleteimage/'+imageid,
+                                data: "id="+imageid,
+                                dataType: 'html'
+                              });
+
+                            } else {
+                            return;
+                            }
+                            });
+                 
+                         
+                          
+                   });     
+                 },
+                 
+                paramName: 'productImage',
+                url: '../addimage',
+                dictDefaultMessage: "Drag your images",
+                clickable: true,
+                addRemoveLinks: true,   
+                uploadMultiple: true,
+                
+            });
+
+            // DEMO CODE - creates mock uploads upon pageload
+                  setTimeout(function() {
+                    var Drop = $('#dropZone');
+                    Drop.addClass('dz-started dz-demo');
+
+                    setTimeout(function() {
+                      $('.example-preview').each(function(i, e) {
+                        var This = $(e);
+
+                        var thumbOut = setTimeout(function() {
+                          Drop.append(This);
+                          This.addClass('animated fadeInRight').removeClass('hidden');
+                        }, i * 135);
+
+                      });
+                    }, 750);
+
+                  }, 800);
+
+                  // Demo code 
+                  $('.example-preview').on('click', 'a.dz-remove', function() {
+                    $(this).parent('.example-preview').remove();
+                  });
+
+            $(".dz-remove").on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                 var imageId = $(this).next(".imageid").text();
+                 var url_img = "../deleteimage/"+imageId
+                 var preview = $(this).closest('.dz-preview');
+
+                 if (bootbox.confirm) {
+                        bootbox.confirm("Are You Sure?!", function(e) {
+
+                          // e returns true if user clicks "accept"
+                          // false if "cancel" or dismiss icon are clicked
+                          if (e) {
+                            // Timeout simply gives the user a second for the modal to
+                            // fade away so they can visibly see the options reset
+                            $.ajax({
+                                url: url_img,
+                                data: { imageId: imageId},
+                                type: 'POST',
+                                success: function (data) {
+                                   preview.remove(); 
+                                },
+                                error: function (data) {
+                                    toastr.error(data.Message);
+                                }
+                            })
+    
+                          } else {
+                            return;
+                          }
+                        });
+
+                      }
+               
+               
+
+            });
+
+
+            $('.multi-field-wrapper').each(function() {
+                var wrapper = $('.multi-fields', this);
+                $(".add-field", $(this)).click(function(e) {
+                newgroup = $('.multi-field:last-child', wrapper).clone(true)
+                newgroup.find('input, select, file ').each(function(){ 
+                    
+                 //code increment name Array
+                 this.name = this.name.replace(/\[(\d+)\]/,function(str,p1){return '[' + (parseInt(p1,10)+1) + ']'});
+ 
+                 }).end().appendTo(wrapper).find('input, select, file, hide').val('').focus();
+                
+                  
+            });
+            $('.multi-field .remove-field', wrapper).click(function() {
+                if ($('.multi-field', wrapper).length > 1)
+                $(this).closest('.multi-field').remove();
+                });
+            });
+        
+
+            
+            // grant file-upload preview onclick functionality
+            // $('.fileupload-preview').on('click', function() {
+            // $('.btn-file > input').click();
+            // });
+
+            /*$('#multiselec').multiselect({
+              enableFiltering: true,  
+            });*/
+            // Init Select2 - Basic Multiple
+            $("#multiselect3").select2({
+              placeholder: "Select Categories",
+               allowClear: true,
+               style: "bg-primary light"
+            });
+            $(".select2-multiple").select2({
+              placeholder: "Select a state",
+               allowClear: true
+            });
+            // select dropdowns - placeholder like creation
+            var selectList = $('.admin-form select');
+            selectList.each(function(i, e) {
+                $(e).on('change', function() {
+                    if ($(e).val() == "0") $(e).addClass("empty");
+                    else $(e).removeClass("empty")
+                });
+            });
+            selectList.each(function(i, e) {
+                $(e).change();
+            });
+
+            // Init tagsinput plugin
+            $("input#tagsinput").tagsinput({
+                tagClass: function(item) {
+                    return 'label bg-primary light';
+                }
+            });
+        
+           /* @custom validation method (smartCaptcha) 
+            ------------------------------------------------------------------ */
+                
+            $.validator.methods.smartCaptcha = function(value, element, param) {
+                    return value == param;
+            };
+            
+            $.validator.addMethod("Alnum", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\s]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+
+            $.validator.addMethod("AlnumOf", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+                    
+            $( "#form" ).validate({
+            
+                    /* @validation states + elements 
+                    ------------------------------------------- */
+                    
+                    errorClass: "state-error",
+                    validClass: "state-success",
+                    errorElement: "em",
+                    ignore: false,
+                    
+                    /* @validation rules 
+                    ------------------------------------------ */
+                        
+                    rules: {
+                            productName: {
+                                    required: true,
+                                    Alnum: true,
+                            },
+                            productDescription: {
+                                    required: true
+                            },                                                                
+                            productModel: {
+                                    required: true
+                            },
+                            productMetaTittle: {
+                                    required: true,
+                                    Alnum: true,
+                            },
+                            productSeoUrl: {
+                                    required: true,
+                                    AlnumOf: true,
+                            },
+                            productCategories: {
+                                    required: true
+                            },  
+                                
+                        
+                    },
+                    
+                    /* @validation error messages 
+                    ---------------------------------------------- */
+                        
+                    messages:{
+                            productName: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },
+                            productDescription: {
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            productCategories: {
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            productModel: {
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            productMetaTittle: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },                  
+                            productSeoUrl: {
+                                    required: 'Campo Obligatorio',
+                                    AlnumOf: 'Solo letras, numeros y guion '
+                            },                  
+                           
+                    },
+
+                    /* @validation highlighting + error placement  
+                    ---------------------------------------------------- */ 
+                    
+                    highlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                    },
+                    invalidHandler: function(e,validator) {
+                        // loop through the errors:                
+                          $('.tab-pane').closest('.active').removeClass('active');
+                          $('.panel-tabs li').closest('.active').removeClass('active');
+                            // "uncollapse" section containing invalid input/s:
+                            $(validator.errorList[0].element).closest('.tab-pane').addClass('active');
+                            tab =  $(validator.errorList[0].element).closest('.tab-pane').attr('id');
+                            tab ='#'+tab;
+                          $('a[href='+tab+']').closest('li').addClass('active');
+                        
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                    },
+                    errorPlacement: function(error, element) {
+                       if (element.is(":radio") || element.is(":checkbox")) {
+                                element.closest('.option-group').after(error);
+                       } else {
+                                error.insertAfter(element.parent());
+                       }
+                    }
+                            
+            });     
+        
+        
+
+        });
+JS;
+$this->inlineScript()->captureEnd();
