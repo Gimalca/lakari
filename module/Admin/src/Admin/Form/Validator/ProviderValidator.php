@@ -26,7 +26,7 @@ use Zend\I18n\Validator\Int;
 use Zend\InputFilter\EmptyContextInterface;
 use Zend\Form\Annotation\Required;
 
-class ProductValidator extends InputFilter
+class ProviderValidator extends InputFilter
 {
 
     protected $opcionesAlnum = array(
@@ -60,13 +60,12 @@ class ProductValidator extends InputFilter
     
 
     public function __construct()
-    {
-       // echo sprintf("%s/data/uploads/attachment.%s.txt", __DIR__ . '/../../../../..', time());die;
-        $productImage = new FileInput('productImage');
-        $productImage->setRequired(false)
+    {      
+        $logo = new FileInput('logo');
+        $logo->setRequired(false)
                      ->setAllowEmpty(false);
         
-        $productImage->getValidatorChain()
+        $logo->getValidatorChain()
             ->attach(new Size(array(
             'messageTemplates' => array(
                 
@@ -81,15 +80,13 @@ class ProductValidator extends InputFilter
             )
         )));
         
-            
-            
         // Validator File Type //
         $mimeType = new MimeType();
         $mimeType->setMimeType(array('image/gif', 'image/jpg','image/jpeg','image/png'));
-        $productImage->getValidatorChain()->attach($mimeType);
+        $logo->getValidatorChain()->attach($mimeType);
 
         /** Move File to Uploads/product **/
-        $nameFile = sprintf("%simg_%s",'./public/assets/images/products/catalog/', time());
+        $nameFile = sprintf("%simg_%s",'./public/assets/images/providers/', time());
         $rename = new RenameUpload($nameFile);
         //$rename->setTarget($nameFile);
         $rename->setUseUploadExtension(true);
@@ -97,99 +94,11 @@ class ProductValidator extends InputFilter
         $rename->setRandomize(true);
         $rename->setOverwrite(true);
               
-        $productImage->getFilterChain()->attach($rename);       
-        $this->add($productImage );
-       
+        $logo->getFilterChain()->attach($rename);
+        $this->add($logo);
         
         $this->add(array(
-            'name' => 'productName',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
-        
-        $this->add(array(
-            'name' => 'productDescription',
-            'required' => true,
-            'validators' => array(
-                array(
-                   'name' => 'not_empty',      
-                )
-            ),
-            'filters' => $this->filterGeneric
-        ));
-        
-        $this->add(array(
-            'name' => 'productModel',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Alnum',
-                    'options' => $this->opcionesAlnum2
-                )
-            )
-        ));
-        $this->add(array(
-            'name' => 'productPrice',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'float',
-                    'options' => array(
-                        'locale' => 'en_US'
-                    )
-                ),
-                array(
-                    'name' => 'stringLength',
-                    'options' => array(
-                        'min' => 1,
-                        'max' => 10
-                    )
-                )
-            ),
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                ),
-                array(
-                    'name' => 'StringTrim'
-                )
-            )
-        ));
-        
-//         $productQuantity = new Input('productQuantity');
-//         $productQuantity->setAllowEmpty(true);
-//         $productQuantity->getValidatorChain()
-//             ->attach(new Digits());
-        
-//         $this->add($productQuantity);
-        
-        $this->add(array(
-            'name' => 'productMinimun',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'Digits',     
-                )
-            )
-        ));
-        
-
-        // Meta-Data Form
-        $this->add(array(
-            'name' => 'productMetaTittle',
+            'name' => 'company',
             'required' => true,
             'validators' => array(
                 array(
@@ -207,11 +116,12 @@ class ProductValidator extends InputFilter
             )
         ));
         $this->add(array(
-            'name' => 'productSeoUrl',
+            'name' => 'company_id',
             'required' => true,
             'validators' => array(
                 array(
-                    'name' => 'not_empty',
+                    'name' => 'Alnum',
+                    'options' => $this->opcionesAlnum
                 )
             ),
             'filters' => array(
@@ -220,17 +130,12 @@ class ProductValidator extends InputFilter
                 ),
                 array(
                     'name' => 'StringTrim'
-                ),
-                array(
-                    'name' => 'StringToLower'
-                ),
-                
+                )
             )
         ));
         $this->add(array(
-            'name' => 'productMetaDescription',
-            'continue_if_empty' => true,
-            
+            'name' => 'email',
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StripTags'
@@ -238,12 +143,29 @@ class ProductValidator extends InputFilter
                 array(
                     'name' => 'StringTrim'
                 )
+            ),
+            'validators' => array(
+                array(
+                    'name' => 'EmailAddress',
+                    'options' => array(
+                        'messages' => array(
+                            'emailAddressInvalidFormat' => 'Email address format is not invalid'
+                        )
+                    )
+                ),
+                array(
+                    'name' => 'NotEmpty',
+                    'options' => array(
+                        'messages' => array(
+                            'isEmpty' => 'Email address is required'
+                        )
+                    )
+                )
             )
         ));
         $this->add(array(
-            'name' => 'productMetaKeywords',
-            'continue_if_empty' => true,
-            
+            'name' => 'password',
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StripTags'
@@ -251,8 +173,42 @@ class ProductValidator extends InputFilter
                 array(
                     'name' => 'StringTrim'
                 )
+            ),
+            'validators' => array(
+                array(
+                    'name' => 'NotEmpty',
+                    'options' => array(
+                        'messages' => array(
+                            'isEmpty' => 'Password is required'
+                        )
+                    )
+                )
             )
         ));
-  
+        $this->add(array(
+            'name' => 'confirmarPassword',
+            'required' => true,
+            'filters' => array(
+                array(
+                    'name' => 'StripTags'
+                ),
+                array(
+                    'name' => 'StringTrim'
+                )
+            ),
+            'validators' => array(
+                array(
+                    'name' => 'identical',
+                    'options' => array(
+                        'token' => 'password'
+                    )
+                )
+            )
+        )
+        );
+        
+        
+        
+     
     }
 }

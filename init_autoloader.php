@@ -34,7 +34,7 @@ if (is_dir('vendor/ZF2/library')) {
 } elseif (get_cfg_var('zf2_path')) { // Support for zf2_path directive value
     $zf2Path = get_cfg_var('zf2_path');
 }
-
+//echo $zf2Path;die;
 if ($zf2Path) {
     if (isset($loader)) {
         $loader->add('Zend', $zf2Path);

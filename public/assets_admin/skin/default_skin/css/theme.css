@@ -10466,7 +10466,7 @@ select[multiple].input-lg {
 }
 .form-horizontal .radio,
 .form-horizontal .checkbox {
-  min-height: 29px;
+  //min-height: 29px;
 }
 .form-horizontal .form-group {
   margin-left: 0px;

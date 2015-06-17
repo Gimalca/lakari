@@ -17,6 +17,8 @@ use Admin\Model\Dao\CategoryDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\Product;
 use Admin\Model\Dao\ProductDao;
+use Admin\Model\Entity\Provider;
+use Admin\Model\Dao\ProviderDao;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -78,6 +80,18 @@ class Module implements AutoloaderProviderInterface
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Category());
                     return new TableGateway('lk_category', $dbAdapter, null, $resultSetPrototype);
+                },
+                'Model\Dao\ProviderDao' => function ($sm) {
+                    $tableGateway = $sm->get('ProviderTableGateway');
+                    $dao = new ProviderDao($tableGateway);
+                    return $dao;
+                },
+                
+                'ProviderTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Provider());
+                    return new TableGateway('lk_provider', $dbAdapter, null, $resultSetPrototype);
                 }
             )
         )

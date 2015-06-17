@@ -44,9 +44,7 @@ class ProductController extends AbstractActionController
             'products' => $productDao->getAll(),
           
         ));
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /module-specific-root/skeleton/foo
-        return array();
+        
     }
 
     public function addAction()
