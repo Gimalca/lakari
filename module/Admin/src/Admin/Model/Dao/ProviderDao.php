@@ -34,6 +34,20 @@ class ProviderDao
         return $resultSet;
          
     }
+    public function getById($id) {
+        
+        $id = (int) $id;
+        $rowset = $this->tableGateway->select(array('provider_id' => $id));
+        $row = $rowset->current();
+        
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        
+        return $row;
+    }
+    
+   
 
     public function saveProvider($data)
     {
@@ -51,6 +65,14 @@ class ProviderDao
         return $this->tableGateway->insert($data);
        
     }
-
+    
+    public function getTable($table)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $table = new TableGateway($table, $adapter);
+    
+        return $table;
+    }
     //put your code here
+    
 }

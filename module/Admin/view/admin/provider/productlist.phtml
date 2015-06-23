@@ -1,0 +1,164 @@
+<?php
+$this->headlink()
+        
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
+?>
+<!-- Start: Topbar -->
+<header id="topbar" class="ph10">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+            
+            <li class="active">
+                <a href="<?php echo $this->url('admin', array('controller' => 'provider', 'action' => 'productlist')).'/'.$this->provider->provider_id; ?>">Products</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="topbar-right">  
+        <a href="<?php echo $this->url('admin', array('controller' => 'provider', 'action' => 'productadd')).'/'.$this->provider->provider_id; ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
+    </div>
+</header>
+<!-- End: Topbar -->
+ 
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center p10 va-t posr">
+        
+    <div class="panel">
+            <div class="panel-body">
+                <div class="media">
+                    <a class="media-left" href="#">
+                        <img data-src="" alt="<?php echo $this->provider->company ?>" src="<?php echo $this->basePath('/assets/images/providers/').$this->provider->logo ?>" data-holder-rendered="true" style=" max-height: 50px;">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading"><?php echo $this->provider->company ?>
+                            <small class="text-muted">-<?php echo $this->provider->company_id ?></small>
+                        </h4> <?php echo $this->provider->email ?><br/>
+                        <a class="text-system" href="#"> Editar </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    <div class="panel p">
+        <div class="panel pn col-lg-11 col-md-11 col-sm-11">
+            
+            <table class="table admin-form theme-warning tc-checkbox-1 fs13">
+                <thead>
+                    <tr class="bg-light">
+                        <th class="text-center">Select</th>
+                        
+                        <th class="">Image</th>
+                        <th class="text-center">ID</th>
+                        <th class="">Product Title</th>
+                        <th class="">SKU</th>
+                        <th class="">Price</th>
+                        <th class="">Stock</th>
+                        <th class="text-right">Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                 <?php foreach ($this->products as $product) : ?>
+                
+             
+                    <tr data-id="<?php echo $product->getProductId();?>">
+                        <td class="text-center">
+                            <label class="option block mn">
+                                <input type="checkbox" name="mobileos" value="FR">
+                                <span class="checkbox mn"></span>
+                            </label>
+                        </td>
+                        <td class="w100">
+                            <a href="<?php echo $this->basePath().'/catalogo/'.$product->getUrlAlias()->keyword;?>" target="_blank"> 
+                                <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>">
+                            </a>
+                        </td>
+                        <td class="w50 text-center"><?php echo $product->getProductId();?></td>
+                        <td class=""><?php echo $product->getProductDescription()->getName();?></td>
+                        <td class="">#21362</td>
+                        <td class=""><?php echo $product->getPrice();?></td>
+                        <td class="">1,400</td>
+                        <td class="text-right">
+                            <div class="btn-group text-right">
+                                <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
+                                    Active
+                                    <span class="caret ml5"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="<?php echo $this->basePath().'/admin/product/edit/'.$product->getProductId();?>">Edit</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn-delete" href="#">Delete</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Archive</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                   
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                     <?php endforeach; ?> 
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+ </div>
+
+</section>
+<?php
+$this->inlineScript()->captureStart();
+echo <<<JS
+//<script type="text/javascript">
+   jQuery('document').ready(function(){
+       
+       
+       $('.btn-delete').click(function(e){
+           e.preventDefault();
+            var row = $(this).closest('tr');
+            var id = row.data('id');
+          bootbox.confirm("Are You Sure?!", function(e) {
+
+                // e returns true if user clicks "accept"
+                // false if "cancel" or dismiss icon are clicked
+                if (e) {  
+                  
+
+                      $.ajax({
+                            url: '../product/delete/'+id,
+                            type: 'post',
+                            data: 'id='+id,
+                            dataType: 'json',
+                            beforeSend: function() {
+
+                                    },
+                            complete: function() {
+
+                            },
+                            success: function(json) {
+                                row.fadeOut();
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "-" + xhr.status );
+                            }
+                     });
+               } else {
+                   return;
+               }
+               
+               
+               
+           })
+        })
+        
+   })
+
+//</script>
+
+JS;
+$this->inlineScript()->captureEnd();

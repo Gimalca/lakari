@@ -118,6 +118,7 @@ class ProductDao implements IProductDao
             $query->where('product_id = ' . $productId);
         }
         $resultSet = $table->selectWith($query);
+       
         
         $categories = array();
         foreach ($resultSet as $row) {
@@ -166,6 +167,38 @@ class ProductDao implements IProductDao
             throw new \Exception("Could not find row $id");
         }
         return $row;
+    }
+    
+    public function getProviderId($id)
+    {
+        $id = (int) $id;
+        // $rowset = $this->tableGateway->select(array('id' => $ide));
+        
+       $query = $this->tableGateway->getSql()->select();
+        $query->join(array(
+            'pd' => 'lk_product_description'
+        ), 'pd.product_id = lk_product.product_id');
+        $query->join(array(
+            'url' => 'lk_url_alias'
+        ), "lk_product.product_id = url.id");
+        $query->join(array(
+            'img' => 'lk_product_image'
+        ), "lk_product.product_id = img.product_id");
+        $query->where(array(
+            'lk_product.provider_id' => $id,
+            'url.type' => 'product',
+            'img.sort_order' => 1
+        ));
+        
+        $query->order("lk_product.product_id DESC");
+        // echo $query->getSqlString();die;
+        
+        $resultSet = $this->tableGateway->selectWith($query);
+        // var_dump($resultSet);
+        
+        return $resultSet;
+      
+    
     }
 
     public function getById($id)
@@ -295,12 +328,14 @@ class ProductDao implements IProductDao
         
         return $table->getLastInsertValue();
     }
+       
 
     public function saveProduct(Product $product)
     {
         $productId = (int) $product->getProductId();
         // print_r($product);die;
         $data_product = array(
+            'provider_id' => $product->getProvider_id(),
             'model' => $product->getModel(),
             'sku' => $product->getSku(),
             'isbn' => $product->getIsbn(),

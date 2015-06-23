@@ -57,8 +57,7 @@ class ProductController extends AbstractActionController
         
         if ($this->request->isPost()) {
             
-           //$postData = $this->request->getPost();
-           $fileData = $this->request->getFiles()->toArray();
+         
            $postData = array_merge_recursive(
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
@@ -77,14 +76,18 @@ class ProductController extends AbstractActionController
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProduct($productEntity);
                 
-                if ($saved) {
+                if($saved){
                     
-                  return $this->redirect()->toRoute('admin', array('controller' => 'product', 'action' => 'list'));
+                  return $this->redirect()->toRoute('admin', array(
+                      'controller' => 'provider', 
+                      'action' => 'productlist',
+                      'id' => $postData['provider_id']
+                  ));
                 }
                
                 
             } else {
-                $messages = $this->productForm->getMessages();
+                //$messages = $this->productForm->getMessages();
 //                  echo 'error filter';
 //                  print_r($messages);die;
                  $this->productForm->populateValues($postData);
@@ -172,7 +175,7 @@ class ProductController extends AbstractActionController
         $productFormData['productSeoUrl']       = $productData->getUrlAlias()->keyword;
         
         $productFormData['productQuantity']       = array(50);
-        $productFormData['productStock']          = array(1);
+        $productFormData['productStock']          = 1;
         $productFormData['productStockStatus']    = 1;
         
        

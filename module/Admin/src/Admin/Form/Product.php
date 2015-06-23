@@ -33,8 +33,13 @@ class Product extends Form {
         $this->add(array(
             'name' => 'productId',
             'attributes' => array(
-                'type' => 'hidden',
-                'id' => 'productId',
+                'type' => 'hidden',               
+            ),
+        ));
+        $this->add(array(
+            'name' => 'provider_id',
+            'attributes' => array(
+                'type' => 'hidden',               
             ),
         ));
 
@@ -160,52 +165,9 @@ class Product extends Form {
                       
             ),
         ));
+   
+      
        
-       $selectProducStock = new Element\Select();
-       $selectProducStock->setAttributes(array(
-                'id' => 'productStock',
-                'class' => 'form-control gui-input',  
-              
-            ));
-       $selectProducStock->setOptions(array(
-               'empty_option' => 'Please choose',
-               'value_options' => array(
-                   '1' => 'Panama',
-                   '2' => 'Colombia',
-                   '3' => 'Venezuela',
-                   '4' => 'Miami',
-               )
-           ));
-       
-       $this->add(array(
-          'name' => 'productStock',
-          'type' => 'Zend\Form\Element\Collection',   
-           'options' => array(  
-               'should_create_template' => false,
-               'target_element' => $selectProducStock
-           )
-          
-            
-        ));
-       
-       $this->add(array(
-           'name' => 'productStockStatus',
-           'type' => 'select',
-           'attributes' => array(
-               'id' => 'productStockStatus',
-               'class' => 'form-control gui-input',
- 
-           ),
-           'options' => array(
-              
-               'value_options' => array(
-                   '1' => 'Available',
-                   '2' => 'Unavailable',
-                   '3' => 'Discontinued',
-                   '4' => 'Out of Stock',
-               )
-           )
-       ));
        
 //        $this->add(array(
 //             'name' => 'productStore',
@@ -258,6 +220,46 @@ class Product extends Form {
            ),
        ));
        
+       $this->add(array(
+            'name' => 'productStock',
+            'type' => 'select',
+            'options' => array(
+                'disable_inarray_validator' => true,
+                'value_options' => array(
+                    '1' => 'Panama',
+                    '2' => 'Colombia',
+                    '3' => 'Venezuela',
+                    '4' => 'Miami',
+                )
+            ),
+            'attributes' => array(
+                'id' => 'productStock',
+                'class' => 'form-control gui-input',
+                'style' => 'width: 100%',
+               
+                'required' => true,
+                
+            ),
+           
+        ));
+       $this->add(array(
+           'name' => 'productStockStatus',
+           'type' => 'select',
+           'attributes' => array(
+               'id' => 'productStockStatus',
+               'class' => 'form-control gui-input',
+               
+           ),
+           'options' => array(
+               'disable_inarray_validator' => true,
+               'value_options' => array(
+                   '1' => 'Available',
+                   '2' => 'Unavailable',
+                   '3' => 'Discontinued',
+                   '4' => 'Out of Stock',
+               )
+           )
+       ));
        $this->add(array(
             'name' => 'productCategories',
             'type' => 'select',

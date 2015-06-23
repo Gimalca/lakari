@@ -7,21 +7,11 @@ $this->headlink()
 <header id="topbar" class="ph10">
     <div class="topbar-left">
         <ul class="nav nav-list nav-list-topbar pull-left">
-            <li >
-                <a href="#">Dashboard</a>
-            </li>
+          
             <li class="active">
-                <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'list')); ?>">Products</a>
+                <a href="<?php echo $this->url('admin', array('controller' => 'provider', 'action' => 'productadd')); ?>">Agregar</a>
             </li>
-            <li>
-                <a href="#">Orders</a>
-            </li>
-            <li>
-                <a href="#">Customers</a>
-            </li>
-            <li>
-                <a href="#">Settings</a>
-            </li>
+         
         </ul>
     </div>
     <div class="topbar-right">  
@@ -34,26 +24,20 @@ $this->headlink()
 <section id="content" class="table-layout animated fadeIn">
 
     <!-- begin: .tray-center -->
-    <div class="tray tray-center p25 va-t posr">
-
+    <div class="tray tray-center p10 va-t posr">
+        
         <!-- create new order panel -->
         <div class="panel mb25 mt5">
             <div class="panel-heading">
-                <span class="panel-title"> Add New Product</span>
+                <span class="panel-title"> Agregar Nuevo Producto</span>
                 <ul class="nav panel-tabs-border panel-tabs">
                     <li class="active">
                         <a href="#tab1_1" data-toggle="tab">Description</a>
                     </li>
                     <li>
-                        <a href="#tab1_2" data-toggle="tab">Data</a>
+                        <a href="#tab1_2" data-toggle="tab">Meta-Data</a>
                     </li>
-                    <li>
-                        <a href="#tab1_3" data-toggle="tab">Meta-Data</a>
-                    </li>
-
-                    <li>
-                        <a href="#tab1_4" data-toggle="tab">Images</a>
-                    </li>
+                    
                     <li>
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
@@ -65,32 +49,40 @@ $this->headlink()
                     <?php echo $this->formhidden($this->productForm->get('productId')) ?>
                     <div class="tab-content pn br-n admin-form theme-primary">  
 
-                        <div id="tab1_1" class="tab-pane active">                           
-                            <div class="section row mbn">
-                                <div class="col-md-4">
-                                   
+                        <div id="tab1_1" class="tab-pane active">  
+                            
+                            
+                            <div class="section row">
+ 
+                                <div class="col-md-5 form-group">
+
+                                    <label class="col-md-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-9">
+                                        <label for="productName" class="field prepend-icon">                                       
+                                            <?php echo $this->formInput($this->productForm->get('productName')); ?>
+                                            <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
+                                            </label>
+                                        </label> 
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productName')) ?> 
+                                        </div>
+                                    </div>     
                                 </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="col-md-3 control-label" for="productCategories">Categorias  <span class="text-danger">*</span></label>
+                                    <div class="col-md-9 form-group">
 
-                                <div class="col-md-8 pl15">
-
-                                    <div class="section mb10 form-group ">
-
-                                        <label class="col-lg-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
-
-                                        <div class="col-md-8">
-                                            <label for="productName" class="field prepend-icon">                                       
-                                                <?php echo $this->formInput($this->productForm->get('productName')); ?>
-                                                <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
-                                                </label>
-                                            </label> 
-                                            <div class="help-block">
-                                                <?php echo $this->formelementerrors($this->productForm->get('productName')) ?> 
-                                            </div>
-                                        </div>     
+                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
+                                        
                                     </div>
-                                    <div class="section mb10 form-group">
-                                        <label class="col-lg-3 control-label" for="productName">Descripción <span class="text-danger">*</span></label>
-                                        <div class="col-md-8">
+                                </div>
+                                
+                            </div>
+                            <div class="section row">     
+                                    <div class="col-md-5 form-group">
+                                        <label class="col-md-3 control-label" for="productName">Descripción <span class="text-danger">*</span></label>
+                                        <div class="col-md-9">
                                             <label class="field prepend-icon">
                                                 <?php echo $this->formTextarea($this->productForm->get('productDescription')); ?>
                                                 <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i>
@@ -103,19 +95,9 @@ $this->headlink()
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                        <div id="tab1_2" class="tab-pane">
-                            <div class="section row">
-
-                                <div class="col-md-4 form-group">
-
-                                    <label class="col-lg-3 control-label" for="productModel">Modelo <span class="text-danger">*</span></label>
-                                    <div class="col-md-8"> 
+                                <div class="col-md-6 form-group ">
+                                     <label class="col-md-3 control-label" for="productModel">Modelo <span class="text-danger">*</span></label>
+                                    <div class="col-md-7"> 
                                         <label for="productModel" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productModel')); ?>
                                             <label for="productModel" class="field-icon"><i class="fa fa-shopping-cart"></i>
@@ -125,13 +107,87 @@ $this->headlink()
                                             <?php echo $this->formelementerrors($this->productForm->get('productModel')) ?> 
                                         </div>
                                     </div>
+
+                                    <label class="col-md-3 control-label" for="productPrice">Precio <span class="text-danger">*</span></label>
+                                    <div class="col-md-3">
+                                        <label for="productPrice" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
+                                            <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productPrice')) ?> 
+                                        </div>
+                                    </div>
+                                   
+                                    <label class="col-lg-3 control-label" for="productMinimun">Orden Minima </label>
+                                    <div class="col-md-3">
+                                        <label for="productMinimum" class="field prepend-icon">
+                                            <?php echo $this->formInput($this->productForm->get('productMinimum')); ?>
+                                            <label for="productMinimum" class="field-icon"><i class="fa fa-shopping-cart"></i>
+                                            </label>
+                                        </label>
+                                        <div class="help-block">
+                                            <?php echo $this->formelementerrors($this->productForm->get('productMinimum')) ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="section row tray-bin">            
+                                <div class="multi-field-wrapper">
+                                    <div class="section row">
+                                        <div class="btn-group ml15 m5">
+                                            <button type="button" class="add-field btn btn btn-success ">
+                                                <span class="glyphicon glyphicon-picture mr5"></span>Agregar Imagen</button>                                            
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="section row multi-fields col-md-12">                                      
+                                        <div class="multi-field col-md-3">                                                
+                                                <div class="col-md-10 form-group imgUpload">
+
+                                                    <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="height: 150px">
+                                                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="height: 150px"></div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <span class="button btn-system btn-file btn-block">
+                                                                    <span class="fileupload-new">Select</span>
+                                                                    <span class="fileupload-exists">Change</span>
+                                                                    <?php echo $this->formFile($this->productForm->get('productImage')); ?>
+
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>  
+                                                <div class="col-md-2 form-group ">
+                                                    <div class="btn-group">
+                                                        <button style="padding:0px 2px" type="button" class="remove-field btn btn-danger">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+                                                    </div>
+                                                    
+                                                </div>  
+                                      </div>
+                                    </div>
                                 </div>
 
+                            </div>
+
+
+                        </div>
+                        <div id="tab1_2" class="tab-pane">
+                            <div class="section row">
                                 <!-- end section -->
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
 
                                     <label class="col-lg-3 control-label" for="productModel">SKU </label>
-                                    <div class="col-md-8"> 
+                                    <div class="col-md-9"> 
                                         <label for="productSku" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productSku')); ?>
                                             <label for="productSku" class="field-icon"><i class="fa fa-shopping-cart"></i>
@@ -142,10 +198,10 @@ $this->headlink()
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
 
                                     <label class="col-lg-3 control-label" for="productIsbn">ISBN </label>
-                                    <div class="col-md-8"> 
+                                    <div class="col-md-9"> 
                                         <label for="productIsbn" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productIsbn')); ?>
                                             <label for="productIsbn" class="field-icon"><i class="fa fa-shopping-cart"></i>
@@ -156,60 +212,7 @@ $this->headlink()
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end section -->
-
                             </div>
-                            <div class="section row">
-                                <div class="col-md-4 form-group ">
-
-                                    <label class="col-lg-3 control-label" for="productPrice">Precio <span class="text-danger">*</span></label>
-                                    <div class="col-md-8">
-                                        <label for="productPrice" class="field prepend-icon">
-                                            <?php echo $this->formInput($this->productForm->get('productPrice')); ?>
-                                            <label for="productPrice" class="field-icon"><i class="fa fa-usd"></i>
-                                            </label>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productPrice')) ?> 
-                                        </div>
-                                    </div>
-
-                                </div>
-                             
-
-                                <div class="col-md-4 form-group ">
-
-                                    <label class="col-lg-5 control-label" for="productMinimum">Orden Minima </label>
-                                    <div class="col-md-7">
-                                        <label for="productMinimum" class="field prepend-icon">
-                                            <?php echo $this->formInput($this->productForm->get('productMinimum')); ?>
-                                            <label for="productMinimum" class="field-icon"><i class="fa fa-shopping-cart"></i>
-                                            </label>
-                                        </label>
-                                        <div class="help-block">
-                                            <?php echo $this->formelementerrors($this->productForm->get('productMinimum')) ?> 
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- end section row section -->
-
-
-                            <!-- end section row section -->
-                            <div class="section row">
-                                <div class="col-md-4"> 
-                                    <label class="col-md-3 control-label">Round Switches</label>
-                                    <div class="switch switch-primary round switch-inline">
-                                        <input id="exampleCheckboxSwitch7" type="checkbox" checked>
-                                        <label for="exampleCheckboxSwitch7"></label>
-                                    </div>
-                                    <!-- end section -->
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab1_3" class="tab-pane">
 
                             <!-- end section -->
 
@@ -246,14 +249,7 @@ $this->headlink()
 
                             </div>
                             <div class="section row">
-                                 <div class="col-md-6 form-group">
-                                    <label class="col-lg-3 control-label" for="productCategories">Categorias  <span class="text-danger">*</span></label>
-                                    <div class="col-md-9 form-group">
-
-                                        <?php echo $this->formSelect($this->productForm->get('productCategories')) ?>
-                                        
-                                    </div>
-                                </div>
+                                 
                                 <!-- end section -->
                                 
                                 <div class="col-md-6 form-group">
@@ -312,56 +308,7 @@ $this->headlink()
                             <!-- end section row section -->
 
                         </div>
-                      
-                        <div id="tab1_4" class="tab-pane">
-
-                            <div class="multi-field-wrapper">
-                                <div class="multi-fields">
-                                    <div class="multi-field"> 
-
-                                        <div class="section row">
-                                            <div class="col-md-3 form-group ">
-
-                                             
-
-                                            </div>
-                                            <div class="col-md-3 form-group">
-
-                                               
-                                            </div>
-
-                                            <div class="col-md-2 form-group imgUpload">
-                                              
-                                                <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
-                                                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                         <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
-                                                     </div>
-                                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <span class="button btn-system btn-file btn-block">
-                                                                <span class="fileupload-new">Select</span>
-                                                                <span class="fileupload-exists">Change</span>
-                                                                <?php echo $this->formFile($this->productForm->get('productImage')); ?>
-                                                                
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>  
-                                            
-                                           
-                                            <div class="col-md-3 form-group ">
-                                              <button type="button" class="remove-field">Remove</button>
-                                           </div>
-                                        </div>
-                                    </div>
-
-                                </div><button type="button" class="add-field">Add field</button>
-                            </div>
-                            
-                        </div>
+            
                         <div id="tab1_5" class="tab-pane">
 
                             <div class="multi-field-wrapper">
@@ -475,10 +422,10 @@ echo <<<JS
                     
    
                   html = '<div class="fileupload fileupload-new admin-form" data-provides="fileupload">';
-                  html +=  ' <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">';
+                  html +=  ' <div class="fileupload-new thumbnail" style="height: 150px">';
                   html +=   '<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />';
                   html +=  '</div>';
-                  html +=  '<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height:150px; line-height: 20px;"></div>';
+                  html +=  '<div class="fileupload-preview fileupload-exists thumbnail" style="height: 150px"></div>';
                   html +=   '<div class="row">';
                   html +=      '<div class="col-xs-12">';
                   html +=          '<span class="button btn-system btn-file btn-block">';

@@ -16,6 +16,7 @@ use Admin\Form\Provider as ProviderForm;
 use Admin\Model\Dao\CategoryDao;
 use Admin\Form\Validator\ProviderValidator;
 use Admin\Model\Entity\Provider;
+use Admin\Form\Product;
 
 
 class ProviderController extends AbstractActionController
@@ -55,7 +56,7 @@ class ProviderController extends AbstractActionController
                 
                 $saved = $providerDao->saveProvider($providerEntity->getArrayCopy());
         
-                if ($saved) {
+                if($saved){
                     $view['save'] = 1;
                     return $this->redirect()->toRoute('admin', array('controller' => 'provider', 'action' => 'list'));
                 }else {
@@ -83,14 +84,95 @@ class ProviderController extends AbstractActionController
         
         return new ViewModel($view );    
        
-    }   
+    }
+    public function productListAction()
+    {
+        $request = $this->getRequest();
+        $id = (int) $this->params()->fromRoute('id', 0);
+        
+        $productDao = $this->getServiceDao('Admin\Model\Dao\ProductDao');
+        $productData = $productDao->getProviderId($id);
+        $view['products'] = $productData;
+        
+        $providerDao = $this->getServiceDao('Model\Dao\ProviderDao');
+        $providerData = $providerDao->getById($id);
+        $view['provider'] = $providerData;
+        
+        
+        return new ViewModel($view);
+    }
     
-    public function getCategorySelect() {
-    
+    public function productAddAction()
+    {
+        
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $request = $this->getRequest();
+        
+        $productForm = New Product();
+        
+        if ($request->isPost()) {
+        
+             
+            $postData = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
+            // print_r($postData);die;
+             
+            $productForm->setInputFilter(new ProductValidator());
+            $productForm->setData($postData);
+        
+            if ($productForm->isValid()) {
+                $productData = $productForm->getData();
+                //print_r($productData);die;
+                $productEntity = new Product();
+                $productEntity->exchangeArrayForm($productData);
+                //var_dump($productEntity);die;
+                $productDao = $this->getProductDao();
+                $saved = $productDao->saveProduct($productEntity);
+        
+                if($saved){   
+        
+                    return $this->redirect()->toRoute('admin', array(
+                        'controller' => 'provider', 
+                        'action' => 'productlist',
+                        'id' =>  $id
+                    ));
+                }
+                 
+        
+            } else {
+                //$messages = $this->productForm->getMessages();
+                //                  echo 'error filter';
+                                  print_r($messages);die;
+                $this->productForm->populateValues($postData);
+            }
+        }
+        
+        
+        $productForm->get('provider_id')->setValue($id);
+        
+        $providerDao = $this->getServiceDao('Model\Dao\ProviderDao');
+        $providerData = $providerDao->getById($id);
+        $view['provider'] = $providerData;
+            
+        $categories = ($providerData->categories == 0 ? 0 : explode(',', $providerData->categories));        
+        $cat = $this->getCategorySelect($categories);
+        $productForm->get('productCategories')->setValueOptions($cat);
+        
+        $view['productForm'] = $productForm;
+        return new ViewModel($view);
+    }
+
+    public function getCategorySelect($categories = NULL)
+    {
         $tableGateway = $this->getServiceDao('CategoryTableGateway');
         $categoryDao = new CategoryDao($tableGateway);
-        $results = $categoryDao->getAll();
-        
+        if(!$categories){
+            $results = $categoryDao->getAll();
+        }else {
+            $results = $categoryDao->getCategories($categories);  
+        }
         $result = array();
         foreach ($results as $cat) {
             //$result[] = $row->getArrayCopy();

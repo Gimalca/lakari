@@ -19,6 +19,7 @@ class Product
 {
 
     private $product_id;
+    private $provider_id;
     private $model;
     private $sku;
     private $isbn;
@@ -42,6 +43,7 @@ class Product
  function exchangeArray($data = NULL)
     {
         $this->product_id = (isset($data['product_id'])) ? $data['product_id'] : null;
+        $this->provider_id = (isset($data['provider_id'])) ? $data['provider_id'] : null;
         $this->model = (isset($data['model'])) ? $data['model'] : null;
         $this->sku = (isset($data['sku'])) ? $data['sku'] : null;
         $this->isbn = (isset($data['isbn'])) ? $data['isbn'] : null;
@@ -75,6 +77,7 @@ class Product
     function exchangeArrayForm($data = NULL)
     {
         $this->product_id = (isset($data['productId'])) ? $data['productId'] : null;
+        $this->provider_id = (isset($data['provider_id'])) ? $data['provider_id'] : null;
         $this->model = (isset($data['productModel'])) ? $data['productModel'] : null;
         $this->sku = (isset($data['productSku'])) ? $data['productSku'] : null;
         $this->isbn = (isset($data['productIsbn'])) ? $data['productIsbn'] : null;
@@ -128,6 +131,10 @@ class Product
     function getProductId()
     {
         return $this->product_id;
+    }
+    function getProvider_id()
+    {
+        return $this->provider_id;
     }
 
     function getModel()
