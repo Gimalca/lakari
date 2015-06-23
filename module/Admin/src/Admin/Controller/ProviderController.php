@@ -109,46 +109,7 @@ class ProviderController extends AbstractActionController
         $request = $this->getRequest();
         
         $productForm = New Product();
-        
-        if ($request->isPost()) {
-        
-             
-            $postData = array_merge_recursive(
-                $request->getPost()->toArray(),
-                $request->getFiles()->toArray()
-            );
-            // print_r($postData);die;
-             
-            $productForm->setInputFilter(new ProductValidator());
-            $productForm->setData($postData);
-        
-            if ($productForm->isValid()) {
-                $productData = $productForm->getData();
-                //print_r($productData);die;
-                $productEntity = new Product();
-                $productEntity->exchangeArrayForm($productData);
-                //var_dump($productEntity);die;
-                $productDao = $this->getProductDao();
-                $saved = $productDao->saveProduct($productEntity);
-        
-                if($saved){   
-        
-                    return $this->redirect()->toRoute('admin', array(
-                        'controller' => 'provider', 
-                        'action' => 'productlist',
-                        'id' =>  $id
-                    ));
-                }
-                 
-        
-            } else {
-                //$messages = $this->productForm->getMessages();
-                //                  echo 'error filter';
-                                  print_r($messages);die;
-                $this->productForm->populateValues($postData);
-            }
-        }
-        
+          
         
         $productForm->get('provider_id')->setValue($id);
         

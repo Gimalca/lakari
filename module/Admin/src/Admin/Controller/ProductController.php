@@ -54,6 +54,7 @@ class ProductController extends AbstractActionController
         $this->productForm = new ProductForm();
         
         $this->productForm->get('productCategories')->setValueOptions($cat);
+        $this->productForm->get('provider_id')->setValue(25);
         
         if ($this->request->isPost()) {
             
