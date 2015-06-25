@@ -4847,9 +4847,9 @@ a {
 .blog-page .blog-write-comment .form-group input,
 .contact-page .contact-form form label,
 .contact-page .contact-form form input {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
-  color: #999;
+  color: #000;
 }
 .shopping-cart .estimate-ship-tax table tbody tr td .form-group label span,
 .blog-page .blog-write-comment label span,
@@ -4982,7 +4982,7 @@ a {
 .body-content .x-page .x-text form input {
   border: 1px solid #e0e0e0;
   border-radius: 3px 0 0 3px;
-  color: #3d3d3d;
+  color: #ccc;
   padding: 13px;
   font-size: 15px;
   width: 40%;
@@ -5175,4 +5175,10 @@ a {
 }
 .product .product-image .image{
     vertical-align: middle;
+}
+.input-group-addon{
+    background-color: #f6f6f6;
+}
+.help-block {
+ color:   #a94442; 
 }

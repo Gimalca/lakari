@@ -1,0 +1,164 @@
+
+<div class="row inner-bottom-sm">
+    <div class="contact-page">        
+        <div class="col-md-8 contact-form">
+            <div class="col-md-12 contact-title">
+                <h4>Registro de Provedores</h4>
+            </div>
+
+            <form id="form"  action="<?php echo $this->basePath($this->providerForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
+                 <?php echo $this->formInput($this->providerForm->get('csrf')); ?>
+                 <div class=" alert-warning">
+                        <?php echo $this->formelementerrors($this->providerForm->get('csrf')) ?> 
+                    </div>
+                <div class="col-md-6 ">
+                    <label class="info-title" for="company">Compañia <span>*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-building-o "></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('company')); ?>                      
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('company')) ?> 
+                    </div>
+                </div>    
+                
+                <div class="col-md-6">
+                    <label class="info-title" for="company_id">ID Fiscal <span>*</span></label>
+                    <div class="input-group ">                       
+                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('company_id')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('company_id')) ?> 
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="info-title" for="firstname">Nombre contacto <span>*</span></label>
+                    <div class="input-group ">                       
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('firstname')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('firstname')) ?> 
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="info-title" for="lastname">Apellido contacto <span>*</span></label>
+                    <div class="input-group ">                       
+                        <span class="input-group-addon"><i class="fa fa-user "></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('lastname')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('lastname')) ?> 
+                    </div>
+                </div>
+  
+                
+                <div class="col-md-4">
+                    <label class="info-title" for="telephone">Telefono<span>*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone "></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('telephone')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('telephone')) ?> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="info-title" for="celphone">Celular</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone "></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('celphone')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('celphone')) ?> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="info-title" for="fax">Fax</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-phone "></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('fax')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('fax')) ?> 
+                    </div>
+                </div>
+                
+               
+                <div class="col-md-6 ">
+                    <label class="info-title" for="email"> E-mail <span>*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('email')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                       <?php echo $this->formelementerrors($this->providerForm->get('email')); ?>
+                    </div>
+
+                </div>
+                <div class="col-md-6 ">
+                    <label class="info-title" for="confirmEmail">Confirmar E-mail <span>*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('confirmEmail')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                       <?php echo $this->formelementerrors($this->providerForm->get('confirmEmail')); ?>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label class="info-title" for="password">Password <span>*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('password')); ?>
+                    </div>
+                    <div class="help-block text-danger">
+                       <?php echo $this->formelementerrors($this->providerForm->get('password')); ?>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label class="info-title" for="confirmarPassword">Confirmar Password <span>*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <?php echo $this->formInput($this->providerForm->get('confirmarPassword')); ?>
+                    </div>
+                    <div class="help-block">
+                       <?php echo $this->formelementerrors($this->providerForm->get('confirmarPassword')); ?>
+                    </div>
+                </div>
+                
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <label class="info-title" for="exampleInputComments">Comentarios </label>
+                        <textarea class="form-control unicase-form-control" id="exampleInputComments"></textarea>
+                    </div>
+
+                </div>
+                <div class="col-md-12 outer-bottom-small m-t-20">
+                    <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Registrarse</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 contact-info">
+            <div class="contact-title">
+                <h4>INFORMATION</h4>
+            </div>
+            <div class="clearfix address">
+                <span class="contact-i"><i class="fa fa-map-marker"></i></span>
+                <span class="contact-span">868 Any Stress, Burala Casi, Picasa USA.</span>
+            </div>
+            <div class="clearfix phone-no">
+                <span class="contact-i"><i class="fa fa-mobile"></i></span>
+                <span class="contact-span">(400) 0888 888 888 <br>(400) 888 848 868</span>
+            </div>
+            <div class="clearfix email">
+                <span class="contact-i"><i class="fa fa-envelope"></i></span>
+                <span class="contact-span">Contact@lakarihome.com <br>Sale@lakarihome.com</span>
+            </div>
+        </div>			</div><!-- /.contact-page -->
+</div><!-- /.row -->
+
+

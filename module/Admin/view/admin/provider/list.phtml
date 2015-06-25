@@ -341,28 +341,53 @@ $this->headlink()
                              
                                 <td class="text-right">
                                     <div class="btn-group text-right">
-                                        <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Active
-                                            <span class="caret ml5"></span>
-                                        </button>
+                                        <?php switch ($provider->status) {
+                                                case 1:
+                                                   echo '<button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
+                                                            Activo
+                                                            <span class="caret ml5"></span>
+                                                        </button>';                 
+                                                    break;
+                                                case 2:
+                                                    echo '<button type="button" class="btn btn-warning br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">  
+                                                            Sin Aprobar
+                                                            <span class="caret ml5"></span>
+                                                          </button>';
+                                                    break;
+                                                case 3:
+                                                    echo '<button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                             Desactivado
+                                                            <span class="caret ml5"></span>
+                                                          </button>';
+                                                    break;
+                                                default:
+                                                    echo '<button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
+                                                            No confirmado
+                                                            <span class="caret ml5"></span>
+                                                          </button>';
+                                                    break;
+                                            }
+                                            ?>
+                                        
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="#">Edit</a>
+                                                <a href="#">Editar</a>
                                             </li>
                                             <li>
                                                 <a href="<?php echo $this->basePath('admin/provider/productlist/').$provider->provider_id;?>">Products</a>
                                             </li>
                                             <li>
-                                                <a href="#">Contact</a>
+                                                <a href="#">Contacto</a>
                                             </li>
                                             <li class="divider"></li>
-                                            <li class="active">
-                                                <a href="#">Active</a>
+                                            <li class="">
+                                                <a href="#">Activo</a>
                                             </li>
                                             <li>
-                                                <a href="#">Suspend</a>
+                                                <a href="#">Sin Aprobar</a>
                                             </li>
                                             <li>
-                                                <a href="#">Remove</a>
+                                                <a href="#">Desactivado</a>
                                             </li>
                                         </ul>
                                     </div>

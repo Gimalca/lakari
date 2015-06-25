@@ -19,4 +19,12 @@ class IndexController extends AbstractActionController
        
         return new ViewModel();
     }
+    public function provedoresAction()
+    {
+        echo 'ver'; die;
+         
+        return new ViewModel();
+    }
+    
+    
 }
