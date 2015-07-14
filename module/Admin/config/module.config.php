@@ -39,5 +39,11 @@ return array(
             'Alert' => 'Admin\View\Helper\AlertHelper',
             'FormCollection' => 'Admin\View\Helper\FormCollection'
         )
+    ),
+    'module_layouts' => array(
+        'Admin' => 'layout/admin',
+    ),
+    'controller_layouts' => array(
+        'Admin/Login' => 'layout/layout',
     )
 );

@@ -75,19 +75,39 @@ class Module
 
     public function initLayout($e)
     {
-        $matches = $e->getRouteMatch();
-        $module = $matches->getParams();
-        
+//        $matches = $e->getRouteMatch();
+//        $module = $matches->getParams();
+        $routeMatchParams = array();
        
-        //print_r($module);die;
-        if ($matches->getParam('__NAMESPACE__') == 'Admin\Controller') {
-            $layout = $e->getViewModel();
-            $layout->setTemplate('layout/admin');
+        $routeMatchParams = $e->getRouteMatch()->getParams();
+
+        (!isset($routeMatchParams['__NAMESPACE__'])) ? $routeMatchParams['__NAMESPACE__'] = "Application\Controller" :  NULL ;
+        $moduleName = substr($routeMatchParams['__NAMESPACE__'], 0, strpos($routeMatchParams['__NAMESPACE__'], '\\'));
+        $controllerName = str_replace('\\Controller\\', '/', $routeMatchParams['controller']);
+        $actionName = $routeMatchParams['action'];
+
+        $config = $e->getApplication()->getServiceManager()->get('config');
+        $controller = $e->getTarget();
+
+        if (isset($config['module_layouts'][$moduleName])) {
+            $controller->layout($config['module_layouts'][$moduleName]);
         }
-        if ($module['controller'] == 'Admin\Controller\Login') {
-            $layout = $e->getViewModel();
-            $layout->setTemplate('layout/layout');
+        if (isset($config['controller_layouts'][$controllerName])) {
+            $controller->layout($config['controller_layouts'][$controllerName]);
         }
+        if (isset($config['action_layouts'][$controllerName . '/' . $actionName])) {
+            $controller->layout($config['action_layouts'][$controllerName . '/' . $actionName]);
+        }
+
+        
+//        if ($matches->getParam('__NAMESPACE__') == 'Admin\Controller') {
+//            $layout = $e->getViewModel();
+//            $layout->setTemplate('layout/admin');
+//        }
+//        if ($module['controller'] == 'Admin\Controller\Login') {
+//            $layout = $e->getViewModel();
+//            $layout->setTemplate('layout/layout');
+//        }
     }
 
     protected function initEnviroment($e)
@@ -117,16 +137,5 @@ class Module
         );
         AbstractValidator::setDefaultTranslator($translator);
     }
-//     public function getViewHelperConfig()
-//     {
-//         return array(
-//             'factories' => array(
-//                 'myhelper' => function($sm) {
-//                     $helper = new View\Helper\MyHelper ;
-//                     return $helper;
-//                 }
-//             )
-//         );
-//     }
 
 }

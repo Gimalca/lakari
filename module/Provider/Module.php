@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -12,32 +13,36 @@ namespace Provider;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
+use Zend\Mail\Transport\Smtp;
+use Zend\Mail\Transport\SmtpOptions;
 
 
 class Module implements AutoloaderProviderInterface
 {
+
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-		    // if we're in a namespace deeper than one level we need to fix the \ in the path
-                    __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/' , __NAMESPACE__),
+                    // if we're in a namespace deeper than one level we need to fix the \ in the path
+                    __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/', __NAMESPACE__),
                 ),
             ),
         );
     }
-    
+
     public function getServiceConfig()
-     {
-         return array(
-             
-         );
-     }
+    {
+        return array(
+            'Mailer' => function ($sm) {
+                $config = $sm->get('Config');
+                $transport = new Smtp();
+                $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
+                return $transport;
+            },
+        );
+    }
 
     public function getConfig()
     {
@@ -48,8 +53,9 @@ class Module implements AutoloaderProviderInterface
     {
         // You may not need to do this if you're doing it elsewhere in your
         // application
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+
 }

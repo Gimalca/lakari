@@ -34,6 +34,7 @@ class Product extends Form {
             'name' => 'productId',
             'attributes' => array(
                 'type' => 'hidden',               
+                'id' => 'productId',               
             ),
         ));
         $this->add(array(

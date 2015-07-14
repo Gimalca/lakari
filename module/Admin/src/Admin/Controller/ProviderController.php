@@ -85,6 +85,7 @@ class ProviderController extends AbstractActionController
         return new ViewModel($view );    
        
     }
+    
     public function productListAction()
     {
         $request = $this->getRequest();
