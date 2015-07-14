@@ -16,7 +16,7 @@ use Provider\Form\RegisterProvider;
 use Provider\Form\Validator\RegisterProviderValidator;
 use Admin\Model\Entity\Provider;
 use Zend\Mail\Message;
-use \Zend\Http\PhpEnvironment\RemoteAddress;
+use Zend\Http\PhpEnvironment\RemoteAddress;
 
 class IndexController extends AbstractActionController
 {
@@ -35,23 +35,25 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $postData = $request->getPost();
 
-            $registerForm->setInputFilter(new RegisterProviderValidator());
+            $registerForm->setInputFilter(new RegisterProviderValidator($this->getServiceLocator()));
             $registerForm->setData($postData);
 
             if ($registerForm->isValid()) {
-                $providerData = $registerForm->getData();
+                $providerData = $registerForm->getData();              
+                $providerData = $this->prepareDataProvider($providerData); 
+                
                 $providerEntity = New Provider();
-                $providerData = $this->prepareDataProvider($providerData);
                 $providerEntity->exchangeArray($providerData);
                 $providerData = $providerEntity->getArrayCopy();
 
-
                 $providerDao = $this->getServiceDao('Model\Dao\ProviderDao');
-                // $saved = $providerDao->saveProvider($providerData);
+                $saved = $providerDao->saveProvider($providerData);
 
-                if (!$saved) {
+                if ($saved) {
+                   
+                    $this->sendMailRegisterConfirm($providerData);
+                     $this->flashMessenger()->addMessage($providerData['email']);
                     print_r($providerData);
-                    echo 'registrado';
                     die;
                 } else {
                     throw new \Exception("Not Save Row");
@@ -75,6 +77,8 @@ class IndexController extends AbstractActionController
         $ipClient =  $remote->getIpAddress();
         $providerData['status'] = 0; 
         $providerData['categories'] = '0';
+        $providerData['approved'] = 0;
+        $providerData['active'] = 0 ;
         $providerData['ip'] = $ipClient;
         $providerData['token'] = md5(uniqid(mt_rand(), true));
         
@@ -85,18 +89,18 @@ class IndexController extends AbstractActionController
     private function sendMailRegisterConfirm($providerData)
     {
         $mailer = $this->getServiceLocator()->get('Mailer');
-        $menssage = new Message();
+        $message = new Message();
         $this->getRequest()->getServer();  //Server vars
-        $message->addTo($providerData->usr_email)
+        $message->addTo( $providerData['email'])
                 ->addFrom('praktiki@coolcsn.com')
                 ->setSubject('Please, confirm your registration!')
                 ->setBody("Please, click the link to confirm your registration => " .
                         $this->getRequest()->getServer('HTTP_ORIGIN') .
-                        $this->url()->fromRoute('auth/default', array(
+                        $this->url()->fromRoute('provider', array(
                             'controller' => 'registration',
                             'action' => 'confirm-email',
-                            'id' => $providerData->usr_registration_token)));
-        $transport->send($message);
+                            'id' => $providerData['token'])));
+        $mailer->send($message);
     }
 
     public function getServiceDao($service)

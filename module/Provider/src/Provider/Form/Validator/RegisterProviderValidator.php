@@ -59,7 +59,7 @@ class RegisterProviderValidator extends InputFilter
             );
     
 
-    public function __construct()
+    public function __construct($sm)
     {      
       
         $this->add(array(
@@ -127,7 +127,18 @@ class RegisterProviderValidator extends InputFilter
                             'isEmpty' => 'Email address is required'
                         )
                     )
-                )
+                ),
+                array(
+                    'name' => 'Zend\Validator\Db\NoRecordExists',
+                    'options' => array(
+                        'table' => 'lk_provider',
+                        'field' => 'email',
+                        'adapter' => $sm->get('Zend\Db\Adapter\Adapter'),
+                         'messages' => array(
+                            'recordFound' => 'Email registrado'
+                        )
+                    ),
+                ),
             )
         ));
         $this->add(array(

@@ -51,6 +51,7 @@ class ProviderDao
 
     public function saveProvider($data)
     {
+       
         // print_r($data);die;
         if ($data['logo']['tmp_name'] != '') {
             $explo = explode('img_', $data['logo']['tmp_name']);

@@ -13,6 +13,7 @@ class Provider {
     public $fax;
     public $password;
     public $salt;
+    public $active;
     public $address_id;
     public $ip;
     public $status;
@@ -36,6 +37,7 @@ class Provider {
         $this->address_id = (isset($data['address_id'])) ? $data['address_id'] : null;
         $this->ip = (isset($data['ip'])) ? $data['ip'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
+        $this->active = (isset($data['active'])) ? $data['active'] : null;
         $this->approved = (isset($data['approved'])) ? $data['approved'] : null;
         $this->token = (isset($data['token'])) ? $data['token'] : null;
         $this->categories = (isset($data['categories'])) ? $data['categories'] : null;

@@ -13,12 +13,22 @@ namespace Provider;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+
+use Zend\ServiceManager\ServiceManager;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
 
 
 class Module implements AutoloaderProviderInterface
 {
+   public function onBootstrap(MvcEvent $e)
+    {
+        // You may not need to do this if you're doing it elsewhere in your
+        // application
+        $eventManager = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
+    }
 
     public function getAutoloaderConfig()
     {
@@ -35,12 +45,14 @@ class Module implements AutoloaderProviderInterface
     public function getServiceConfig()
     {
         return array(
-            'Mailer' => function ($sm) {
-                $config = $sm->get('Config');
-                $transport = new Smtp();
-                $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
-                return $transport;
-            },
+            'factories' => array(
+                'Mailer' => function ($sm) {
+                    $config = $sm->get('Config');                  
+                    $transport = new Smtp();
+                    $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
+                    return $transport;
+                },
+            )
         );
     }
 
@@ -49,13 +61,6 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function onBootstrap(MvcEvent $e)
-    {
-        // You may not need to do this if you're doing it elsewhere in your
-        // application
-        $eventManager = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
-    }
+   
 
 }
