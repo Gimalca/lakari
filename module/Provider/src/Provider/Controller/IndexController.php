@@ -16,6 +16,7 @@ use Provider\Form\RegisterProvider;
 use Provider\Form\Validator\RegisterProviderValidator;
 use Admin\Model\Entity\Provider;
 use Zend\Mail\Message;
+use \Zend\Http\PhpEnvironment\RemoteAddress;
 
 class IndexController extends AbstractActionController
 {
@@ -28,8 +29,7 @@ class IndexController extends AbstractActionController
 
     public function registerAction()
     {
-        $request = $this->getRequest();
-        print_r($request->getServer());die;
+        $request = $this->getRequest();       
         $registerForm = New RegisterProvider();
 
         if ($request->isPost()) {
@@ -41,7 +41,7 @@ class IndexController extends AbstractActionController
             if ($registerForm->isValid()) {
                 $providerData = $registerForm->getData();
                 $providerEntity = New Provider();
-                $providerData = $this->prepareData($providerData);
+                $providerData = $this->prepareDataProvider($providerData);
                 $providerEntity->exchangeArray($providerData);
                 $providerData = $providerEntity->getArrayCopy();
 
@@ -71,10 +71,14 @@ class IndexController extends AbstractActionController
 
     private function prepareDataProvider($providerData)
     {
+        $remote = new RemoteAddress;
+        $ipClient =  $remote->getIpAddress();
         $providerData['status'] = 0; 
         $providerData['categories'] = '0';
+        $providerData['ip'] = $ipClient;
         $providerData['token'] = md5(uniqid(mt_rand(), true));
         
+        return $providerData;  
     }
    
 
