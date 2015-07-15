@@ -52,7 +52,7 @@ class IndexController extends AbstractActionController
                 if ($saved) {
                    
                     $this->sendMailRegisterConfirm($providerData);
-                     $this->flashMessenger()->addMessage($providerData['email']);
+                    $this->flashMessenger()->addMessage($providerData['email']);
                     print_r($providerData);
                     die;
                 } else {
