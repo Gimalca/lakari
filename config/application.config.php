@@ -6,6 +6,9 @@ return array(
         'Catalog',
         'Admin',
         'Provider',
+        'ZendDeveloperTools',
+        'BjyProfiler',
+        'ZFTool'
     ),
 
     // These are various options for the listeners attached to the ModuleManager

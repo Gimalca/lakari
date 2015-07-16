@@ -23,6 +23,7 @@ use Zend\Json\Json;
 use Zend\File\Transfer\Adapter\Http as FileTransferAdapter;
 use ArrayObject;
 use Admin\Form\ProductImage as ProductImageForm;
+
 class ProductController extends AbstractActionController
 {
    
@@ -162,6 +163,7 @@ class ProductController extends AbstractActionController
         
         $productFormData = new ArrayObject;
         $productFormData['productId']           = $productData->getProductId();
+        $productFormData['provider_id']           = $productData->getProvider_id();
         $productFormData['productName']         = $productData->getProductDescription()->getName();
         $productFormData['productDescription']  = $productData->getProductDescription()->getDescription();
         $productFormData['productModel']        = $productData->getModel();

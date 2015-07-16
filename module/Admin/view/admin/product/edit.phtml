@@ -72,6 +72,7 @@ $this->headlink()
                 <?php $this->productForm->prepare() ?>
                 <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
                     <?php echo $this->formhidden($this->productForm->get('productId')) ?>
+                    <?php echo $this->formhidden($this->productForm->get('provider_id')) ?>
                     <div class="tab-content pn br-n admin-form theme-primary">  
 
                         <div id="tab1_1" class="tab-pane active">  
