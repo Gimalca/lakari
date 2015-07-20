@@ -6,16 +6,17 @@
 
             <li class="sidebar-label pt20">Menu</li>
             <li>
-                <a class="accordion-toggle menu-open" href="#">
+                        <a href="#">
+                            <span class="glyphicons glyphicons-charts"></span> Dashboard </a>
+                    </li>
+            <li>
+                <a class="accordion-toggle " href="#">
                     <span class="glyphicons glyphicons-shopping_cart"></span>
                     <span class="sidebar-title">Catalogo</span>
                     <span class="caret"></span>
                 </a>
                 <ul class="nav sub-nav">
-                    <li>
-                        <a href="#">
-                            <span class="glyphicons glyphicons-shopping_cart"></span> Dashboard </a>
-                    </li>
+                    
                     <li class="">
                         <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'list')); ?>">
                             <span class="glyphicons glyphicons-tags"></span> Products </a>
@@ -41,13 +42,34 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="nav sub-nav">
+                   
+                    <li >
+                        <a href="<?php echo $this->url('admin', array('controller' => 'provider', 'action' => 'list')); ?>">
+                            <span class="glyphicons glyphicons-building"></span> Compañias</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
+                <a class="accordion-toggle  " href="#">
+                    <span class="glyphicons glyphicons-briefcase"></span>
+                    <span class="sidebar-title">Sales</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav sub-nav">
                     <li>
                         <a href="#">
                             <span class="glyphicons glyphicons-charts"></span> Dashboard </a>
                     </li>
-                    <li class="active">
-                        <a href="<?php echo $this->url('admin', array('controller' => 'provider', 'action' => 'list')); ?>">
-                            <span class="glyphicons glyphicons-building"></span> Compañias<span class="label label-xs bg-primary">New</span></a>
+                    <li >
+                        <a href="<?php echo $this->url('admin', array('controller' => 'Order', 'action' => 'index')); ?>">
+                            <span class="glyphicons glyphicons-building"></span> Ordenes<span class="label label-xs bg-primary">New</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?php echo $this->url('admin', array('controller' => 'Customer', 'action' => 'index')); ?>">
+                            <span class="glyphicons glyphicons-building"></span> Clientes<span class="label label-xs bg-primary">New</span>
+                        </a>
                     </li>
 
                 </ul>

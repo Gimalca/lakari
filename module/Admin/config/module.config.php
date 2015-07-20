@@ -6,6 +6,8 @@ return array(
             'Admin\Controller\Usuario' => 'Admin\Controller\UsuarioController',
             'Admin\Controller\Product' => 'Admin\Controller\ProductController',
             'Admin\Controller\Provider' => 'Admin\Controller\ProviderController',
+            'Admin\Controller\Customer' => 'Admin\Controller\CustomerController',
+            'Admin\Controller\Order' =>    'Admin\Controller\OrderController',
         ),
     ),
      'router' => array(
