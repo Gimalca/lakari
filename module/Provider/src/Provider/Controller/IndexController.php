@@ -4,6 +4,7 @@ namespace Provider\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Provider\Form\RegisterProvider;
 
 class IndexController extends AbstractActionController
 {

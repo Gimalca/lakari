@@ -12,10 +12,10 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Admin\Form\Provider as ProviderForm;
+use Provider\Form\Provider as ProviderForm;
 use Admin\Model\Dao\CategoryDao;
-use Admin\Form\Validator\ProviderValidator;
-use Admin\Model\Entity\Provider;
+use Provider\Form\Validator\ProviderValidator;
+use Provider\Model\Entity\Provider;
 use Admin\Form\Product;
 
 

@@ -17,8 +17,8 @@ use Admin\Model\Dao\CategoryDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\Product;
 use Admin\Model\Dao\ProductDao;
-use Admin\Model\Entity\Provider;
-use Admin\Model\Dao\ProviderDao;
+use Provider\Model\Entity\Provider;
+use Provider\Model\Dao\ProviderDao;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;

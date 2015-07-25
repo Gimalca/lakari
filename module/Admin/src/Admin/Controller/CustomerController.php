@@ -4,6 +4,8 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+//FORMS USE
+use Sales\Form\CustomerForm;
 
 class CustomerController extends AbstractActionController
 {
@@ -15,7 +17,10 @@ class CustomerController extends AbstractActionController
 
     public function listAction()
     {
-        return new ViewModel();
+        $customerForm = new CustomerForm;
+        $view['form'] = $customerForm;
+        
+        return new ViewModel($view);
     }
 
     public function addAction()

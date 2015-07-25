@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Form;
+namespace Provider\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
@@ -9,7 +9,7 @@ use Zend\Form\Element;
 /**
  * Description of Contacto
  *
- * @author Andres
+ * @author Pedro
  */
 class Provider extends Form {
 

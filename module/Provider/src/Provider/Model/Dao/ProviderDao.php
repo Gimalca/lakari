@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Model\Dao;
+namespace Provider\Model\Dao;
 
 /**
  * Description of ProductTable
