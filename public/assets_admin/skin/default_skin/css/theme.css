@@ -15664,7 +15664,8 @@ div.switch.switch-dark input:checked + label {
   position: relative;
   padding-left: 32px;
   margin-right: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
+  margin-top: 5px;
 }
 /* checkbox border */
 .checkbox-custom label:before {

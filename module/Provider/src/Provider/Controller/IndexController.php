@@ -36,8 +36,7 @@ class IndexController extends AbstractActionController
                         $providerDao = $this->getServiceDao('Model\Dao\ProviderDao');
                         $saved = $providerDao->saveProvider($providerData);
 
-                        if ($saved) {
-                           
+                        if ($saved) {                
                             $this->sendMailRegisterConfirm($providerData);
                             $this->flashMessenger()->addMessage($providerData['email']);
                             print_r($providerData);
@@ -61,15 +60,15 @@ class IndexController extends AbstractActionController
     private function prepareDataProvider($providerData)
     {
         $remote = new RemoteAddress;
-                $ipClient =  $remote->getIpAddress();
-                $providerData['status'] = 0; 
-                $providerData['categories'] = '0';
-                $providerData['approved'] = 0;
-                $providerData['active'] = 0 ;
-                $providerData['ip'] = $ipClient;
-                $providerData['token'] = md5(uniqid(mt_rand(), true));
-                
-                return $providerData;
+        $ipClient = $remote->getIpAddress();
+        $providerData['status'] = 0;
+        $providerData['categories'] = '0';
+        $providerData['approved'] = 0;
+        $providerData['active'] = 0;
+        $providerData['ip'] = $ipClient;
+        $providerData['token'] = md5(uniqid(mt_rand(), true));
+
+        return $providerData;
     }
 
     private function sendMailRegisterConfirm($providerData)

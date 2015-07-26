@@ -16,7 +16,7 @@ class CustomerForm extends Form
     {
          parent::__construct($name);
 
-        $this->setAttribute('action', 'admin/provider/list');
+        $this->setAttribute('action', 'admin/customer/add');
         $this->setAttribute('method', 'post');
 
 
@@ -25,6 +25,7 @@ class CustomerForm extends Form
             'type' => 'hidden',
             'attributes' => array(     
                 'id' => 'customer_id',
+                'value' =>0
             ),
         ));
 
@@ -127,15 +128,15 @@ class CustomerForm extends Form
             ),
         ));
         
-         $this->add(array(
-            'name' => 'newsletter',
-             'type' => 'checkbox',
-            'attributes' => array(       
-                'id' => 'lastname',
-                'class' => 'form-control gui-input',
-                'required' => true,              
-            ),
-        ));
+//         $this->add(array(
+//            'name' => 'newsletter',
+//             'type' => 'checkbox',
+//            'attributes' => array(       
+//                'id' => 'newsletter',
+//                'checked' => true,
+//               
+//            ),
+//        ));
     }
 
     //put your code here

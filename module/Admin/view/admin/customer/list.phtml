@@ -57,11 +57,11 @@ $this->headlink()
                                 <div class="col-md-12 ">
                                     <div class="section row  form-group">
                                         <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="nombre">Nombre <span class="text-danger">*</span></label>
+                                            <label class="col-md-3 control-label" for="firstname">Nombre <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label for="company" class="field prepend-icon">                                       
+                                                <label for="firstname" class="field prepend-icon">                                       
                                                     <?php echo $this->formInput($this->form->get('firstname')); ?>
-                                                    <label for="company" class="field-icon"><i class="fa fa-user"></i>
+                                                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
@@ -72,9 +72,9 @@ $this->headlink()
                                         <div class="col-xs-6">
                                             <label class="col-md-3 control-label" for="lastname">Apellido <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label for="company_id" class="field prepend-icon">                                       
+                                                <label for="lastname" class="field prepend-icon">                                       
                                                     <?php echo $this->formInput($this->form->get('lastname')); ?>
-                                                    <label for="company_id" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    <label for="lastname" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
@@ -83,13 +83,62 @@ $this->headlink()
                                             </div>
                                         </div>
                                     </div>
+                                     <div class="section row  form-group">
+                                        <div class="col-xs-6">
+                                            <label class="col-md-3 control-label" for="telephone">Telephone <span class="text-danger">*</span></label>
+                                            <div class="col-md-4">
+                                                <label for="telephone" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->form->get('telephone')); ?>
+                                                    <label for="telephone" class="field-icon"><i class="fa fa-user"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->form->get('telephone')) ?> 
+                                                </div>
+                                            </div>
+
+                                            <label class="col-md-1 control-label" for="movil">Celular <span class="text-danger">*</span></label>
+                                            <div class="col-md-4">
+                                                <label for="movil" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->form->get('movil')); ?>
+                                                    <label for="movil" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->form->get('movil')) ?> 
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="col-xs-6">
+                                             <label class="col-md-3 control-label" for="fax">Fax <span class="text-danger">*</span></label>
+                                            <div class="col-md-4">
+                                                <label for="fax" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->form->get('fax')); ?>
+                                                    <label for="fax" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->form->get('fax')) ?> 
+                                                </div>
+                                            </div>
+                                             
+                                             <div class="col-md-4">
+                                                 <div class="checkbox-custom mb5">
+                                                     <input type="checkbox" checked="" id="newsletter">
+                                                     <?php //echo $this->formInput($this->form->get('newsletter')); ?>  
+                                                     <label for="newsletter">Newsletter</label>
+                                                 </div>      
+                                             </div>
+                                        </div>
+                                    </div>
                                     <div class="section row  form-group">
                                         <div class="col-xs-6">
                                             <label class="col-md-3 control-label" for="email">Email <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label for="company" class="field prepend-icon">                                       
+                                                <label for="email" class="field prepend-icon">                                       
                                                     <?php echo $this->formInput($this->form->get('email')); ?>
-                                                    <label for="company" class="field-icon"><i class="fa fa-user"></i>
+                                                    <label for="email" class="field-icon"><i class="fa fa-user"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
@@ -100,9 +149,9 @@ $this->headlink()
                                         <div class="col-xs-6">
                                             <label class="col-md-3 control-label" for="confirmEmail">Confirmar Email <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label for="company_id" class="field prepend-icon">                                       
+                                                <label for="confirmEmail" class="field prepend-icon">                                       
                                                     <?php echo $this->formInput($this->form->get('confirmEmail')); ?>
-                                                    <label for="company_id" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    <label for="confirmEmail" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
@@ -111,59 +160,31 @@ $this->headlink()
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="section row  form-group">
+                                   
+                                    <div class="section row  form-group"> 
                                         <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="telephone">Telephone <span class="text-danger">*</span></label>
+                                            <label class="col-md-3 control-label" for="password">Password <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label for="company" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('telephone')); ?>
-                                                    <label for="company" class="field-icon"><i class="fa fa-user"></i>
+                                                <label for="password" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->form->get('password')); ?>
+                                                    <label for="password" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('telephone')) ?> 
+                                                    <?php echo $this->formelementerrors($this->form->get('password')) ?> 
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="movil">Celular <span class="text-danger">*</span></label>
+                                            <label class="col-md-3 control-label" for="confirmPassword">Confirmar Password<span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label for="company_id" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('movil')); ?>
-                                                    <label for="company_id" class="field-icon"><i class="fa fa-barcode"></i>
+                                                <label for="confirmPassword" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->form->get('confirmPassword')); ?>
+                                                    <label for="confirmPassword" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('movil')) ?> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="section row  form-group">
-                                      <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="fax">Fax <span class="text-danger">*</span></label>
-                                            <div class="col-md-9">
-                                                <label for="company_id" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('fax')); ?>
-                                                    <label for="company_id" class="field-icon"><i class="fa fa-barcode"></i>
-                                                    </label>
-                                                </label> 
-                                                <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('fax')) ?> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="lastname">Apellido <span class="text-danger">*</span></label>
-                                            <div class="col-md-9">
-                                                <label for="company_id" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('lastname')); ?>
-                                                    <label for="company_id" class="field-icon"><i class="fa fa-barcode"></i>
-                                                    </label>
-                                                </label> 
-                                                <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('lastname')) ?> 
+                                                    <?php echo $this->formelementerrors($this->form->get('confirmPassword')) ?> 
                                                 </div>
                                             </div>
                                         </div>

@@ -37,7 +37,7 @@ class Customer
 
     //put your code here
 
-    function __construct($data = null)
+    public function  exchangeArray($data = null)
     {
         $this->customer_id = (isset($data['customer_id'])) ? $data['customer_id'] : null;
         $this->firstname = (isset($data['firstname'])) ? $data['firstname'] : null;
