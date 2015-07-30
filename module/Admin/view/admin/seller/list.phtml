@@ -9,7 +9,7 @@ $this->headlink()
         <ul class="nav nav-list nav-list-topbar pull-left">
                        
             <li class="active">
-                <a href="<?php echo $this->url('admin', array('controller' => 'customer', 'action' => 'list')); ?>">List</a>
+                <a href="<?php echo $this->url('admin', array('controller' => 'seller', 'action' => 'list')); ?>">List</a>
             </li>
 
         </ul>
@@ -30,7 +30,7 @@ $this->headlink()
     <!-- begin: .tray-center -->
     <div class="tray tray-center">
          <?php if($this->add == 1) {
-                        $message = "Cliente <strong> </strong> Agregado satisfactoriamente";
+                        $message = "Vendendor <strong> </strong> Agregado satisfactoriamente";
                         echo $this->alert('succes',$message);
                     }
                 ?>
@@ -38,7 +38,7 @@ $this->headlink()
         <div class="panel mb25 mt5">
             
             <div class="panel-heading">
-                <span class="panel-title hidden-xs"> Agregar Nuevo Cliente </span>
+                <span class="panel-title hidden-xs"> Agregar Nuevo Vendedor </span>
                 <!--ul class="nav panel-tabs-border panel-tabs">
                     <li class="active">
                         <a href="#tab1_1" data-toggle="tab">General</a>
@@ -53,7 +53,7 @@ $this->headlink()
             </div>
             <div class="panel-body p20 pb10 form-horizontal">
                 <form id="form"  action="<?php echo $this->basePath($this->form->getAttribute('action')); ?>" method="post" >   
-                     <?php echo $this->formInput($this->form->get('customer_id')); ?>
+                     <?php echo $this->formInput($this->form->get('seller_id')); ?>
                     <div class="tab-content pn br-n admin-form">
                         <div id="tab1_1" class="tab-pane active">
 
@@ -117,7 +117,7 @@ $this->headlink()
                                         </div>
                                         <div class="col-xs-6">
                                              <label class="col-md-3 control-label" for="fax">Fax <span class="text-danger">*</span></label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <label for="fax" class="field prepend-icon">                                       
                                                     <?php echo $this->formInput($this->form->get('fax')); ?>
                                                     <label for="fax" class="field-icon"><i class="fa fa-barcode"></i>
@@ -128,13 +128,7 @@ $this->headlink()
                                                 </div>
                                             </div>
                                              
-                                             <div class="col-md-4">
-                                                 <div class="checkbox-custom mb5">
-                                                     <input type="checkbox" checked="" id="newsletter">
-                                                     <?php //echo $this->formInput($this->form->get('newsletter')); ?>  
-                                                     <label for="newsletter">Newsletter</label>
-                                                 </div>      
-                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="section row  form-group">
@@ -273,7 +267,7 @@ $this->headlink()
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($this->customers as $customer) : ?>
+                            <?php foreach ($this->sellers as $seller) : ?>
                             <tr>
                                 <td class="text-center">
                                     <label class="option block mn">
@@ -282,16 +276,16 @@ $this->headlink()
                                     </label>
                                 </td>
                                
-                                <td class=""><?php echo $customer->firstname;?></td>
-                                <td class=""><?php echo $customer->lastname;?></td>
-                                <td class=""><?php echo $customer->email;?></td>         
-                                <td class=""><?php echo $customer->status;?></td>
-                                <td class=""><?php echo $customer->ip;?></td>
-                                <td class=""><?php echo $customer->date_added;?></td>
+                                <td class=""><?php echo $seller->firstname;?></td>
+                                <td class=""><?php echo $seller->lastname;?></td>
+                                <td class=""><?php echo $seller->email;?></td>         
+                                <td class=""><?php echo $seller->status;?></td>
+                                <td class=""><?php echo $seller->ip;?></td>
+                                <td class=""><?php echo $seller->date_added;?></td>
                              
                                 <td class="text-right">
                                     <div class="btn-group text-right">
-                                        <?php switch ($customer->status) {
+                                        <?php switch ($seller->status) {
                                                 case 1:
                                                    echo '<button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
                                                             Activo
@@ -324,7 +318,7 @@ $this->headlink()
                                                 <a href="#">Editar</a>
                                             </li>
                                             <li>
-                                                <a href="<?php echo $this->basePath('admin/provider/productlist/').$customer->provider_id;?>">Products</a>
+                                                <a href="<?php echo $this->basePath('admin/provider/productlist/').$seller->provider_id;?>">Products</a>
                                             </li>
                                             <li>
                                                 <a href="#">Contacto</a>

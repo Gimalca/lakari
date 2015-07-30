@@ -6,7 +6,7 @@
  * @author Pedro
  */
 
-namespace Admin\Model\Entity;
+namespace Catalog\Model\Entity;
 
 use Admin\Model\Entity\ProductDescription;
 use Admin\Model\Entity\ProductImage;

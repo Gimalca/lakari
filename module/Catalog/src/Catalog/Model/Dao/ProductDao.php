@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Model\Dao;
+namespace Catalog\Model\Dao;
 
 /**
  * Description of ProductTable
@@ -9,7 +9,7 @@ namespace Admin\Model\Dao;
  */
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
-use Admin\Model\Entity\Product;
+use Catalog\Model\Entity\Product;
 use Admin\Model\Entity\ProductDescription;
 use Admin\Model\Entity\ProductImage;
 

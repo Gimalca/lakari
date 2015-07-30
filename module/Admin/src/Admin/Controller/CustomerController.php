@@ -21,8 +21,24 @@ class CustomerController extends AbstractActionController
 
     public function listAction()
     {
-        $customerForm = new CustomerForm;
-        $view['form'] = $customerForm;
+
+        //Get Resulset DB CUSTOMER Table
+        $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
+        $view['customers'] = $customerDao->getAll();
+
+        //Get Form Customer
+        $form = $this->params()->fromRoute('form', false);
+        if ($form) {
+            $view['form'] = $form;
+        } else {
+            $customerForm = new CustomerForm;
+            $view['form'] = $customerForm;
+        }
+
+
+        //Fordward ADD ACTION 
+        $add = $this->params()->fromRoute('add', false);
+        $view['add'] = $add;
 
         return new ViewModel($view);
     }
@@ -36,7 +52,7 @@ class CustomerController extends AbstractActionController
             $postData = $request->getPost();
 
             $customerForm = New CustomerForm;
-            $customerForm->setInputFilter(new CustomerValidator());
+            $customerForm->setInputFilter(new CustomerValidator($this->getServiceLocator()));
             $customerForm->setData($postData);
 
             if ($customerForm->isValid()) {
@@ -46,39 +62,39 @@ class CustomerController extends AbstractActionController
                 $customerEntity = new Customer;
                 $customerEntity->exchangeArray($customerPrepareData);
                 $customerDataArray = $customerEntity->getArrayCopy();
-               
+
                 $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
                 $saved = $customerDao->savedCustomer($customerDataArray);
 
                 if ($saved) {
-                    print_r($customerDataArray);
-                    die;
+
+                    return $this->forward()->dispatch('Admin\Controller\Customer', array(
+                                'action' => 'list',
+                                'add' => 1,
+                    ));
                 } else {
                     throw new \Exception("Not Save Row");
                 }
             } else {
                 $messages = $customerForm->getMessages();
-                print_r($messages);
-                die;
-
+                //print_r($messages);die;               
                 $customerForm->populateValues($postData);
+                return $this->forward()->dispatch('Admin\Controller\Seller', array(
+                            'action' => 'list',
+                            'form' => $customerForm
+                ));
             }
         }
 
-        $viewData['form'] = $customerForm;
-
-        $view = new ViewModel($viewData);
-        $view->setTemplate('admin/customer/list');
-
-        return $view;
+        return $this->redirect()->toRoute('admin', array('controller' => 'customer', 'action' => 'list'));
     }
 
     private function prepareDataCustomer($customerData)
     {
         $remote = new RemoteAddress;
         $ipClient = $remote->getIpAddress();
-        
-        
+
+
         $customerData['address_id'] = 0;
         $customerData['ip'] = $ipClient;
         $customerData['status'] = 0;

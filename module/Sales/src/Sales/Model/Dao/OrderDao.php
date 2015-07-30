@@ -10,7 +10,7 @@ namespace Sales\Model\Dao;
 
 use Zend\Db\TableGateway\TableGateway;
 
-class CustomerDao
+class OrderDao
 {
     protected $tableGateway;
 
@@ -23,7 +23,7 @@ class CustomerDao
     {
         $query = $this->tableGateway->getSql()->select();
 
-        $query->order("customer_id DESC");
+        $query->order("order_id DESC");
         //echo $query->getSqlString();die;
     
         $resultSet = $this->tableGateway->selectWith($query);
@@ -33,9 +33,11 @@ class CustomerDao
          
     }
     
-    public function savedCustomer($data)
+    public function savedOrderAddCustomer($data)
     {
-         return $this->tableGateway->insert($data);
+         $this->tableGateway->insert($data);
+         
+         return $this->tableGateway->getLastInsertValue();
     }
     
     

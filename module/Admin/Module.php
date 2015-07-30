@@ -13,10 +13,10 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
-use Admin\Model\Dao\CategoryDao;
-use Admin\Model\Entity\Category;
-use Admin\Model\Entity\Product;
-use Admin\Model\Dao\ProductDao;
+use Catalog\Model\Dao\CategoryDao;
+use Catalog\Model\Entity\Category;
+use Catalog\Model\Entity\Product;
+use Catalog\Model\Dao\ProductDao;
 use Provider\Model\Entity\Provider;
 use Provider\Model\Dao\ProviderDao;
 

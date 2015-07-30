@@ -8,6 +8,7 @@ return array(
             'Admin\Controller\Provider' => 'Admin\Controller\ProviderController',
             'Admin\Controller\Customer' => 'Admin\Controller\CustomerController',
             'Admin\Controller\Order' =>    'Admin\Controller\OrderController',
+            'Admin\Controller\Seller' =>    'Admin\Controller\SellerController',
         ),
     ),
      'router' => array(

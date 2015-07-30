@@ -10,7 +10,7 @@ namespace Sales\Form\Validator;
 
 use Zend\InputFilter\InputFilter;
 
-class CustomerValidator extends InputFilter
+class SellerValidator extends InputFilter
 {
 
     protected $opcionesAlnum = array(
@@ -43,7 +43,7 @@ class CustomerValidator extends InputFilter
     public function __construct($sm)
     {
         $this->add(array(
-            'name' => 'customer_id',
+            'name' => 'seller_id',
             'continue_if_empty' => true,
             'validators' => array(
                 array(
@@ -128,7 +128,7 @@ class CustomerValidator extends InputFilter
                 array(
                     'name' => 'Zend\Validator\Db\NoRecordExists',
                     'options' => array(
-                        'table' => 'lk_customer',
+                        'table' => 'lk_seller',
                         'field' => 'email',
                         'adapter' => $sm->get('Zend\Db\Adapter\Adapter'),
                          'messages' => array(

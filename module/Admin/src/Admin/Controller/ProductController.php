@@ -16,8 +16,8 @@ use Admin\Form\Product as ProductForm;
 use Admin\Form;
 use Admin\Form\Validator\ProductValidator;
 use Admin\Form\Validator\ProductImageValidator;
-use Admin\Model\Entity\Product;
-use Admin\Model\Dao\CategoryDao;
+use Catalog\Model\Entity\Product;
+use Catalog\Model\Dao\CategoryDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\ProductImage;
 
@@ -81,7 +81,7 @@ class ProductController extends AbstractActionController
                 $saved = $productDao->saveProduct($productEntity);
                 
                 if($saved){
-                    
+                   
                   return $this->redirect()->toRoute('admin', array(
                       'controller' => 'provider', 
                       'action' => 'productlist',

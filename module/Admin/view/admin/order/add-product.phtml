@@ -1,0 +1,230 @@
+<?php
+$this->headlink()
+        
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
+?>
+<!-- Start: Topbar -->
+<header id="topbar" class="ph10">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+                       
+            <li class="active">
+                <a href="<?php echo $this->url('admin', array('controller' => 'seller', 'action' => 'list')); ?>">List</a>
+            </li>
+
+        </ul>
+    </div>
+    <!--    <div class="topbar-right hidden-xs hidden-sm">
+          
+            <a href="ecommerce_products.html" class="btn btn-default btn-sm light fw600 ml10">
+                <span class="fa fa-plus pr5"></span> Add Product</a>
+            <a href="ecommerce_customers.html" class="btn btn-default btn-sm light fw600 ml10">
+                <span class="fa fa-user pr5"></span> Add Company</a>
+        </div>-->
+</header>
+<!-- End: Topbar -->
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="mw1000 center-block">
+          <!-- Form Wizard -->
+          <div class="">
+
+            <form method="post" action="<?php // echo $this->basePath($this->form->getAttribute('action')); ?>" id="form-wizard" novalidate="novalidate">
+               <?php //echo $this->formhidden($this->form->get('order_id')) ?>
+                <div class="wizard steps-bg steps-left clearfix" role="application" id="steps-uid-0"><div class="steps clearfix">
+                        <ul role="tablist">
+                            
+                            <li role="tab" class="disabled" aria-disabled="true"><a id="steps-uid-0-t-1" href="#steps-uid-0-h-1" aria-controls="steps-uid-0-p-1"><span class="number">2.</span> 
+                                    <i class="fa fa-user pr5"></i> Cliente</a></li>
+                            <li role="tab" class="first current" aria-disabled="false" aria-selected="true"><a id="steps-uid-0-t-0" href="#steps-uid-0-h-0" aria-controls="steps-uid-0-p-0"><span class="current-info audible">current step: </span><span class="number">1.</span> 
+                                    <i class="fa  fa-shopping-cart pr5"></i> Pedido</a></li>
+                            <li role="tab" class="disabled" aria-disabled="true"><a id="steps-uid-0-t-2" href="#steps-uid-0-h-2" aria-controls="steps-uid-0-p-2"><span class="number">3.</span> 
+                                    <i class="fa fa-shopping-cart pr5"></i> Checkout</a></li>
+                            <li role="tab" class="disabled last" aria-disabled="true"><a id="steps-uid-0-t-3" href="#steps-uid-0-h-3" aria-controls="steps-uid-0-p-3"><span class="number">4.</span> 
+                                    <i class="fa fa-shopping-cart pr5"></i> Checkout</a></li>
+                        </ul></div><div class="content clearfix">
+
+                <!-- Wizard step 1 -->
+               
+                <section id="content" class="table-layout">
+<div class="tray tray-center p10 va-t posr">
+                    <div class="panel mb25 mt5">
+            
+            <div class="panel-heading">
+                <span class="panel-title hidden-xs"> Agregar Productos </span>
+                <!--ul class="nav panel-tabs-border panel-tabs">
+                    <li class="active">
+                        <a href="#tab1_1" data-toggle="tab">General</a>
+                    </li>
+                    <li>
+                        <a href="#tab1_2" data-toggle="tab">Configuración</a>
+                    </li>
+                    <li>
+                        <a href="#tab1_3" data-toggle="tab">Dirección</a>
+                    </li>
+                </ul-->
+            </div>
+            <div class="panel-body p20 pb10 form-horizontal">
+                <form id="form" action="<?php echo $this->basePath($this->form->getAttribute('action')); ?>" method="post">   
+                     <?php echo $this->formhidden($this->form->get('order_id')) ?>
+                    
+                    <div class="tab-content pn br-n admin-form">
+                        <div id="tab1_1" class="tab-pane active">
+
+                            <div class="section row mbn">
+                               
+                                <div class="col-md-12 ">
+                                    <div class="section row  form-group">
+                                        <div class="col-xs-12">
+                                            <label class="col-md-3 control-label" for="customer_id">Producto  <span class="text-danger">*</span></label>
+                                            <div class="col-md-9 form-group">
+
+                                                <?php echo $this->formSelect($this->form->get('product_id')) ?>
+                                            </div>
+                                            <!-- end .smart-widget section -->
+                                        </div>
+
+                                    </div>
+                                     
+                                    
+                                   
+                                    <div class="section row  form-group"> 
+                                        <div class="col-xs-12">
+                                            <label class="col-md-3 control-label" for="password">Cantidad <span class="text-danger">*</span></label>
+                                            <div class="col-md-3">
+                                                 <label for="confirmPassword" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->form->get('quantity')); ?>
+                                                     <label for="confirmPassword" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                              
+                                                   
+                                                
+                                                <div class="help-block">
+                                                     
+                                                </div>
+                                            </div>
+                                       
+                                           
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                
+                            </div>
+                            <!-- end section row -->
+
+                        </div>
+                        
+                         <hr class="short alt mtn">
+                        <div class="panel-footer text-right mt5">
+                            <button class="btn btn-primary text-right"> + Añadir Producto</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        </div>
+
+               
+                  <!-- end section -->
+
+                </section>
+
+                <!-- Wizard step 2 -->
+               
+           
+                
+              </div>
+                  <div class="actions clearfix">
+                      <ul role="menu" aria-label="Pagination">
+                          <li class="disabled" aria-disabled="true">
+                              <a href="#previous" role="menuitem">Anterior</a>
+                          </li>
+                          <li aria-hidden="false" aria-disabled="false">
+                                 <button class="btn btn-primary text-right"> Continuar </button>
+                          </li>
+                          <li aria-hidden="true" style="display: none;">
+                              <a href="#finish" role="menuitem">Finish</a>
+                          </li>
+                      </ul></div></div>
+              <!-- End: Wizard -->
+
+            </form>
+            <!-- End Account2 Form -->
+
+          </div>
+          <!-- end: .admin-form -->
+
+        </div>
+    <!-- end: .tray-center -->
+
+</section>
+<!-- End: Content -->
+<?php
+$this->headScript()
+   //     ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
+  //      ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
+  //      ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
+// ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+;
+$this->inlineScript()->captureStart();
+ echo <<<JS
+   jQuery(document).ready(function() { 
+
+
+  
+
+// Form Wizard 
+    var form = $("#form-wizard");
+
+    form.validate({
+        /* @validation states + elements 
+          ------------------------------------------- */
+         errorClass: "state-error",
+         validClass: "state-success",
+         errorElement: "em",
+         ignore: false,
+         /* @validation rules 
+          ------------------------------------------ */
+           rules: {
+           
+            customer_id: {
+                    required: true
+            },                   
+        },
+        messages:{
+            customer_id: {
+                    required: 'Campo Obligatorio'
+            },    
+        },
+    });
+
+//    form.children(".wizard").steps({
+//      headerTag: ".wizard-section-title",
+//      bodyTag: ".wizard-section",
+//      //transitionEffect: "slideLeft",
+//      autoFocus: true
+//    });
+
+    // Demo Wizard Functionality
+    var formWizard = $('.wizard');
+    var formSteps = formWizard.find('.steps');
+
+     $("#multiselect").select2({
+              placeholder: "Select Categories",
+               allowClear: true,
+               style: "bg-primary light"
+            });
+
+  });
+    
+JS;
+$this->inlineScript()->captureEnd();

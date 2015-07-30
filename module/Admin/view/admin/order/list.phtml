@@ -1,3 +1,200 @@
-Module: Admin
-Controller: Order
-Action: list
+<?php
+$this->headlink()
+        
+      //  ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
+?>
+<!-- Start: Topbar -->
+<header id="topbar" class="ph10">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+                       
+            <li class="active">
+                <a href="<?php echo $this->url('admin', array('controller' => 'order', 'action' => 'list')); ?>">List</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="topbar-right">  
+        <a href="<?php echo $this->url('admin', array('controller' => 'order', 'action' => 'add')); ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Order</a>
+    </div>
+      
+</header>
+<!-- End: Topbar -->
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center">
+         <?php // if($this->add == 1) {
+//                        $message = "Vendendor <strong> </strong> Agregado satisfactoriamente";
+//                        echo $this->alert('succes',$message);
+//                    }
+                ?>
+        <!-- create new order panel -->
+        
+
+        <!-- recent orders table -->
+        <div class="panel col-lg-11 col-md-11">
+            <div class="panel-menu admin-form theme-primary ">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="field select">
+                            <select id="filter-purchases" name="filter-purchases">
+                                <option value="0">Filter by Purchases</option>
+                                <option value="1">1-49</option>
+                                <option value="2">50-499</option>
+                                <option value="1">500-999</option>
+                                <option value="2">1000+</option>
+                            </select>
+                            <i class="arrow double"></i>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="field select">
+                            <select id="filter-group" name="filter-group">
+                                <option value="0">Filter by Group</option>
+                                <option value="1">Customers</option>
+                                <option value="2">Vendors</option>
+                                <option value="3">Distributors</option>
+                                <option value="4">Employees</option>
+                            </select>
+                            <i class="arrow double"></i>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="field select">
+                            <select id="filter-status" name="filter-status">
+                                <option value="0">Filter by Status</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                                <option value="3">Suspended</option>
+                                <option value="4">Online</option>
+                                <option value="5">Offline</option>
+                            </select>
+                            <i class="arrow double"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body pn ">
+                <div class="table-responsive">
+                    <table class="table admin-form theme-warning tc-checkbox-1 fs13">
+                        <thead>
+                            <tr class="bg-light">
+                                <th class="text-center">Select</th>
+                                <th class="">Orden Nº</th>
+                                <th class="">Cliente</th>                            
+                                <th class="">Email</th>
+                                <th class="">Status</th>
+                                <th class="">Ip</th>
+                                <th class="">Ingreso</th>                             
+                                <th class="">Opciones</th>
+                               
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->orders as $orders) : ?>
+                            <tr>
+                                <td class="text-center">
+                                    <label class="option block mn">
+                                        <input type="checkbox" name="mobileos" value="FR">
+                                        <span class="checkbox mn"></span>
+                                    </label>
+                                </td>
+                               
+                                <td class=""><?php echo $orders->order_id;?></td>
+                                <td class=""><?php echo $orders->customer_id;?></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                               
+                             
+                                <td class="text-right">
+                                    <div class="btn-group text-right">
+                                        <?php switch ($orders->customer_id) {
+                                                case 1:
+                                                   echo '<button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
+                                                            Activo
+                                                            <span class="caret ml5"></span>
+                                                        </button>';                 
+                                                    break;
+                                                case 2:
+                                                    echo '<button type="button" class="btn btn-warning br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">  
+                                                            Sin Aprobar
+                                                            <span class="caret ml5"></span>
+                                                          </button>';
+                                                    break;
+                                                case 3:
+                                                    echo '<button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                             Desactivado
+                                                            <span class="caret ml5"></span>
+                                                          </button>';
+                                                    break;
+                                                default:
+                                                    echo '<button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
+                                                            Incompleto
+                                                            <span class="caret ml5"></span>
+                                                          </button>';
+                                                    break;
+                                            }
+                                            ?>
+                                        
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="#">Editar</a>
+                                            </li>
+                                            <li>
+                                                <a href="<?php echo $this->basePath('admin/provider/productlist/').$orders->provider_id;?>">Products</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Contacto</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li class="">
+                                                <a href="#">Activo</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Sin Aprobar</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Desactivado</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                     <?php endforeach; ?>        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end: .tray-center -->
+
+    <!-- begin: .tray-right -->
+
+    <!-- end: .tray-right -->
+
+</section>
+<!-- End: Content -->
+<?php
+$this->headScript()
+   //     ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
+  //      ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
+  //      ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
+  //      ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
+ //       ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
+// ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+;
+$this->inlineScript()->captureStart();
+ echo <<<JS
+   
+    
+JS;
+$this->inlineScript()->captureEnd();

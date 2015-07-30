@@ -1,12 +1,12 @@
 <?php
 
-namespace Admin\Model\Dao;
+namespace Catalog\Model\Dao;
 /**
  * Description of IProductDao
  *
  * @author Pedro
  */
-use Admin\Model\Entity\Product;
+use Catalog\Model\Entity\Product;
 
 interface IProductDao
 {
