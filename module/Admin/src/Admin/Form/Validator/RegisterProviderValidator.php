@@ -5,7 +5,7 @@
  *
  * @author Pedro
  */
-namespace Provider\Form\Validator;
+namespace Admin\Form\Validator;
 
 use Zend\Validator\StringLength;
 use Zend\Validator\NotEmpty;

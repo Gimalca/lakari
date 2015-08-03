@@ -12,18 +12,15 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Provider\Form\Provider as ProviderForm;
-use Admin\Model\Dao\CategoryDao;
-use Provider\Form\Validator\ProviderValidator;
+use Admin\Form\Provider as ProviderForm;
+use Catalog\Model\Dao\CategoryDao;
+use Admin\Form\Validator\ProviderValidator;
 use Provider\Model\Entity\Provider;
 use Admin\Form\Product;
 
 
 class ProviderController extends AbstractActionController
 {
-
-   
-
     public function indexAction()
     {
         return $this->forward()->dispatch('Admin\Controller\Provider', array('action' => 'list'));
@@ -48,13 +45,14 @@ class ProviderController extends AbstractActionController
         
             if ($providerForm->isValid()) {
         
-                $providerData = $providerForm->getData();
-                //print_r($providerData);die;
-                $providerEntity = New Provider();
-                $providerEntity->exchangeArray($providerData);
-        
+                $providerData = $providerForm->getData();                
+                $prepareProviderData = $this->prepareProviderData($providerData);
                 
-                $saved = $providerDao->saveProvider($providerEntity->getArrayCopy());
+                $providerEntity = New Provider();
+                $providerEntity->exchangeArray($prepareProviderData);
+                $providerDataArray = $providerEntity->getArrayCopy();
+                
+                $saved = $providerDao->saveProvider($providerDataArray);
         
                 if($saved){
                     $view['save'] = 1;
@@ -84,6 +82,26 @@ class ProviderController extends AbstractActionController
         
         return new ViewModel($view );    
        
+    }
+     private function prepareProviderData($data)
+    {
+        // print_r($data);die;
+        if ($data['logo']['tmp_name'] != '') {
+            $explo = explode('img_', $data['logo']['tmp_name']);
+            $img = 'img_' . $explo[1];
+        }else{
+            $img = 'img_';
+        }
+        
+        $data['logo'] = ($img== "img_") ?  'no-logo.jpg' : $img;
+        $data['categories'] = ($data['categories']==0) ? 0:implode (", ",  $data['categories']);
+        $data['date_added'] = date("Y-m-d H:i:s");
+        $data['salt'] = time();
+        $data['password'] = md5($data['password'].$data['salt']);
+        $data['active'] = 1;
+        $data['approved'] = 0;
+                
+        return $data;
     }
     
     public function productListAction()

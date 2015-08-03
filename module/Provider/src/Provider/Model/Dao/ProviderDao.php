@@ -50,21 +50,7 @@ class ProviderDao
    
 
     public function saveProvider($data)
-    {
-       
-        // print_r($data);die;
-        if ($data['logo']['tmp_name'] != '') {
-            $explo = explode('img_', $data['logo']['tmp_name']);
-            $img = 'img_' . $explo[1];
-        }else{
-            $img = 'img_';
-        }
-        
-        $data['logo'] = ($img== "img_") ?  'no-logo.jpg' : $img;
-        $data['categories'] = ($data['categories']==0) ? 0:implode (", ",  $data['categories']);
-        $data['date_added'] = date("Y-m-d H:i:s");
-        $data['salt'] = time();
-        $data['password'] = md5($data['password'].$data['salt']);
+    { 
        
         return $this->tableGateway->insert($data);
        
