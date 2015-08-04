@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Form;
+namespace Provider\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;

@@ -6,6 +6,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Provider\Form\RegisterProvider;
 
+
+
 class IndexController extends AbstractActionController
 {
 
@@ -17,7 +19,7 @@ class IndexController extends AbstractActionController
     public function registerAction()
     {
         $request = $this->getRequest();       
-                $registerForm = New RegisterProvider();
+                $registerForm = new RegisterProvider();
 
                 if ($request->isPost()) {
                     $postData = $request->getPost();
