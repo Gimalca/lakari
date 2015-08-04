@@ -82,6 +82,7 @@ return array(
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => array(
+            // Loyut Front END
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'layout/head' => __DIR__ . '/../view/layout/head.phtml',
             'layout/header' => __DIR__ . '/../view/layout/header.phtml',

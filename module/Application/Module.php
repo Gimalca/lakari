@@ -88,7 +88,7 @@ class Module
 
         $config = $e->getApplication()->getServiceManager()->get('config');
         $controller = $e->getTarget();
-
+        //echo $config['module_layouts'][$moduleName];die;
         if (isset($config['module_layouts'][$moduleName])) {
             $controller->layout($config['module_layouts'][$moduleName]);
         }

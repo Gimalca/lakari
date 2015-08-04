@@ -103,9 +103,9 @@ class ProductController extends AbstractActionController
             'productForm' => $this->productForm
         ));
     }
-    
-    
-    
+
+
+
     public function editAction() 
     {
         $request = $this->getRequest();

@@ -15,6 +15,7 @@ return array(
         'BjyProfiler',
         'ZFTool',
         'Sales',
+        'Payment',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

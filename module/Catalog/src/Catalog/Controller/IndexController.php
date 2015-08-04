@@ -48,7 +48,7 @@ class IndexController extends AbstractActionController
         ));
     }
     public function categoryListAction()
-    {
+    {   
         $url = $this->params()->fromRoute('category');
         $id = $this->getUrlAliasDao()->getKeywordId($url);
  
