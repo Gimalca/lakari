@@ -18,6 +18,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
 
+use Provider\Model\Entity\Provider;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -52,6 +53,19 @@ class Module implements AutoloaderProviderInterface
                     $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
                     return $transport;
                 },
+                        
+                'Model\Dao\ProviderDao' => function ($sm) {
+                    $tableGateway = $sm->get('ProviderTableGateway');
+                    $dao = new ProviderDao($tableGateway);
+                    return $dao;
+                },
+                
+                'ProviderTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Provider());
+                    return new TableGateway('lk_provider', $dbAdapter, null, $resultSetPrototype);
+                }
             )
         );
     }

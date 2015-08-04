@@ -21,12 +21,16 @@ class CustomerController extends AbstractActionController
 
     public function listAction()
     {
-
-        //Get Resulset DB CUSTOMER Table
-        $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
+        //Decalaramos la variable view como array para enviarlo a la vista
+        $view = array();
+        
+        //Llamamos al servicio de la clase CustomerDao
+        $customerDao = $this->getService('Model\Dao\CustomerDao');
+        
+        //Asignamos al indice Customer Todo los Registros de la tabla customer
         $view['customers'] = $customerDao->getAll();
-
-        //Get Form Customer
+      
+        //Get Form Customer si no existe
         $form = $this->params()->fromRoute('form', false);
         if ($form) {
             $view['form'] = $form;
@@ -36,17 +40,17 @@ class CustomerController extends AbstractActionController
         }
 
 
-        //Fordward ADD ACTION 
+        //Fordward ADD ACTION si no se redirige
         $add = $this->params()->fromRoute('add', false);
         $view['add'] = $add;
-
+       // print_r($view);die;
         return new ViewModel($view);
     }
 
     public function addAction()
     {
         $request = $this->getRequest();
-
+       
         if ($request->isPost()) {
 
             $postData = $request->getPost();
@@ -57,17 +61,17 @@ class CustomerController extends AbstractActionController
 
             if ($customerForm->isValid()) {
                 $customerData = $customerForm->getData();
+                //
                 $customerPrepareData = $this->prepareDataCustomer($customerData);
-
+                //print_r($customerPrepareData);die;
                 $customerEntity = new Customer;
                 $customerEntity->exchangeArray($customerPrepareData);
                 $customerDataArray = $customerEntity->getArrayCopy();
-
-                $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
+                 
+                $customerDao = $this->getService('Model\Dao\CustomerDao');
                 $saved = $customerDao->savedCustomer($customerDataArray);
 
                 if ($saved) {
-
                     return $this->forward()->dispatch('Admin\Controller\Customer', array(
                                 'action' => 'list',
                                 'add' => 1,
@@ -79,7 +83,7 @@ class CustomerController extends AbstractActionController
                 $messages = $customerForm->getMessages();
                 //print_r($messages);die;               
                 $customerForm->populateValues($postData);
-                return $this->forward()->dispatch('Admin\Controller\Seller', array(
+                return $this->forward()->dispatch('Admin\Controller\Customer', array(
                             'action' => 'list',
                             'form' => $customerForm
                 ));
@@ -113,12 +117,12 @@ class CustomerController extends AbstractActionController
         return new ViewModel();
     }
 
-    public function getServiceDao($service)
+    public function getService($serviceName)
     {
         $sm = $this->getServiceLocator();
-        $tableGateway = $sm->get($service);
+        $service = $sm->get($serviceName);
 
-        return $tableGateway;
+        return $service;
     }
 
 }

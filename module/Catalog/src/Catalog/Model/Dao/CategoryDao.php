@@ -9,7 +9,7 @@ namespace Catalog\Model\Dao;
  */
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
-use Admin\Model\Entity\Category;
+use Catalog\Model\Entity\Category;
 
 class CategoryDao 
 {
@@ -29,11 +29,11 @@ class CategoryDao
         ),  'cd.category_id = lk_category.category_id');
         
         $query->order("lk_category.category_id DESC");
-        //echo $query->getSqlString();die;
-        
+        $query->getSqlString();
+        //print_r($query);die;
         $resultSet = $this->tableGateway->selectWith($query);
-       
-        //var_dump($resultSet);die;
+        //$result = $resultSet->toArray();
+        //print_r($result);die;
         
         return $resultSet;
        
