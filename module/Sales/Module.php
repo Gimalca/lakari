@@ -66,6 +66,16 @@ class Module
                     $dao = new OrderDao($tableGateway);
                     return $dao;
                 },
+                'Model\Dao\OrderDaoAdmin' => function ($sm) {
+                    $tableGateway = $sm->get('OrderTableGateway');
+                    $dao = new OrderDao($tableGateway);
+                    return $dao;
+                },
+                'Model\Dao\OrderDao' => function ($sm) {
+                    $tableGateway = $sm->get('OrderTableGateway');
+                    $dao = new OrderDao($tableGateway);
+                    return $dao;
+                },
                 
                 'OrderTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

@@ -81,18 +81,7 @@ class Module implements AutoloaderProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new Category());
                     return new TableGateway('lk_category', $dbAdapter, null, $resultSetPrototype);
                 },
-                'Model\Dao\ProviderDao' => function ($sm) {
-                    $tableGateway = $sm->get('ProviderTableGateway');
-                    $dao = new ProviderDao($tableGateway);
-                    return $dao;
-                },
                 
-                'ProviderTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Provider());
-                    return new TableGateway('lk_provider', $dbAdapter, null, $resultSetPrototype);
-                }
             )
         )
         ;
