@@ -39,9 +39,8 @@ $this->headlink()
                         <th class="text-center">Select</th>
                         
                         <th class="">Image</th>
-                        <th class="text-center">ID</th>
                         <th class="">Product Title</th>
-                        <th class="">SKU</th>
+                        <th class="">Product Model</th> 
                         <th class="">Price</th>
                         <th class="">Stock</th>
                         <th class="text-right">Status</th>
@@ -64,11 +63,10 @@ $this->headlink()
                                 <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>">
                             </a>
                         </td>
-                        <td class="w50 text-center"><?php echo $product->getProductId();?></td>
                         <td class=""><?php echo $product->getProductDescription()->getName();?></td>
-                        <td class="">#21362</td>
-                        <td class=""><?php echo $product->getPrice();?></td>
-                        <td class="">1,400</td>
+                        <td class=""><?php echo $product->getModel();?></td>
+                        <td class=""> $ <?php echo $product->getPrice();?></td>
+                        <td class=""><?php echo $product->getQuantity();?></td>
                         <td class="text-right">
                             <div class="btn-group text-right">
                                 <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
