@@ -11,7 +11,7 @@ return array(
         'Catalog',
         'Admin',
         'Provider',
-        'ZendDeveloperTools',
+       // 'ZendDeveloperTools',
         'BjyProfiler',
         'ZFTool',
         'Sales',
