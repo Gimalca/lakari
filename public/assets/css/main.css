@@ -1760,7 +1760,7 @@ a {
 #owl-main {
   text-align: center;
   cursor: default;
-  height: 368px;
+  height: 450px;
 }
 #owl-main .owl-controls {
   display: inline-block;
@@ -2055,7 +2055,7 @@ a {
 #owl-main .owl-controls {
   display: block;
   position: static;
-  margin-top: -47px;
+  margin-top: -105px;
 }
 #owl-main .owl-pagination {
   background: #FFF;
@@ -3977,7 +3977,7 @@ a {
   line-height: 30px;
   font-size: 14px;
 }
-.homepage-container .product .cart {
+.product .cart {
   margin-top: 5px;
   -webkit-transition: all 0.2s linear 0s;
   -moz-transition: all 0.2s linear 0s;
@@ -5170,11 +5170,12 @@ a {
 /*  GIMALCA
 /*===================================================================================*/
 
-.product .product-image {
+.product .product-image img {
     height: 300px;
 }
-.product .product-image .image{
+.product .product-image .image {
     vertical-align: middle;
+  
 }
 .input-group-addon{
     background-color: #f6f6f6;

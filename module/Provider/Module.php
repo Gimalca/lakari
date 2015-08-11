@@ -17,8 +17,11 @@ use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 
 use Provider\Model\Entity\Provider;
+use Provider\Model\Dao\ProviderDao;
 
 class Module implements AutoloaderProviderInterface
 {
