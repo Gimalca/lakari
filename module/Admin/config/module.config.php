@@ -48,5 +48,8 @@ return array(
     ),
     'controller_layouts' => array(
         'Admin/Login' => 'layout/layout',
+    ),
+    'strategies' => array(
+        'ViewJsonStrategy',
     )
 );

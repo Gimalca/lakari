@@ -20,6 +20,7 @@ use Catalog\Model\Entity\Product;
 use Catalog\Model\Dao\CategoryDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\ProductImage;
+use Zend\ViewModel\JsonModel;
 
 use Zend\Json\Json;
 use Zend\File\Transfer\Adapter\Http as FileTransferAdapter;
@@ -204,10 +205,9 @@ class ProductController extends AbstractActionController
         $response = $this->getResponse();
         
         $id = $request->getPost('id');
-        
         $productDao = $this->getProductDao();
         $delete = $productDao->deleteProduct($id);
-        
+        print_r($delete);die;
         if ($delete){
                 
             if ($request->isXmlHttpRequest()){
@@ -226,11 +226,57 @@ class ProductController extends AbstractActionController
         return $response;
         
     }
+
+    public function statusAction(){
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        
+        $status = $request->getPost('status');
+        $id = $request->getPost('id');
+
+        $productDao = $this->getProductDao();
+        $update = $productDao->updateProductStatus($status,$id);
+
+        switch ($status) {
+            case 1:
+                $statusName = 'Active';
+                break;
+            case 0:
+                $statusName = 'Inactive';
+                break;
+            case 2:
+                $statusName = 'Archived';
+                break;
+        }
+
+        if ($update){
+                
+                           
+                $response->setStatusCode(200);
+                $response->setContent(\Zend\Json\Json::encode(array(
+                    'response' => $update,
+                    'status' => $status,
+                    'statusName' => $statusName
+                    )
+                ));
+           
+        }else{
+            
+                $response->setStatusCode(400);
+                $response->setContent(\Zend\Json\Json::encode(array('response' => $update)));
+            
+            }
+        
+        return $response;
+        
+    }
     
     
     public function deleteImageAction() {
         $id = (int) $this->params()->fromRoute('id', 0);
         
+
+
         $request = $this->getRequest();
         $response = $this->getResponse();
         
@@ -251,6 +297,8 @@ class ProductController extends AbstractActionController
         
         return $response;
     }
+
+
     
     public function addImageAction() {
     

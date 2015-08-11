@@ -1,6 +1,5 @@
 <?php
 $this->headlink()
-        
         ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
 ?>
 <!-- Start: Topbar -->
@@ -29,15 +28,16 @@ $this->headlink()
     </div>
 </header>
 <!-- End: Topbar -->
+
 <section class="table-layout" id="content">
     <div class="panel p">
         <div class="panel-body pn col-lg-11 col-md-11 col-sm-11">
-            
+
             <table class="table admin-form theme-warning tc-checkbox-1 fs13">
                 <thead>
                     <tr class="bg-light">
                         <th class="text-center">Select</th>
-                        
+
                         <th class="">Image</th>
                         <th class="">Product Title</th>
                         <th class="">Product Model</th> 
@@ -48,57 +48,113 @@ $this->headlink()
                     </tr>
                 </thead>
                 <tbody>
-                 <?php foreach ($this->products as $product) : ?>
-                
-             
-                    <tr data-id="<?php echo $product->getProductId();?>">
-                        <td class="text-center">
-                            <label class="option block mn">
-                                <input type="checkbox" name="mobileos" value="FR">
-                                <span class="checkbox mn"></span>
-                            </label>
-                        </td>
-                        <td class="w100">
-                            <a href="<?php echo $this->basePath().'/catalogo/'.$product->getUrlAlias()->keyword;?>" target="_blank"> 
-                                <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>">
-                            </a>
-                        </td>
-                        <td class=""><?php echo $product->getProductDescription()->getName();?></td>
-                        <td class=""><?php echo $product->getModel();?></td>
-                        <td class=""> $ <?php echo $product->getPrice();?></td>
-                        <td class=""><?php echo $product->getQuantity();?></td>
-                        <td class="text-right">
-                            <div class="btn-group text-right">
-                                <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
-                                    Active
-                                    <span class="caret ml5"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="<?php echo $this->basePath().'/admin/product/edit/'.$product->getProductId();?>">Edit</a>
-                                    </li>
-                                    <li>
-                                        <a class="btn-delete" href="#">Delete</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Archive</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">Complete</a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="#">Pending</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Canceled</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                     <?php endforeach; ?> 
-                    
+                    <?php foreach ($this->products as $product) : ?>
+                        
+
+                        <tr data-id="<?php echo $product->getProductId(); ?>" data-whatever="<?php echo $product->getStatus(); ?>">
+                            <td class="text-center">
+                                <label class="option block mn">
+                                    <input type="checkbox" name="mobileos" value="FR">
+                                    <span class="checkbox mn"></span>
+                                </label>
+                            </td>
+                            <td class="w100">
+                                <a href="<?php echo $this->basePath() . '/catalogo/' . $product->getUrlAlias()->keyword; ?>" target="_blank"> 
+                                    <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage(); ?>">
+                                </a>
+                            </td>
+                            <td class=""><?php echo $product->getProductDescription()->getName(); ?></td>
+                            <td class=""><?php echo $product->getModel(); ?></td>
+                            <td class=""> $ <?php echo $product->getPrice(); ?></td>
+                            <td class=""><?php echo $product->getQuantity(); ?></td>
+                            <td class="text-right">
+                                <div class="btn-group text-right">
+                                    <?php
+                                    $status = $product->getStatus();
+                                    if ($status == 0) {
+                                        ?>
+                                        <button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
+                                            Inactive
+                                            <span class="caret ml5"></span>
+                                        </button> 
+                                        <?php
+                                    }
+                                    if ($status == 1) {
+                                        ?>
+                                        <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
+                                            Active
+                                            <span class="caret ml5"></span>
+                                        </button> 
+                                    <?php }
+                                    if ($status == 2){
+                                        ?>
+                                        <button type="button" class="btn btn-warning br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
+                                            Archived
+                                            <span class="caret ml5"></span>
+                                        </button> 
+                                    <?php }
+                                    
+                                    ?>
+
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="<?php echo $this->basePath() . '/admin/product/edit/' . $product->getProductId(); ?>">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-delete" href="#">Delete</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <?php
+                                        switch ($status) {
+                                            case 0:
+                                                ?>
+                                                <li>
+                                                    <a class="status" data-whatever="1" data-note-style="success" data-note-shadow="true" href = "#">Active</a>
+                                                </li>
+                                                <li class = "" >
+                                                    <a class="status" data-whatever="0" data-note-style="success" data-note-shadow="true" href = "#" >Inactive</a>
+                                                </li>
+                                                <li>
+                                                    <a class="status" data-whatever="2" data-note-style="success" data-note-shadow="true" href = "#">Archived</a>
+                                                </li>
+                                                <?php
+                                                break;
+                                            case 1:
+                                                ?>
+                                                <li  class = "">
+                                                    <a class="status" data-whatever="1" data-note-style="success" data-note-shadow="true" href = "#">Active</a>
+                                                </li>
+                                                <li>
+                                                    <a class="status" data-whatever="0" data-note-style="success" data-note-shadow="true" href = "#">Inactive</a>
+                                                </li>
+                                                <li>
+                                                    <a class="status" data-whatever="2" data-note-style="success" data-note-shadow="true" href = "#">Archived</a>
+                                                </li>
+                                                <?php
+                                                break;
+                                            case 2:
+                                                ?>
+                                                <li>
+                                                    <a class="status" data-whatever="1"  data-note-style="success" data-note-shadow="true" href = "#">Active</a>
+                                                </li>
+                                                <li>
+                                                    <a class="status" data-whatever="0" data-note-style="success" data-note-shadow="true" href = "#">Inactive</a>
+                                                </li>
+                                                <li  class = "">
+                                                    <a class="status" data-whatever="2" data-note-style="success" data-note-shadow="true" href = "#">Archived</a>
+                                                </li>
+                                                <?php
+                                                break;
+                                        }
+                                        ?>
+
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach;
+                    ?> 
+
                 </tbody>
             </table>
         </div>
@@ -111,7 +167,18 @@ echo <<<JS
 //<script type="text/javascript">
    jQuery('document').ready(function(){
        
-       
+        var Stacks = {
+                stack_top_right: {
+                    "dir1": "down",
+                    "dir2": "left",
+                    "push": "top",
+                    "spacing1": 10,
+                    "spacing2": 10
+                },
+            }
+
+            // PNotify Plugin Event Init
+            
        $('.btn-delete').click(function(e){
            e.preventDefault();
             var row = $(this).closest('tr');
@@ -143,14 +210,91 @@ echo <<<JS
                      });
                } else {
                    return;
-               }
-               
-               
-               
-           })
-        })
+               }    
+           });
+        });
+       $('.status').click(function(e){
+            e.preventDefault();
+            var row = $(this).closest('tr');
+            var oldStatus = row.data('whatever');
+            var status = $(this).data('whatever');
+            var id = row.data('id');
+
+                      $.ajax({
+                            url: '../product/status/'+id,
+                            type: 'post',
+                            data: {"id":id,"status":status},
+                            dataType: 'json',
+                            beforeSend: function() {
+
+                                    },
+                            complete: function() {
+
+                            },
+                            success: function(json) {
+                                var _class = '';
+                                var statusName = json.statusName;
+                                switch (json.status) {
+                                    case '1':
+                                       _class = 'btn btn-success br2 btn-xs fs12 dropdown-toggle';
+                                        
+                                        break;
+                                    case '0':
+                                        _class = 'btn btn-danger br2 btn-xs fs12 dropdown-toggle';
+                                        break;
+                                    case '2':
+                                        _class = 'btn btn-warning br2 btn-xs fs12 dropdown-toggle';
+                                        row.fadeOut();
+                                        var noteStyle = $(this).data('note-style');
+                                        var noteShadow = $(this).data('note-shadow');
+                                        var noteOpacity = $(this).data('note-opacity');
+                                        var noteStack = $(this).data('note-stack');
+                                        var width = "390px";
+
+                                        var noteStack = noteStack ? noteStack : "stack_top_right";
+                                        var noteOpacity = noteOpacity ? noteOpacity : "1";
+
+                                        function findWidth() {
+                                            if (noteStack == "stack_bar_top") {
+                                                return "100%";
+                                            }
+                                        }
+
+                                        new PNotify({
+                                            title: 'Succefully Archived',
+                                            shadow: noteShadow,
+                                            opacity: noteOpacity,
+                                            addclass: noteStack,
+                                            type: 'noteStyle',
+                                            stack: Stacks[noteStack],
+                                            width: findWidth(),
+                                            delay: 1400
+                                        });
+                                        break;
+
+                                }
+                                
+                                var button = $(row).find('button');
+                                button.html(statusName+'<span class="caret ml5"></span>');
+
+                                var oldClass = button.attr('class');
+                                button.removeClass(oldClass); 
+                                button.addClass(_class);
+
+                                var newStatus = $(row).find('a[data-whatever='+status+']').parent('li');               
+                                var old = $(row).find('a[data-whatever='+oldStatus+']').parent('li');
+                                  
+
+                                
+
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "-" + xhr.status );
+                            }
+                     });
+        });
         
-   })
+   });
 
 //</script>
 

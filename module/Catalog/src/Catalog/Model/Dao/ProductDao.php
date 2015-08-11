@@ -171,6 +171,18 @@ class ProductDao implements IProductDao
         return $row;
     }
 
+    public function updateProductStatus($status,$id)
+    {
+
+        $id = (int) $id;
+        $status = (int) $status;
+
+        $result = $this->tableGateway->update(array('status' => $status), array('product_id' => $id));
+
+        return $result;
+    }
+
+
     public function getProviderId($id)
     {
         $id = (int) $id;
@@ -208,6 +220,7 @@ class ProductDao implements IProductDao
         $rowset = $this->tableGateway->select(array(
             'product_id' => $id
         ));
+        var_dump($id);die;
 
         $row = $rowset->current();
 
@@ -409,7 +422,6 @@ class ProductDao implements IProductDao
     {
 
         $id = (int) $productId;
-
         return $this->tableGateway->delete(array('product_id' => $productId));
     }
 
