@@ -16,6 +16,8 @@ use Zend\Mvc\MvcEvent;
 
 use Catalog\Model\Entity\UrlAlias;
 use Catalog\Model\Dao\UrlAliasDao;
+use Catalog\Model\Entity\Category;
+use Catalog\Model\Dao\CategoryDao;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -53,6 +55,13 @@ class Module implements AutoloaderProviderInterface
                      $resultSetPrototype->setArrayObjectPrototype(new UrlAlias());
                      return new TableGateway('lk_url_alias', $dbAdapter, null, $resultSetPrototype);
                  },
+                 'CategoryTableGateway' => function ($sm) {
+                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                     $resultSetPrototype = new ResultSet();
+                     $resultSetPrototype->setArrayObjectPrototype(new Category());
+                     return new TableGateway('lk_category', $dbAdapter, null, $resultSetPrototype);
+                 },
+                 
              ),
          );
      }

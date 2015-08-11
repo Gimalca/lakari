@@ -29,7 +29,7 @@ class CategoryDao
         ),  'cd.category_id = lk_category.category_id');
         
         $query->order("lk_category.category_id DESC");
-        $query->getSqlString();
+        //$query->getSqlString(); die;
         //print_r($query);die;
         $resultSet = $this->tableGateway->selectWith($query);
         //$result = $resultSet->toArray();

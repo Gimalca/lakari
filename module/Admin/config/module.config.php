@@ -9,6 +9,7 @@ return array(
             'Admin\Controller\Customer' => 'Admin\Controller\CustomerController',
             'Admin\Controller\Order' =>    'Admin\Controller\OrderController',
             'Admin\Controller\Seller' =>    'Admin\Controller\SellerController',
+            'Admin\Controller\Category' =>    'Admin\Controller\CategoryController',
         ),
     ),
      'router' => array(

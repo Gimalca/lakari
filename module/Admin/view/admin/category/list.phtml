@@ -11,7 +11,7 @@ $this->headlink()
                 <a href="#">Dashboard</a>
             </li>
             <li class="active">
-                <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'list')); ?>">Products</a>
+                <a href="<?php echo $this->url('admin', array('controller' => 'category', 'action' => 'list')); ?>">Category</a>
             </li>
             <li>
                 <a href="#">Orders</a>
@@ -25,10 +25,11 @@ $this->headlink()
         </ul>
     </div>
     <div class="topbar-right">  
-        <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'add')); ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
+        <a href="<?php echo $this->url('admin', array('controller' => 'category', 'action' => 'add')); ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
     </div>
 </header>
 <!-- End: Topbar -->
+
 <section class="table-layout" id="content">
     <div class="panel p">
         <div class="panel-body pn col-lg-10 col-lg-offset-1 col-md-10 col-lg-offset-1 col-sm-11">
@@ -37,21 +38,20 @@ $this->headlink()
                 <thead>
                     <tr class="bg-light">
                         <th class="text-center">Select</th>
-                        
                         <th class="">Image</th>
-                        <th class="">Product Title</th>
-                        <th class="">Product Model</th> 
-                        <th class="">Price</th>
-                        <th class="">Stock</th>
+                        <th class="">Title</th>
+                        <th class="text-center">Top</th> 
+                        <th class="text-center">Sort Order</th>
+                        <th class=""></th>
                         <th class="text-right">Status</th>
-
                     </tr>
                 </thead>
+                
                 <tbody>
-                 <?php foreach ($this->products as $product) : ?>
+                 <?php foreach ($this->category as $category) : ?>
                 
              
-                    <tr data-id="<?php echo $product->getProductId();?>">
+                    <tr data-id="<?php echo $category->category_id;?>">
                         <td class="text-center">
                             <label class="option block mn">
                                 <input type="checkbox" name="mobileos" value="FR">
@@ -59,39 +59,36 @@ $this->headlink()
                             </label>
                         </td>
                         <td class="w100">
-                            <a href="<?php echo $this->basePath().'/catalogo/'.$product->getUrlAlias()->keyword;?>" target="_blank"> 
-                                <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>">
+                            <a href="" target="_blank"> 
+                                <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets/images/category/5.jpg')?>">
                             </a>
                         </td>
-                        <td class=""><?php echo $product->getProductDescription()->getName();?></td>
-                        <td class=""><?php echo $product->getModel();?></td>
-                        <td class=""> $ <?php echo $product->getPrice();?></td>
-                        <td class=""><?php echo $product->getQuantity();?></td>
+                        <td class=""><?php echo $category->name;?></td>
+                        <td class="text-center"><?php echo $category->top ;?></td>
+                        <td class="text-center"><?php echo $category->sort_order;?></td>
+                        <td class=""></td>
                         <td class="text-right">
-                            <div class="btn-group text-right">
-                                <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
-                                    Active
-                                    <span class="caret ml5"></span>
-                                </button>
+                            <div class="btn-group text-right"><?php 
+                                    $status = $category->status;
+                                    switch($status){
+                                        case 0: ?>
+                                <button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Inactive<span class="caret ml5"></span></button>
+                                        <?php    break;
+                                        case 1:?>
+                                <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Active<span class="caret ml5"></span></button>
+                                         <?php break;      
+                                    } ?>
+                                    
+                                
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="<?php echo $this->basePath().'/admin/product/edit/'.$product->getProductId();?>">Edit</a>
+                                        <a href="">Edit</a>
                                     </li>
                                     <li>
                                         <a class="btn-delete" href="#">Delete</a>
                                     </li>
                                     <li>
                                         <a href="#">Archive</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">Complete</a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="#">Pending</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Canceled</a>
                                     </li>
                                 </ul>
                             </div>
