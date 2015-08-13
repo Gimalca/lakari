@@ -17,8 +17,11 @@ use Catalog\Model\Dao\CategoryDao;
 use Catalog\Model\Entity\Category;
 use Catalog\Model\Entity\Product;
 use Catalog\Model\Dao\ProductDao;
+use Catalog\Model\Dao\InformationPageDao;
+use Catalog\Model\Entity\InformationPage;
 use Provider\Model\Entity\Provider;
 use Provider\Model\Dao\ProviderDao;
+
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -75,12 +78,7 @@ class Module implements AutoloaderProviderInterface
                     return $dao;
                 },
                 
-                'CategoryTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Category());
-                    return new TableGateway('lk_category', $dbAdapter, null, $resultSetPrototype);
-                },
+              
                 
             )
         )

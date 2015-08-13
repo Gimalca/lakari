@@ -10,6 +10,7 @@ return array(
             'Admin\Controller\Order' =>    'Admin\Controller\OrderController',
             'Admin\Controller\Seller' =>    'Admin\Controller\SellerController',
             'Admin\Controller\Category' =>    'Admin\Controller\CategoryController',
+            'Admin\Controller\InformationPage' =>    'Admin\Controller\InformationPageController',
         ),
     ),
      'router' => array(
