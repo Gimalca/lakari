@@ -1,0 +1,90 @@
+<?php
+$this->headlink()
+        ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
+?>
+
+<!-- Start: Topbar -->
+<header id="topbar" class="ph10">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+            <li >
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'list')); ?>">Products</a>
+            </li>
+            <li>
+                <a href="#">Orders</a>
+            </li>
+            <li>
+                <a href="#">Customers</a>
+            </li>
+            <li>
+                <a href="#">Settings</a>
+            </li>
+        </ul>
+    </div>
+    <div class="topbar-right">  
+        <a href="<?php echo $this->url('admin', array('controller' => 'product', 'action' => 'add')); ?>" class="btn btn-primary btn-sm light fw600 ml10"><span class="fa fa-plus pr5"></span> Add Product</a>
+    </div>
+</header>
+<!-- End: Topbar -->
+
+<section class="table-layout" id="content">
+    <div class="panel p">
+        <div class="panel-body pn col-lg-10 col-lg-offset-1 col-md-10 col-lg-offset-1 col-sm-11">
+
+            <table class="table admin-form theme-warning tc-checkbox-1 fs13">
+                <thead>
+                    <tr class="bg-light text-center">
+                        <th class="">Name</th>
+                        <th class="">Title</th>
+                        <th class="text-left">Sort Order</th> 
+                        <th class=""></th>
+                        <th class="">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->page as $pages): ?>
+                        <tr>
+                            <td class="text-left"><?php echo $pages->getName(); ?></td>
+                            <td class=""><?php echo $pages->getTitle(); ?></td>
+                            <td class=""><?php echo $pages->getSortOrder(); ?></td>
+                            <td class=""></td>
+                            <td class="">
+                                <div class="btn-group text-right"><?php 
+                                        $status = $pages->getStatus();
+                                        //print_r($status);
+                                        switch($status){
+                                            case 1: ?>
+                                    <button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        Inactive
+                                        <span class="caret ml5"></span></button>
+                                            <?php    break;
+                                            case 2: ?>
+                                    <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        Active
+                                        <span class="caret ml5"></span></button>
+                                             <?php break;      
+                                        } ?>
+                                    
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn-delete" href="#">Delete</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Archive</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach;?> 
+                <tbody>
+            </table>
+        </div>
+    </div>
+</section>
