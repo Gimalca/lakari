@@ -32,5 +32,19 @@ class UrlAliasDao
         return $row;
     }
 
+    public function getAll($urlSeo)
+    {
+        $sql = $this->tableGateway->getSql();
+        $select = $sql->select();
+        $select->columns(array('keyword'));
+        $select->where(array(
+            'keyword' => $urlSeo,
+        ));
+       // echo $sqlstring = $sql->getSqlStringForSqlObject($select);die;
+        $resultSet = $this->tableGateway->selectWith($select);
+        return $resultSet;
+
+    }
+
     //put your code here
 }

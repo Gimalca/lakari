@@ -25,6 +25,8 @@ use Zend\Validator\Digits;
 use Zend\I18n\Validator\Int;
 use Zend\InputFilter\EmptyContextInterface;
 use Zend\Form\Annotation\Required;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Sql;
 
 class ProductValidator extends InputFilter
 {
@@ -59,7 +61,7 @@ class ProductValidator extends InputFilter
             );
     
 
-    public function __construct()
+    public function __construct($serviceLocator)
     {
        // echo sprintf("%s/data/uploads/attachment.%s.txt", __DIR__ . '/../../../../..', time());die;
         $productImage = new FileInput('productImage');
@@ -212,7 +214,18 @@ class ProductValidator extends InputFilter
             'validators' => array(
                 array(
                     'name' => 'not_empty',
-                )
+                ),
+                array(
+                    'name' => 'Zend\Validator\Db\NoRecordExists',
+                    'options' => array(
+                        'adapter' => $serviceLocator->get('Zend\Db\Adapter\Adapter'),
+                        'table' => 'lk_url_alias',
+                        'field' => 'keyword',
+                        'messages' => array(
+                            'recordFound' => 'SEO URL ya se encuentra registrado, porfavor escoja otro.'
+                        )                        
+                    ),
+                ),
             ),
             'filters' => array(
                 array(
