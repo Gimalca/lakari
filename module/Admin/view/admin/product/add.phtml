@@ -374,8 +374,8 @@ $this->headlink()
                         </div>
                        
                         <hr class="short alt">
-                        <div class="panel-footer text-right">
-                            <button class="btn btn-primary text-right"> Saved </button>
+                        <div class="panel-footer text-right" id="button-form">
+                            <button class="btn btn-primary text-right"> Save </button>
                         </div>
                 </form>
             </div>
@@ -413,9 +413,12 @@ $this->headScript()
 
 
 $this->inlineScript()->captureStart();
+$url = $this->url('admin', array('controller' => 'product', 'action' => 'seo', ));
 echo <<<JS
+//<script type="text/javascript">
+var URL = '$url';
    jQuery(document).ready(function() {
-
+            
             $('.multi-field-wrapper').each(function() {
                 var wrapper = $('.multi-fields', this);
                 $(".add-field", $(this)).click(function(e) {
@@ -506,7 +509,8 @@ echo <<<JS
             $.validator.addMethod("AlnumOf", function(value, element) {
              return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
             }, "Username must contain only letters, numbers, or dashes.");
-                    
+
+                                
             $( "#form" ).validate({
             
                     /* @validation states + elements 
@@ -538,6 +542,15 @@ echo <<<JS
                             productSeoUrl: {
                                     required: true,
                                     AlnumOf: true,
+                                    remote: {
+                                        url: URL,
+                                        type: "get",
+                                        data: {
+                                            seo: function(){
+                                                return $("#productSeoUrl").val();
+                                            }
+                                        }                                        
+                                    }
                             },
                             productCategories: {
                                     required: true
@@ -569,7 +582,8 @@ echo <<<JS
                             },                  
                             productSeoUrl: {
                                     required: 'Campo Obligatorio',
-                                    AlnumOf: 'Solo letras, numeros y guion '
+                                    AlnumOf: 'Solo letras, numeros y guion ',
+                                    remote: 'Este SEO ya existe'
                             },                  
                            
                     },
@@ -602,8 +616,7 @@ echo <<<JS
                        }
                     }
                             
-            });     
-        
+            }); 
         
 
         });

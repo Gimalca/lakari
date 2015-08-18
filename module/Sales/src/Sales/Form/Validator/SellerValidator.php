@@ -131,7 +131,7 @@ class SellerValidator extends InputFilter
                         'table' => 'lk_seller',
                         'field' => 'email',
                         'adapter' => $sm->get('Zend\Db\Adapter\Adapter'),
-                         'messages' => array(
+                        'messages' => array(
                             'recordFound' => 'Email registrado'
                         )
                     ),
