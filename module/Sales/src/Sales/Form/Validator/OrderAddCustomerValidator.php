@@ -10,13 +10,10 @@ namespace Sales\Form\Validator;
 
 use Zend\InputFilter\InputFilter;
 
-class OrderAddCustomerValidator extends InputFilter
-{
+class OrderAddCustomerValidator extends InputFilter {
 
-
-    public function __construct()
-    {
-        $this->add(array(
+    public function __construct() {
+/*        $this->add(array(
             'name' => 'order_id',
             'continue_if_empty' => true,
             'validators' => array(
@@ -32,7 +29,8 @@ class OrderAddCustomerValidator extends InputFilter
                     'name' => 'StringTrim'
                 )
             )
-        ));
+        )); */
+
         $this->add(array(
             'name' => 'customer_id',
             'continue_if_empty' => true,
@@ -50,10 +48,5 @@ class OrderAddCustomerValidator extends InputFilter
                 )
             )
         ));
-
-       
-     
-       
     }
-
 }
