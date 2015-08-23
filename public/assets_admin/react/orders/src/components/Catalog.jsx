@@ -8,14 +8,11 @@ class Catalog extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            catalog: KartStore.getCatalog()
-        }
-
         this.addToKart = (e) => {
             e.preventDefault();
             var id = this.refs.product_id.getDOMNode().value;
-            KartActions.addItem(id);
+            let orderId = KartStore.getOrderId();
+            KartActions.addItem(id, orderId);
         };
     }
 
@@ -27,7 +24,7 @@ class Catalog extends React.Component {
     render() {
         let addLabel = 'Add to Kart';
 
-        let products = this.state.catalog.map( (product, i) => {
+        let products = this.props.products.map( (product, i) => {
             return (<option key={i} value={product.id}>{product.name}</option>);
         }); 
 

@@ -224,7 +224,6 @@
 }
 
 .form-control {
-    z-index: 10;
 }
 
 .select-user {
@@ -250,6 +249,23 @@
     background-color: #70ca63;
     color: #FFF;
     opacity: 0.8;
+}
+
+.nav-tabs > li.disabled > a {
+    background: rgb(238, 238, 238);
+}
+
+.nav-tabs > li > a {
+    background: rgb(250, 250, 250);
+    color: #777777;
+    border-bottom: 1px solid #dddddd;
+}
+
+@media (max-width: 991px) {
+
+    #content .col-md-6 + .col-md-6 {
+        padding-top: 0px !important;
+    }
 }
  
 @media only screen and (max-width: 815px) {
