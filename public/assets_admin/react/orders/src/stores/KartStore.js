@@ -3,26 +3,24 @@ import BaseStore from './BaseStore';
 import KartDispatcher from '../dispatchers/KartDispatcher';
 import KartConstants from '../constants/actions';
 
-var _catalog = [];
-var _cartItems = []; 
+var _cartItems = [],
+    _orderId; 
 
 //go to db, localstorage w/e
 
-function _add(id) {
+function _setCart(order) {
+    _cartItems = order.cart;
+    _orderId = order.order_id;
+}
 
-    var found = _cartItems.filter( product => {
-        return id == product.id;
-    });
+function _add(update) {
+}
 
-    if (found.length == 0) {
+function _itemAdded(product) {
+    _cartItems.push(product);
+}
 
-        let item = _catalog.filter( product => {
-            return product.id == id;
-        });
-
-        item[0].quantity = 1;
-        _cartItems.push(item[0]);
-    }
+function _invalidItem(error) {
 }
 
 function _remove(index) {
@@ -52,9 +50,8 @@ function _change(item) {
 
 class KartStore extends BaseStore {
 
-    getCatalog() {
-        _catalog = JSON.parse(PRODUCTS);
-        return _catalog;
+    getOrderId() {
+        return _orderId;
     }
 
     getCart() {
@@ -69,8 +66,15 @@ kartStore.dispatchToken = KartDispatcher.register( payload => {
     let actions = KartConstants.actions;
 
     switch(payload.action.actionType) {
+
         case actions.ADD_ITEM:
-            _add(payload.action.id)
+            _add(payload.action.update);
+        break;
+        case actions.ITEM_ADDED:
+            _itemAdded(payload.action.product);
+        break;
+        case actions.ITEM_INVALID:
+            _invalidItem(payload.action.error);
         break;
         case actions.REMOVE_ITEM:
             _remove(payload.action.index);
@@ -86,6 +90,9 @@ kartStore.dispatchToken = KartDispatcher.register( payload => {
         break;
         case actions.CHANGE_ITEM:
             _change(payload.action.item);
+        break;
+        case actions.USER_VALIDATED:
+            _setCart(payload.action.cart);
         break;
     }
 

@@ -9,10 +9,11 @@ class Cart extends React.Component {
         super(props);
 
         this.state = {
-            cart: KartStore.getCart()
-        }
+            cart: []
+        };
 
         this.onChange = (e) => {
+
             this.setState({
                 cart: KartStore.getCart()
             });
@@ -29,6 +30,7 @@ class Cart extends React.Component {
         this.increaseItem = (index) => {
             KartActions.increaseItem(index);
         }
+
         this.handleClear = () => {
             KartActions.emptyKart();
         }
@@ -39,18 +41,21 @@ class Cart extends React.Component {
         };
     }
 
+    componentDidMount() {
+
+    }
+
     componentWillMount() {
         KartStore.addChangeListener(this.onChange);
     }
 
     render() {
 
-        let removeLabel = 'X';
-        let increaseLabel = '+';
-        let decreaseLabel = '-';
         var total = 0;
+        var products = this.state.cart;
 
-        let items = this.state.cart.map( (product, i) => {
+        let items = products.map( (product, i) => {
+
             let qty = product.quantity || '';
 
             if (product.quantity <= 0) {
@@ -59,6 +64,7 @@ class Cart extends React.Component {
 
             let subTotal = product.price * qty;
             total+= subTotal;
+
             return (<tr key={i}>
                      <td className='col-xs-2 romove-item'> 
                     <a onClick={this.removeFromKart.bind(this, i)} title='cancel' className='icon'> 
@@ -67,7 +73,7 @@ class Cart extends React.Component {
                      </td> 
                      <td className='col-xs-3'>
                      <a className='entry-thumbnail'>
-                        <img className='hidden-xs kart-image mw60 ib mr10 img-responsive img-thumbnail' src={'/assets/images/products/catalog/'+product.image} alt='100x100'/> 
+                        <img className='hidden-xs kart-image mw60 ib mr10 img-responsive img-thumbnail' src={'/assets/images/products/catalog/'+ product.image} alt='100x100'/> 
                         </a>
                         <div> {product.name} </div>
                     </td>
@@ -96,12 +102,10 @@ class Cart extends React.Component {
                     </td>
                     </tr>);
         });
+
         return (<div className='shopping-cart'>
-
                 <div className='col-xs-12 col-md-10 col-sm-10'>
-
                 <div className='bodycontainer scrollable shopping-cart-table'>
-
                 <table className='table table-hover table-bordered table-scrollable'>
                 <thead> 
                     <tr>
@@ -129,7 +133,6 @@ class Cart extends React.Component {
                 </thead>
                 <tbody>{items}</tbody>
                 </table>
-
             </div>
         </div>
 

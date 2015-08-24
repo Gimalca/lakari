@@ -24,53 +24,144 @@ class OrderController extends AbstractActionController {
         return new ViewModel($view);
     }
 
+    public function userinfoAction() {
+
+        $request = $this->getRequest();
+
+        if ($request->isXmlHttpRequest()) {
+
+            $id = $request->getQuery('id');
+            $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
+
+            $columns = array (
+                'customer_id',
+                'firstname',
+                'lastname',
+                'email',
+                'telephone',
+                'fax',
+            );
+
+            $customer = $customerDao->getById($id, $columns)->getArrayCopy();
+
+            //mientras el modelo no tenga cel
+            $customer['cellphone'] = $customer['telephone'];
+            $response = $this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent(Json::encode(array_filter($customer)));
+            return $response;
+        }
+
+        return false;
+    }
+
     public function addAction() {
+
         $request = $this->getRequest();
         $form = new OrderAddCustomerForm;
 
-        if ($request->isPost()) {
+        if ($request->isXmlHttpRequest() && $request->isPost()) {
 
-            $postData = $request->getPost();
-
+            $postData = $request->getPost('user');
             $form->setInputFilter(new OrderAddCustomerValidator);
             $form->setData($postData);
             if ($form->isValid()) {
                 $orderData = $form->getData();
 
+                //TODO BUSCAR ORDEN EN ESTADO DE PENDIENTE
+
                 $orderEntity = New Order;
                 $orderEntity->exchangeArray($orderData);
                 $dataOrder = $orderEntity->getArrayCopy();
-
                 $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
-                $saved = $orderDao->savedOrderAddCustomer($dataOrder);
+                $saved = $orderDao->savedOrderAddCustomer($this->formatInsert($orderEntity));
+
+                //TODO Busco el carrito del cliente para mostrar
+                //los items ya cargados
+
+                $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
+                $id = $dataOrder['customer_id'];
+                $customer = $customerDao->getById($id, array('cart'))->getArrayCopy();
+                $cart = (isset($customer['cart']) && $customer['cart'])? $customer['cart']:[];
+                $response = $this->getResponse();
 
                 if ($saved) {
-
-                      return $this->forward()->dispatch('Admin\Controller\Order', array(
-                                'action' => 'addProduct',
-                                'id' => $saved,
-                    ));
+                    $response->setStatusCode(200);
+                    $response->setContent(Json::encode(array('order_id' => $saved, 'cart' => $cart)));
 
                 } else {
                     throw new \Exception("Not Save Row");
                 }
             } else {
                 $messages = $form->getMessages();
-                print_r($messages);
-                die;
-                $form->populateValues($postData);
+                $response->setStatusCode(400);
+                $response->setContent(Json::encode($messages));
             }
+            return $response;
         }
 
-//        $cus = $this->getCustomerSelect();
- //       $form->get('customer_id')->setValueOptions($cus);
-
-        $view['form'] = $form;
         $view['customers'] = JSON::encode($this->getCustomerSelect());
         //print_r($view['customers']);die;
         $view['products'] = JSON::encode($this->getProductSelect());
-
         return new ViewModel($view);
+    }
+
+    public function addProductAction() {
+        $request = $this->getRequest();
+
+        if ($request->isXmlHttpRequest() && $request->isPost()) {
+            $postData = $request->getPost();
+            $form = new OrderAddProductForm;
+
+            //TODO AGREGAR EL PRODUCTO AL CARRITO
+            $productDao = $this->getServiceDao('Admin\Model\Dao\ProductDao');
+            $result = $productDao->getProductById($postData['product_id']);
+
+            $product['name'] = $result->getProductDescription()->getName();
+            $product['description'] = $result->getProductDescription()->getDescription();
+            $product['image'] = $result->getProductImage()[0]->image;
+            $product['price'] = $result->getPrice();
+            $product['quantity'] = $result->getQuantity();
+
+            $response = $this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent(Json::encode($product));
+            return $response;
+        };
+        return false;
+    }
+
+    private function getServiceDao($service) {
+        $sm = $this->getServiceLocator();
+                $tableGateway = $sm->get($service);
+
+                return $tableGateway;
+    }
+
+    private function formatInsert($order) {
+        $order->order_status_id = 0;
+        $order->date_added = date("Y-m-d H:i:s");
+        $order->invoice_no = 0;
+        return $order;
+    }
+
+    private function getProductSelect() {
+
+        $productDao = $this->getServiceDao('Admin\Model\Dao\ProductDao');
+        $results = $productDao->getAll();
+
+        $products = array_map(function ($product) {
+        $description = $product['productDescription'];
+
+            return array(
+                'id' => $product['product_id'],
+                'name' => $description->getName(),
+                'description' => $description->getDescription(),
+            );
+
+        }, $results->toArray());
+
+        return $products;
     }
 
     private function getCustomerSelect() {
@@ -84,62 +175,9 @@ class OrderController extends AbstractActionController {
                 'name' => $customer['firstname'],
                 'email' => $customer['email'],
                 'lastname' => $customer['lastname'],
-                'telephone' => $customer['telephone'],
-                'fax' => $customer['fax']
             );
         }, $results->toArray());
 
         return $customers;
-    }
-
-    public function addProductAction() {
-        $request = $this->getRequest();
-        $idOrder = (int) $this->params()->fromRoute('id', 0);
-
-        //         if (!$idOrder) {
-        //            return $this->redirect()->toRoute('admin', array('controller' => 'order', 'action' => 'list'));
-        //        }
-
-        if ($request->isPost()) {
-            $postData = $request->getPost();
-
-            // print_r($postData);die;
-
-        };
-        $form = new OrderAddProductForm;
-        $products = $this->getProductSelect();
-        $form->get('product_id')->setValueOptions($products);
-        $view['form'] = $form;
-        $view['products'] = $this->getProductJSON();
-        return new ViewModel($view);
-    }
-
-    private function getProductSelect() {
-
-        $productDao = $this->getServiceDao('Admin\Model\Dao\ProductDao');
-        $results = $productDao->getAll();
-
-        $products = array_map(function ($product) {
-        $description = $product['productDescription'];
-
-            return array(
-                'id' => $product['product_id'],
-                'price' => $product['price'],
-                'image' => $product['image'],
-                'name' => $description->getName(),
-                'description' => $description->getDescription(),
-                'sku' => $product['sku'],
-                'isbn' => $product['isbn']
-            );
-        }, $results->toArray());
-
-        return $products;
-    }
-
-    private function getServiceDao($service) {
-        $sm = $this->getServiceLocator();
-                $tableGateway = $sm->get($service);
-
-                return $tableGateway;
     }
 }

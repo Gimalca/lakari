@@ -22,7 +22,7 @@ gulp.task('build', function () {
   .pipe(source('bundle.min.js'))
   .pipe(buffer())
   .pipe(uglify())
-  .pipe(gulp.dest('dist'));
+  .pipe(gulp.dest('../../js'));
 });
 
 gulp.task('css', function () {
@@ -30,7 +30,7 @@ gulp.src('styles/**/*.css')
     .pipe(minifyCSS())
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
     .pipe(concat('bundle.min.css'))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('../../../css'));
 });
  
 gulp.task('watch', function () {
