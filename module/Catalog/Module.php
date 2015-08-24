@@ -56,6 +56,12 @@ class Module implements AutoloaderProviderInterface
                      $resultSetPrototype->setArrayObjectPrototype(new UrlAlias());
                      return new TableGateway('lk_url_alias', $dbAdapter, null, $resultSetPrototype);
                  },
+                 'Catalog\Model\CategoryDao' => function($sm){
+                   $tableGateway = $sm->get('CategoryTableGateway');
+                   $table = new CategoryDao($tableGateway);
+                   return $table;
+                 },        
+                 
                  'CategoryTableGateway' => function ($sm) {
                      $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                      $resultSetPrototype = new ResultSet();
