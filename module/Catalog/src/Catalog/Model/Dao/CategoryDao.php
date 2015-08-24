@@ -38,6 +38,7 @@ class CategoryDao
         return $resultSet;
        
     }
+    
     public function getCategories($categories)
     {     
         $query = $this->tableGateway->getSql()->select();
@@ -54,6 +55,15 @@ class CategoryDao
     
         return $resultSet;
     }
+    
+    public function saveCategory($data)
+    { 
+        //print_r($data);die;
+        
+        return $this->tableGateway->insert($data); 
+    }
+    
+    
 
     //put your code here
 }

@@ -8,12 +8,12 @@ class Category {
     public $image;
     public $parent_id;
     public $top;
-    public $colum;
+    public $column;
     public $sort_order;
     public $status;
     public $date_added;
     public $date_modified;
-    public $name;
+    //public $name;
     
     function __construct($category_id = Null)
     {
@@ -26,13 +26,13 @@ class Category {
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
         $this->image = (isset($data['image'])) ? $data['image'] : null;
         $this->parent_id = (isset($data['parent_id'])) ? $data['parent_id'] : null;
-        $this->top =  (isset($data['top'])) ? $data['top'] : null;
-        $this->colum =  (isset($data['colum'])) ? $data['colum'] : null;
-        $this->sort_order =  (isset($data['sort_order'])) ? $data['sort_order'] : null;
+        $this->top = (isset($data['top'])) ? $data['top'] : null;
+        $this->column = (isset($data['column'])) ? $data['column'] : null;
+        $this->sort_order = (isset($data['sort_order'])) ? $data['sort_order'] : null;
         $this->status =  (isset($data['status'])) ? $data['status'] : null;
         $this->date_added =  (isset($data['date_added'])) ? $data['date_added'] : null;
         $this->date_modified =  (isset($data['date_modified'])) ? $data['date_modified'] : null;
-        $this->name =  (isset($data['name'])) ? $data['name'] : null;
+        //$this->name =  (isset($data['name'])) ? $data['name'] : null;
     }
 
     

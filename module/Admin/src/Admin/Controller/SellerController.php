@@ -25,14 +25,13 @@ class SellerController extends AbstractActionController
         $view['sellers'] = $sellerDao->getAll();
 
         //Get Form Seller
-        $form = $this->params()->fromRoute('form', false);
-        if ($form) {
-            $view['form'] = $form;
-        } else {
-            $sellerForm = new SellerForm;
-            $view['form'] = $sellerForm;
-        }
-
+         $sellerForm = new SellerForm;
+         $view['form'] = $sellerForm;
+        
+//        $form = $this->params()->fromRoute('form', false);
+//        if ($form) {
+//            $view['form'] = $form;
+//        } 
         //Fordward ADD ACTION 
         $add = $this->params()->fromRoute('add', false);
         $view['add'] = $add;
