@@ -19771,7 +19771,7 @@ ul.sidebar-nav ul#sideEight.sub-nav > li > a:hover {
 }
 @media (max-width: 815px) {
   #content .panel .panel-body {
-    overflow: hidden !important;
+    overflow: hidden;
     min-width: 0 !important;
   }
 }

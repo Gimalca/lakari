@@ -18,6 +18,8 @@ use Admin\Form\Validator\ProductValidator;
 use Admin\Form\Validator\ProductImageValidator;
 use Catalog\Model\Entity\Product;
 use Catalog\Model\Dao\CategoryDao;
+use Caralog\Model\Entity\UrlAlias;
+use Catalog\Model\Dao\urlAliasDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\ProductImage;
 use Zend\ViewModel\JsonModel;
@@ -29,10 +31,11 @@ use Admin\Form\ProductImage as ProductImageForm;
 
 class ProductController extends AbstractActionController
 {
-   
+
     private $productTable;
     private $categoryDao;
     private $productForm;
+    private $urlAliasDao;
 
     public function indexAction()
     {
@@ -69,7 +72,7 @@ class ProductController extends AbstractActionController
            );
            // print_r($postData);die;
            
-            $this->productForm->setInputFilter(new ProductValidator());
+            $this->productForm->setInputFilter(new ProductValidator($this->getServiceLocator()));
             $this->productForm->setData($postData);
             
             if ($this->productForm->isValid()) {
@@ -386,6 +389,30 @@ class ProductController extends AbstractActionController
         
     }
     
+    public function seoAction(){
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+
+        $seo = $request->getQuery('seo');
+
+        $urlDao = $this->getUrlDao();
+        $seoExist = $urlDao->getAll($seo);
+        $keyword = $seoExist->toArray();
+
+        if (empty($keyword)){   
+                
+                $response->setStatusCode(200);
+                $response->setContent(\Zend\Json\Json::encode('true'));
+           
+        }else{
+                
+                $response->setStatusCode(200);
+                $response->setContent(\Zend\Json\Json::encode('Este SEO ya existe, por favor seleccione otro'));
+            }
+        
+        return $response;
+        
+    }
 
     public function getProductDao()
     {
@@ -394,6 +421,16 @@ class ProductController extends AbstractActionController
             $this->productTable = $sm->get('Admin\Model\Dao\ProductDao');
         }
         return $this->productTable;
+    }
+
+    public function getUrlDao()
+    {
+        if (! $this->urlAliasDao) {
+            $sm = $this->getServiceLocator();
+            $tableGateway = $sm->get('UrlAliasTableGateway');
+            $this->urlAliasDao = new UrlAliasDao($tableGateway); 
+        }
+        return $this->urlAliasDao;
     }
     
     public function getCategoryDao()
