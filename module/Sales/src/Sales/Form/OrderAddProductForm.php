@@ -9,31 +9,21 @@ namespace Sales\Form;
  */
 use Zend\Form\Form;
 
-class OrderAddProductForm extends Form
-{
+class OrderAddProductForm extends Form {
 
-    public function __construct($name = NULL)
-    {
+    public function __construct($name = NULL) {
+
          parent::__construct($name);
 
         $this->setAttribute('action', 'admin/order/addProduct');
         $this->setAttribute('method', 'post');
 
-
         $this->add(array(
             'name' => 'order_id',
             'type' => 'hidden',
-            'attributes' => array(     
+            'attributes' => array(
                 'id' => 'order_id',
-                'value' =>0
-            ),
-        ));
-        $this->add(array(
-            'name' => 'customer_id',
-            'type' => 'hidden',
-            'attributes' => array(     
-                'id' => 'order_id',
-                'value' =>0
+                'value' => 0
             ),
         ));
 
@@ -46,12 +36,11 @@ class OrderAddProductForm extends Form
             'attributes' => array(
                 'id' => 'multiselect',
                 'class' => 'form-control gui-input',
-                'style' => 'width: 100%',     
+                'style' => 'width: 100%',
                 'required' => true,
-                
             ),
-           
         ));
+
           $this->add(array(
             'name' => 'quantity',
             'attributes' => array(
@@ -60,10 +49,7 @@ class OrderAddProductForm extends Form
                 'value' =>1,
                 'class' => 'form-control gui-input',
                 'placeholder' => 'quantity',
-                'required' => true,       
             ),
         ));
     }
-
-    //put your code here
 }

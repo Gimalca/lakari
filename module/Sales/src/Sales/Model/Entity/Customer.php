@@ -14,8 +14,7 @@
 
 namespace Sales\Model\Entity;
 
-class Customer
-{
+class Customer {
 
     public $customer_id;
     public $firstname;
@@ -58,9 +57,7 @@ class Customer
         $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
     }
 
-    public function getArrayCopy()
-    {
+    public function getArrayCopy() {
         return get_object_vars($this);
     }
-
 }
