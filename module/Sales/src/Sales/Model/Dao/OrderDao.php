@@ -7,6 +7,7 @@ namespace Sales\Model\Dao;
  *
  * @author Pedro
  */
+use Sales\Model\Entity\Order;
 
 use Zend\Db\TableGateway\TableGateway;
 
@@ -18,27 +19,25 @@ class OrderDao
     {
         $this->tableGateway = $tableGateway;
     }
-    
-     public function getAll()
-    {
+
+     public function getAll() {
+
         $query = $this->tableGateway->getSql()->select();
 
         $query->order("order_id DESC");
         //echo $query->getSqlString();die;
-    
+
         $resultSet = $this->tableGateway->selectWith($query);
         //var_dump($resultSet);die;
-    
         return $resultSet;
-         
     }
-    
-    public function savedOrderAddCustomer($data)
-    {
-         $this->tableGateway->insert($data);
-         
+
+    public function savedOrderAddCustomer(Order $order) {
+
+         $this->tableGateway->insert($order->getArrayCopy());
+
          return $this->tableGateway->getLastInsertValue();
     }
-    
-    
+
+
 }

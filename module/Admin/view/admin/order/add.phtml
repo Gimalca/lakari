@@ -1,7 +1,6 @@
 <?php
-$this->headlink()
-        
-        ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
+$this->headlink()->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css')
+        ->prependStylesheet($this->basePath() . '/css/bundle.min.css');
 ?>
 <!-- Start: Topbar -->
 <header id="topbar" class="ph10">
@@ -14,157 +13,12 @@ $this->headlink()
 
         </ul>
     </div>
-    <!--    <div class="topbar-right hidden-xs hidden-sm">
-          
-            <a href="ecommerce_products.html" class="btn btn-default btn-sm light fw600 ml10">
-                <span class="fa fa-plus pr5"></span> Add Product</a>
-            <a href="ecommerce_customers.html" class="btn btn-default btn-sm light fw600 ml10">
-                <span class="fa fa-user pr5"></span> Add Company</a>
-        </div>-->
 </header>
 <!-- End: Topbar -->
 
 <!-- Begin: Content -->
 <section id="content" class="table-layout animated fadeIn">
-
-    <!-- begin: .tray-center -->
-    <div class="mw1000 center-block">
-          <!-- Form Wizard -->
-          <div class="admin-form">
-
-            <form method="post" action="<?php echo $this->basePath($this->form->getAttribute('action')); ?>" id="form-wizard" novalidate="novalidate">
-               <?php echo $this->formhidden($this->form->get('order_id')) ?>
-                <div class="wizard steps-bg steps-left clearfix" role="application" id="steps-uid-0"><div class="steps clearfix"><ul role="tablist"><li role="tab" class="first current" aria-disabled="false" aria-selected="true"><a id="steps-uid-0-t-0" href="#steps-uid-0-h-0" aria-controls="steps-uid-0-p-0"><span class="current-info audible">current step: </span><span class="number">1.</span> 
-                  <i class="fa fa-user pr5"></i> Cliente</a></li><li role="tab" class="disabled" aria-disabled="true"><a id="steps-uid-0-t-1" href="#steps-uid-0-h-1" aria-controls="steps-uid-0-p-1"><span class="number">2.</span> 
-                  <i class="fa fa-dollar pr5"></i> Payment</a></li><li role="tab" class="disabled" aria-disabled="true"><a id="steps-uid-0-t-2" href="#steps-uid-0-h-2" aria-controls="steps-uid-0-p-2"><span class="number">3.</span> 
-                  <i class="fa fa-shopping-cart pr5"></i> Checkout</a></li><li role="tab" class="disabled last" aria-disabled="true"><a id="steps-uid-0-t-3" href="#steps-uid-0-h-3" aria-controls="steps-uid-0-p-3"><span class="number">4.</span> 
-                  <i class="fa fa-shopping-cart pr5"></i> Checkout</a></li></ul></div><div class="content clearfix">
-
-                <!-- Wizard step 1 -->
-                <h4 class="wizard-section-title title current" id="steps-uid-0-h-0" tabindex="-1">
-                  <i class="fa fa-user pr5"></i> Cliente</h4>
-                <section class="wizard-section body current" id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" aria-hidden="false">
-
-                     <div class="col-md-10 form-group">
-                        <label class="col-md-3 control-label" for="customer_id">Cliente  <span class="text-danger">*</span></label>
-                        <div class="col-md-9 form-group">
-
-                            <?php echo $this->formSelect($this->form->get('customer_id')) ?>
-                        </div>
-                        <!-- end .smart-widget section -->
-                    </div>
-                  <!-- end section -->
-
-               
-                  <!-- end section -->
-
-                </section>
-
-                <!-- Wizard step 2 -->
-                <h4 class="wizard-section-title title" id="steps-uid-0-h-1" tabindex="-1">
-                  <i class="fa fa-dollar pr5"></i> Payment</h4>
-                <section class="wizard-section body" id="steps-uid-0-p-1" role="tabpanel" aria-labelledby="steps-uid-0-h-1" aria-hidden="true" style="display: none;">
-
-                  <div class="section">
-                    <label for="firstname" class="field prepend-icon">
-                      <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="First name...">
-                      <label for="firstname" class="field-icon">
-                        <i class="fa fa-user"></i>
-                      </label>
-                    </label>
-                  </div>
-                  <!-- end section -->
-
-                  <div class="section">
-                    <label for="lastname" class="field prepend-icon">
-                      <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
-                      <label for="lastname" class="field-icon">
-                        <i class="fa fa-user"></i>
-                      </label>
-                    </label>
-                  </div>
-                  <!-- end section -->
-
-                </section>
-
-                <!-- Wizard step 3 -->
-                <h4 class="wizard-section-title title" id="steps-uid-0-h-2" tabindex="-1">
-                  <i class="fa fa-shopping-cart pr5"></i> Checkout</h4>
-                <section class="wizard-section body" id="steps-uid-0-p-2" role="tabpanel" aria-labelledby="steps-uid-0-h-2" aria-hidden="true" style="display: none;">
-
-                  <div class="section">
-                    <label for="email" class="field prepend-icon">
-                      <input type="email" name="email" id="email" class="gui-input" placeholder="Email address">
-                      <label for="email" class="field-icon">
-                        <i class="fa fa-envelope"></i>
-                      </label>
-                    </label>
-                  </div>
-                  <!-- end section -->
-
-                  <div class="section">
-                    <label for="mobile" class="field prepend-icon">
-                      <input type="tel" name="mobile" id="mobile" class="gui-input" placeholder="Telephone / moble number">
-                      <label for="mobile" class="field-icon">
-                        <i class="fa fa-phone-square"></i>
-                      </label>
-                    </label>
-                  </div>
-                  <!-- end section -->
-
-                </section>
-                
-                 <!-- Wizard step 3 -->
-                <h4 class="wizard-section-title title" id="steps-uid-0-h-3" tabindex="-1">
-                  <i class="fa fa-shopping-cart pr5"></i> Checkout</h4>
-                <section class="wizard-section body" id="steps-uid-0-p-3" role="tabpanel" aria-labelledby="steps-uid-0-h-3" aria-hidden="true" style="display: none;">
-
-                  <div class="section">
-                    <label for="email" class="field prepend-icon">
-                      <input type="email" name="email" id="email" class="gui-input" placeholder="Email address">
-                      <label for="email" class="field-icon">
-                        <i class="fa fa-envelope"></i>
-                      </label>
-                    </label>
-                  </div>
-                  <!-- end section -->
-
-                  <div class="section">
-                    <label for="mobile" class="field prepend-icon">
-                      <input type="tel" name="mobile" id="mobile" class="gui-input" placeholder="Telephone / moble number">
-                      <label for="mobile" class="field-icon">
-                        <i class="fa fa-phone-square"></i>
-                      </label>
-                    </label>
-                  </div>
-                  <!-- end section -->
-
-                </section>
-                
-              </div>
-                  <div class="actions clearfix">
-                      <ul role="menu" aria-label="Pagination">
-                          <li class="disabled" aria-disabled="true">
-                              <a href="#previous" role="menuitem">Anterior</a>
-                          </li>
-                          <li aria-hidden="false" aria-disabled="false">
-                                 <button class="btn btn-primary text-right"> Continuar </button>
-                          </li>
-                          <li aria-hidden="true" style="display: none;">
-                              <a href="#finish" role="menuitem">Finish</a>
-                          </li>
-                      </ul></div></div>
-              <!-- End: Wizard -->
-
-            </form>
-            <!-- End Account2 Form -->
-
-          </div>
-          <!-- end: .admin-form -->
-
-        </div>
     <!-- end: .tray-center -->
-
 </section>
 <!-- End: Content -->
 <?php
@@ -177,12 +31,18 @@ $this->headScript()
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
 // ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
 ;
+$urlAjax = $this->url('admin', array('controller' => 'order'));
+$products = $this->products;
+$customers = $this->customers;
+
 $this->inlineScript()->captureStart();
  echo <<<JS
+
+   var URL_AJAX = '{$urlAjax}';
+   var PRODUCTS = '{$products}';
+   var CUSTOMERS = '{$customers}';
+
    jQuery(document).ready(function() { 
-
-
-  
 
 // Form Wizard 
     var form = $("#form-wizard");
@@ -221,12 +81,13 @@ $this->inlineScript()->captureStart();
     var formSteps = formWizard.find('.steps');
 
      $("#multiselect").select2({
-              placeholder: "Select Categories",
+              placeholder: "Select User",
                allowClear: true,
                style: "bg-primary light"
             });
-
   });
     
 JS;
 $this->inlineScript()->captureEnd();
+$this->inlineScript()->appendFile($this->basePath('/assets_admin/js/bundle.min.js'));
+
