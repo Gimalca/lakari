@@ -7,6 +7,20 @@
         <?php echo $this->partial('layout/header'); ?>
         <div class="body-content m-t-10" id="top-banner-and-menu">
             <div class="container">
+                <?php 
+                    echo $this->flashMessenger()->renderCurrent('error',   array('alert', 'alert-dismissible', 'alert-danger')); 
+                    echo $this->flashMessenger()->renderCurrent('info',    array('alert', 'alert-dismissible', 'alert-info'));
+                    echo $this->flashMessenger()->renderCurrent('warning', array('alert', 'alert-dismissible', 'alert-warning'));
+                    echo $this->flashMessenger()->renderCurrent('success', array('alert', 'alert-dismissible', 'alert-success'));
+                    
+                    ?>
+                
+                <?php 
+                    if($this->alert) {
+                           
+                            echo $this->alert('succes',$this->alert);
+                    }
+                ?>
                 <?php echo $this->content; ?>
             </div>
         </div>

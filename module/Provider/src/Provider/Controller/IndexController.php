@@ -4,8 +4,14 @@ namespace Provider\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Provider\Form\RegisterProvider;
+use Zend\Http\PhpEnvironment\RemoteAddress;
 
+use Provider\Model\Entity\Provider;
+use Provider\Form\RegisterProvider;
+use Admin\Form\Validator\RegisterProviderValidator;
+use Provider\Model\Dao\ProviderDao;
+
+use Zend\Mail\Message;
 
 
 class IndexController extends AbstractActionController
@@ -20,7 +26,7 @@ class IndexController extends AbstractActionController
     {
         $request = $this->getRequest();       
                 $registerForm = new RegisterProvider();
-
+ 
                 if ($request->isPost()) {
                     $postData = $request->getPost();
 
@@ -35,19 +41,24 @@ class IndexController extends AbstractActionController
                         $providerEntity->exchangeArray($providerData);
                         $providerData = $providerEntity->getArrayCopy();
 
-                        $providerDao = $this->getServiceDao('Model\Dao\ProviderDao');
-                        $saved = $providerDao->saveProvider($providerData);
-
-                        if ($saved) {                
-                            $this->sendMailRegisterConfirm($providerData);
-                            $this->flashMessenger()->addMessage($providerData['email']);
-                            print_r($providerData);
-                            die;
+                        $providerTableGateway = $this->getService('providerTableGateway');
+                        $providerDao = new ProviderDao($providerTableGateway);
+                        
+                         $saved = $providerDao->saveProvider($providerData);
+                         $sendMail = $this->sendMailRegisterConfirm($providerData);
+                         
+                          print_r($saved); print_r($sendMail);die;
+                        if ($saved && $sendMail) {    
+                             $email = $providerData['email'];
+                             $this->flashMessenger()->addMessage("Registro satisfactorio Por favor revise su correo: $email", 'success' );
                         } else {
-                            throw new \Exception("Not Save Row");
+                            $this->flashMessenger()->addMessage("Disculpe no pudimos procesar su registro ", "error");
+                           // throw new \Exception("Not Save Row");
                         }
                     } else {
+                        $this->flashMessenger()->addMessage("Revise los datos del formulario ", 'error');
                         $messages = $registerForm->getMessages();
+                        $this->flashMessenger()->addMessage($messages, 'error');
                         //print_r($messages);die;
                         $registerForm->populateValues($postData);
                     }
@@ -63,13 +74,17 @@ class IndexController extends AbstractActionController
     {
         $remote = new RemoteAddress;
         $ipClient = $remote->getIpAddress();
+        
+        $providerData['logo'] = 'no-logo.jpg';
         $providerData['status'] = 0;
         $providerData['categories'] = '0';
         $providerData['approved'] = 0;
         $providerData['active'] = 0;
+        $providerData['salt'] = time();
         $providerData['ip'] = $ipClient;
         $providerData['token'] = md5(uniqid(mt_rand(), true));
-
+        $providerData['date_added'] = date("Y-m-d H:i:s");
+        
         return $providerData;
     }
 
@@ -87,15 +102,25 @@ class IndexController extends AbstractActionController
                                     'controller' => 'registration',
                                     'action' => 'confirm-email',
                                     'id' => $providerData['token'])));
-                $mailer->send($message);
+                
+              $sendMail =  $mailer->send($message);
+           
+              if($sendMail){
+                 $this->flashMessenger()->addMessage("Email enviado con exito." , 'success' );
+                 
+              }  else {
+                 $this->flashMessenger()->addMessage("No se pudo enviar el mail", 'error' );
+                 
+              }
+       return $sendMail;         
     }
 
-    public function getServiceDao($service)
+    public function getService($serviceName)
     {
         $sm = $this->getServiceLocator();
-                $tableGateway = $sm->get($service);
+        $service = $sm->get($serviceName);
 
-                return $tableGateway;
+        return $service;
     }
 
     public function confirmRegisterAction()

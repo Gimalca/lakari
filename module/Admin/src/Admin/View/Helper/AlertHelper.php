@@ -21,7 +21,31 @@ class AlertHelper extends AbstractHelper
             case 'succes':
                 $alert = '<div class="alert alert-success pastel alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <i class="fa fa-check pr10"></i>'.
+                                <i class="fa fa-check pr10"></i> '.
+                                $message
+                          .'</div>'
+            ;
+            break;
+            case 'info':
+                $alert = '<div class="alert alert-info pastel alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <i class="fa fa-check pr10"></i> '.
+                                $message
+                          .'</div>'
+            ;
+            break;
+            case 'warning':
+                $alert = '<div class="alert alert-warning pastel alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <i class="fa fa-check pr10"></i> '.
+                                $message
+                          .'</div>'
+            ;
+            break;
+            case 'error':
+                $alert = '<div class="alert alert-danger pastel alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <i class="fa fa-check pr10"></i> '.
                                 $message
                           .'</div>'
             ;
