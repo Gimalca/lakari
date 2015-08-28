@@ -39,8 +39,8 @@ $this->headlink()
 -------------------------------------->
     <section id="content" class="table-layout animated fadeIn">
         <div class="tray tray-center">
-         <?php if($this->save == 1) {
-                        $message = "Provedor <strong> Creado </strong> satisfactoriamente";
+         <?php if($this->add == 1) {
+                        $message = "Categoria <strong> Creada </strong> satisfactoriamente";
                         echo $this->alert('succes',$message);
                     }
                 ?>
@@ -59,33 +59,26 @@ $this->headlink()
                                 <div class="section row mbn">
                                     <div class="col-md-2">
                                         <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" style="">
-                                                <img data-src="holder.js/200x100/text:logo" src="" />
+                                        <div class="fileupload-new thumbnail" style="">
+                                            <img data-src="holder.js/200x100/text:logo" src="" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style=""></div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <span class="button btn-system btn-file btn-block">
+                                                    <span class="fileupload-new">Select</span>
+                                                    <span class="fileupload-exists">Change</span>
+                                                    <?php echo $this->formFile($this->categoryForm->get('image')); ?>
+
+                                                </span>
                                             </div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail" style=""></div>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <span class="button btn-system btn-file btn-block">
-                                                        <span class="fileupload-new">Select</span>
-                                                        <span class="fileupload-exists">Change</span>
-                                                        <?php echo $this->formFile($this->categoryForm->get('logo')); ?>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                
 
                                 <div class="col-md-10 ">
                                     <div class="section row  form-group">
-  <!--                                      <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="company">Parent_id: <span class="text-danger">*</span></label>
-                                            <div class="col-md-9">
-                                                <label for="company" class="field prepend-icon">                                       
-                                                    <?php //$parent_id = $this->categoryForm->get('parent_id'); ?>
-                                                    <?php //echo $this->formInput($parent_id); ?>
-                                            </div>
-                                        </div>-->
                                       <div class="col-xs-6">
                                             <label class="col-md-3 control-label" for="company">Categoria: <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
@@ -117,14 +110,15 @@ $this->headlink()
                                         <div class="col-xs-6">
                                             <label class="col-md-3 control-label" for="company">Descripcion: <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
-                                                <label class="field prepend-icon">                                       
+                                                <label class="field prepend-icon">
                                                     <?php echo $this->formTextarea($this->categoryForm->get('description')); ?>
+                                                    <label for="productDescription" class="field-icon"><i class="fa fa-comments"></i></label>
                                                 </label> 
                                             </div>
                                         </div>
                                         
                                         <div class="col-xs-6">
-                                          <label class="col-lg-3 control-label" for="status">Sort Order <span class="text-danger">*</span></label>
+                                          <label class="col-lg-3 control-label" for="status">Sort Order </label>
                                                 <div class="col-md-9 "> 
                                                     <label class="field select">
                                                         <?php echo $this->formInput($this->categoryForm->get('sort_order')) ?>
@@ -139,7 +133,7 @@ $this->headlink()
                                     
                                    <div class="section row  form-group">
                                         <div class="col-xs-6">
-                                          <label class="col-lg-3 control-label" for="column">Top <span class="text-danger">*</span></label>
+                                          <label class="col-lg-3 control-label" for="column">Top </label>
                                                 <div class="col-md-9 "> 
                                                         <?php echo $this->formRow($this->categoryForm->get('top')) ?>
                                                     <div class="help-block">
@@ -197,7 +191,9 @@ $this->headlink()
                 </thead>
                 
                 <tbody>
+                    <?php //var_dump($this->category); die; ?>
                  <?php foreach ($this->category as $category) : ?>
+                    
                 
              
                     <tr data-id="<?php echo $category->category_id;?>">
@@ -209,7 +205,7 @@ $this->headlink()
                         </td>
                         <td class="w100">
                             <a href="" target="_blank"> 
-                                <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath('assets/images/category/5.jpg')?>">
+                                <img class="img-responsive mw60 ib mr10" title="user" src="<?php echo $this->basePath().'/assets/images/category/'.$category->image?>">
                             </a>
                         </td>
                         <td class=""><?php echo $category->name;?></td>
@@ -252,53 +248,108 @@ $this->headlink()
 </section>
 
     <?php
+    $this->headScript()
+        ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
+  //      ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
+        ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
+ //       ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
+// ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+;
 $this->inlineScript()->captureStart();
 echo <<<JS
 //<script type="text/javascript">
    jQuery('document').ready(function(){
-       
-       
-       $('.btn-delete').click(function(e){
-           e.preventDefault();
-            var row = $(this).closest('tr');
-            var id = row.data('id');
-          bootbox.confirm("Are You Sure?!", function(e) {
+           
+           /* @custom validation method (smartCaptcha) 
+            ------------------------------------------------------------------ */
+                
+            $.validator.methods.smartCaptcha = function(value, element, param) {
+                    return value == param;
+            };
+            
+            $.validator.addMethod("Alnum", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\s]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
 
-                // e returns true if user clicks "accept"
-                // false if "cancel" or dismiss icon are clicked
-                if (e) {  
-                  
-
-                      $.ajax({
-                            url: '../product/delete/'+id,
-                            type: 'post',
-                            data: 'id='+id,
-                            dataType: 'json',
-                            beforeSend: function() {
-
-                                    },
-                            complete: function() {
-
+            $.validator.addMethod("AlnumOf", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+                
+            $( "#form" ).validate({
+            
+                    /* @validation states + elements 
+                    ------------------------------------------- */
+                    
+                    errorClass: "state-error",
+                    validClass: "state-success",
+                    errorElement: "em",
+                    ignore: false,
+                    
+                    /* @validation rules 
+                    ------------------------------------------ */
+                        
+                    rules: {
+                            name: {
+                                required: true,
+                                Alnum: true
                             },
-                            success: function(json) {
-                                row.fadeOut();
+                            description:{
+                                required: true,
+                                Alnum: true,
                             },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                alert(thrownError + "-" + xhr.status );
-                            }
-                     });
-               } else {
-                   return;
-               }
-               
-               
-               
-           })
-        })
-        
+                            status: {
+                                required: true,
+                            },
+                    },
+                    
+                    /* @validation error messages 
+                    ---------------------------------------------- */
+                        
+                    messages:{
+                            name: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },
+                            description:{
+                                required: 'Campo Obligatorio', 
+                                Alnum: 'Solo letras y numeros'
+                            },
+                            status:{
+                                required: 'Campo Obligatorio',
+                            },
+                    },
+
+                    /* @validation highlighting + error placement  
+                    ---------------------------------------------------- */ 
+                    
+                    highlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                    },
+                    invalidHandler: function(e,validator) {
+                        // loop through the errors:                
+                          $('.tab-pane').closest('.active').removeClass('active');
+                          $('.panel-tabs li').closest('.active').removeClass('active');
+                            // "uncollapse" section containing invalid input/s:
+                            $(validator.errorList[0].element).closest('.tab-pane').addClass('active');
+                            tab =  $(validator.errorList[0].element).closest('.tab-pane').attr('id');
+                            tab ='#'+tab;
+                          $('a[href='+tab+']').closest('li').addClass('active');
+                        
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                    },
+                    errorPlacement: function(error, element) {
+                       if (element.is(":radio") || element.is(":checkbox")) {
+                                element.closest('.option-group').after(error);
+                       } else {
+                                error.insertAfter(element.parent());
+                       }
+                    }
+            }); 
    })
-
 //</script>
-
 JS;
 $this->inlineScript()->captureEnd();

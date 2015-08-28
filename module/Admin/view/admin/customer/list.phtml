@@ -361,17 +361,175 @@ $this->headlink()
 <!-- End: Content -->
 <?php
 $this->headScript()
-   //     ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
+        // ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
   //      ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
-  //      ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
   //      ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
- //       ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+//        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
 // ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
 ;
 $this->inlineScript()->captureStart();
  echo <<<JS
-  
-                                            
+jQuery(document).ready(function() {
+
+
+     /* @custom validation method (smartCaptcha) 
+            ------------------------------------------------------------------ */
+                
+            $.validator.methods.smartCaptcha = function(value, element, param) {
+                    return value == param;
+            };
+            
+            $.validator.addMethod("Alnum", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\s]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+
+            $.validator.addMethod("AlnumOf", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+                    
+            $( "#form" ).validate({
+            
+                    /* @validation states + elements 
+                    ------------------------------------------- */
+                    
+                    errorClass: "state-error",
+                    validClass: "state-success",
+                    errorElement: "em",
+                    ignore: false,
+                    
+                    /* @validation rules 
+                    ------------------------------------------ */
+                        
+                    rules: {
+                            firstname: {
+                                    required: true,
+                                    Alnum: true,
+                            },
+                            lastname: {
+                                    required: true,  
+                                    Alnum: true,
+                            }, 
+                            telephone:{
+                              required: true,
+                              digits: true
+                            },
+                            movil:{
+                              required: true,
+                              digits: true
+                            },
+                            fax:{
+                              required: true,
+                              digits: true
+                            },
+                            email: {
+                                    required: true,
+                                    email:true
+                            },
+                            confirmEmail: {
+                                    required: true,
+                                    email:true,                               
+				    equalTo: "#email"
+                            },
+                            password: {
+                                    required: true,
+                                    minlength: 5,
+                                    Alnum: true,
+                            },
+                            confirmPassword: {
+                                    required: true,
+                                    AlnumOf: true,
+                                    equalTo: "#password"
+                            },
+                            categories: {
+                                    required: true
+                            },  
+                                
+                        
+                    },
+                    
+                    /* @validation error messages 
+                    ---------------------------------------------- */
+                        
+                    messages:{
+                            fristname: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },
+                            lastname: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },   
+                            telephone:{
+                              required: 'Campo Obligatorio',
+                              digits: 'Ingresar solo digitos'
+                            },
+                            movil:{
+                              required: 'Campo Obligatorio',
+                              digits: 'Ingresar solo digitos'
+                            },
+                            fax:{
+                              required: 'Campo Obligatorio',
+                              digits: 'Ingresar solo digitos'
+                            },
+                            email: {
+                                    email: 'Email Invalido',
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            confirmEmail: {
+                                    email: 'Email Invalido',
+                                    required: 'Campo Obligatorio',
+                                    equalTo: "Email no coincide"
+                            },                  
+                            password: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                                    
+                            },                  
+                            confirmPassword: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros',
+                                    minlength: 'Password minimo 5 caracteres',
+                                    equalTo: "Password no coincide"
+                                    
+                            },                  
+                                
+                           
+                    },
+
+                    /* @validation highlighting + error placement  
+                    ---------------------------------------------------- */ 
+                    
+                    highlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                    },
+                    invalidHandler: function(e,validator) {
+                        // loop through the errors:                
+                          $('.tab-pane').closest('.active').removeClass('active');
+                          $('.panel-tabs li').closest('.active').removeClass('active');
+                            // "uncollapse" section containing invalid input/s:
+                            $(validator.errorList[0].element).closest('.tab-pane').addClass('active');
+                            tab =  $(validator.errorList[0].element).closest('.tab-pane').attr('id');
+                            tab ='#'+tab;
+                          $('a[href='+tab+']').closest('li').addClass('active');
+                        
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                    },
+                    errorPlacement: function(error, element) {
+                       if (element.is(":radio") || element.is(":checkbox")) {
+                                element.closest('.option-group').after(error);
+                       } else {
+                                error.insertAfter(element.parent());
+                       }
+                    }
+                            
+            });     
+
+
+  });
+         
 JS;
 $this->inlineScript()->captureEnd();

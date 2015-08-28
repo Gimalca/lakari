@@ -10,6 +10,7 @@ namespace Catalog\Model\Dao;
 use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGateway;
 use Catalog\Model\Entity\Category;
+use Catalog\Model\Entity\CategoryDescription;
 
 class CategoryDao 
 {
@@ -51,19 +52,52 @@ class CategoryDao
         }
         //echo $query->getSqlString();die;
         $resultSet = $this->tableGateway->selectWith($query);
-         
+        
     
         return $resultSet;
     }
     
-    public function saveCategory($data)
+   
+    private function saveCategoryDescription(CategoryDescription $categoryDescription){
+        
+        //print_r($categoryDescription);die;
+        $categoryDescriptionData = $categoryDescription->getArrayCopy();
+        //print_r($categoryDescriptionData);die;
+        $table = $this->getTable('lk_category_description');
+        
+        $insert = $table->insert($categoryDescriptionData);
+        
+        return $insert;
+        
+    }
+
+    public function saveCategory(Category $category, CategoryDescription $categoryDescription)
     { 
         //print_r($data);die;
+        $dataCategory =  $category->getArrayCopy();
         
-        return $this->tableGateway->insert($data); 
+        $insert = $this->tableGateway->insert($dataCategory);
+        
+        if($insert){
+            
+            $categoryId = $this->tableGateway->getLastInsertValue();
+            
+            $categoryDescription->category_id = $categoryId;
+            $saveCategoryDescription = $this->saveCategoryDescription($categoryDescription);
+        }
+       
+        return $categoryId; 
     }
     
-    
+    private function getTable($tableName){
+        
+        $adapter = $this->tableGateway->getAdapter();
+        $table = new TableGateway($tableName, $adapter);
+        
+        return $table;
+    }
+
+
 
     //put your code here
 }

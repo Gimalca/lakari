@@ -45,14 +45,14 @@ class CustomerForm extends Form
                 'type' => 'text',
                 'id' => 'lastname',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter first lastname',
+                'placeholder' => 'enter lastname',
                 'required' => true,              
             ),
         ));
          $this->add(array(
-            'type' => 'email',
             'name' => 'email',
-            'attributes' => array(           
+            'attributes' => array( 
+                'type' => 'email',
                 'id' => 'email',
                 'class' => 'form-control gui-input',
                 'placeholder' => 'enter email',
@@ -62,12 +62,12 @@ class CustomerForm extends Form
             ),
         ));
         $this->add(array(
-            'type' => 'email',
             'name' => 'confirmEmail',
-            'attributes' => array(           
+            'attributes' => array( 
+                'type' => 'email',
                 'id' => 'confirmEmail',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter confirm email',
+                'placeholder' => 'confirm email',
                 'required' => true,
                 'autofocus' => true,
             ),
@@ -79,7 +79,7 @@ class CustomerForm extends Form
                 'type' => 'text',
                 'id' => 'telephone',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter company name',
+                'placeholder' => 'enter telephone',
                 'required' => true,
             ),
         ));
@@ -100,7 +100,7 @@ class CustomerForm extends Form
                 'type' => 'text',
                 'id' => 'fax',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter company name',
+                'placeholder' => 'enter fax',
                 'required' => true, 
             ),
         ));
@@ -113,6 +113,7 @@ class CustomerForm extends Form
                 'class' => 'form-control gui-input',
                 'placeholder' => 'enter password',
                 'required' => true,
+                'autofocus' => true,
             ),
         ));
         
@@ -124,7 +125,8 @@ class CustomerForm extends Form
                 'id' => 'confirmarPassword',
                 'class' => 'form-control gui-input',
                 'placeholder' => 'confirm password',
-                'required' => true,           
+                'required' => true,   
+                'autofocus' => true,
             ),
         ));
         

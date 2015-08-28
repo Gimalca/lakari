@@ -67,7 +67,7 @@ class SellerForm extends Form
             'attributes' => array(           
                 'id' => 'confirmEmail',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter confirm email',
+                'placeholder' => 'confirm email',
                 'required' => true,
                 'autofocus' => true,
             ),
@@ -76,10 +76,10 @@ class SellerForm extends Form
         $this->add(array(
             'name' => 'telephone',
             'attributes' => array(
-                'type' => 'text',
+                'type' => 'digits',
                 'id' => 'telephone',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter company name',
+                'placeholder' => 'enter telephone',
                 'required' => true,
             ),
         ));
@@ -100,7 +100,7 @@ class SellerForm extends Form
                 'type' => 'text',
                 'id' => 'fax',
                 'class' => 'form-control gui-input',
-                'placeholder' => 'enter company name',
+                'placeholder' => 'enter fax',
                 'required' => true, 
             ),
         ));

@@ -17,6 +17,7 @@ class Category extends Form
         
         $this->setAttribute('action', 'admin/category/add');
         $this->setAttribute('method', 'post');
+        $this->setAttribute('enctype', 'multipart/form-data');
         
         
         $this->add(array(
@@ -28,11 +29,11 @@ class Category extends Form
         ));
         
         $this->add(array(
-            'name' => 'logo',
+            'name' => 'image',
             'attributes' => array(
                 'type' => 'File',
-                'id' => 'logo',
-                'placeholder' => 'Logo',                
+                'id' => 'image',
+                'placeholder' => 'Logo',               
             ),
         ));
         
@@ -50,7 +51,7 @@ class Category extends Form
             'options' => array(
             ),
             'attributes' => array(
-                'value' => 'yes'
+                'value' => 'yes',
             )
         ));
         
@@ -83,7 +84,7 @@ class Category extends Form
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
                 'id' => 'description',
-                'class' => 'form-control',
+                'class' => 'form-control gui-textarea',
                 'placeholder' => 'Enter category description',
                 'required' => true,              
             ),
@@ -109,7 +110,7 @@ class Category extends Form
             'type' => 'select',
             'attributes' => array(
                 'id' => 'status',
-                'class' => 'form-control gui-input',
+                'class' => 'select',
             ),
             'options' => array(
         
