@@ -1,9 +1,9 @@
-
 <div class="row inner-bottom-sm">
     <div class="contact-page">        
         <div class="col-md-8 contact-form">
             <div class="col-md-12 contact-title">
                 <h4>Registro de Provedores</h4>
+  
             </div>
 
             <form id="form"  action="<?php echo $this->basePath($this->providerForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
@@ -93,9 +93,7 @@
                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                         <?php echo $this->formInput($this->providerForm->get('email')); ?>
                     </div>
-                    <div class="help-block text-danger">
-                       <?php echo $this->formelementerrors($this->providerForm->get('email')); ?>
-                    </div>
+                   
 
                 </div>
                 <div class="col-md-6 ">
@@ -105,6 +103,7 @@
                         <?php echo $this->formInput($this->providerForm->get('confirmEmail')); ?>
                     </div>
                     <div class="help-block text-danger">
+                        <?php echo $this->formelementerrors($this->providerForm->get('email')); ?>
                        <?php echo $this->formelementerrors($this->providerForm->get('confirmEmail')); ?>
                     </div>
                 </div>
@@ -125,6 +124,7 @@
                         <?php echo $this->formInput($this->providerForm->get('confirmarPassword')); ?>
                     </div>
                     <div class="help-block">
+                         
                        <?php echo $this->formelementerrors($this->providerForm->get('confirmarPassword')); ?>
                     </div>
                 </div>

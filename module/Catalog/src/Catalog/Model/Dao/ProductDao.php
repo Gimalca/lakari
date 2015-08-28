@@ -44,7 +44,7 @@ class ProductDao implements IProductDao
         // echo $query->getSqlString();die;
 
         $resultSet = $this->tableGateway->selectWith($query);
-        // var_dump($resultSet);
+         var_dump($resultSet->current()); die;
 
         return $resultSet;
     }
