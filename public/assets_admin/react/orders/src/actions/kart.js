@@ -158,7 +158,7 @@ let actions = {
             order: id
         });
 
-        $.post(URL_AJAX + '/delete', { order: id }, null, 'json')
+        $.post(URL_AJAX + '/delete', { id }, null, 'json')
             .then(function(response) {
                 KartDispatcher.handleServerAction({
                     actionType: KartConstants.actions.ORDER_DELETED,

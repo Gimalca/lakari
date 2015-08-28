@@ -58,7 +58,6 @@ class App extends React.Component {
 
         this.onChangeUser = (e) => {
 
-            console.log('change user');
             let key = UserStore.isConfirmed() ? 2 : 1;
 
             this.setState({
