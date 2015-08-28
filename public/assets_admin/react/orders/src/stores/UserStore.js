@@ -30,6 +30,10 @@ function _invalidUser(user) {
     console.log(user);
 }
 
+function _orderSelected(order) {
+    _isConfirmed = true;
+}
+
 class UserStore extends BaseStore {
 
     getUser() { return _user; }
@@ -47,11 +51,11 @@ userStore.dispatchToken = KartDispatcher.register( payload => {
         case actions.SELECT_USER:
             _selectUser(payload.action.id);
             break;
-        case actions.FETCH_USER:
-            _setUser(payload.action.user);
-            break;
         case actions.EDIT_USER:
             _editUser(payload.action.change);
+            break;
+        case actions.FETCH_USER:
+            _setUser(payload.action.user);
             break;
         case actions.USER_CONFIRM:
             _validateUser(payload.action.user);
@@ -59,6 +63,9 @@ userStore.dispatchToken = KartDispatcher.register( payload => {
         case actions.USER_INVALID:
             _invalidUser(payload.action.user);
             break;
+        case actions.ORDER_VALID:
+            _orderSelected(payload.action.order);
+        break;
     }
 
     userStore.emitChange();

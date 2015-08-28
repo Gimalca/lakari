@@ -2,10 +2,6 @@
 import KartDispatcher from '../dispatchers/KartDispatcher';
 import KartConstants from '../constants/actions';
 
-function _getByID(id) {
-    return $.get(URL_AJAX + '/userinfo', { id }, null,'json');
-}
-
 let actions = {
 
     setUser: (id) => {
@@ -15,13 +11,20 @@ let actions = {
             id
         });
 
-            _getByID(id)
+        $.get(URL_AJAX + '/userinfo', { id }, null,'json')
             .then(function (user) {
                 KartDispatcher.handleServerAction({
                     actionType: KartConstants.actions.FETCH_USER,
                     user
                 });
-            }).done();
+            })
+            .fail(function (error) {
+                KartDispatcher.handleServerAction({
+                    actionType: KartConstants.actions.USER_INVALID,
+                    user
+                });
+            })
+            .done();
     },
 
     editUser: (prop, value) => {
@@ -44,8 +47,8 @@ let actions = {
         $.post(URL_AJAX + '/add', { user }, null, 'json')
             .then(function (response) {
                 KartDispatcher.handleServerAction({
-                    actionType: KartConstants.actions.USER_VALIDATED,
-                    cart: response
+                    actionType: KartConstants.actions.ORDER_CREATED,
+                    order: response
                 });
             })
             .fail(function (error) {
@@ -92,10 +95,12 @@ let actions = {
     },
 
     decreaseItem: (index) => {
+
         KartDispatcher.handleViewAction({
             actionType: KartConstants.actions.DECREASE_ITEM,
             index
         });
+
     },
 
     increaseItem: (index) => {
@@ -106,12 +111,14 @@ let actions = {
     },
 
     emptyKart: () => {
+
         KartDispatcher.handleViewAction({
             actionType: KartConstants.actions.EMPTY_KART
         });
     },
 
     changeQuantity: (index, value) => {
+
         KartDispatcher.handleViewAction({
             actionType: KartConstants.actions.CHANGE_ITEM,
             item: { 
@@ -119,6 +126,52 @@ let actions = {
                 value
             }
         });
+    },
+
+    selectOrder: (id) => {
+
+        KartDispatcher.handleViewAction({
+            actionType: KartConstants.actions.SELECT_ORDER,
+            order: id
+        });
+
+        $.get(URL_AJAX, { id }, null, 'json')
+            .then(function (response) {
+                KartDispatcher.handleServerAction({
+                    actionType: KartConstants.actions.ORDER_VALID,
+                    order: response 
+                });
+            })
+            .fail(function (error) {
+                KartDispatcher.handleServerAction({
+                    actionType: KartConstants.actions.ORDER_INVALID,
+                    error
+                });
+            })
+            .done();
+    },
+
+    deleteOrder: (id) => {
+
+        KartDispatcher.handleViewAction({
+            actionType: KartConstants.actions.DELETE_ORDER,
+            order: id
+        });
+
+        $.post(URL_AJAX + '/delete', { order: id }, null, 'json')
+            .then(function(response) {
+                KartDispatcher.handleServerAction({
+                    actionType: KartConstants.actions.ORDER_DELETED,
+                    order: response 
+                });
+            })
+            .fail(function (error) {
+                KartDispatcher.handleServerAction({
+                    actionType: KartConstants.actions.ORDER_DELETE_FAIL,
+                    order: response 
+                });
+            })
+            .done();
     }
 }
 
