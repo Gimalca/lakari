@@ -15,7 +15,19 @@ use Sales\Form\OrderAddProductForm;
 class OrderController extends AbstractActionController {
 
     public function indexAction() {
-        return new ViewModel();
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->getQuery('id', 0);
+            $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
+            $order = array_filter($orderDao->getById($id)->getArrayCopy());
+            $order['products'] = $orderDao->getOrderProducts($id);
+            $response = $this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent(Json::encode($order));
+            return $response;
+        } else {
+            return new ViewModel();
+        }
     }
 
     public function listAction() {
@@ -32,7 +44,6 @@ class OrderController extends AbstractActionController {
         if ($request->isXmlHttpRequest()) {
 
             $id = $request->getQuery('id');
-
             $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
             $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
 
@@ -72,36 +83,28 @@ class OrderController extends AbstractActionController {
     public function addAction() {
 
         $request = $this->getRequest();
-        $form = new OrderAddCustomerForm;
 
         if ($request->isXmlHttpRequest() && $request->isPost()) {
 
             $postData = $request->getPost('user');
+            $form = new OrderAddCustomerForm;
             $form->setInputFilter(new OrderAddCustomerValidator);
             $form->setData($postData);
+
             if ($form->isValid()) {
                 $orderData = $form->getData();
-
-                //TODO BUSCAR ORDEN EN ESTADO DE PENDIENTE
-
                 $orderEntity = New Order;
                 $orderEntity->exchangeArray($orderData);
                 $dataOrder = $orderEntity->getArrayCopy();
                 $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
                 $saved = $orderDao->savedOrderAddCustomer($this->formatInsert($orderEntity));
 
-                //TODO Busco el carrito del cliente para mostrar
-                //los items ya cargados
-
-                $customerDao = $this->getServiceDao('Model\Dao\CustomerDao');
                 $id = $dataOrder['customer_id'];
-                $customer = $customerDao->getById($id, array('cart'))->getArrayCopy();
-                $cart = (isset($customer['cart']) && $customer['cart'])? $customer['cart']:[];
                 $response = $this->getResponse();
 
                 if ($saved) {
                     $response->setStatusCode(200);
-                    $response->setContent(Json::encode(array('order_id' => $saved, 'cart' => $cart)));
+                    $response->setContent(Json::encode(array('order_id' => $saved, 'products' => [])));
 
                 } else {
                     throw new \Exception("Not Save Row");
