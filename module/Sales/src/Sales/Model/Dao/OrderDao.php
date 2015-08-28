@@ -8,11 +8,12 @@ namespace Sales\Model\Dao;
  * @author Pedro
  */
 use Sales\Model\Entity\Order;
+use Sales\Model\Entity\OrderProduct;
 
 use Zend\Db\TableGateway\TableGateway;
 
-class OrderDao
-{
+class OrderDao {
+
     protected $tableGateway;
 
     public function __construct(TableGateway $tableGateway)
@@ -32,12 +33,89 @@ class OrderDao
         return $resultSet;
     }
 
+    public function getById($id) {
+
+        $id = (int) $id;
+
+        $sql = $this->tableGateway->getSql();
+        $query = $sql->select()
+            ->columns(array('order_id','order_status_id','invoice_no'), true)
+            ->where(array('order_id'=> $id));
+
+        $rowset = $this->tableGateway->selectWith($query);
+        $row = $rowset->current();
+
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
+
+    public function getOrderProducts($id) {
+
+        $id = (int) $id;
+        $sql = $this->getTable('lk_order_product')->getSql();
+
+        $query = $sql->select()
+            ->columns(array('product_id','name','price', 'quantity'), true)
+            ->join(array('pro' => 'lk_product'),
+                'pro.product_id = lk_order_product.product_id',
+                array('image'))
+            ->join(array('pd' => 'lk_product_description'),
+                'pd.product_id = pro.product_id', array('name','description'))
+            ->where(array('order_id'=> $id));
+
+        $resultSet = $this->getTable('lk_order_product')->selectWith($query);
+        $buffer = $resultSet->buffer();
+        $result = $this->formatOrderProduct($buffer);
+        return $result;
+    }
+
+    private function formatOrderProduct($orderProducts) {
+        $products = [];
+        foreach($orderProducts->toArray() as $orderProduct) {
+            $product = [];
+            foreach($orderProduct as $key => $value) {
+                if ($key === 'description' || $key === 'image') {
+                    if(!isset($product[$key])) {
+                        $product[$key] = [];
+                    }
+                    array_push($product[$key], $value);
+                } else {
+                    $product[$key] = $value;
+                }
+            }
+            $products[] =  $product;
+        }
+        return $products;
+    }
+
+    private function formatProductDesription($product) {
+    }
+
     public function savedOrderAddCustomer(Order $order) {
 
          $this->tableGateway->insert($order->getArrayCopy());
-
          return $this->tableGateway->getLastInsertValue();
     }
 
+    public function forCustomer($id, $columns) {
 
+        $sql = $this->tableGateway->getSql();
+        $query = $sql->select()
+            ->columns($columns, true)
+            ->where(array('lk_order.customer_id' => $id));
+        return $this->tableGateway->selectWith($query);
+    }
+
+
+    public function saveOrderProduct(OrderProduct $product) {
+        $insert = $product->getArrayCopy();
+        return $this->getTable('lk_order_product')->insert($insert);
+    }
+
+    private function getTable($tableName) {
+        $adapter = $this->tableGateway->getAdapter();
+        return new TableGateway($tableName, $adapter);
+    }
 }

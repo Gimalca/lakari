@@ -10,17 +10,16 @@ namespace Sales\Model\Dao;
 
 use Zend\Db\TableGateway\TableGateway;
 
-class CustomerDao
-{
-    protected $tableGateway;
+class CustomerDao {
 
-    public function __construct(TableGateway $tableGateway)
-    {
+    protected $tableGateway;
+    private $query;
+
+    public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
     }
 
-     public function getAll()
-    {
+     public function getAll() {
         $query = $this->tableGateway->getSql()->select();
 
         $query->order("customer_id DESC");
@@ -36,25 +35,18 @@ class CustomerDao
     public function getById($id, $columns) {
 
         $id = (int) $id;
-
         $sql = $this->tableGateway->getSql();
 
-        $query = $sql->select()->columns($columns)
-                    ->where(array('customer_id' => $id));
+        $query = $sql->select()
+                    ->columns($columns)
+                    ->where(array('lk_customer.customer_id' => $id));
 
-        $result = $this->tableGateway->selectWith($query);
-        $row = $result->current();
-
-        if (!$row) {
-            throw new \Exception("Could not find row");
-        }
+        $resultSet = $this->tableGateway->selectWith($query);
+        $row = $resultSet->current();
         return $row;
     }
 
-    public function savedCustomer($data)
-    {
+    public function savedCustomer($data) {
          return $this->tableGateway->insert($data);
     }
-
-
 }

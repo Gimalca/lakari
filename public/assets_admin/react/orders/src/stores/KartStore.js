@@ -9,7 +9,7 @@ var _cartItems = [],
 //go to db, localstorage w/e
 
 function _setCart(order) {
-    _cartItems = order.cart;
+    _cartItems = order.products;
     _orderId = order.order_id;
 }
 
@@ -91,11 +91,14 @@ kartStore.dispatchToken = KartDispatcher.register( payload => {
         case actions.CHANGE_ITEM:
             _change(payload.action.item);
         break;
-        case actions.USER_VALIDATED:
-            _setCart(payload.action.cart);
+
+        case actions.ORDER_CREATED:
+        case actions.ORDER_VALID:
+            _setCart(payload.action.order);
         break;
     }
 
+    console.log(payload.action.actionType);
     kartStore.emitChange();
     return true;
 });

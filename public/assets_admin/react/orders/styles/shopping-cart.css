@@ -211,7 +211,7 @@
     margin: 0 1em;
 }
 
-.bodycontainer { max-height: 350px; width: 100%; margin: 0; overflow-y: auto; }
+.bodycontainer { max-height: 600px; width: 100%; margin: 0; overflow-y: auto; }
 .table-scrollable { margin: 0; padding: 0; }
 
 .panel-body {
@@ -220,7 +220,7 @@
 }
 
 .user-form {
-    padding: 10%;
+    padding: 100px;
 }
 
 .form-control {
@@ -259,6 +259,20 @@
     background: rgb(250, 250, 250);
     color: #777777;
     border-bottom: 1px solid #dddddd;
+}
+
+.order-table {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.order-table tbody th {
+    text-align: center;
+}
+
+.order-table tbody tr td span.action {
+    margin: 0 5px;
+    cursor: pointer;
 }
 
 @media (max-width: 991px) {

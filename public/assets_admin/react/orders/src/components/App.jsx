@@ -5,7 +5,9 @@ import Catalog from './Catalog';
 import Panel from './Panel';
 import Checkout from './Checkout';
 import UserFilter from './UserFilter';
+import OrderTable from './OrderTable';
 import UserStore from '../stores/UserStore';
+import KartStore from '../stores/KartStore';
 import KartActions from '../actions/kart';
 import UserForm from './UserForm';
 import Cart from './Cart';
@@ -56,6 +58,7 @@ class App extends React.Component {
 
         this.onChangeUser = (e) => {
 
+            console.log('change user');
             let key = UserStore.isConfirmed() ? 2 : 1;
 
             this.setState({
@@ -63,10 +66,22 @@ class App extends React.Component {
                 user: UserStore.getUser()
             });
         };
+
+        this.onChangeKart = (e) => {
+            this.setState({
+                key: 2
+            });
+        }
     }
     
     componentWillMount() {
         UserStore.addChangeListener(this.onChangeUser);
+        KartStore.addChangeListener(this.onChangeKart);
+    }
+
+    componentWillUnmount() {
+        UserStore.removeChangeListener(this.onChangeUser);
+        KartStore.removeChangeListener(this.onChangeKart);
     }
 
     render() { 
@@ -80,7 +95,7 @@ class App extends React.Component {
             <TabPane eventKey={1} tab='Cliente'>
                 <Panel title='El Cliente' 
                     titleContent={<UserFilter options={users} onSelectOption={this.onClientLoad} />}
-                    panelContent={<UserForm />}
+                    panelContent={<div><UserForm /><OrderTable orders={this.state.user.orders} /></div>}
                     actionLabel={'Continuar'}
                     onFinish={this.onClientSelected} />
             </TabPane>
