@@ -51,16 +51,33 @@ class OrderDao {
         return $row;
     }
 
+    public function getOrderProductById($id) {
+        $id = (int) $id;
+        $orderProduct = $this->getTable('lk_order_product');
+        $sql = $orderProduct->getsql();
+        $query = $sql->select()
+                ->columns(array('name', 'model', 'quantity'))
+                ->where(array('order_product_id' => $id));
+        $rowSet = $orderProduct->selectWith($query);
+        $row = $rowSet->current();
+        if(!$row) {
+            throw new \Exception("Coulndt Find row {$id}");
+        } else {
+            return $row;
+        }
+    }
+
     public function getOrderProducts($id) {
 
         $id = (int) $id;
         $sql = $this->getTable('lk_order_product')->getSql();
 
         $query = $sql->select()
-            ->columns(array('product_id','name','price', 'quantity'), true)
+            ->columns(array('order_product_id as product_id','name','price', 'quantity'), true)
             ->join(array('pro' => 'lk_product'),
-                'pro.product_id = lk_order_product.product_id',
-                array('image'))
+                'pro.product_id = lk_order_product.product_id')
+            ->join(array('pi' => 'lk_product_image'),
+                'pro.product_id = pi.product_id', array('image'))
             ->join(array('pd' => 'lk_product_description'),
                 'pd.product_id = pro.product_id', array('name','description'))
             ->where(array('order_id'=> $id));
@@ -90,13 +107,23 @@ class OrderDao {
         return $products;
     }
 
-    private function formatProductDesription($product) {
-    }
-
     public function savedOrderAddCustomer(Order $order) {
 
          $this->tableGateway->insert($order->getArrayCopy());
          return $this->tableGateway->getLastInsertValue();
+    }
+
+    public function deleteOrder($id) {
+        $id = (int) $id;
+        $result = $this->tableGateway->delete(array('order_id' => $id));
+        return $result;
+    }
+
+    public function deleteOrderProduct($id) {
+        $id = (int) $id;
+        $delete = $this->getTable('lk_order_product')
+            ->delete(array('order_product_id' => $id));
+        return $delete;
     }
 
     public function forCustomer($id, $columns) {
@@ -111,7 +138,9 @@ class OrderDao {
 
     public function saveOrderProduct(OrderProduct $product) {
         $insert = $product->getArrayCopy();
-        return $this->getTable('lk_order_product')->insert($insert);
+        $orderProduct = $this->getTable('lk_order_product');
+        $orderProduct->insert($insert);
+        return $orderProduct->getLastInsertValue();
     }
 
     private function getTable($tableName) {
