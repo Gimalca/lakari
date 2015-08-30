@@ -227,7 +227,6 @@ class OrderController extends AbstractActionController {
             $postData = $request->getPost();
             $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
             $id = $postData['id'];
-            var_dump($id);die;
             $orderProduct = array_filter($orderDao->getOrderProductById($id)->getArrayCopy());
             $response = $this->getResponse();
 
