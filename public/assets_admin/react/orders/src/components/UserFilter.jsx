@@ -33,7 +33,8 @@ class UserFilter extends React.Component {
                 </span>
                 </span>
                 <div className='col-xs-10 col-sm-9'>
-                <select defaultValue='' style={{width:"100%"}} ref='filter' className='select-user form-control gui-input' onChange={this.onSelectOption} >
+                <select style={{width:"100%"}} ref='filter' className='select-user form-control gui-input' onChange={this.onSelectOption} >
+                    <option> </option>
                     {options}
                 </select>
                 </div>

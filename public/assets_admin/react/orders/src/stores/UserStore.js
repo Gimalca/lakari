@@ -3,27 +3,33 @@ import BaseStore from './BaseStore';
 import KartDispatcher from '../dispatchers/KartDispatcher';
 import KartConstants from '../constants/actions';
 
-var _user = {};
-var _isConfirmed = false;
+var _user = {},
+    _isConfirmed = false;
 
 function _selectUser(id) {
  //   console.log(id);
-    _isConfirmed = false;
+    if (id) {
+        _isConfirmed = true;
+    } else {
+        _isConfirmed = false;
+    }
 }
 
 function _setUser(user) {
-    _user = user;
+    if(user) {
+        _user = user;
+    } else {
+        _isConfirmed = false;
+    }
 }
 
 function _editUser(update) {
     _user[update.prop] = update.value;
-    _isConfirmed = false;
 }
 
 function _validateUser(user) {
 //    console.log(user);
     _user = user;
-    _isConfirmed = true;
 }
 
 function _invalidUser(user) {
@@ -31,7 +37,6 @@ function _invalidUser(user) {
 }
 
 function _orderSelected(order) {
-    _isConfirmed = true;
 }
 
 class UserStore extends BaseStore {
@@ -50,25 +55,27 @@ userStore.dispatchToken = KartDispatcher.register( payload => {
 
         case actions.SELECT_USER:
             _selectUser(payload.action.id);
+            userStore.emitChange();
             break;
         case actions.EDIT_USER:
             _editUser(payload.action.change);
+            userStore.emitChange();
             break;
         case actions.FETCH_USER:
             _setUser(payload.action.user);
+            userStore.emitChange();
             break;
         case actions.USER_CONFIRM:
             _validateUser(payload.action.user);
+            userStore.emitChange();
             break;
         case actions.USER_INVALID:
             _invalidUser(payload.action.user);
+            userStore.emitChange();
             break;
-        case actions.ORDER_VALID:
-            _orderSelected(payload.action.order);
-        break;
+        default:
     }
 
-    userStore.emitChange();
     return true;
 });
 

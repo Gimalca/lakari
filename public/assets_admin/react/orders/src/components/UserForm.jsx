@@ -30,6 +30,7 @@ class UserForm extends React.Component {
 
     render() {
         let user = this.state.user;
+        let status = this.props.disabled;
 
         return (<div className="admin-form user-form col-sm-12 col-md-12">
                 <div className="section row form-group">
@@ -38,16 +39,19 @@ class UserForm extends React.Component {
                         attr={'firstname'} 
                         icon={'fa-user'}
                         val={user.firstname} 
+                        disabled={status}
                         label={'Nombre'} />
                     <UserField 
                         onEdit={this.onEdit} 
                         attr={'lastname'} 
                         icon={'fa-users'}
                         val={user.lastname} 
+                        disabled={status}
                         label={'Apellido'} />
                 </div>
                 <div className="section row form-group">
                     <UserField 
+                        disabled={status}
                         onEdit={this.onEdit} 
                         attr={'email'} 
                         icon={'fa-envelope'}
@@ -55,6 +59,7 @@ class UserForm extends React.Component {
                         label={'Email'} />
                     <UserField 
                         onEdit={this.onEdit} 
+                        disabled={status}
                         attr={'telephone'} 
                         icon={'fa-phone'}
                         val={user.telephone} 
@@ -62,12 +67,14 @@ class UserForm extends React.Component {
                 </div>
                 <div className="section row form-group">
                     <UserField 
+                        disabled={status}
                         onEdit={this.onEdit} 
                         attr={'cellphone'} 
                         icon={'fa-mobile'}
                         val={user.cellphone} 
                         label={'Celular'} />
                     <UserField 
+                        disabled={status}
                         onEdit={this.onEdit} 
                         attr={'fax'} 
                         icon={'fa-fax'}

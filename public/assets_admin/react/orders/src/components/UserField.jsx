@@ -14,6 +14,8 @@ class UserField extends React.Component {
     render() {
         let value = this.props.val;
         let icon = 'fa ' + this.props.icon;
+        let status = this.props.disabled;
+
         return (
             <div className="col-xs-12 col-sm-6 col-md-6"> 
                 <label className="col-xs-3 col-sm-3 col-md-3 control-label">
@@ -22,7 +24,7 @@ class UserField extends React.Component {
                 </label>
                 <div className="col-xs-9 col-sm-9 col-md-9">
                     <label htmlFor={this.props.attr} className="field prepend-icon">
-                        <input name={this.props.attr} type="text" className="form-control gui-input" value={value} onChange={this.handleInput} />
+                        <input disabled={status} name={this.props.attr} type="text" className="form-control gui-input" value={value} onChange={this.handleInput} />
                         <label htmlFor={this.props.attr} className="field-icon">
                             <i className={icon}/>
                         </label>

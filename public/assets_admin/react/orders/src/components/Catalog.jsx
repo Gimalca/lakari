@@ -11,14 +11,16 @@ class Catalog extends React.Component {
         this.addToKart = (e) => {
             e.preventDefault();
             var id = this.refs.product_id.getDOMNode().value;
-            let orderId = KartStore.getOrderId();
-            KartActions.addItem(id, orderId);
+            if(id) {
+                let orderId = KartStore.getOrderId();
+                KartActions.addItem(id, orderId);
+            }
         };
     }
 
     componentDidMount() {
         let filter = React.findDOMNode(this.refs.product_id);
-        $(filter).select2();
+        $(filter).select2({ placeholder: "Seleccione un Producto", allowClear: true });
     }
 
     render() {
@@ -33,6 +35,7 @@ class Catalog extends React.Component {
             <div className='hidden-xs col-sm-3 col-md-4'></div>
             <div className='col-xs-10 col-sm-6 col-md-6'>
             <select style={{maxWidth:'600px', width:'100%',float:'right'}} className='form-control gui-input' ref='product_id' name='product_id'>
+                <option></option>
                 {products}
             </select>
             </div>
