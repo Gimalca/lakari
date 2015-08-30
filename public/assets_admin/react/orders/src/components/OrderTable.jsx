@@ -10,8 +10,8 @@ class OrderTable extends React.Component {
         this.onChangeOrder = (e) => {
         };
 
-        this.deleteOrder = (id) => {
-            KartActions.deleteOrder(id);
+        this.deleteOrder = (id, i) => {
+            KartActions.deleteOrder(id, i);
         };
 
         this.editOrder = (id) => {
@@ -23,7 +23,7 @@ class OrderTable extends React.Component {
     }
 
     render() {
-        let orders = this.props.orders || [];
+        let orders = this.props.orders;
 
         let orderElements = orders.map(function (order, i) {
 
@@ -34,14 +34,15 @@ class OrderTable extends React.Component {
                         <td>{order.total || 0}</td>
                         <td>
                             <span onClick={this.editOrder.bind(this, order.order_id)} className='action glyphicon glyphicon-pencil' ></span>
-                            <span onClick={this.deleteOrder.bind(this, order.order_id)} className='action fa fa-trash-o'></span>
+                            <span onClick={this.deleteOrder.bind(this, order.order_id, i)} className='action fa fa-trash-o'></span>
                         </td>
                     </tr>);
         }.bind(this));
 
-        if (this.props.orders)
+        if (this.props.orders.length > 0)
         return <div className="row"> 
             <div className="col-xs-12 text-center" >
+            <h2> Ordenes Pendientes </h2>
            <table className="order-table table table-bordered">
             <tbody>
                 <tr>
@@ -57,7 +58,7 @@ class OrderTable extends React.Component {
         </div>
         </div>
         else 
-            return <div> </div>
+            return <div></div>
     }
 }
 

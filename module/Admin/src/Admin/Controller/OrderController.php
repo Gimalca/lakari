@@ -20,7 +20,20 @@ class OrderController extends AbstractActionController {
             $id = $request->getQuery('id', 0);
             $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
             $order = array_filter($orderDao->getById($id)->getArrayCopy());
-            $order['products'] = $orderDao->getOrderProducts($id);
+
+            // solo una foto
+
+            $sm = $this->getServiceLocator();
+            $helper = $sm->get('viewhelpermanager')->get('basePath');
+            $path = $helper('assets/images/products/catalog/');
+
+            $products = array_map(function ($product) use($path) {
+                $product['image'] = $path . $product['image'][0];
+                $product['description'] = $product['description'][0];
+                return $product;
+            }, $orderDao->getOrderProducts($id));
+
+            $order['products'] = $products;
             $response = $this->getResponse();
             $response->setStatusCode(200);
             $response->setContent(Json::encode($order));
@@ -98,13 +111,17 @@ class OrderController extends AbstractActionController {
                 $dataOrder = $orderEntity->getArrayCopy();
                 $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
                 $saved = $orderDao->savedOrderAddCustomer($this->formatInsert($orderEntity));
+                $order = [
+                    'order_id' => $saved,
+                    'order_status_id' => 0,
+                    'invoice_no' => 0
+                ];
 
-                $id = $dataOrder['customer_id'];
                 $response = $this->getResponse();
 
                 if ($saved) {
                     $response->setStatusCode(200);
-                    $response->setContent(Json::encode(array('order_id' => $saved, 'products' => [])));
+                    $response->setContent(Json::encode($order));
 
                 } else {
                     throw new \Exception("Not Save Row");
@@ -141,9 +158,13 @@ class OrderController extends AbstractActionController {
                 $result      = $productDao->getProductById($postData['product_id']);
                 $description = $result->getProductDescription();
 
+                $sm = $this->getServiceLocator();
+                $helper = $sm->get('viewhelpermanager')->get('basePath');
+                $path = $helper('assets/images/products/catalog/');
+
                 $product['name'] = $description->getName();
                 $product['description'] = $description->getDescription();
-                $product['image'] = $request->getBasePath() . $result->getProductImage()[0]->image;
+                $product['image'] = $path . $result->getProductImage()[0]->image;
                 $product['price'] = $result->getPrice();
                 $product['model'] = $result->getModel();
                 $product['quantity'] = $result->getQuantity();
@@ -163,6 +184,7 @@ class OrderController extends AbstractActionController {
                 $orderProduct = new OrderProduct($mixedData);
                 $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
                 $saved    = $orderDao->saveOrderProduct($orderProduct);
+                $product['product_id'] = $saved;
 
                 $response = $this->getResponse();
 
@@ -176,6 +198,48 @@ class OrderController extends AbstractActionController {
 
             }
         };
+        return false;
+    }
+
+    public function deleteAction() {
+        $request = $this->getRequest();
+
+        if ($request->isXmlHttpRequest() && $request->isPost()) {
+            $postData = $request->getPost();
+            $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
+            $id = $postData['id'];
+            $order = array_filter($orderDao->getById($id)->getArrayCopy());
+            $response = $this->getResponse();
+            $deleted = $orderDao->deleteOrder($id);
+                if ($deleted) {
+                    $response->setStatusCode(200);
+                    $response->setContent(Json::encode($order));
+                    return $response;
+                }
+        }
+        return false;
+    }
+
+    public function deleteProductAction() {
+        $request = $this->getRequest();
+
+        if ($request->isXmlHttpRequest() && $request->isPost()) {
+            $postData = $request->getPost();
+            $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
+            $id = $postData['id'];
+            var_dump($id);die;
+            $orderProduct = array_filter($orderDao->getOrderProductById($id)->getArrayCopy());
+            $response = $this->getResponse();
+
+            if ($orderProduct) {
+                $deleted = $orderDao->deleteOrderProduct($id);
+                if ($deleted) {
+                    $response->setStatusCode(200);
+                    $response->setContent(Json::encode($orderProduct));
+                    return $response;
+                }
+            }
+        }
         return false;
     }
 
