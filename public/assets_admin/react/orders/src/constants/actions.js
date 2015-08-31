@@ -7,9 +7,14 @@ let constants = {
         ADD_ITEM : 'ADD_ITEM',
         ITEM_ADDED: 'ITEM_ADDED',
         ITEM_INVALID: 'ITEM_INVALID',
+
         REMOVE_ITEM : 'REMOVE_ITEM',
+        DELETE_PRODUCT: 'DELETE_PRODUCT',
+        DELETE_PRODUCT_FAIL: 'DELETE_PRODUCT_FAIL',
+
         INCREASE_ITEM : 'INCREASE_ITEM',
         DECREASE_ITEM : 'DECREASE_ITEM',
+
         EMPTY_KART: 'EMPTY_KART',
         CHANGE_ITEM: 'CHANGE_ITEM',
 
@@ -25,7 +30,8 @@ let constants = {
         ORDER_CREATED: 'ORDER_CREATED',
         ORDER_DELETED: 'ORDER_DELETED',
         ORDER_VALID: 'ORDER_VALID',
-        ORDER_INVALID: 'ORDER_INVALID'
+        ORDER_INVALID: 'ORDER_INVALID',
+
     },
     events: {
         CHANGE: 'CHANGE'

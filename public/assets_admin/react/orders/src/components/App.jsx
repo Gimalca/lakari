@@ -8,6 +8,7 @@ import UserFilter from './UserFilter';
 import OrderTable from './OrderTable';
 import UserStore from '../stores/UserStore';
 import KartStore from '../stores/KartStore';
+import OrderStore from '../stores/OrderStore';
 import KartActions from '../actions/kart';
 import UserForm from './UserForm';
 import Cart from './Cart';
@@ -19,7 +20,8 @@ class App extends React.Component {
 
         this.state = {
             key: 1,
-            user: UserStore.getUser()
+            user: UserStore.getUser(),
+            orders: OrderStore.getOrders()
         };
 
         this.onChangeTab = (key) => {
@@ -35,7 +37,9 @@ class App extends React.Component {
         };
 
         this.onClientSelected = (e) => {
-            KartActions.confirmUser(this.state.user);
+            if (UserStore.isConfirmed()) {
+                KartActions.createOrder(this.state.user);
+            }
         };
 
         this.onOrderLoad = (e) => {
@@ -58,17 +62,23 @@ class App extends React.Component {
 
         this.onChangeUser = (e) => {
 
-            let key = UserStore.isConfirmed() ? 2 : 1;
-
             this.setState({
-                key,
                 user: UserStore.getUser()
             });
         };
 
         this.onChangeKart = (e) => {
+
+            let key = KartStore.isOrderValid()? 2: 1;
+
             this.setState({
-                key: 2
+                key
+            });
+        }
+
+        this.onChangeOrders = (e) => {
+            this.setState({
+                orders: OrderStore.getOrders()
             });
         }
     }
@@ -76,11 +86,13 @@ class App extends React.Component {
     componentWillMount() {
         UserStore.addChangeListener(this.onChangeUser);
         KartStore.addChangeListener(this.onChangeKart);
+        OrderStore.addChangeListener(this.onChangeOrders);
     }
 
     componentWillUnmount() {
         UserStore.removeChangeListener(this.onChangeUser);
         KartStore.removeChangeListener(this.onChangeKart);
+        OrderStore.removeChangeListener(this.onChangeOrders);
     }
 
     render() { 
@@ -94,11 +106,11 @@ class App extends React.Component {
             <TabPane eventKey={1} tab='Cliente'>
                 <Panel title='El Cliente' 
                     titleContent={<UserFilter options={users} onSelectOption={this.onClientLoad} />}
-                    panelContent={<div><UserForm /><OrderTable orders={this.state.user.orders} /></div>}
-                    actionLabel={'Continuar'}
+                    panelContent={<div><UserForm disabled={!UserStore.isConfirmed()}/><OrderTable orders={this.state.orders} /></div>}
+                    actionLabel={'Nueva Orden'}
                     onFinish={this.onClientSelected} />
             </TabPane>
-            <TabPane eventKey={2} tab='Pedido' disabled={!UserStore.isConfirmed()}>
+            <TabPane eventKey={2} tab='Pedido' disabled={!KartStore.isOrderValid()}>
                 <Panel title='Productos'
                     titleContent={<Catalog products={products} />}
                     panelContent={<Cart  />}

@@ -19,8 +19,8 @@ class Cart extends React.Component {
             });
         }
 
-        this.removeFromKart = (index) => {
-            KartActions.removeItem(index);
+        this.removeFromKart = (index, id) => {
+            KartActions.removeItem(index, id);
         }
 
         this.decreaseItem = (index) => {
@@ -67,13 +67,13 @@ class Cart extends React.Component {
 
             return (<tr key={i}>
                      <td className='col-xs-2 romove-item'> 
-                    <a onClick={this.removeFromKart.bind(this, i)} title='cancel' className='icon'> 
+                    <a onClick={this.removeFromKart.bind(this, i, product.product_id)} title='cancel' className='icon'> 
                         <i className='fa fa-trash-o'> </i>
                     </a>
                      </td> 
                      <td className='col-xs-3'>
                      <a className='entry-thumbnail'>
-                        <img className='hidden-xs kart-image mw60 ib mr10 img-responsive img-thumbnail' src={'/assets/images/products/catalog/'+ product.image} alt='100x100'/> 
+                        <img className='hidden-xs kart-image mw60 ib mr10 img-responsive img-thumbnail' src={product.image} alt='100x100'/> 
                         </a>
                         <div> {product.name} </div>
                     </td>

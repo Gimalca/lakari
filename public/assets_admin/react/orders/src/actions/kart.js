@@ -11,7 +11,8 @@ let actions = {
             id
         });
 
-        $.get(URL_AJAX + '/userinfo', { id }, null,'json')
+        if (id) {
+            $.get(URL_AJAX + '/userinfo', { id }, null,'json')
             .then(function (user) {
                 KartDispatcher.handleServerAction({
                     actionType: KartConstants.actions.FETCH_USER,
@@ -21,10 +22,11 @@ let actions = {
             .fail(function (error) {
                 KartDispatcher.handleServerAction({
                     actionType: KartConstants.actions.USER_INVALID,
-                    user
+                    error
                 });
             })
             .done();
+        }
     },
 
     editUser: (prop, value) => {
@@ -37,7 +39,7 @@ let actions = {
         });
     },
 
-    confirmUser: (user) => {
+    createOrder: (user) => {
 
         KartDispatcher.handleViewAction({
             actionType: KartConstants.actions.USER_CONFIRM,
@@ -87,11 +89,26 @@ let actions = {
         .done();
     },
 
-    removeItem: (index) => {
+    removeItem: (index, id) => {
+
         KartDispatcher.handleViewAction({
             actionType: KartConstants.actions.REMOVE_ITEM,
             index
         });
+        $.post(URL_AJAX + '/deleteProduct', { id }, null, 'json')
+            .then(function (response) {
+                KartDispatcher.handleViewAction({
+                    actionType: KartConstants.actions.DELETE_PRODUCT,
+                    index
+                });
+            })
+            .fail(function (error) {
+                KartDispatcher.handleViewAction({
+                    actionType: KartConstants.actions.DELETE_PRODUCT_FAIL,
+                    error
+                });
+            })
+            .done();
     },
 
     decreaseItem: (index) => {
@@ -151,7 +168,7 @@ let actions = {
             .done();
     },
 
-    deleteOrder: (id) => {
+    deleteOrder: (id, index) => {
 
         KartDispatcher.handleViewAction({
             actionType: KartConstants.actions.DELETE_ORDER,
@@ -162,13 +179,14 @@ let actions = {
             .then(function(response) {
                 KartDispatcher.handleServerAction({
                     actionType: KartConstants.actions.ORDER_DELETED,
-                    order: response 
+                    order: response,
+                    index
                 });
             })
             .fail(function (error) {
                 KartDispatcher.handleServerAction({
                     actionType: KartConstants.actions.ORDER_DELETE_FAIL,
-                    order: response 
+                    error
                 });
             })
             .done();
