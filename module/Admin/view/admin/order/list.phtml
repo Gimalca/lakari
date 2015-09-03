@@ -35,7 +35,7 @@ $this->headlink()
         
 
         <!-- recent orders table -->
-        <div class="panel col-lg-11 col-md-11">
+        <div class="panel">
             <div class="panel-menu admin-form theme-primary ">
                 <div class="row">
                     <div class="col-md-4">
@@ -83,13 +83,13 @@ $this->headlink()
                         <thead>
                             <tr class="bg-light">
                                 <th class="text-center">Select</th>
-                                <th class="">Orden Nº</th>
+                                <th class="">Invoice Nº</th>
                                 <th class="">Cliente</th>                            
                                 <th class="">Email</th>
-                                <th class="">Status</th>
-                                <th class="">Ip</th>
-                                <th class="">Ingreso</th>                             
-                                <th class="">Opciones</th>
+                                <th class=""></th>
+                                <th class="text-left">Ip</th>
+                                <th class="text-left">Ingreso</th>                             
+                                <th class="text-center">Status</th>
                                
 
                             </tr>
@@ -104,15 +104,15 @@ $this->headlink()
                                     </label>
                                 </td>
                                
-                                <td class=""><?php echo $orders->order_id;?></td>
-                                <td class=""><?php echo $orders->customer_id;?></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
+                                <td class=""><?php echo $orders->invoice_no;?></td>
+                                <td class=""><?php echo $orders->firstname . " " . $orders->lastname;?></td>
+                                <td class=""><?php echo $orders->email;?></td>
+                                <td class=""><?php echo $orders->ip;?></td>
+                                <td class=""><?php echo $orders->date_added;?></td>
                                 <td class=""></td>
                                
                              
-                                <td class="text-right">
+                                <td class="text-center">
                                     <div class="btn-group text-right">
                                         <?php switch ($orders->customer_id) {
                                                 case 1:

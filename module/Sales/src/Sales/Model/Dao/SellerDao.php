@@ -9,6 +9,9 @@ namespace Sales\Model\Dao;
  */
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Sql;
+use Sales\Model\Entity\Seller;
+
 
 class SellerDao
 {
@@ -30,12 +33,51 @@ class SellerDao
         //var_dump($resultSet);die;
     
         return $resultSet;
-         
     }
     
     public function savedSeller($data)
     {
          return $this->tableGateway->insert($data);
+    }
+    
+    public function updateSeller(Seller $seller)
+    {
+        $sellerId = (int) $seller->getSeller_id();
+        
+        $data_seller = array(
+            'seller_id' => $seller->getSeller_id(),
+            'firstname' => $seller->getFirstname(),
+            'lastname' => $seller->getLastname(),
+            'telephone' => $seller->getTelephone(),
+            'movil' => $seller->getMovil(),
+            'fax' => $seller->getFax(),
+            'email' => $seller->getEmail(),
+        );
+        
+        if ($this->getSellerById($sellerId)) {
+            //$data_seller['date_modified'] = date("Y-m-d H:i:s");
+            //print_r($data_seller);die;
+            $this->tableGateway->update($data_seller, array(
+               'seller_id' => $sellerId,
+            ));
+       }  
+       
+       return $sellerId;
+    }
+
+    public function getSellerById($id)
+    {
+        $id = (int) $id;
+        
+        $query = $this->tableGateway->getSql()->select();
+        //echo $query->getSqlString();die;
+        $query->where(array(
+            'lk_seller.seller_id' => $id
+        ));
+        $resultSet = $this->tableGateway->selectWith($query);
+        
+        return $resultSet->current();
+        //var_dump($resultSet->toArray()); die;
     }
     
     

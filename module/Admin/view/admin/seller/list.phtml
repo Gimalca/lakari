@@ -207,7 +207,7 @@ $this->headlink()
         </div>
 
         <!-- recent orders table -->
-        <div class="panel col-lg-11 col-md-11">
+        <div class="panel">
             <div class="panel-menu admin-form theme-primary ">
                 <div class="row">
                     <div class="col-md-4">
@@ -261,7 +261,7 @@ $this->headlink()
                                 <th class="">Status</th>
                                 <th class="">Ip</th>
                                 <th class="">Ingreso</th>                             
-                                <th class="">Opciones</th>
+                                <th class="text-center">Opciones</th>
                                
 
                             </tr>
@@ -315,7 +315,7 @@ $this->headlink()
                                         
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="#">Editar</a>
+                                                <a href="<?php echo $this->basePath('admin/seller/edit/').$seller->seller_id;?>">Editar</a>
                                             </li>
                                             <li>
                                                 <a href="<?php echo $this->basePath('admin/provider/productlist/').$seller->provider_id;?>">Products</a>

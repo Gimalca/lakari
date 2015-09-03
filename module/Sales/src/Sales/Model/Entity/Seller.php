@@ -57,4 +57,117 @@ class Seller
         return get_object_vars($this);
     }
 
+    function getSeller_id() {
+        return $this->seller_id;
+    }
+
+    function getFirstname() {
+        return $this->firstname;
+    }
+
+    function getLastname() {
+        return $this->lastname;
+    }
+
+    function getEmail() {
+        return $this->email;
+    }
+
+    function getTelephone() {
+        return $this->telephone;
+    }
+
+    function getMovil() {
+        return $this->movil;
+    }
+
+    function getFax() {
+        return $this->fax;
+    }
+
+    function getPassword() {
+        return $this->password;
+    }
+
+    function getSalt() {
+        return $this->salt;
+    }
+
+    function getIp() {
+        return $this->ip;
+    }
+
+    function getStatus() {
+        return $this->status;
+    }
+
+    function getApproved() {
+        return $this->approved;
+    }
+
+    function getToken() {
+        return $this->token;
+    }
+
+    function getDate_added() {
+        return $this->date_added;
+    }
+
+    function setSeller_id($seller_id) {
+        $this->seller_id = $seller_id;
+    }
+
+    function setFirstname($firstname) {
+        $this->firstname = $firstname;
+    }
+
+    function setLastname($lastname) {
+        $this->lastname = $lastname;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+    function setTelephone($telephone) {
+        $this->telephone = $telephone;
+    }
+
+    function setMovil($movil) {
+        $this->movil = $movil;
+    }
+
+    function setFax($fax) {
+        $this->fax = $fax;
+    }
+
+    function setPassword($password) {
+        $this->password = $password;
+    }
+
+    function setSalt($salt) {
+        $this->salt = $salt;
+    }
+
+    function setIp($ip) {
+        $this->ip = $ip;
+    }
+
+    function setStatus($status) {
+        $this->status = $status;
+    }
+
+    function setApproved($approved) {
+        $this->approved = $approved;
+    }
+
+    function setToken($token) {
+        $this->token = $token;
+    }
+
+    function setDate_added($date_added) {
+        $this->date_added = $date_added;
+    }
+
+
 }
