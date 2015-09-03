@@ -127,7 +127,6 @@ class Product extends Form {
                 'required' => false,       
             ),
         ));
-       
        $this->add(array(
             'name' => 'productPrice',
             'attributes' => array(

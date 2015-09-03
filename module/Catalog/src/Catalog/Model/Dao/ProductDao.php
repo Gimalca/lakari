@@ -44,7 +44,7 @@ class ProductDao implements IProductDao
         // echo $query->getSqlString();die;
 
         $resultSet = $this->tableGateway->selectWith($query);
-         var_dump($resultSet->current()); die;
+        //var_dump($resultSet->current()); die;
 
         return $resultSet;
     }
@@ -220,7 +220,7 @@ class ProductDao implements IProductDao
         $rowset = $this->tableGateway->select(array(
             'product_id' => $id
         ));
-        var_dump($id);die;
+        //var_dump($id);die;
 
         $row = $rowset->current();
 

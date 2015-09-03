@@ -210,7 +210,7 @@ class ProductController extends AbstractActionController
         $id = $request->getPost('id');
         $productDao = $this->getProductDao();
         $delete = $productDao->deleteProduct($id);
-        print_r($delete);die;
+        //print_r($delete);die;
         if ($delete){
                 
             if ($request->isXmlHttpRequest()){

@@ -9,7 +9,7 @@ $this->headlink()
         <ul class="nav nav-list nav-list-topbar pull-left">
                        
             <li class="active">
-                <a href="<?php echo $this->url('admin', array('controller' => 'customer', 'action' => 'list')); ?>">List</a>
+                <a href="<?php echo $this->url('admin', array('controller' => 'seller', 'action' => 'list')); ?>">List</a>
             </li>
 
         </ul>
@@ -29,16 +29,16 @@ $this->headlink()
 
     <!-- begin: .tray-center -->
     <div class="tray tray-center">
-         <?php if($this->add == 1) {
-                        $message = "Cliente <strong> </strong> Agregado satisfactoriamente";
-                        echo $this->alert('sucess',$message);
+         <?php if($this->update == 1) {
+                        $message = "Vendendor <strong> </strong> Actualizado satisfactoriamente";
+                        echo $this->alert('succes',$message);
                     }
                 ?>
         <!-- create new order panel -->
         <div class="panel mb25 mt5">
             
             <div class="panel-heading">
-                <span class="panel-title hidden-xs"> Agregar Nuevo Cliente </span>
+                <span class="panel-title hidden-xs"> Actualizar Datos Vendedor </span>
                 <!--ul class="nav panel-tabs-border panel-tabs">
                     <li class="active">
                         <a href="#tab1_1" data-toggle="tab">General</a>
@@ -52,8 +52,8 @@ $this->headlink()
                 </ul-->
             </div>
             <div class="panel-body p20 pb10 form-horizontal">
-                <form id="form"  action="<?php echo $this->basePath($this->form->getAttribute('action')); ?>" method="post" >   
-                     <?php echo $this->formInput($this->form->get('customer_id')); ?>
+                <form id="form"  action="<?php echo $this->basePath($this->sellerForm->getAttribute('action')); ?>" method="post" >   
+                     <?php echo $this->formInput($this->sellerForm->get('seller_id')); ?>
                     <div class="tab-content pn br-n admin-form">
                         <div id="tab1_1" class="tab-pane active">
 
@@ -65,12 +65,12 @@ $this->headlink()
                                             <label class="col-md-3 control-label" for="firstname">Nombre <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
                                                 <label for="firstname" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('firstname')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('firstname')); ?>
                                                     <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('firstname')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('firstname')) ?> 
                                                 </div>
                                             </div>
                                         </div>
@@ -78,12 +78,12 @@ $this->headlink()
                                             <label class="col-md-3 control-label" for="lastname">Apellido <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
                                                 <label for="lastname" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('lastname')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('lastname')); ?>
                                                     <label for="lastname" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('lastname')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('lastname')) ?> 
                                                 </div>
                                             </div>
                                         </div>
@@ -93,48 +93,42 @@ $this->headlink()
                                             <label class="col-md-3 control-label" for="telephone">Telephone <span class="text-danger">*</span></label>
                                             <div class="col-md-4">
                                                 <label for="telephone" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('telephone')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('telephone')); ?>
                                                     <label for="telephone" class="field-icon"><i class="fa fa-user"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('telephone')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('telephone')) ?> 
                                                 </div>
                                             </div>
 
                                             <label class="col-md-1 control-label" for="movil">Celular <span class="text-danger">*</span></label>
                                             <div class="col-md-4">
                                                 <label for="movil" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('movil')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('movil')); ?>
                                                     <label for="movil" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('movil')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('movil')) ?> 
                                                 </div>
                                             </div>
                                            
                                         </div>
                                         <div class="col-xs-6">
                                              <label class="col-md-3 control-label" for="fax">Fax <span class="text-danger">*</span></label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-9">
                                                 <label for="fax" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('fax')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('fax')); ?>
                                                     <label for="fax" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('fax')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('fax')) ?> 
                                                 </div>
                                             </div>
                                              
-                                             <div class="col-md-4">
-                                                 <div class="checkbox-custom mb5">
-                                                     <input type="checkbox" checked="" id="newsletter">
-                                                     <?php //echo $this->formInput($this->form->get('newsletter')); ?>  
-                                                     <label for="newsletter">Newsletter</label>
-                                                 </div>      
-                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="section row  form-group">
@@ -142,12 +136,12 @@ $this->headlink()
                                             <label class="col-md-3 control-label" for="email">Email <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
                                                 <label for="email" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('email')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('email')); ?>
                                                     <label for="email" class="field-icon"><i class="fa fa-user"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('email')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('email')) ?> 
                                                 </div>
                                             </div>
                                         </div>
@@ -155,48 +149,17 @@ $this->headlink()
                                             <label class="col-md-3 control-label" for="confirmEmail">Confirmar Email <span class="text-danger">*</span></label>
                                             <div class="col-md-9">
                                                 <label for="confirmEmail" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('confirmEmail')); ?>
+                                                    <?php echo $this->formInput($this->sellerForm->get('confirmEmail')); ?>
                                                     <label for="confirmEmail" class="field-icon"><i class="fa fa-barcode"></i>
                                                     </label>
                                                 </label> 
                                                 <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('confirmEmail')) ?> 
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('confirmEmail')) ?> 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                   
-                                    <div class="section row  form-group"> 
-                                        <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="password">Password <span class="text-danger">*</span></label>
-                                            <div class="col-md-9">
-                                                <label for="password" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('password')); ?>
-                                                    <label for="password" class="field-icon"><i class="fa fa-barcode"></i>
-                                                    </label>
-                                                </label> 
-                                                <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('password')) ?> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <label class="col-md-3 control-label" for="confirmPassword">Confirmar Password<span class="text-danger">*</span></label>
-                                            <div class="col-md-9">
-                                                <label for="confirmPassword" class="field prepend-icon">                                       
-                                                    <?php echo $this->formInput($this->form->get('confirmPassword')); ?>
-                                                    <label for="confirmPassword" class="field-icon"><i class="fa fa-barcode"></i>
-                                                    </label>
-                                                </label> 
-                                                <div class="help-block">
-                                                    <?php echo $this->formelementerrors($this->form->get('confirmPassword')) ?> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
                                 </div>
-                                
                             </div>
                             <!-- end section row -->
 
@@ -204,7 +167,7 @@ $this->headlink()
                         
                          <hr class="short alt mtn">
                         <div class="panel-footer text-right mt5">
-                            <button class="btn btn-primary text-right"> Crear Cliente </button>
+                            <button class="btn btn-primary text-right"> Actualizar </button>
                         </div>
                     </div>
                     
@@ -212,162 +175,18 @@ $this->headlink()
             </div>
         </div>
 
-        <!-- recent orders table -->
-        <div class="panel">
-            <div class="panel-menu admin-form theme-primary ">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label class="field select">
-                            <select id="filter-purchases" name="filter-purchases">
-                                <option value="0">Filter by Purchases</option>
-                                <option value="1">1-49</option>
-                                <option value="2">50-499</option>
-                                <option value="1">500-999</option>
-                                <option value="2">1000+</option>
-                            </select>
-                            <i class="arrow double"></i>
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="field select">
-                            <select id="filter-group" name="filter-group">
-                                <option value="0">Filter by Group</option>
-                                <option value="1">Customers</option>
-                                <option value="2">Vendors</option>
-                                <option value="3">Distributors</option>
-                                <option value="4">Employees</option>
-                            </select>
-                            <i class="arrow double"></i>
-                        </label>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="field select">
-                            <select id="filter-status" name="filter-status">
-                                <option value="0">Filter by Status</option>
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
-                                <option value="3">Suspended</option>
-                                <option value="4">Online</option>
-                                <option value="5">Offline</option>
-                            </select>
-                            <i class="arrow double"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-body pn ">
-                <div class="table-responsive">
-                    <table class="table admin-form theme-warning tc-checkbox-1 fs13">
-                        <thead>
-                            <tr class="bg-light">
-                                <th class="text-center">Select</th>
-                                <th class="">Nombre</th>
-                                <th class="">Apellido</th>                            
-                                <th class="">Email</th>
-                                <th class="">Status</th>
-                                <th class="">Ip</th>
-                                <th class="">Ingreso</th>                             
-                                <th class="text-center">Opciones</th>
-                               
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($this->customers as $customer) : ?>
-                            <tr>
-                                <td class="text-center">
-                                    <label class="option block mn">
-                                        <input type="checkbox" name="mobileos" value="FR">
-                                        <span class="checkbox mn"></span>
-                                    </label>
-                                </td>
-                               
-                                <td class=""><?php echo $customer->firstname;?></td>
-                                <td class=""><?php echo $customer->lastname;?></td>
-                                <td class=""><?php echo $customer->email;?></td>         
-                                <td class=""><?php echo $customer->status;?></td>
-                                <td class=""><?php echo $customer->ip;?></td>
-                                <td class=""><?php echo $customer->date_added;?></td>
-                             
-                                <td class="text-right">
-                                    <div class="btn-group text-right">
-                                        <?php switch ($customer->status) {
-                                                case 1:
-                                                   echo '<button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
-                                                            Activo
-                                                            <span class="caret ml5"></span>
-                                                        </button>';                 
-                                                    break;
-                                                case 2:
-                                                    echo '<button type="button" class="btn btn-warning br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">  
-                                                            Sin Aprobar
-                                                            <span class="caret ml5"></span>
-                                                          </button>';
-                                                    break;
-                                                case 3:
-                                                    echo '<button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                             Desactivado
-                                                            <span class="caret ml5"></span>
-                                                          </button>';
-                                                    break;
-                                                default:
-                                                    echo '<button type="button" class="btn btn-danger br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
-                                                            No confirmado
-                                                            <span class="caret ml5"></span>
-                                                          </button>';
-                                                    break;
-                                            }
-                                            ?>
-                                        
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#">Editar</a>
-                                            </li>
-                                            <li>
-                                                <a href="<?php echo $this->basePath('admin/provider/productlist/').$customer->provider_id;?>">Products</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Contacto</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li class="">
-                                                <a href="#">Activo</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Sin Aprobar</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Desactivado</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                     <?php endforeach; ?>        
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- end: .tray-center -->
-
-    <!-- begin: .tray-right -->
-
-    <!-- end: .tray-right -->
-
+        
 </section>
 <!-- End: Content -->
 <?php
 $this->headScript()
-        // ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
   //      ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
         ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
   //      ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
-//        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+ //       ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
         ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
-// ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+ ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
 ;
 $this->inlineScript()->captureStart();
  echo <<<JS
@@ -430,7 +249,7 @@ jQuery(document).ready(function() {
                             confirmEmail: {
                                     required: true,
                                     email:true,                               
-				    equalTo: "#email"
+                    equalTo: "#email"
                             },
                             password: {
                                     required: true,
@@ -530,6 +349,5 @@ jQuery(document).ready(function() {
 
 
   });
-         
 JS;
 $this->inlineScript()->captureEnd();
