@@ -1,0 +1,115 @@
+/* CSS used here will be applied after bootstrap.css */
+.top-navbar {
+    min-height: 65px;
+    color: #000;
+    background: #FFF;
+    border-bottom: 1px solid #e3e3e3;
+    z-index: 10;
+}
+.top-navbar .navbar-toggle .icon-bar {
+    background-color: #000;
+}
+
+a.dropdown-toggle {
+    color: #000;
+}
+
+.lakari-logo {
+    margin-top: -10px;
+    width: 90px;
+}
+
+.button-navbar-button {
+    background: #b52a2f;
+}
+
+.navbar-link {
+  font-family: "Champagne-Limousines-Bold", sans-serif;
+  color: #000;
+}
+
+.navbar-link {
+    color: #000;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.navbar-collapse {
+    width: auto;
+    background: white;
+    height: auto;
+    max-height: 400px;
+    text-align: center;
+}
+
+.navbar-search {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.navbar-toggle {
+    border: none;
+    background: transparent !important;
+}
+
+.navbar-toggle &:hover {
+    background: transparent !important;
+}
+
+.navbar-toggle .icon-bar {
+    width: 22px;
+    transition: all 0.2s;
+}
+.navbar-toggle .top-bar-icon {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+}
+.navbar-toggle .middle-bar {
+    opacity: 0;
+}
+
+.navbar-toggle .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+}
+
+.navbar-toggle.collapsed .top-bar-icon {
+    transform: rotate(0);
+}
+
+.navbar-toggle.collapsed .middle-bar {
+    opacity: 1;
+}
+
+.navbar-toggle.collapsed .bottom-bar {
+    transform: rotate(0);
+}
+
+  @media screen and (min-width:768px) {
+
+    .navbar-fixed-top {
+        height: 100px; /* Whatever you want. */
+    }
+
+      .lakari-logo {
+          margin-top: -40px;
+          width: 180px;
+      }
+
+      .navbar {
+          padding: 30px;
+          transition: background 1s, border 1s;
+          margin-bottom: 0;
+          border-radius: 0;
+      }
+
+      .navbar-collapse {
+          width: 100%;
+      }
+
+      .navbar-search {
+          width: 100%;
+          transform: translateY(25%);
+      }
+  }
+
