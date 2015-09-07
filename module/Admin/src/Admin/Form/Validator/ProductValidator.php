@@ -148,7 +148,7 @@ class ProductValidator extends InputFilter
             'required' => true,
             'validators' => array(
                 array(
-                    'name' => 'float',
+                    'name' => 'float',  
                     'options' => array(
                         'locale' => 'en_US'
                     )
@@ -171,13 +171,17 @@ class ProductValidator extends InputFilter
             )
         ));
         
+        //Validacion de campo "CANTIDAD"
+        
 //         $productQuantity = new Input('productQuantity');
 //         $productQuantity->setAllowEmpty(true);
 //         $productQuantity->getValidatorChain()
 //             ->attach(new Digits());
-        
+//        
 //         $this->add($productQuantity);
         
+         //end 
+         
         $this->add(array(
             'name' => 'productMinimun',
             'required' => false,
