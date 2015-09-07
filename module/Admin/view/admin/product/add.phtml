@@ -60,7 +60,7 @@ $this->headlink()
                                     <label class="col-md-3 control-label" for="productName"> Nombre <span class="text-danger">*</span></label>
 
                                     <div class="col-md-9">
-                                        <label for="productName" class="field prepend-icon">                                       
+                                        <label for="productName" class="field prepend-icon">                 
                                             <?php echo $this->formInput($this->productForm->get('productName')); ?>
                                             <label for="name2" class="field-icon"><i class="fa fa-tag"></i>
                                             </label>
@@ -223,8 +223,7 @@ $this->headlink()
                                     <div class="col-md-9">
                                         <label for="productMetaTittle" class="field prepend-icon">
                                             <?php echo $this->formInput($this->productForm->get('productMetaTittle')) ?> 
-                                            <label for="productMetaTittle" class="field-icon"><i class=" fa fa-tag"></i>
-                                            </label> 
+                                            <label for="productMetaTittle" class="field-icon"><i class=" fa fa-tag"></i </label> 
                                         </label>  
                                         <div class="help-block">
                                             <?php echo $this->formelementerrors($this->productForm->get('productMetaTittle')) ?> 
@@ -317,7 +316,7 @@ $this->headlink()
                                     <div class="multi-field"> 
 
                                         <div class="section row">
-                                            <div class="col-md-3 form-group ">
+                                            <div class="col-md-3 form-group">
 
                                                 <label class="col-lg-3 control-label" for="productQuantity">Cantidad </label>
                                                 <div class="col-md-8">
@@ -493,7 +492,11 @@ var URL = '$url';
                 tagClass: function(item) {
                     return 'label bg-primary light';
                 }
-            });
+            });   
+            
+            
+            
+        
         
            /* @custom validation method (smartCaptcha) 
             ------------------------------------------------------------------ */
@@ -555,8 +558,18 @@ var URL = '$url';
                             productCategories: {
                                     required: true
                             },  
-                                
-                        
+                            productPrice: {
+                                required: true, 
+                                number: true,
+                            },
+                            productMinimum: {
+                                required: true,
+                                number: true,
+                            },
+                            productQuantity: {
+                                required: true,
+                                digits: true
+                            },
                     },
                     
                     /* @validation error messages 
