@@ -29,14 +29,18 @@ a.dropdown-toggle {
 }
 
 .navbar-link {
-  font-family: "Champagne-Limousines-Bold", sans-serif;
-  color: #000;
+    font-family: "Champagne-Limousines-Bold", sans-serif;
+    color: #000;
 }
 
 .navbar-link {
     color: #000;
     font-size: 20px;
     font-weight: 900;
+}
+
+.nav>li>a:hover, .nav>li>a:focus {
+    background: white;
 }
 
 .navbar-collapse {
@@ -90,35 +94,186 @@ a.dropdown-toggle {
     transform: rotate(0);
 }
 
-  @media screen and (min-width:768px) {
+/* Shopping Cart */ 
+#main-nav, #cd-cart {
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    /* header height */
+    padding-top: 25px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+}
+
+#cd-cart {
+    right: -100%;
+    top: 50px;
+    background: #FFF;
+    -webkit-transition: right 0.3s;
+    -moz-transition: right 0.3s;
+    transition: right 0.3s;
+}
+
+#cd-cart.speed-in {
+    right: 0;
+}
+
+#cd-cart > * {
+    padding: 0 1em;
+}
+#cd-cart h2 {
+    font-size: 14px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 1em 0;
+}
+#cd-cart .cd-cart-items {
+    padding: 0;
+}
+#cd-cart .cd-cart-items li {
+    position: relative;
+    padding: 1em;
+    border-top: 1px solid #e0e6ef;
+}
+#cd-cart .cd-cart-items li:last-child {
+    border-bottom: 1px solid #e0e6ef;
+}
+#cd-cart .cd-qty, #cd-cart .cd-price {
+    color: #a5aebc;
+}
+#cd-cart .cd-price {
+    margin-top: .4em;
+}
+#cd-cart .cd-item-remove {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: url("../images/cd-remove-item.svg") no-repeat center center;
+}
+#cd-cart .cd-item-remove:hover {
+    background-color: #e0e6ef;
+}
+
+.cd-img-replace {
+  /* replace text with a background-image */
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+#cd-cart .cd-cart-total {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+#cd-cart .cd-cart-total span {
+    float: right;
+}
+#cd-cart .cd-cart-total::after {
+    /* clearfix */
+    content: '';
+    display: table;
+    clear: both;
+}
+#cd-cart .checkout-btn {
+    display: block;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background: #7dcf85;
+    color: #FFF;
+    text-align: center;
+}
+.no-touch #cd-cart .checkout-btn:hover {
+    background: #a2dda8;
+}
+#cd-cart .cd-go-to-cart {
+    text-align: center;
+    margin: 1em 0;
+}
+#cd-cart .cd-go-to-cart a {
+    text-decoration: underline;
+}
+
+#cd-shadow-layer {
+    position: fixed;
+    min-height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(67, 87, 121, 0.6);
+    cursor: pointer;
+    z-index: 2;
+    display: none;
+}
+
+#cd-shadow-layer.is-visible {
+    display: block;
+    -webkit-animation: cd-fade-in 0.3s;
+    -moz-animation: cd-fade-in 0.3s;
+    animation: cd-fade-in 0.3s;
+}
+
+@media only screen and (min-width: 768px) {
+
+    body {
+        margin-top: 110px;
+    }
 
     .navbar-fixed-top {
         height: 100px; /* Whatever you want. */
     }
 
-      .lakari-logo {
-          margin-top: -40px;
-          width: 180px;
-      }
+    .lakari-logo {
+        margin-top: -40px;
+        width: 180px;
+    }
 
-      .navbar {
-          padding: 30px;
-          transition: background 1s, border 1s;
-          margin-bottom: 0;
-          border-radius: 0;
-      }
+    .navbar {
+        padding: 30px;
+        transition: background 1s, border 1s;
+        margin-bottom: 0;
+        border-radius: 0;
+    }
 
-      .navbar-collapse {
-          width: 100%;
-      }
+    .navbar-collapse {
+        width: 100%;
+    }
 
-      .navbar-search {
-          width: 100%;
-          transform: translateY(25%);
-      }
+    .navbar-search {
+        width: 100%;
+        transform: translateY(25%);
+    }
 
-      body {
-          margin-top: 110px;
-      }
-  }
+    #cd-cart > * {
+        padding: 0 2em;
+    }
+    #cd-cart .cd-cart-items li {
+        padding: 1em 2em;
+    }
+    #cd-cart .cd-item-remove {
+        right: 2em;
+    }
+
+    #main-nav, #cd-cart {
+        width: 350px;
+        height: 80%;
+    }
+
+    #cd-cart.speed-in {
+        top: 100px;
+    }
+}
 
