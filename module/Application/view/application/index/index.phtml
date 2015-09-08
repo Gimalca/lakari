@@ -1,402 +1,290 @@
-<div class="">
+<?php
+echo $this->headlink() 
+        ->appendStylesheet($this->basePath('assets') . '/css/index.css');
 
-    <div id="hero" class="homepage-slider2 wow fadeInUp ">
-        <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm ">
-            <div class="full-width-slider">	
-                <div class="item" style="background-image: url(assets/images/sliders/slider_1.jpg);">
-                  <!--   <div class="container-fluid">
-                        <div class="caption vertical-center text-center">
-                            <div class="big-text fadeInDown-1">
-                                Sale!
+        $images = $this->basePath('assets') . '/images/test/';
+?>
+
+<div class="container">
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img class="img-responsive" src="assets/images/sliders/slide1-1800x930.jpg" alt="...">
+      <div class="carousel-caption">
+        ...
+      </div>
+    </div>
+    <div class="item">
+      <img class="img-responsive" src="assets/images/sliders/slide2-1800x930.jpg" alt="...">
+      <div class="carousel-caption">
+        ...
+      </div>
+    </div>
+    <div class="item">
+      <img class="img-responsive" src="assets/images/sliders/slide3-1800x930.jpg" alt="...">
+      <div class="carousel-caption">
+        ...
+      </div>
+    </div>
+    ...
+  </div>
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<hr>
+    <div id="carousel-best" class="best-seller-3">
+        <!-- Carousel items -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
                             </div>
-
-                            <div class="excerpt fadeInDown-2">
-                                Save up to 25% off
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_wood_puzzle-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
                             </div>
-
-                            <div class="button-holder hidden-sm fadeInDown-3">
-                                <a href="index6c11.html?page=single-product" class="big btn btn-primary">check now</a>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_tina_frey_dishes1-430x480.jpg ' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
                             </div>
-                        </div>
-                    </div>/.container-fluid -->
-                </div><!-- /.item -->
-            </div><!-- /.full-width-slider -->
-
-            <div class="full-width-slider">
-                <div class="item full-width-slider" style="background-image: url(assets/images/sliders/slider_2.jpg);">
-                    
-                </div><!-- /.item -->
-            </div><!-- /.full-width-slider -->
-            <div class="full-width-slider">
-                <div class="item full-width-slider" style="background-image: url(assets/images/sliders/slider_3.jpg);">
-                    
-                </div><!-- /.item -->
-            </div><!-- /.full-width-slider -->
-
-        </div><!-- /.owl-carousel -->
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_sphrical_vase-430x480.jpg ' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_chrome_pen-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_wood_puzzle-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_112_hario_glasses_4-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
     </div>
 
-    <div class="wide-banners wow fadeInUp homepage-banner outer-bottom-small">
-        <div class="row">
-
-            <div class="col-md-4">
-                <div class="wide-banner cnt-strip">
-                    <div class="image">
-                        <img class="img-responsive" data-echo="assets/images/banners/banner_1.jpg" src="assets/images/blank.gif" alt="">
-                    </div>	
-                    <!--div class="strip">
-                        <div class="strip-inner">
-                            <h4 class="white">Woman's</h4>
-                            <h3 class="white">collection</h3>
-                        </div>	
-                    </div-->
-                </div><!-- /.wide-banner -->
-            </div><!-- /.col -->
-
-            <div class="col-md-4">
-                <div class="wide-banner cnt-strip">
-                    <div class="image">
-                        <img class="img-responsive" data-echo="assets/images/banners/banner_2.jpg" src="assets/images/blank.gif" alt="">
-                    </div>	
-                  
-                </div><!-- /.wide-banner -->
-            </div><!-- /.col -->
-
-            <div class="col-md-4">
-                <div class="wide-banner cnt-strip">
-                    <div class="image">
-                        <img class="img-responsive" data-echo="assets/images/banners/banner_3.jpg" src="assets/images/blank.gif" alt="">
-                    </div>	
-                 
-                </div><!-- /.wide-banner -->
-            </div><!-- /.col -->
-
-        </div><!-- /.row -->
-    </div><!-- /.wide-banners -->
-
-    <div class="sections prod-slider-small ">
-        <div class="row">
-            
-                <section class="section col-md-12">
-                    <h3 class="section-title">Especiales</h3>
-                    <div class="owl-carousel home-owl-carousel custom-carousel outer-top-xs owl-theme" data-item="4">
-
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">		
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="#"><img  src="assets/images/blank.gif" data-echo="assets/images/furniture-products/1.jpg" alt=""></a>
-                                        </div><!-- /.image -->			
-
-                                        <div class="tag hot"><span>Oferta</span></div>		   
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="#">Producto simple vista</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">	
-                                            <span class="price">
-                                                $650.99				</span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-                                                        <i class="fa fa-shopping-cart"></i>													
-                                                    </button>
-                                                    <button class="btn btn-primary" type="button">Comprar</button>
-
-                                                </li>
-
-                                                <li class="lnk wishlist">
-                                                    <a class="add-to-cart" href="#" title="Wishlist">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li>
-
-                                                <li class="lnk">
-                                                    <a class="add-to-cart" href="#" title="Compare">
-                                                        <i class="fa fa-retweet"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div>
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">		
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="#"><img  src="assets/images/blank.gif" data-echo="assets/images/furniture-products/3.jpg" alt=""></a>
-                                        </div><!-- /.image -->			
-
-                                        <div class="tag sale"><span>Pocos</span></div>            		   
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="#">Producto simple vista</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">	
-                                            <span class="price">
-                                                $650.99				</span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button type="button" data-toggle="dropdown" class="icon lnk btn btn-primary">
-                                                        <i class="fa fa-shopping-cart"></i>													
-                                                    </button>
-                                                    <button type="button" class="btn lnk btn-primary">Comprar</button>
-
-                                                </li>
-
-                                                <!--li class="lnk wishlist">
-                                                    <a title="Wishlist" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li-->
-
-                                                <!--li class="lnk">
-                                                    <a title="Compare" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="fa fa-retweet"></i>
-                                                    </a>
-                                                </li-->
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div>
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">		
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="#"><img  src="assets/images/blank.gif" data-echo="assets/images/furniture-products/4.jpg" alt=""></a>
-                                        </div><!-- /.image -->			
-
-
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="#">Producto simple vista</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">	
-                                            <span class="price">
-                                                $650.99				</span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button type="button" data-toggle="dropdown" class="icon lnk btn btn-primary">
-                                                        <i class="fa fa-shopping-cart"></i>													
-                                                    </button>
-                                                    <button type="button" class="btn lnk btn-primary">Comprar</button>
-
-                                                </li>
-
-                                                <!--li class="lnk wishlist">
-                                                    <a title="Wishlist" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li-->
-
-                                                <!--li class="lnk">
-                                                    <a title="Compare" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="fa fa-retweet"></i>
-                                                    </a>
-                                                </li-->
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div>
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">		
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="#"><img  src="assets/images/blank.gif" data-echo="assets/images/furniture-products/6.jpg" alt=""></a>
-                                        </div><!-- /.image -->			
-
-                                        <div class="tag new"><span>nuevo</span></div>                        		   
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="#">Producto simple vista</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">	
-                                            <span class="price">
-                                                $650.99				</span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="action"><a href="#" class="lnk btn btn-primary">Comprar</a></div>
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">		
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="#"><img  src="assets/images/blank.gif" data-echo="assets/images/furniture-products/5.jpg" alt=""></a>
-                                        </div><!-- /.image -->			
-
-                                        <div class="tag sale"><span>Pocos</span></div>            		   
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="#">Producto simple vista</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">	
-                                            <span class="price">
-                                                $650.99				</span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button type="button" data-toggle="dropdown" class="icon lnk btn btn-primary">
-                                                        <i class="fa fa-shopping-cart"></i>													
-                                                    </button>
-                                                    <button type="button" class="btn lnk btn-primary">Comprar</button>
-
-                                                </li>
-
-                                                <!--li class="lnk wishlist">
-                                                    <a title="Wishlist" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li-->
-
-                                                <!--li class="lnk">
-                                                    <a title="Compare" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="fa fa-retweet"></i>
-                                                    </a>
-                                                </li-->
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div>
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">		
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="#"><img  src="assets/images/blank.gif" data-echo="assets/images/furniture-products/2.jpg" alt=""></a>
-                                        </div><!-- /.image -->			
-
-
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="#">Producto simple vista</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">	
-                                            <span class="price">
-                                                $650.99				</span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button type="button" data-toggle="dropdown" class="icon lnk btn btn-primary">
-                                                        <i class="fa fa-shopping-cart"></i>													
-                                                    </button>
-                                                    <button type="button" class="btn lnk btn-primary">Comprar</button>
-
-                                                </li>
-
-                                                <!--li class="lnk wishlist">
-                                                    <a title="Wishlist" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li-->
-
-                                                <!--li class="lnk">
-                                                    <a title="Compare" href="indexbd17.html?page=detail" class="add-to-cart">
-                                                        <i class="fa fa-retweet"></i>
-                                                    </a>
-                                                </li-->
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div>
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-                    </div>
-                </section>
-            
-            
-        </div>
+    <hr>
+
+    <div id="carousel-nuevos" class="best-seller-2">
+        <!-- Carousel items -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_aalto_vase-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_hasami_lids-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_hanging_planter-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_super_normal-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_tina_frey_dishes1-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
+            <div class="item">
+                <div class="thumbnail">          
+                    <div class="caption">       
+                        <div class="row"><div class="col-md-12"><p>Sofa Minimalista</p></div></div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <div class="btn-group"> 
+                                    <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-heart"></span></a>
+                                    <a href="#" class="btn btn-default btn-product"><span class="glyphicon glyphicon-share"></span> </a>
+                                </div>
+                            </div>
+                        <div class="col-md-4 col-xs-4 price"><label>$649.99</label></div>
+                        </div> <!-- row -->              
+                    </div> <!-- caption -->            
+                    <img src="<?=$images . 'yes_thumbs_vase-443x500-430x480.jpg' ?>" class="img-responsive" />
+                </div> <!-- thumbnail -->
+            </div>
+            <!-- item -->
     </div>
 
 </div>
