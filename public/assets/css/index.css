@@ -19,3 +19,8 @@
     background-color: #6e6e6e;
     border-color: #6e6e6e;
 }
+
+.carousel-control {
+    height:30%;
+    margin: auto;
+}
