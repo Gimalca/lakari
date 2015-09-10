@@ -36,7 +36,7 @@ a.dropdown-toggle {
 .navbar-link {
     color: #000;
     font-size: 20px;
-    font-weight: 900;
+    font-weight: 100;
 }
 
 .nav>li>a:hover, .nav>li>a:focus {
@@ -49,6 +49,11 @@ a.dropdown-toggle {
     height: auto;
     max-height: 400px;
     text-align: center;
+    overflow-x: hidden;
+}
+
+.carousel-indicators {
+    display: none;
 }
 
 .navbar-search {
@@ -269,11 +274,15 @@ a.dropdown-toggle {
 
     #main-nav, #cd-cart {
         width: 350px;
-        height: 80%;
+        height: 100%;
     }
 
     #cd-cart.speed-in {
         top: 100px;
+    }
+
+    .carousel-indicators {
+        display: block;
     }
 }
 
