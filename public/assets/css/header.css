@@ -8,7 +8,7 @@ body {
     color: #000;
     background: #FFF;
     border-bottom: 1px solid #e3e3e3;
-    z-index: 10;
+    z-index: 25;
 }
 
 .top-navbar .navbar-toggle .icon-bar {
@@ -109,7 +109,7 @@ a.dropdown-toggle {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    z-index: 3;
+    z-index: 20;
 }
 
 #cd-cart {
@@ -220,7 +220,7 @@ a.dropdown-toggle {
     left: 0;
     background: rgba(67, 87, 121, 0.6);
     cursor: pointer;
-    z-index: 2;
+    z-index: 20;
     display: none;
 }
 
