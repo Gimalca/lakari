@@ -29,7 +29,7 @@ class OrderDao {
         //echo $query->getSqlString();die;
 
         $resultSet = $this->tableGateway->selectWith($query);
-        //var_dump($resultSet);die;
+        //var_dump($resultSet->toArray());die;
         return $resultSet;
     }
 

@@ -99,6 +99,80 @@ class SellerController extends AbstractActionController
         return $sellerData;
     }
 
+      public function editAction()
+    { //Mostrar formulario lleno
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        
+        $this->sellerForm = new SellerForm();
+        $this->sellerForm->setAttribute('action', '/admin/seller/edit');
+        
+        $id = (int) $this->params()->fromRoute('id', 0);
+        //var_dump($id); die;
+        
+       $view = array();
+        if ($request->isPost()) {
+            // Actualizar datos con boton de envio
+            $postData = $this->request->getPost()->toArray();
+            //print_r($postData); die;
+            $sm = $this->getServiceLocator();
+            //print_r($sm); die;
+            $validator = new SellerValidator($sm);
+            $validator->get('password')->setRequired(false);
+            $validator->get('confirmPassword')->setRequired(false);
+            $this->sellerForm->setInputFilter($validator);
+            $this->sellerForm->setData($postData);
+            //print_r($postData); die;
+            
+             //var_dump($this->sellerForm->isValid()); die;
+            if ($this->sellerForm->isValid()) {
+                $sellerData = $this->sellerForm->getData();
+                
+                $sellerEntity = new Seller();
+                $sellerEntity->exchangeArray($sellerData);
+                //var_dump($sellerEntity); die;
+                $sellerDao = $this->getServiceDao('Model\Dao\SellerDao');
+                $sellerId = $sellerDao->updateSeller($sellerEntity);
+                //var_dump($sellerId); die;
+                if($sellerId) {
+                    $view['update'] = 1;
+                    $id = $sellerId;
+                }
+            }else {
+                $messages = $this->sellerForm->getMessages();
+                $this->sellerForm->populateValues($postData);
+            }
+            
+        }else{
+                      
+            if (!$id) {
+            return $this->redirect()->toRoute('admin', array('controller' => 'seller', 'action' => 'list'));
+            }
+        } 
+        
+        $sellerDao = $this->getServiceDao('Model\Dao\SellerDao');
+        $sellerData = $sellerDao->getSellerById($id);
+        $this->sellerForm->bind($sellerData);
+        //print_r($this->sellerForm->getData()); die;
+            
+        $this->sellerForm->setData($sellerData->getArrayCopy());
+        $view['sellerForm'] = $this->sellerForm;
+        //var_dump($view); die;
+        return new ViewModel($view);   
+        //$cat = $this->getCategorySelect();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public function deleteAction()
     {
         return new ViewModel();

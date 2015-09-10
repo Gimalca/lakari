@@ -1,0 +1,353 @@
+<?php
+$this->headlink()
+        
+      //  ->prependStylesheet($this->basePath() . '/vendor/plugins/select2/css/core.css');
+?>
+<!-- Start: Topbar -->
+<header id="topbar" class="ph10">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+                       
+            <li class="active">
+                <a href="<?php echo $this->url('admin', array('controller' => 'seller', 'action' => 'list')); ?>">List</a>
+            </li>
+
+        </ul>
+    </div>
+    <!--    <div class="topbar-right hidden-xs hidden-sm">
+          
+            <a href="ecommerce_products.html" class="btn btn-default btn-sm light fw600 ml10">
+                <span class="fa fa-plus pr5"></span> Add Product</a>
+            <a href="ecommerce_customers.html" class="btn btn-default btn-sm light fw600 ml10">
+                <span class="fa fa-user pr5"></span> Add Company</a>
+        </div>-->
+</header>
+<!-- End: Topbar -->
+
+<!-- Begin: Content -->
+<section id="content" class="table-layout animated fadeIn">
+
+    <!-- begin: .tray-center -->
+    <div class="tray tray-center">
+         <?php if($this->update == 1) {
+                        $message = "Vendendor <strong> </strong> Actualizado satisfactoriamente";
+                        echo $this->alert('succes',$message);
+                    }
+                ?>
+        <!-- create new order panel -->
+        <div class="panel mb25 mt5">
+            
+            <div class="panel-heading">
+                <span class="panel-title hidden-xs"> Actualizar Datos Vendedor </span>
+                <!--ul class="nav panel-tabs-border panel-tabs">
+                    <li class="active">
+                        <a href="#tab1_1" data-toggle="tab">General</a>
+                    </li>
+                    <li>
+                        <a href="#tab1_2" data-toggle="tab">Configuración</a>
+                    </li>
+                    <li>
+                        <a href="#tab1_3" data-toggle="tab">Dirección</a>
+                    </li>
+                </ul-->
+            </div>
+            <div class="panel-body p20 pb10 form-horizontal">
+                <form id="form"  action="<?php echo $this->basePath($this->sellerForm->getAttribute('action')); ?>" method="post" >   
+                     <?php echo $this->formInput($this->sellerForm->get('seller_id')); ?>
+                    <div class="tab-content pn br-n admin-form">
+                        <div id="tab1_1" class="tab-pane active">
+
+                            <div class="section row mbn">
+                               
+                                <div class="col-md-12 ">
+                                    <div class="section row  form-group">
+                                        <div class="col-xs-6">
+                                            <label class="col-md-3 control-label" for="firstname">Nombre <span class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <label for="firstname" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('firstname')); ?>
+                                                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('firstname')) ?> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label class="col-md-3 control-label" for="lastname">Apellido <span class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <label for="lastname" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('lastname')); ?>
+                                                    <label for="lastname" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('lastname')) ?> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="section row  form-group">
+                                        <div class="col-xs-6">
+                                            <label class="col-md-3 control-label" for="telephone">Telephone <span class="text-danger">*</span></label>
+                                            <div class="col-md-4">
+                                                <label for="telephone" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('telephone')); ?>
+                                                    <label for="telephone" class="field-icon"><i class="fa fa-user"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('telephone')) ?> 
+                                                </div>
+                                            </div>
+
+                                            <label class="col-md-1 control-label" for="movil">Celular <span class="text-danger">*</span></label>
+                                            <div class="col-md-4">
+                                                <label for="movil" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('movil')); ?>
+                                                    <label for="movil" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('movil')) ?> 
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="col-xs-6">
+                                             <label class="col-md-3 control-label" for="fax">Fax <span class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <label for="fax" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('fax')); ?>
+                                                    <label for="fax" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('fax')) ?> 
+                                                </div>
+                                            </div>
+                                             
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="section row  form-group">
+                                        <div class="col-xs-6">
+                                            <label class="col-md-3 control-label" for="email">Email <span class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <label for="email" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('email')); ?>
+                                                    <label for="email" class="field-icon"><i class="fa fa-user"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('email')) ?> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label class="col-md-3 control-label" for="confirmEmail">Confirmar Email <span class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <label for="confirmEmail" class="field prepend-icon">                                       
+                                                    <?php echo $this->formInput($this->sellerForm->get('confirmEmail')); ?>
+                                                    <label for="confirmEmail" class="field-icon"><i class="fa fa-barcode"></i>
+                                                    </label>
+                                                </label> 
+                                                <div class="help-block">
+                                                    <?php echo $this->formelementerrors($this->sellerForm->get('confirmEmail')) ?> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end section row -->
+
+                        </div>
+                        
+                         <hr class="short alt mtn">
+                        <div class="panel-footer text-right mt5">
+                            <button class="btn btn-primary text-right"> Actualizar </button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+        
+</section>
+<!-- End: Content -->
+<?php
+$this->headScript()
+        ->prependFile($this->basePath() . '/vendor/plugins/fileupload/fileupload.js')
+  //      ->prependFile($this->basePath() . '/vendor/plugins/tagsinput/tagsinput.min.js')
+        ->prependFile($this->basePath() . '/vendor/plugins/select2/select2.min.js')
+  //      ->prependFile($this->basePath() . '/assets_admin/js/bootstrap/holder.min.js')
+ //       ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/advanced/steps/jquery.steps.js')
+        ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/jquery.validate.min.js')
+ ->prependFile($this->basePath() . '/assets_admin/admin-tools/admin-forms/js/additional-methods.min.js')
+;
+$this->inlineScript()->captureStart();
+ echo <<<JS
+jQuery(document).ready(function() {
+
+
+     /* @custom validation method (smartCaptcha) 
+            ------------------------------------------------------------------ */
+                
+            $.validator.methods.smartCaptcha = function(value, element, param) {
+                    return value == param;
+            };
+            
+            $.validator.addMethod("Alnum", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\s]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+
+            $.validator.addMethod("AlnumOf", function(value, element) {
+             return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
+            }, "Username must contain only letters, numbers, or dashes.");
+                    
+            $( "#form" ).validate({
+            
+                    /* @validation states + elements 
+                    ------------------------------------------- */
+                    
+                    errorClass: "state-error",
+                    validClass: "state-success",
+                    errorElement: "em",
+                    ignore: false,
+                    
+                    /* @validation rules 
+                    ------------------------------------------ */
+                        
+                    rules: {
+                            firstname: {
+                                    required: true,
+                                    Alnum: true,
+                            },
+                            lastname: {
+                                    required: true,  
+                                    Alnum: true,
+                            }, 
+                            telephone:{
+                              required: true,
+                              digits: true
+                            },
+                            movil:{
+                              required: true,
+                              digits: true
+                            },
+                            fax:{
+                              required: true,
+                              digits: true
+                            },
+                            email: {
+                                    required: true,
+                                    email:true
+                            },
+                            confirmEmail: {
+                                    required: true,
+                                    email:true,                               
+                    equalTo: "#email"
+                            },
+                            password: {
+                                    required: true,
+                                    minlength: 5,
+                                    Alnum: true,
+                            },
+                            confirmPassword: {
+                                    required: true,
+                                    AlnumOf: true,
+                                    equalTo: "#password"
+                            },
+                            categories: {
+                                    required: true
+                            },  
+                                
+                        
+                    },
+                    
+                    /* @validation error messages 
+                    ---------------------------------------------- */
+                        
+                    messages:{
+                            fristname: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },
+                            lastname: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                            },   
+                            telephone:{
+                              required: 'Campo Obligatorio',
+                              digits: 'Ingresar solo digitos'
+                            },
+                            movil:{
+                              required: 'Campo Obligatorio',
+                              digits: 'Ingresar solo digitos'
+                            },
+                            fax:{
+                              required: 'Campo Obligatorio',
+                              digits: 'Ingresar solo digitos'
+                            },
+                            email: {
+                                    email: 'Email Invalido',
+                                    required: 'Campo Obligatorio'
+                            },                  
+                            confirmEmail: {
+                                    email: 'Email Invalido',
+                                    required: 'Campo Obligatorio',
+                                    equalTo: "Email no coincide"
+                            },                  
+                            password: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros'
+                                    
+                            },                  
+                            confirmPassword: {
+                                    required: 'Campo Obligatorio',
+                                    Alnum: 'Solo letras y numeros',
+                                    minlength: 'Password minimo 5 caracteres',
+                                    equalTo: "Password no coincide"
+                                    
+                            },                  
+                                
+                           
+                    },
+
+                    /* @validation highlighting + error placement  
+                    ---------------------------------------------------- */ 
+                    
+                    highlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                    },
+                    invalidHandler: function(e,validator) {
+                        // loop through the errors:                
+                          $('.tab-pane').closest('.active').removeClass('active');
+                          $('.panel-tabs li').closest('.active').removeClass('active');
+                            // "uncollapse" section containing invalid input/s:
+                            $(validator.errorList[0].element).closest('.tab-pane').addClass('active');
+                            tab =  $(validator.errorList[0].element).closest('.tab-pane').attr('id');
+                            tab ='#'+tab;
+                          $('a[href='+tab+']').closest('li').addClass('active');
+                        
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                            $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                    },
+                    errorPlacement: function(error, element) {
+                       if (element.is(":radio") || element.is(":checkbox")) {
+                                element.closest('.option-group').after(error);
+                       } else {
+                                error.insertAfter(element.parent());
+                       }
+                    }
+                            
+            });     
+
+
+  });
+JS;
+$this->inlineScript()->captureEnd();

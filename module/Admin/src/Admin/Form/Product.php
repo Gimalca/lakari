@@ -127,7 +127,6 @@ class Product extends Form {
                 'required' => false,       
             ),
         ));
-       
        $this->add(array(
             'name' => 'productPrice',
             'attributes' => array(
@@ -135,7 +134,8 @@ class Product extends Form {
                 'id' => 'productPrice',
                 'class' => 'form-control gui-input',
                 'placeholder' => 'Product Price',
-                'required' => true,       
+                'required' => true,  
+                'number' => true
             ),
         ));
        
@@ -143,14 +143,15 @@ class Product extends Form {
        $inputProductQuantity->setAttribute('class', 'form-control gui-input');
        
        $this->add(array(
-           'type' => 'Zend\Form\Element\Collection',
             'name' => 'productQuantity',
-           'options' => array(
-               
-               'should_create_template' => false,
-               'target_element' =>  $inputProductQuantity
-           )
-          
+            'attributes' => array(
+                'type' => 'text',
+                'id' => 'productQuantity',
+                'class' => 'form-control gui-input',
+                'placeholder' => 'productQuantity',
+                'required' => true,  
+                'number' => true
+                ),
         ));
 
      

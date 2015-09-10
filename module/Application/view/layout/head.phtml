@@ -12,39 +12,29 @@
         <meta name="keywords" content="MediaCenter, Template, eCommerce">
         <meta name="robots" content="all">
 
-        <title>.:: Lakari Home ::.</title>
-         <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+         <?php echo $this->headTitle($this->translate('.:: Lakari Home ::.'))->setAutoEscape(false) ?>
 
         <!-- Bootstrap Core CSS -->
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/bootstrap.min.css">
 
         <!-- Customizable CSS -->
+        <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/reset.css">
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/main.css">
         <link rel="stylesheet" href="<?php echo $this->basePath().'/assets/css/green.css'?>">
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/owl.carousel.css">
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/owl.transitions.css">
-        <!--<link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/owl.theme.css">-->
-        <link href="<?php echo $this->basePath('assets') ?>/css/lightbox.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/lightbox.css" >
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/animate.min.css">
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/rateit.css">
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/bootstrap-select.min.css">
-
-        <!-- Demo Purpose Only. Should be removed in production -->
-        <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/config.css">
-       <!--
-        <link href="<?php echo $this->basePath('assets') ?>/css/green.css" rel="alternate stylesheet" title="Green color">
-        <link href="<?php echo $this->basePath('assets') ?>/css/blue.css" rel="alternate stylesheet" title="Blue color">
-        <link href="<?php echo $this->basePath('assets') ?>/css/red.css" rel="alternate stylesheet" title="Red color">
-        <link href="<?php echo $this->basePath('assets') ?>/css/orange.css" rel="alternate stylesheet" title="Orange color">
-        <link href="<?php echo $this->basePath('assets') ?>/css/dark-green.css" rel="alternate stylesheet" title="Darkgreen color">
-        Demo Purpose Only. Should be removed in production : END -->
-
+        <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/header.css"> 
 
         <!-- Icons/Glyphs -->
         <link rel="stylesheet" href="<?php echo $this->basePath('assets') ?>/css/font-awesome.min.css">
 
         <!-- Fonts --> 
         <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href='<?php echo $this->basePath('assets') ?>/fonts/Champagne-Limousines-Bold/champagne-limousines-bold.css' rel='stylesheet' type='text/css'>
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="<?php echo $this->basePath('assets') ?>/images/favicon.ico">

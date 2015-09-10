@@ -186,12 +186,12 @@ $(document).ready(function () {
 	});
 
        $(".best-seller").owlCarousel({
-         items : 3,
+         items : 4,
         navigation : true,
         itemsDesktopSmall :[979,2],
         itemsDesktop : [1199,2],
         slideSpeed : 300,
-        pagination: false,
+        pagination: true,
         paginationSpeed : 400,
         navigationText: ["", ""]
     });
@@ -226,6 +226,36 @@ $(document).ready(function () {
         paginationSpeed : 400,
         navigationText: ["", ""]
     });    
+
+    $('.best-seller-2').owlCarousel({
+        items : 4,
+        navigation : true,
+        itemsDesktopSmall :[979,2],
+        itemsDesktop : [1199,2],
+        slideSpeed : 1000,
+        pagination: true,
+        paginationSpeed : 800,
+        navigationText: ['<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>', 
+            '<a class="right carousel-control" role="button"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>'],
+        lazyLoad: true,
+        autoPlay: 7000,
+        stopOnHover: true,
+    });
+
+    $('.best-seller-3').owlCarousel({
+        items : 4,
+        navigation : true,
+        itemsDesktopSmall :[979,2],
+        itemsDesktop : [1199,2],
+        slideSpeed : 900,
+        pagination: true,
+        paginationSpeed : 800,
+        navigationText: ['<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>', 
+            '<a class="right carousel-control" role="button"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>'],
+        lazyLoad: true,
+        autoPlay: 9000,
+        stopOnHover: true,
+    });
 
 	var $owl_controls_custom = $('.owl-controls-custom');
 	$('.owl-next' , $owl_controls_custom).click(function(event){
