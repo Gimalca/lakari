@@ -1,4 +1,6 @@
-<?php namespace Sales\Model\Entity;
+<?php 
+
+namespace Sales\Model\Entity;
 
 class OrderProduct {
 
@@ -22,7 +24,7 @@ class OrderProduct {
         $attributes = array_keys($this->getArrayCopy());
 
         foreach($attributes as $attr) {
-            if (!is_null($data[$attr])) {
+            if (isset($data[$attr])) {
                 $this->{$attr} = $data[$attr];
             }
         }

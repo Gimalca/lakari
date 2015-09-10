@@ -250,9 +250,9 @@ class OrderController extends AbstractActionController {
 
     private function formatInsert($order) {
 
-        $order->order_status_id = 0;
+        $order->order_status_id = 1;
         $order->date_added = date("Y-m-d H:i:s");
-        $order->invoice_no = 0;
+        $order->invoice_no = '1234';
         return $order;
     }
 
