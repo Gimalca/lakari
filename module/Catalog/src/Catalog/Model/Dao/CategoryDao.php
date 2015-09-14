@@ -75,6 +75,7 @@ class CategoryDao
     { 
         //print_r($data);die;
         $dataCategory =  $category->getArrayCopy();
+        unset($dataCategory['name']);
         
         $insert = $this->tableGateway->insert($dataCategory);
         
