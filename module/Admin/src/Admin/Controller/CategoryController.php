@@ -112,6 +112,7 @@ class CategoryController extends AbstractActionController {
         $categoryData['parent_id'] = 0;
         //$categoryData['top'] = 1;
         $categoryData['date_added'] = date("Y-m-d H:i:s");
+        $categoryData['date_modified'] = date("Y-m-d H:i:s");    
         $categoryData['language_id'] = 1;
         $categoryData['meta_description'] = 'pruebaaa';
         $categoryData['meta_keyword'] = 'pruebbaaa';

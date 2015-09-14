@@ -13,7 +13,7 @@ class Category {
     public $status;
     public $date_added;
     public $date_modified;
-    //public $name;
+    public $name;
     
     function __construct($category_id = Null)
     {
@@ -32,7 +32,7 @@ class Category {
         $this->status =  (isset($data['status'])) ? $data['status'] : null;
         $this->date_added =  (isset($data['date_added'])) ? $data['date_added'] : null;
         $this->date_modified =  (isset($data['date_modified'])) ? $data['date_modified'] : null;
-        //$this->name =  (isset($data['name'])) ? $data['name'] : null;
+        $this->name =  (isset($data['name'])) ? $data['name'] : null;
     }
 
     
