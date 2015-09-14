@@ -15,77 +15,91 @@ var topProducts  = document.getElementById('slider-products');
 
 var bestSeller = [
     { 
-        price: '$649.99', 
+        id: '1',
+        price: '649.99', 
         title: 'Jarra joven', 
-        image: 'yes_thumbs_vase-443x500-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_vase-443x500-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '2',
+        price: '649.99', 
         title: 'Despertador Divertido', 
-        image: 'yes_thumbs_analog_alarm_clock-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_analog_alarm_clock-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '3',
+        price: '649.99', 
         title: 'Plato Precioso', 
-        image: 'yes_thumbs_black_bowl-443x500-430x480.jpg '
+        image: BASE_URL + 'yes_thumbs_black_bowl-443x500-430x480.jpg '
     },
     { 
-        price: '$649.99', 
+        id: '4',
+        price: '649.99', 
         title: 'Copa Cruzada', 
-        image: 'yes_thumbs_black_cups-443x500-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_black_cups-443x500-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '5',
+        price: '649.99', 
         title: 'Boligrafo Bello', 
-        image: 'yes_thumbs_chrome_pen-430x480.jpg '
+        image: BASE_URL + 'yes_thumbs_chrome_pen-430x480.jpg '
     },
     { 
-        price: '$649.99', 
+        id: '6',
+        price: '649.99', 
         title: 'Pajaro Picante', 
-        image: 'yes_thumbs_cast_iron_birds-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_cast_iron_birds-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '7',
+        price: '649.99', 
         title: 'Tijeras Torcidas', 
-        image: 'yes_thumbs_scissors-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_scissors-430x480.jpg'
     }
 ];
 
 var topNew = [
     { 
-        price: '$649.99', 
+        id: '8',
+        price: '649.99', 
         title: 'Rompecabeza Ruidoso', 
-        image: 'yes_thumbs_wood_puzzle-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_wood_puzzle-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '9',
+        price: '649.99', 
         title: 'Libro Loco', 
-        image: 'yes_thumbs_helvetica_book-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_helvetica_book-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '1',
+        price: '649.99', 
         title: 'Jabonera Jovial', 
-        image: 'yes_thumbs_tina_frey_dishes1-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_tina_frey_dishes1-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '9',
+        price: '649.99', 
         title: 'Jarron Juvenil', 
-        image: 'yes_thumbs_sphrical_vase-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_sphrical_vase-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '15',
+        price: '649.99', 
         title: 'Olla Original', 
-        image: 'yes_thumbs_castiron_cassarol_dish-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_castiron_cassarol_dish-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '12',
+        price: '649.99', 
         title: 'Vela Valiente', 
-        image: 'yes_thumbs_concretecandle-443x500-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_concretecandle-443x500-430x480.jpg'
     },
     { 
-        price: '$649.99', 
+        id: '19',
+        price: '649.99', 
         title: 'Revista Responsable', 
-        image: 'yes_thumbs_super_normal-430x480.jpg'
+        image: BASE_URL + 'yes_thumbs_super_normal-430x480.jpg'
     }
 ];
 

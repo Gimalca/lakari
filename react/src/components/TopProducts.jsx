@@ -3,12 +3,6 @@ import React from 'react';
 import ProductThumbnail from './ProductThumbnail';
 import Slider from './Slider';
 
-function thumbNailer(products) {
-    return products.map(function (item, i) {
-        return <ProductThumbnail key={i} product={item} />
-    });
-}
-
 class TopProducts extends React.Component {
 
     constructor(props) {
@@ -21,17 +15,24 @@ class TopProducts extends React.Component {
 
     render() {
 
-        var topSeller = thumbNailer(this.props.best);
-        var topNew = thumbNailer(this.props.news);
+        var topSeller = this.thumbNail(this.props.best);
+        var topNew = this.thumbNail(this.props.news);
 
         return (<div>
                     <h1> Los mas Vendidos </h1>
-                    <Slider items={topSeller} />
+                    <Slider autoPlay={12}>{topSeller}</Slider>
                     <hr />
                     <h1> Los mas Nuevos </h1>
-                    <Slider items={topNew} />
+                    <Slider autoPlay={10}>{topNew}</Slider>
                 </div>);
     }
+
+    thumbNail(products) {
+        return products.map((item, i) => {
+            return <ProductThumbnail key={i} product={item} />
+        });
+    }
+
 }
 
 export default TopProducts;

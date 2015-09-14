@@ -1,15 +1,30 @@
 'use strict';
 import React from 'react';
+import {actions} from '../actions/cart';
 
 class ProductThumbnail extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.onBuy = (e) => {
+            e.preventDefault();
+            var product = this.props.product;
+            actions.addProduct(product); 
+            $('#cd-cart-trigger').click();
+        };
+
+        this.onShare = (e) => {
+            e.preventDefault();
+        };
+
+        this.onLike = (e) => {
+            e.preventDefault();
+        };
     }
 
     render() {
 
-        var directory = 'assets/images/test/';
         var product = this.props.product;
 
         return (
@@ -23,13 +38,13 @@ class ProductThumbnail extends React.Component {
                 <div className='row'>
                     <div className='col-xs-8 col-md-8'>
                         <div className='btn-group'>
-                            <a href="#" className="btn btn-success btn-product">
+                            <a  onClick={this.onBuy} href="#" className="btn btn-success btn-product">
                                 <span className="glyphicon glyphicon-shopping-cart"></span> 
                             </a>
-                            <a className="btn btn-primary btn-product">
+                            <a onClick={this.onLike} className="btn btn-primary btn-product">
                                 <span className="glyphicon glyphicon-heart"></span>
                             </a>
-                            <a href="#" className="btn btn-default btn-product">
+                            <a onClick={this.onShare} href="#" className="btn btn-default btn-product">
                                 <span className="glyphicon glyphicon-share"></span> 
                             </a>
                         </div> 
@@ -39,9 +54,10 @@ class ProductThumbnail extends React.Component {
                     </div>
                 </div>
             </div>
-            <img src={ directory + product.image} className="img-responsive" />
+            <img src={product.image} className="img-responsive" />
         </div>);
     }
+
 }
 
 export default ProductThumbnail;

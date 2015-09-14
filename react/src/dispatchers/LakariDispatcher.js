@@ -21,6 +21,5 @@ class LakariDispatcher extends Flux.Dispatcher {
     }
 }
 
-let _lakariDispatcher = new LakariDispatcher();
+export let lakariDispatcher = new LakariDispatcher();
 
-export default _kartDispatcher;

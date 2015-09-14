@@ -1,8 +1,6 @@
 <?php
 echo $this->headlink() 
-        ->appendStylesheet($this->basePath('assets') . '/css/index.css');
-
-        $images = $this->basePath('assets') . '/images/test/';
+        ->appendStylesheet($this->basePath('assets') . '/css/index.min.css');
 ?>
 
 <div class="container">
@@ -45,4 +43,11 @@ echo $this->headlink()
     <div id="slider-products" class="slider-owl"></div>
 
 </div>
+<?php $images = $this->basePath('assets') . '/images/test/'; ?>
+<?php $this->inlineScript()->captureStart();
+ echo <<<JS
+    var BASE_URL='{$images}';
+JS;
+$this->inlineScript()->captureEnd();
+?>
 <?php $this->inlineScript()->appendFile($this->basePath('/assets/js/dist/index.min.js')); ?>

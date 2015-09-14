@@ -1,41 +1,61 @@
 'use strict';
-
 import React from 'react';
+import CartStore from '../stores/CartStore';
+import ShoppingCartItem from './ShoppingCartItem';
 
 class ShoppingCart extends React.Component {
+
     constructor(props) {
         super(props);
+
+        this.state = {
+            products: CartStore.getProducts()
+        };
+
+        this.handleProductChange = (e) => {
+            this.setState({
+                products: CartStore.getProducts()
+            });
+        }
+    }
+
+    componentDidMount() {
+        CartStore.addChangeListener(this.handleProductChange);
+    }
+
+    componentDidUnmount() {
+        CartStore.removeListener(this.handleProductChange);
     }
 
     render() {
+        var total = 0; 
+        let products = this.state.products;
+        let items = products.map( (product, i) => {
+            total += parseInt(product.price, 10);
+            return (<li key={i}> 
+                        <ShoppingCartItem item={product} />
+                    </li>);
+        });
+
         return (<div>
-            <h2>Cart</h2>
-            <ul className="cd-cart-items">
-                <li>
-                    <span className="cd-qty">1x</span> Product Name
-                    <div className="cd-price">$9.99</div>
-                    <a href="#0" className="cd-item-remove cd-img-replace">Remove</a>
-                </li>
-
-                <li>
-                    <span className="cd-qty">2x</span> Product Name
-                    <div className="cd-price">$19.98</div>
-                    <a href="#0" className="cd-item-remove cd-img-replace">Remove</a>
-                </li>
-
-                <li>
-                    <span className="cd-qty">1x</span> Product Name
-                    <div className="cd-price">$9.99</div>
-                    <a href="#0" className="cd-item-remove cd-img-replace">Remove</a>
-                </li>
-            </ul> 
-            <div className="cd-cart-total">
-                <p>Total <span>$39.96</span></p>
-            </div> 
-            <a href="#0" className="checkout-btn">Checkout</a>
-            <p className="cd-go-to-cart"><a href="#0">Go to cart page</a></p>
+            <div className='w-full-height w-horizontal-centered'>
+                <div className='scrollable'>
+                    <ul className="cd-cart-items dropdown-cart">
+                        {items}
+                    </ul> 
+                </div>
+            </div>
+            <div className='cd-cart-checkout w-horizontal-centered'>
+                <div className="cd-cart-total">
+                    <p>{'Total = $' + total}</p>
+                </div>
+                <a href="#0" className="checkout-btn">Checkout</a>
+                <a href="#0" className='go-to-cart-btn'>Go to cart page</a>
+            </div>
             </div>);
     }
 }
 
 export default ShoppingCart;
+
+

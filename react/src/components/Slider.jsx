@@ -24,15 +24,16 @@ class Slider extends React.Component {
             paginationSpeed : 800,
             navigationText: [leftNavigation, rightNavigation],
             lazyLoad: true,
-            autoPlay: 9000,
+            autoPlay: this.props.autoPlay * 1000,
             stopOnHover: true,
         });
     }
 
     render() {
-        var items = this.props.items;
-        var slides = items.map(function (slide, i) {
-            return (<div key={i} className='item'> {slide} </div>);
+
+        var slides = React.Children.map(
+            this.props.children, function (child, i) {
+            return (<div key={i} className='item'> {child} </div>);
         });
 
         return (<div ref='wrapper'>{slides}</div>);
