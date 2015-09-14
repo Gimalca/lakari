@@ -16,6 +16,7 @@ use Admin\Form\Product as ProductForm;
 use Admin\Form;
 use Admin\Form\Validator\ProductValidator;
 use Admin\Form\Validator\ProductImageValidator;
+use Catalog\Model\Dao\ProductDao;
 use Catalog\Model\Entity\Product;
 use Catalog\Model\Dao\CategoryDao;
 use Caralog\Model\Entity\UrlAlias;
@@ -441,5 +442,42 @@ class ProductController extends AbstractActionController
             $this->categoryDao = new CategoryDao($tableGateway);                
         }
         return $this->categoryDao;
+    }
+    
+    private function getProductSelect() {
+
+        $productDao = $this->getServiceDao('Admin\Model\Dao\ProductDao');
+        $results = $productDao->getAll();
+
+        $products = array_map(function ($product) {
+        $description = $product['productDescription'];
+
+            return array(
+                'id' => $product['product_id'],
+                'name' => $description->getName(),
+                'description' => $description->getDescription(),
+            );
+
+        }, $results->toArray());
+
+        return $products;
+    }
+    
+    public function getProductRelated()
+    {
+        $productDao = $this->getServiceDao('Admin\Model\Dao\ProductDao');
+        $results = $productDao->getAll();
+
+        $products = array_map(function ($product) {
+        $description = $product['productDescription'];
+
+            return array(
+                'id' => $product['product_id'],
+                'name' => $description->getName(),
+            );
+
+        }, $results->toArray());
+
+        return $products;
     }
 }

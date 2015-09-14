@@ -41,6 +41,9 @@ $this->headlink()
                     <li>
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
+                    <li>
+                        <a href="#tab1_6" data-toggle="tab">Stock</a>
+                    </li>
                 </ul>
             </div>
             <div class="panel-body p20 pb10 form-horizontal">   
@@ -348,7 +351,7 @@ $this->headlink()
                                             <div class="col-md-2 form-group">
                                               
                                                <label class="col-lg-3 control-label" for="productStockStatus">Stock <span class="text-danger">*</span></label>
-                                                <div class="col-md-8 "> 
+                                                <div class="col-md-9 "> 
                                                     <label class="field select">
                                                         <?php echo $this->formRow($this->productForm->get('productStockStatus')) ?>
                                                         <i class="arrow double "></i>
@@ -371,7 +374,37 @@ $this->headlink()
                             </div>
                             
                         </div>
+                        
+                        
+                        <div id="tab1_6" class="tab-pane">
+                            <div class="section row">
+                                <!-- end section -->
+                                <div class="col-md-12 form-group">
+                                    <div class="col-xs-4">
+                                       <label class="col-xs-4 control-label" style="text-align:right;" for="company">Select Related</label>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6 col-sm-6">
+                                      <label class="field select">
+                                        <select style="width: 100%" id="filter-related" name="filter-purchases">
+                                            <option value="0">Filter by Related</option>
+                                            <option value="1">Mesa</option>
+                                            <option value="2">Muebles</option>
+                                            <option value="3">Sillas</option>
+                                            <option value="4">Estantes</option>
+                                        </select>
+                                    </label>
+                                    </div>
+                                     <div class="text-right" id="button-form">
+                                        <button class="btn btn-primary text-right"> Add </button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                        
+                       
+                        <hr class="short alt">
+                        
                         <hr class="short alt">
                         <div class="panel-footer text-right" id="button-form">
                             <button class="btn btn-primary text-right"> Save </button>
@@ -413,6 +446,7 @@ $this->headScript()
 
 $this->inlineScript()->captureStart();
 $url = $this->url('admin', array('controller' => 'product', 'action' => 'seo', ));
+
 echo <<<JS
 //<script type="text/javascript">
 var URL = '$url';
@@ -466,7 +500,7 @@ var URL = '$url';
               enableFiltering: true,  
             });*/
             // Init Select2 - Basic Multiple
-            $("#multiselect3").select2({
+            $("#filter-related").select2({
               placeholder: "Select Categories",
                allowClear: true,
                style: "bg-primary light"

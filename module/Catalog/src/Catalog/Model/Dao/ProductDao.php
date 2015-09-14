@@ -433,5 +433,27 @@ class ProductDao implements IProductDao
 
         return $table;
     }
+    
+    //JOIN de base de datos con productos relacionados
+
+    public function getProductRelated()
+    {
+        $query = $this->tableGateway->getSql()->select();
+        $query->join(array(
+            'pr' => 'lk_product_related'
+                ), 'pr.product_id = lk_product_related.product_id');
+        $query->join(array(
+            'pro' => 'lk_product'),
+                'pr.related_id = pro.product_id' 
+        );
+
+        $query->order("lk_product.product_id DESC");
+        //echo $query->getSqlString();die;
+
+        $resultSet = $this->tableGateway->selectWith($query);
+        //var_dump($resultSet->current()); die;
+
+        return $resultSet;
+    }
 
 }
