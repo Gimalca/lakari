@@ -27,7 +27,7 @@ class Slider extends React.Component {
             autoPlay: this.props.autoPlay * 1000,
             stopOnHover: true,
             singleItem: this.props.single || false,
-            transitionStyle: this.props.transition || 'backSlide'
+            transitionStyle: this.props.transition
         });
     }
 

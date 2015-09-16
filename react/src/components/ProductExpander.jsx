@@ -71,7 +71,7 @@ class ProductExpander extends React.Component {
                     </div>
                 </div>
                 <div className='section section-2 col col-xs-9 flex expander-img'>
-                    <Slider transition='backSlide' autoPlay={6} single={true}>
+                    <Slider transition='fade' autoPlay={6} single={true}>
                         <img className='img-responsive' src='http://placehold.it/800x600' />
                         <img className='img-responsive' src='http://placehold.it/800x600?text=placehold.it+2' />
                         <img className='img-responsive' src='http://placehold.it/800x600?text=placehold.it+3' />
