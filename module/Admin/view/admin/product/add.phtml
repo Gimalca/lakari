@@ -42,7 +42,7 @@ $this->headlink()
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
                     <li>
-                        <a href="#tab1_6" data-toggle="tab">Stock</a>
+                        <a href="#tab1_6" data-toggle="tab">Related</a>
                     </li>
                 </ul>
             </div>
@@ -385,25 +385,14 @@ $this->headlink()
                                     </div>
                                     <div class="col-xs-4 col-md-6 col-sm-6">
                                       <label class="field select">
-                                        <select style="width: 100%" id="filter-related" name="filter-purchases">
-                                            <option value="0">Filter by Related</option>
-                                            <option value="1">Mesa</option>
-                                            <option value="2">Muebles</option>
-                                            <option value="3">Sillas</option>
-                                            <option value="4">Estantes</option>
-                                        </select>
+                                       <?php echo $this->formSelect($this->productForm->get('related_id')) ?>
                                     </label>
-                                    </div>
-                                     <div class="text-right" id="button-form">
-                                        <button class="btn btn-primary text-right"> Add </button>
                                     </div>
                                     
                                 </div>
                             </div>
                         </div>
                        
-                       
-                        <hr class="short alt">
                         
                         <hr class="short alt">
                         <div class="panel-footer text-right" id="button-form">
@@ -499,16 +488,26 @@ var URL = '$url';
             /*$('#multiselec').multiselect({
               enableFiltering: true,  
             });*/
+        
             // Init Select2 - Basic Multiple
-            $("#filter-related").select2({
+            $("#multiselect3").select2({
               placeholder: "Select Categories",
                allowClear: true,
                style: "bg-primary light"
             });
+        
+            // Init Select2 - Basic Multiple
+            $("#related_id").select2({
+              placeholder: "Select Related",
+               allowClear: true,
+               style: "bg-primary light"
+            });
+        
             $(".select2-multiple").select2({
               placeholder: "Select a state",
                allowClear: true
             });
+        
             // select dropdowns - placeholder like creation
             var selectList = $('.admin-form select');
             selectList.each(function(i, e) {
@@ -517,6 +516,7 @@ var URL = '$url';
                     else $(e).removeClass("empty")
                 });
             });
+        
             selectList.each(function(i, e) {
                 $(e).change();
             });

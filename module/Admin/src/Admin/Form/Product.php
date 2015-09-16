@@ -312,15 +312,17 @@ class Product extends Form {
         $this->add(array(
             'name' => 'related_id',
             'type' => 'select',
+            'options' => array(
+                'disable_inarray_validator' => true,
+            ),
             'attributes' => array(
-                'id' => 'select',
-                'class' => 'gui-input',
+                'id' => 'related_id',
+                'class' => 'form-control gui-input',
                 'style' => 'width: 100%',
+                'multiple' => true,
                 'required' => false,
             ),
-            'options' => array(
-                'products' => $products,
-            ),
+            
         ));
         
 //        $this->add(array(

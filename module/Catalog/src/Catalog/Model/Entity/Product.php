@@ -11,6 +11,7 @@ namespace Catalog\Model\Entity;
 use Admin\Model\Entity\ProductDescription;
 use Admin\Model\Entity\ProductImage;
 use Catalog\Model\Entity\UrlAlias;
+
 /**
  * @author Pedro
  *
@@ -37,8 +38,8 @@ class Product
     private $productImage;
     private $urlAlias;
     private $productCategories;
-
-   
+    private $productRelated;
+               
 
  function exchangeArray($data = NULL)
     {
@@ -67,6 +68,7 @@ class Product
         $this->productDescription->setMeta_keyword((isset($data['meta_keyword'])) ? $data['meta_keyword'] : null);
         $this->productDescription->setMeta_tittle((isset($data['meta_tittle'])) ? $data['meta_tittle'] : null);
         
+        $this->productRelated = (isset($data['related_id'])) ? $data['related_id'] : null;
 
         $this->productImage = (isset($data['image'])) ? $data['image'] : null;
 
@@ -116,7 +118,8 @@ class Product
         } //die;
         $this->productImage = (isset($images)) ? $images : null;
         
-       
+        $this->productRelated = (isset($data['related_id'])) ? $data['related_id'] : null;
+
     
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['productSeoUrl'])) ? $data['productSeoUrl'] : null;
@@ -240,6 +243,16 @@ class Product
     {
         $this->quantity = $quantity;
     }
+    
+    function getProductRelated() {
+        return $this->productRelated;
+    }
+
+    function setRelated_id($related_id) {
+        $this->related_id = $related_id;
+    }
+
+        
     public function getArrayCopy() {
         return get_object_vars($this);
     }
