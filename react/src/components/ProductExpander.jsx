@@ -1,11 +1,21 @@
 'use strict';
 import React from 'react';
 import Slider from './Slider';
+import {actions} from '../actions/cart';
 
 class ProductExpander extends React.Component {
 
     constructor(props) {
         super(props);
+        this.onClose = () => {
+            $('.product-expander').fadeOut('slow');
+        };
+
+        this.handleAdd = (e) => {
+            var product = this.props.product;
+            actions.addProduct(product); 
+            $('#cd-cart-trigger').click();
+        };
     }
 
     render() {
@@ -59,7 +69,7 @@ class ProductExpander extends React.Component {
                                     <button type="button" className="btn btn-flat btn-details">Detalles</button>
                                 </div>
                                 <div className="btn-group" role="group">
-                              <button type='button' className='btn btn-buy btn-flat'>
+                              <button onClick={this.handleAdd} type='button' className='btn btn-buy btn-flat'>
                                 <span className="glyphicon glyphicon-shopping-cart"></span>
                               </button>
                             </div>
@@ -76,6 +86,7 @@ class ProductExpander extends React.Component {
                         <img className='img-responsive' src='http://placehold.it/800x600?text=placehold.it+2' />
                         <img className='img-responsive' src='http://placehold.it/800x600?text=placehold.it+3' />
                     </Slider> 
+                    <span onClick={this.onClose} className="close">X</span>
                 </div>
             </div>);
 }

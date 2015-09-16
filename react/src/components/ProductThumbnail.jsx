@@ -21,6 +21,15 @@ class ProductThumbnail extends React.Component {
         this.onLike = (e) => {
             e.preventDefault();
         };
+
+        this.handleClick = (e) => {
+            e.preventDefault();
+            console.log('slide');
+            $('.product-expander').fadeIn('slow');
+            $('html, body').animate({
+        scrollTop: $(".product-expander").offset().top - 200
+    }, 2000);
+        };
     }
 
     render() {
@@ -54,7 +63,9 @@ class ProductThumbnail extends React.Component {
                     </div>
                 </div>
             </div>
-            <img src={product.image} className="img-responsive" />
+            <a onClick={this.handleClick} hre="#">
+                <img src={product.image} className="img-responsive" />
+            </a>
         </div>);
     }
 
