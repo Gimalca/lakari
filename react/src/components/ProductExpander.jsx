@@ -54,8 +54,8 @@ class ProductExpander extends React.Component {
                         </div>
                         <hr />
                         <div className='product-actions'>
-                            <div className="btn-group flex flex-center" role="group" aria-label="false">
-                                <div className="btn-group" role="group">
+                            <div className="btn-group flex" role="group" aria-label="false">
+                                <div className="btn-group flex-grow" role="group">
                                     <button type="button" className="btn btn-flat btn-details">Detalles</button>
                                 </div>
                                 <div className="btn-group" role="group">
