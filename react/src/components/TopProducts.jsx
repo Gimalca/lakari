@@ -1,12 +1,17 @@
 'use strict';
 import React from 'react';
 import ProductThumbnail from './ProductThumbnail';
+import ProductExpander from './ProductExpander';
 import Slider from './Slider';
 
 class TopProducts extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            selected: 1
+        };
     }
 
     shouldComponentUpdate() {
@@ -17,13 +22,22 @@ class TopProducts extends React.Component {
 
         var topSeller = this.thumbNail(this.props.best);
         var topNew = this.thumbNail(this.props.news);
+        let selected = this.props.best[this.state.selected];
 
         return (<div>
-                    <h1> Los mas Vendidos </h1>
-                    <Slider autoPlay={12}>{topSeller}</Slider>
+                    <div className='row'>
+                        <h1> Los mas Vendidos </h1>
+                        <Slider autoPlay={12}>{topSeller}</Slider>
+                    </div>
                     <hr />
-                    <h1> Los mas Nuevos </h1>
-                    <Slider autoPlay={10}>{topNew}</Slider>
+                    <div className='row'>
+                        <ProductExpander product={selected} />
+                    </div>
+                    <hr />
+                    <div className='row'>
+                        <h1> Los mas Nuevos </h1>
+                        <Slider autoPlay={10}>{topNew}</Slider>
+                    </div>
                 </div>);
     }
 
