@@ -24,11 +24,16 @@ class ProductThumbnail extends React.Component {
 
         this.handleClick = (e) => {
             e.preventDefault();
-            console.log('slide');
-            $('.product-expander').fadeIn('slow');
-            $('html, body').animate({
-        scrollTop: $(".product-expander").offset().top - 200
-    }, 2000);
+            var expander = $('.product-expander');
+            expander.animate({
+                opacity: '0.9',
+                height: "100%"
+            }, 500, function() {
+                // Animation complete.
+                $('html, body').animate({
+                    scrollTop: expander.offset().top - 200 
+                }, 2000);
+            });
         };
     }
 

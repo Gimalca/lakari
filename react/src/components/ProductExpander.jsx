@@ -8,7 +8,14 @@ class ProductExpander extends React.Component {
     constructor(props) {
         super(props);
         this.onClose = () => {
-            $('.product-expander').fadeOut('slow');
+
+        $('.product-expander').animate({
+                opacity: '0',
+                left: "+=50",
+                height: "0"
+            }, 500, function() {
+                // Animation complete.
+            });
         };
 
         this.handleAdd = (e) => {
