@@ -41,6 +41,9 @@ $this->headlink()
                     <li>
                         <a href="#tab1_5" data-toggle="tab">Stock</a>
                     </li>
+                    <li>
+                        <a href="#tab1_6" data-toggle="tab">Related</a>
+                    </li>
                 </ul>
             </div>
             <div class="panel-body p20 pb10 form-horizontal">   
@@ -348,7 +351,7 @@ $this->headlink()
                                             <div class="col-md-2 form-group">
                                               
                                                <label class="col-lg-3 control-label" for="productStockStatus">Stock <span class="text-danger">*</span></label>
-                                                <div class="col-md-8 "> 
+                                                <div class="col-md-9 "> 
                                                     <label class="field select">
                                                         <?php echo $this->formRow($this->productForm->get('productStockStatus')) ?>
                                                         <i class="arrow double "></i>
@@ -371,7 +374,26 @@ $this->headlink()
                             </div>
                             
                         </div>
+                        
+                        
+                        <div id="tab1_6" class="tab-pane">
+                            <div class="section row">
+                                <!-- end section -->
+                                <div class="col-md-12 form-group">
+                                    <div class="col-xs-4">
+                                       <label class="col-xs-4 control-label" style="text-align:right;" for="company">Select Related</label>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6 col-sm-6">
+                                      <label class="field select">
+                                       <?php echo $this->formSelect($this->productForm->get('related_id')) ?>
+                                    </label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                        
+                        
                         <hr class="short alt">
                         <div class="panel-footer text-right" id="button-form">
                             <button class="btn btn-primary text-right"> Save </button>
@@ -413,6 +435,7 @@ $this->headScript()
 
 $this->inlineScript()->captureStart();
 $url = $this->url('admin', array('controller' => 'product', 'action' => 'seo', ));
+
 echo <<<JS
 //<script type="text/javascript">
 var URL = '$url';
@@ -465,16 +488,26 @@ var URL = '$url';
             /*$('#multiselec').multiselect({
               enableFiltering: true,  
             });*/
+        
             // Init Select2 - Basic Multiple
             $("#multiselect3").select2({
               placeholder: "Select Categories",
                allowClear: true,
                style: "bg-primary light"
             });
+        
+            // Init Select2 - Basic Multiple
+            $("#related_id").select2({
+              placeholder: "Select Related",
+               allowClear: true,
+               style: "bg-primary light"
+            });
+        
             $(".select2-multiple").select2({
               placeholder: "Select a state",
                allowClear: true
             });
+        
             // select dropdowns - placeholder like creation
             var selectList = $('.admin-form select');
             selectList.each(function(i, e) {
@@ -483,6 +516,7 @@ var URL = '$url';
                     else $(e).removeClass("empty")
                 });
             });
+        
             selectList.each(function(i, e) {
                 $(e).change();
             });

@@ -12,6 +12,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Catalog\Model\Entity\Product;
 use Admin\Model\Entity\ProductDescription;
 use Admin\Model\Entity\ProductImage;
+use Catalog\Model\Entity\ProductRelated;
 
 class ProductDao implements IProductDao
 {
@@ -314,6 +315,30 @@ class ProductDao implements IProductDao
 
         return $table->getLastInsertValue();
     }
+    
+    protected function saveProductRelated($productId, $data = Null, $update = Null)
+    {
+        $id = (int) $productId;
+
+        $table = $this->getTable('lk_product_related');
+
+        if ($update == 1) {
+            $table->delete(array('product_id' => $id));
+        }
+
+        foreach ($data as $related) {
+            $insertRelated = array(
+                'product_id' => $id,
+                'related_id' => $related,
+            );
+            //print_r($insertRelated);die;
+
+            $saved = $table->insert($insertRelated);
+        }
+        
+        return $table->getLastInsertValue();
+    }
+    
 
     protected function saveUrlAlias($productId, $data = NULL, $update = NULL)
     {
@@ -365,7 +390,9 @@ class ProductDao implements IProductDao
         );
 
         $data_product_categories = $product->getProductCategories();
-
+        
+        $data_product_related = $product->getProductRelated();
+        //print_r($data_product_related);die;
         $data_product_image = $product->getProductImage();
 
         $data_product_urlAlias = array(
@@ -388,6 +415,9 @@ class ProductDao implements IProductDao
                 $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias);
                 // insert Categories
                 $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories);
+                //insert Related
+                $sRelated = $this->saveProductRelated($productId, $data_product_related);
+                
 
                 return $productId;
             } else {
@@ -432,6 +462,28 @@ class ProductDao implements IProductDao
         $table = new TableGateway($table, $adapter);
 
         return $table;
+    }
+    
+    //JOIN de base de datos con productos relacionados
+
+    public function getProductRelated()
+    {
+        $query = $this->tableGateway->getSql()->select();
+        $query->join(array(
+            'pr' => 'lk_product_related'
+                ), 'pr.product_id = lk_product_related.product_id');
+        $query->join(array(
+            'pro' => 'lk_product'),
+                'pr.related_id = pro.product_id' 
+        );
+
+        $query->order("lk_product.product_id DESC");
+        //echo $query->getSqlString();die;
+
+        $resultSet = $this->tableGateway->selectWith($query);
+        //var_dump($resultSet->current()); die;
+
+        return $resultSet;
     }
 
 }

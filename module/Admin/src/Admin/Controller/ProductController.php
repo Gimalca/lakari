@@ -16,6 +16,7 @@ use Admin\Form\Product as ProductForm;
 use Admin\Form;
 use Admin\Form\Validator\ProductValidator;
 use Admin\Form\Validator\ProductImageValidator;
+use Catalog\Model\Dao\ProductDao;
 use Catalog\Model\Entity\Product;
 use Catalog\Model\Dao\CategoryDao;
 use Caralog\Model\Entity\UrlAlias;
@@ -63,6 +64,11 @@ class ProductController extends AbstractActionController
         $this->productForm->get('productCategories')->setValueOptions($cat);
         $this->productForm->get('provider_id')->setValue(25);
         
+        $related = $this->getProductSelect();
+//        //print_r($related);die;
+//        
+        $this->productForm->get('related_id')->setValueOptions($related);
+        
         if ($this->request->isPost()) {
             
          
@@ -70,7 +76,7 @@ class ProductController extends AbstractActionController
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-           // print_r($postData);die;
+           //print_r($postData);die;
            
             $this->productForm->setInputFilter(new ProductValidator($this->getServiceLocator()));
             $this->productForm->setData($postData);
@@ -441,5 +447,37 @@ class ProductController extends AbstractActionController
             $this->categoryDao = new CategoryDao($tableGateway);                
         }
         return $this->categoryDao;
+    }
+    
+    private function getProductSelect() {
+
+        $productDao = $this->getProductDao();
+        $results = $productDao->getAll();
+
+        $result = array();
+        foreach ($results as $related) {
+           //$result[] = $row->getArrayCopy();
+           $result[$related->getProductId()] = $related->getProductDescription()->getName();
+        }
+        //print_r($result);die;
+       return $result;
+    }
+    
+    public function getProductRelated()
+    {
+        $productDao = $this->getProductDao();
+        $results = $productDao->getAll();
+
+        $products = array_map(function ($product) {
+        $description = $product['productDescription'];
+
+            return array(
+                'id' => $product['product_id'],
+                'name' => $description->getName(),
+            );
+
+        }, $results->toArray());
+
+        return $products;
     }
 }

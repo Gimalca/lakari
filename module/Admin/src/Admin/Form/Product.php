@@ -308,6 +308,38 @@ class Product extends Form {
                 'value' => 'Crear',
             ),
         ));
+        
+        $this->add(array(
+            'name' => 'related_id',
+            'type' => 'select',
+            'options' => array(
+                'disable_inarray_validator' => true,
+            ),
+            'attributes' => array(
+                'id' => 'related_id',
+                'class' => 'form-control gui-input',
+                'style' => 'width: 100%',
+                'multiple' => true,
+                'required' => false,
+            ),
+            
+        ));
+        
+//        $this->add(array(
+//            'name' => 'related_id',
+//            'type' => 'select',
+//             'options' => array(
+//                'disable_inarray_validator' => true,
+//            ),
+//            'attributes' => array(
+//                'id' => 'multiselect',
+//                'class' => 'form-control gui-input',
+//                'style' => 'width: 100%',
+//
+//                'required' => true,
+//            ),
+//        ));
+        
     }
 
 }
