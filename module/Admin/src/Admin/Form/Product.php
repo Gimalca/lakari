@@ -37,12 +37,28 @@ class Product extends Form {
                 'id' => 'productId',               
             ),
         ));
+        
         $this->add(array(
-            'name' => 'provider_id',
-            'attributes' => array(
-                'type' => 'hidden',               
+            'name' => 'provider',
+            'type' => 'select',
+            'options' => array(
+                'disable_inarray_validator' => true,
             ),
+            'attributes' => array(
+                'id' => 'provider',
+                'class' => 'form-control gui-input',
+                'style' => 'width: 100%',
+                'multiple' => FALSE,
+                'required' => true,
+            ),  
         ));
+//        
+//        $this->add(array(
+//            'name' => 'provider_id',
+//            'attributes' => array(
+//                'type' => 'hidden',               
+//            ),
+//        ));
 
         $this->add(array(
             'name' => 'productName',
@@ -324,6 +340,7 @@ class Product extends Form {
             ),
             
         ));
+        
         
 //        $this->add(array(
 //            'name' => 'related_id',

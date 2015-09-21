@@ -309,12 +309,33 @@ class ProductDao implements IProductDao
 
             $saved = $table->insert($insertCategories);
         }
-
-
-
-
+        
         return $table->getLastInsertValue();
     }
+    
+    protected function saveProductProvider($productId, $data = Null, $update = Null)
+    {
+        $id = (int) $productId;
+
+        $table = $this->getTable('lk_product_provider');
+
+        if ($update == 1) {
+            $table->delete(array('product_id' => $id));
+        }
+
+        foreach ($data as $provider) {
+            $insertProvider = array(
+                'provider_id' => $provider,
+                'company' => $company,
+            );
+            print_r($insertProvider);die;
+
+            $saved = $table->insert($insertProvider);
+        }
+        
+        return $table->getLastInsertValue();
+    }
+    
     
     protected function saveProductRelated($productId, $data = Null, $update = Null)
     {
@@ -393,6 +414,9 @@ class ProductDao implements IProductDao
         
         $data_product_related = $product->getProductRelated();
         //print_r($data_product_related);die;
+        
+        $data_product_provider = $product->getProviderId();
+        //print_r($data_product_provider);die;
         $data_product_image = $product->getProductImage();
 
         $data_product_urlAlias = array(
