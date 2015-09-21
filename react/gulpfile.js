@@ -11,7 +11,7 @@ var minifyCSS = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
  
-gulp.task('build-index', function () {
+gulp.task('build', function () {
 
   browserify({
     entries: ['src/index.jsx'],

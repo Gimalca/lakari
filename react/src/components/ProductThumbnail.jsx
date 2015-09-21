@@ -25,14 +25,15 @@ class ProductThumbnail extends React.Component {
         this.handleClick = (e) => {
             e.preventDefault();
             var expander = $('.product-expander');
+            expander.show();
             expander.animate({
                 opacity: '0.9',
-                height: "100%"
-            }, 500, function() {
+                height: "640px"
+            }, 100, function() {
                 // Animation complete.
                 $('html, body').animate({
                     scrollTop: expander.offset().top - 200 
-                }, 2000);
+                }, 400);
             });
         };
     }
@@ -42,35 +43,50 @@ class ProductThumbnail extends React.Component {
         var product = this.props.product;
 
         return (
-        <div className='thumbnail'> 
+        <div className='col-xs-12 product thumbnail product-thumbnail'> 
             <div className='caption'>
                 <div className='row'>
-                    <div className='col-md-12'>
-                        <p>{product.title}</p>
+                    <div className='product-info col-md-12'>
+                        <h3 className='name'>{product.title}</h3>
                     </div>
                 </div>
-                <div className='row'>
+                <div className='row product-info'>
                     <div className='col-xs-8 col-md-8'>
-                        <div className='btn-group'>
-                            <a  onClick={this.onBuy} href="#" className="btn btn-success btn-product">
-                                <span className="glyphicon glyphicon-shopping-cart"></span> 
-                            </a>
-                            <a onClick={this.onLike} className="btn btn-primary btn-product">
-                                <span className="glyphicon glyphicon-heart"></span>
-                            </a>
-                            <a onClick={this.onShare} href="#" className="btn btn-default btn-product">
-                                <span className="glyphicon glyphicon-share"></span> 
-                            </a>
-                        </div> 
+                    <div className="cart clearfix animate-effect">
+                        <div className="action">
+                            <ul className="list-unstyled">
+                                <li className="add-cart-button btn-group">
+                                    <button onClick={this.onBuy} className="btn btn-primary icon" data-toggle="dropdown" type="button">
+                                        <i className="fa fa-shopping-cart"></i>                                                 
+                                    </button>
+                                    <button className="btn btn-primary" type="button">Comprar</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className='col-md-4 col-xs-4 price'>
-                        <label>{product.price}</label>
+                    </div>
+                    <div className='col-md-4 col-xs-4 product-price'>
+                        <span className='price' >{product.price + '$'}</span>
                     </div>
                 </div>
             </div>
-            <a onClick={this.handleClick} hre="#">
-                <img src={product.image} className="img-responsive" />
-            </a>
+            <div className='product-image'>
+                <div className='image'>
+                    <a onClick={this.handleClick} href="#">
+                        <img src={product.image} className="img-responsive" />
+                    </a>
+                    <span className="lnk media-buttons">
+                        <ul className="list-inline">
+                            <li className="likes-btn" href="#" title="Wishlist">
+                                <i className="icon fa fa-heart fa-reverse"></i>
+                            </li>
+                            <li className="tweets-btn" href="#" title="Compare">
+                                <i className="fa fa-retweet"></i>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         </div>);
     }
 
