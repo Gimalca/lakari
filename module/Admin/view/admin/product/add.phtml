@@ -50,7 +50,6 @@ $this->headlink()
                 <?php $this->productForm->prepare() ?>
                 <form id="form"  action="<?php echo $this->basePath($this->productForm->getAttribute('action')); ?>" method="post" enctype="multipart/form-data" >   
                     <?php echo $this->formhidden($this->productForm->get('productId')) ?>
-                    <?php echo $this->formhidden($this->productForm->get('provider_id')) ?>
                     <div class="tab-content pn br-n admin-form theme-primary">  
 
                         <div id="tab1_1" class="tab-pane active">  
@@ -134,6 +133,14 @@ $this->headlink()
                                         <div class="help-block">
                                             <?php echo $this->formelementerrors($this->productForm->get('productMinimum')) ?> 
                                         </div>
+                                    </div>
+                                    
+                                    <label class="col-lg-3 control-label" for="provider_id">Proveedor </label>
+                                    <div class="col-md-6">
+                                        <label for="provider_id" class="field prepend-icon">
+                                        <?php echo $this->formSelect($this->productForm->get('provider')) ?>
+                                        <label for="provider_id" class="field icon"><i class="arrow single"></i></label>
+                                        </label>
                                     </div>
                                 </div>
                                 
@@ -496,6 +503,8 @@ var URL = '$url';
                style: "bg-primary light"
             });
         
+        
+        
             // Init Select2 - Basic Multiple
             $("#related_id").select2({
               placeholder: "Select Related",
@@ -503,10 +512,14 @@ var URL = '$url';
                style: "bg-primary light"
             });
         
-            $(".select2-multiple").select2({
-              placeholder: "Select a state",
-               allowClear: true
+        // Init Select2 - Basic Multiple
+            $("#provider").select2({
+              placeholder: "Select Provider",
+               allowClear: true,
+               style: "bg-primary light"
             });
+          
+        
         
             // select dropdowns - placeholder like creation
             var selectList = $('.admin-form select');

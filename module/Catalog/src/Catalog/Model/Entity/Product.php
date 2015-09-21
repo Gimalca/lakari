@@ -11,6 +11,7 @@ namespace Catalog\Model\Entity;
 use Admin\Model\Entity\ProductDescription;
 use Admin\Model\Entity\ProductImage;
 use Catalog\Model\Entity\UrlAlias;
+use Provider\Model\Entity\Provider;
 
 /**
  * @author Pedro
@@ -39,6 +40,7 @@ class Product
     private $urlAlias;
     private $productCategories;
     private $productRelated;
+    private $productProvider;
                
 
  function exchangeArray($data = NULL)
@@ -69,6 +71,8 @@ class Product
         $this->productDescription->setMeta_tittle((isset($data['meta_tittle'])) ? $data['meta_tittle'] : null);
         
         $this->productRelated = (isset($data['related_id'])) ? $data['related_id'] : null;
+        
+        $this->productProvider = (isset($data['provider_id'])) ? $data['provider_id'] : null;
 
         $this->productImage = (isset($data['image'])) ? $data['image'] : null;
 
