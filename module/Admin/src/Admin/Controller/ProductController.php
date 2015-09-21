@@ -24,6 +24,7 @@ use Catalog\Model\Dao\urlAliasDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\ProductImage;
 use Zend\ViewModel\JsonModel;
+use Provider\Model\Dao\ProviderDao;
 
 use Zend\Json\Json;
 use Zend\File\Transfer\Adapter\Http as FileTransferAdapter;
@@ -62,12 +63,19 @@ class ProductController extends AbstractActionController
         $this->productForm = new ProductForm();
         
         $this->productForm->get('productCategories')->setValueOptions($cat);
-        $this->productForm->get('provider_id')->setValue(25);
+        
+        $providers = $this->getProvider();
+        //print_r($provider);die;
+        array_unshift($providers, null);
+        $this->productForm->get('provider')->setValueOptions($providers);
         
         $related = $this->getProductSelect();
 //        //print_r($related);die;
-//        
         $this->productForm->get('related_id')->setValueOptions($related);
+        
+      
+        //print_r($provider);die;
+//        $this->productForm->get('provider_id')->setValueOptions($provider);
         
         if ($this->request->isPost()) {
             
@@ -449,6 +457,16 @@ class ProductController extends AbstractActionController
         return $this->categoryDao;
     }
     
+    public function getProviderDao()
+    {
+        if (!isset($this->providerDao)) {
+            $sm = $this->getServiceLocator();       
+            $tableGateway = $sm->get('ProviderTableGateway');
+            $this->providerDao = new ProviderDao($tableGateway);                
+        }
+        return $this->providerDao;
+    }
+
     private function getProductSelect() {
 
         $productDao = $this->getProductDao();
@@ -461,6 +479,19 @@ class ProductController extends AbstractActionController
         }
         //print_r($result);die;
        return $result;
+    }
+    
+     private function getProvider() 
+    {       
+        $providerDao = $this->getProviderDao();
+        $results = $providerDao->getAll();
+
+         $result = array();
+        foreach ($results as $provider) {
+           //$result[] = $row->getArrayCopy();
+           $result[$provider->provider_id] = $provider->company;
+        }
+        return $result;
     }
     
     public function getProductRelated()
@@ -479,5 +510,23 @@ class ProductController extends AbstractActionController
         }, $results->toArray());
 
         return $products;
+    }
+    
+    public function getProductId()
+    {
+       $productDao = $this->getProductDao();
+        $results = $productDao->getAll();
+
+        $products = array_map(function ($product) {
+        $description = $product['productDescription'];
+
+            return array(
+                'id' => $product['product_id'],
+                'name' => $description->getName(),
+            );
+
+        }, $results->toArray());
+
+        return $products; 
     }
 }
