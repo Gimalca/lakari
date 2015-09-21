@@ -31,7 +31,7 @@ gulp.task('css', function () {
     gulp.src('styles/**/*.css')
         .pipe(minifyCSS())
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(concat('bundle.min.css'))
+        .pipe(concat('index.min.css'))
         .pipe(gulp.dest('../public/assets/css'));
 });
  

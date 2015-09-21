@@ -26,6 +26,8 @@ class Slider extends React.Component {
             lazyLoad: true,
             autoPlay: this.props.autoPlay * 1000,
             stopOnHover: true,
+            singleItem: this.props.single || false,
+            transitionStyle: this.props.transition
         });
     }
 
@@ -33,7 +35,7 @@ class Slider extends React.Component {
 
         var slides = React.Children.map(
             this.props.children, function (child, i) {
-            return (<div key={i} className='item'> {child} </div>);
+            return (<div key={i} className='item'>{child}</div>);
         });
 
         return (<div ref='wrapper'>{slides}</div>);
