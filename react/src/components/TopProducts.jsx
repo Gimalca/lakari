@@ -26,7 +26,7 @@ class TopProducts extends React.Component {
 
         return (<div>
                     <div className='row'>
-                        <h1> Los mas Vendidos </h1>
+                        <h3 className='main-title'> Los mas Vendidos </h3>
                         <Slider autoPlay={12}>{topSeller}</Slider>
                     </div>
                     <hr />
@@ -35,7 +35,7 @@ class TopProducts extends React.Component {
                     </div>
                     <hr />
                     <div className='row'>
-                        <h1> Los mas Nuevos </h1>
+                        <h3 className='main-title'> Los mas Nuevos </h3>
                         <Slider autoPlay={10}>{topNew}</Slider>
                     </div>
                 </div>);
