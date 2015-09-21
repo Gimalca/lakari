@@ -25,6 +25,10 @@ class ProductExpander extends React.Component {
         };
     }
 
+    componentDidMount() {
+        $('.product-expander').hide();
+    }
+
     render() {
         let product = this.props.product;
 

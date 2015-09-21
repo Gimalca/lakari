@@ -1,7 +1,7 @@
 body {
     font-family: "Champagne-Limousines-Bold", sans-serif;
 }
-
+/* index */
 .slider-owl .item{
     margin: 3px;
 }
@@ -45,6 +45,8 @@ span.count {
   left: 7px;
   transform: translateY(-50%);
 }
+
+/* Product Expander */
 
 .expander-img {
     margin: 0 0 0 auto;
@@ -175,7 +177,46 @@ span.count {
     z-index: 2;
     border: solid 1px #ccc;
 }
+/* Catalog */
+.product-thumbnail {
+    box-shadow: 1px 2px 3px #e6e6e6;
+    border-radius: 0px;
+}
+.product-image .image {
+    position: relative;
+}
 
+.media-buttons {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  font-size: 1.4em;
+}
+
+.likes-btn {
+  color: #FFF;
+  transition: font-size 0.1s ease-in;
+}
+
+.likes-btn:hover {
+  color: #F00;
+  font-size: 1.45em;
+}
+
+.likes-btn.liked {
+    color: #F00;
+}
+
+.tweets-btn {
+  color: #FFF;
+  transition: font-size 0.1s ease-in;
+}
+
+.tweets-btn:hover {
+    color: #00F;
+    font-size: 1.45em;
+}
+/* General */
 
 .flex {
     display: flex;
