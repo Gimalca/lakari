@@ -378,13 +378,14 @@ class ProductController extends AbstractActionController
         
         $categoryDao = $this->getCategoryDao();
         $results = $categoryDao->getAll();
-        
+        //$ver = $results->toArray();
+        //print_r($ver);
         $result = array();
         foreach ($results as $cat) {
            //$result[] = $row->getArrayCopy();
            $result[$cat->category_id] = $cat->name;
         }
-    
+        
        return $result;
         
     }
