@@ -1,6 +1,7 @@
 'use strict';
+
  import React from 'react';
- import CartStore from '../stores/CartStore';
+ import CartStore from '../../stores/CartStore';
 
  class CartTrigger extends React.Component {
 
@@ -11,10 +12,12 @@
              quantity: 0
          }
 
-         this.handleProductChange = () => {
+         this.handleProductChange = (e) => {
              this.setState({
                 quantity : CartStore.getProducts().length  
              });
+
+             $(React.findDOMNode(this)).click();
          };
      }
 

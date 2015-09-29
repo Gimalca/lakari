@@ -4,6 +4,7 @@ import {constants} from '../constants/actions';
 import {lakariDispatcher as dispatcher} from '../dispatchers/LakariDispatcher';
 
 var _cartItems = [];
+var _selected = null;
 
 function _addProduct(product) {
     if(_cartItems.indexOf(product) == -1) {
@@ -15,8 +16,14 @@ function _removeProduct(product) {
     _cartItems.splice(_cartItems.indexOf(product), 1);
 }
 
+function _selectProduct(product) {
+    _selected = product;
+}
+
 class CartStore extends BaseStore {
     getProducts() { return _cartItems; }
+
+    getSelected() { return _selected; }
 }
 
 var _cartStore = new CartStore();

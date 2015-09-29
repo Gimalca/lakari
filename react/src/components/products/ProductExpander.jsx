@@ -1,15 +1,18 @@
 'use strict';
 import React from 'react';
-import Slider from './Slider';
-import {actions} from '../actions/cart';
+import OwlCarousel from '../common/OwlCarousel';
+import {actions} from '../../actions/cart';
 
 class ProductExpander extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.onClose = () => {
 
-        $('.product-expander').animate({
+        var $this = $(React.findDOMNode(this));
+
+        $this.animate({
                 opacity: '0',
                 left: "+=50",
                 height: "0"
@@ -21,25 +24,39 @@ class ProductExpander extends React.Component {
         this.handleAdd = (e) => {
             var product = this.props.product;
             actions.addProduct(product); 
-            $('#cd-cart-trigger').click();
         };
     }
 
     componentDidMount() {
-        $('.product-expander').hide();
+        $(React.findDOMNode(this)).hide();
     }
 
     render() {
-        let product = this.props.product;
 
-        return (<div className='product-expander flex hidden-xs'>
+        let product = this.props.product;
+        if (product) {
+
+        let images = product.images.map((img, i) => {
+            return (<img className='img img-responsive expander-img-product' src={img.image} alt='http://placehold.it/800x600' key={i} />);
+        });
+
+        var leftNavigation = '<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+
+        var rightNavigation = '<a class="right carousel-control" role="button"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>';
+
+        let carouselOptions = {singleItem: true, autoPlay: true,navigation:true, stopOnHover: true, navigationText: [leftNavigation, rightNavigation] };
+
+        let title = product.descriptions.name;
+        let description = product.descriptions;
+        return (<div>
+                 <div className='product-expander flex hidden-xs'>
                     <div className='section section-1 col-xs-3 flex flex-vertical'>
                         <div className='product-resume flex-grow'>
-                        <label className='product-title main-title'>{product.title}</label>
+                        <label className='product-title main-title'>{title}</label>
                         <hr />
                         <label className='product-title brand-title'>Marca</label>
                         <div className='product-description'>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam</p>
+                            <p>{product.description}</p>
                         </div>
                     </div>
                     <div className='product-details'>
@@ -50,7 +67,7 @@ class ProductExpander extends React.Component {
                         <hr />
                         <div className='product-description'>
                             <label>Descripción</label>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p>{description.description}</p>
                         </div>
                         <hr />
                         <div className='product-prop'>
@@ -92,15 +109,19 @@ class ProductExpander extends React.Component {
                     </div>
                 </div>
                 <div className='section section-2 col col-xs-9 flex expander-img'>
-                    <Slider transition='fade' autoPlay={6} single={true}>
-                        <img className='img-responsive' src='http://placehold.it/800x600' />
-                        <img className='img-responsive' src='http://placehold.it/800x600?text=placehold.it+2' />
-                        <img className='img-responsive' src='http://placehold.it/800x600?text=placehold.it+3' />
-                    </Slider> 
-                    <span onClick={this.onClose} className="close">X</span>
+                    <OwlCarousel options={carouselOptions}>
+                        {images}
+                    </OwlCarousel>
+                    <button onClick={this.onClose} type="button" className="close" aria-hidden="true">
+                        &times;
+                    </button>
                 </div>
+            </div>
             </div>);
-}
+        } else {
+            return null;
+        }
+    }
 }
 
 export default ProductExpander;

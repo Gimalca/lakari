@@ -28,5 +28,28 @@ export var actions = {
             actionType: constants.SHARE_PRODUCT,
             product
         });
+    },
+    expandProduct: (product) => {
+
+        dispatcher.handleViewAction({
+            actionType: constants.EXPAND_PRODUCT,
+            product
+        });
+
+        $.get(URL_AJAX + '/index/expander',
+              {id:product.id}, null, 'json')
+        .then(function (response) {
+            dispatcher.handleServerAction({
+                actionType: constants.EXPAND_PRODUCT_RESPONSE,
+                product : response
+            });
+        })
+        .fail(function (error) {
+            dispatcher.handleServerAction({
+                actionType: constants.EXPAND_PRODUCT_ERROR,
+                error
+            });
+        })
+        .done();
     }
 }
