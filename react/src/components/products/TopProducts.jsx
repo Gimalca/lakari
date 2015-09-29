@@ -5,55 +5,14 @@ import ProductThumbnail from './ProductThumbnail';
 import ProductExpander from './ProductExpander';
 import OwlCarousel from '../common/OwlCarousel';
 
-import ProductStore from '../../stores/ProductStore';
 
 class TopProducts extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            selected: ProductStore.getSelected()
-        };
-
-        this.handleProductChange = (e) => {
-
-            var $expander = $(React.findDOMNode(this.refs.expander));
-
-            $expander.show();
-            $expander.animate({
-                opacity: '0.9',
-                height: "640px"
-            }, {
-                duration: 300,
-                complete: function () {
-                    $('html, body').animate({
-                        scrollTop: $expander.offset().top - 200 
-                    }, 300);
-                }
-            });
-
-            this.setState({
-                selected: ProductStore.getSelected()
-            });
-
-        };
     }
 
-    componentDidMount() {
-        ProductStore.addChangeListener(this.handleProductChange);
-    }
-
-    componentDidUnmount() {
-        ProductStore.removeListener(this.handleProductChange);
-    }
-
-    render() {
-
-        var topSeller = this.thumbNail(this.props.best);
-        var topNew = this.thumbNail(this.props.news);
-
-        var selected = this.state.selected;
+    getCarouselOptions() {
 
         var leftNavigation = '<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
 
@@ -72,7 +31,14 @@ class TopProducts extends React.Component {
             singleItem: false,
             itemsScaleUp: true
         };
-        
+        return carouselOptions;
+    }
+
+    render() {
+
+        var topSeller = this.thumbNail(this.props.best);
+        var topNew = this.thumbNail(this.props.news);
+        let carouselOptions = this.getCarouselOptions(); 
         return (<div>
                     <div className='row'>
                         <h3 className='main-title'> Los mas Vendidos </h3>
@@ -80,11 +46,9 @@ class TopProducts extends React.Component {
                         <OwlCarousel options={carouselOptions}>{topSeller}</OwlCarousel>
                         </div>
                     </div>
-                    <hr />
                     <div className='row hidden-xs'>
-                        <ProductExpander ref='expander' product={selected} />
+                        <ProductExpander  />
                     </div>
-                    {selected?<hr />:''}
                     <div className='row'>
                         <h3 className='main-title'> Los mas Nuevos </h3>
                         <div className='col-md-12' >
@@ -94,13 +58,38 @@ class TopProducts extends React.Component {
                 </div>);
     }
 
+    getColors() {
 
-    thumbNail(products) {
-        return products.map((item, i) => {
-            return <ProductThumbnail key={i} product={item}  />
-        });
+        const colors = [
+            '#FFEFC1',
+            '#DFEABF',
+            '#E7B4B0',
+            '#A5C1CF',
+            '#E6665B',
+            '#C5D5D4',
+            '#F9EFB3',
+            '#AACDDC',
+            '#FFBE7B',
+            '#C77B8D'
+        ];
+
+        return  colors;
     }
 
+    randomColor(colors) {
+        var random = Math.floor(Math.random() * colors.length); 
+        return colors[random];
+    }
+
+    thumbNail(products) {
+
+        let colors = this.getColors();
+
+        return products.map((item, i) => {
+            var style = {backgroundColor: this.randomColor(colors)}; 
+            return <ProductThumbnail key={i} product={item} imageStyle={style} />
+        });
+    }
 }
 
 export default TopProducts;

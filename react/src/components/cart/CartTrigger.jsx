@@ -16,8 +16,6 @@
              this.setState({
                 quantity : CartStore.getProducts().length  
              });
-
-             $(React.findDOMNode(this)).click();
          };
      }
 

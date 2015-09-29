@@ -13,6 +13,7 @@ class ProductThumbnail extends React.Component {
             e.preventDefault();
             var product = this.props.product;
             actions.addProduct(product); 
+            $('#cd-cart-trigger').click();
         };
 
         this.onShare = (e) => {
@@ -37,6 +38,7 @@ class ProductThumbnail extends React.Component {
     render() {
 
         var product = this.props.product;
+        var image = product.images[0].image;
 
         return (<div className='product thumbnail product-thumbnail'> 
             <div className='caption'>
@@ -65,10 +67,10 @@ class ProductThumbnail extends React.Component {
                     </div>
                 </div>
             </div>
-            <div className='product-image'>
+            <div style={this.props.imageStyle} className='product-image'>
                 <div className='image'>
                     <a onClick={this.handleClick.bind(this, product)} href="#">
-                        <img src={product.image} className="img-responsive" />
+                        <img src={image} className="img-responsive" />
                     </a>
                     <span className="lnk media-buttons">
                         <ul className="list-inline">

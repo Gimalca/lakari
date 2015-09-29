@@ -6,6 +6,10 @@ body {
     margin: 3px;
 }
 
+.main-title {
+    margin: 20px 10px;
+}
+
 .carousel-control.right {
     background-image: none;
 }
@@ -85,7 +89,7 @@ span.count {
 
 .product-expander {
     padding: 20px;
-    opacity: 0.6;
+    opacity: 1;
     max-height: 640px;
     min-width: 1170px;
     margin: 0 auto;
@@ -123,6 +127,7 @@ span.count {
 }
 
 .product-title {
+    font-size: 26px;
     margin-bottom: 5px;
 }
 

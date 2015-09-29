@@ -2,11 +2,16 @@
 import React from 'react';
 import OwlCarousel from '../common/OwlCarousel';
 import {actions} from '../../actions/cart';
+import ProductStore from '../../stores/ProductStore';
 
 class ProductExpander extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            product: ProductStore.getSelected()
+        };
 
         this.onClose = () => {
 
@@ -22,37 +27,78 @@ class ProductExpander extends React.Component {
         };
 
         this.handleAdd = (e) => {
-            var product = this.props.product;
+            var product = this.state.product;
             actions.addProduct(product); 
+        };
+
+        this.handleProductChange = (e) => {
+
+            var $expander = $(React.findDOMNode(this));
+
+            $expander.show();
+            $expander.animate({
+                opacity: '1',
+                height: "640px"
+            }, {
+                duration: 300,
+                complete: function () {
+                    $('html, body').animate({
+                        scrollTop: $expander.offset().top - 200 
+                    }, 300);
+                }
+            });
+
+            this.setState({
+                product: ProductStore.getSelected()
+            });
+
         };
     }
 
     componentDidMount() {
+        ProductStore.addChangeListener(this.handleProductChange);
         $(React.findDOMNode(this)).hide();
+    }
+
+    componentDidUnmount() {
+        ProductStore.removeListener(this.handleProductChange);
+    }
+    
+    getCarouselOptions() {
+
+        var leftNavigation = '<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+
+        var rightNavigation = '<a class="right carousel-control" role="button"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>';
+
+        let carouselOptions = {
+            singleItem: true,
+            autoPlay: true,
+            navigation:true,
+            stopOnHover: true,
+            navigationText: [leftNavigation, rightNavigation] 
+        };
+
+        return carouselOptions;
     }
 
     render() {
 
-        let product = this.props.product;
+        let product = this.state.product;
+
         if (product) {
 
         let images = product.images.map((img, i) => {
             return (<img className='img img-responsive expander-img-product' src={img.image} alt='http://placehold.it/800x600' key={i} />);
         });
 
-        var leftNavigation = '<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-
-        var rightNavigation = '<a class="right carousel-control" role="button"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>';
-
-        let carouselOptions = {singleItem: true, autoPlay: true,navigation:true, stopOnHover: true, navigationText: [leftNavigation, rightNavigation] };
-
         let title = product.descriptions.name;
         let description = product.descriptions;
+        let carouselOptions = this.getCarouselOptions();
         return (<div>
                  <div className='product-expander flex hidden-xs'>
                     <div className='section section-1 col-xs-3 flex flex-vertical'>
                         <div className='product-resume flex-grow'>
-                        <label className='product-title main-title'>{title}</label>
+                        <label className='product-title'>{title}</label>
                         <hr />
                         <label className='product-title brand-title'>Marca</label>
                         <div className='product-description'>
