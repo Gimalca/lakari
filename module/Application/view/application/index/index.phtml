@@ -5,7 +5,7 @@ echo $this->headlink()
 
 <div class="container">
 
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<div id="carousel-example-generic" class="carousel slide hidden-xs" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -42,13 +42,23 @@ echo $this->headlink()
     <hr>
     <div id="slider-products" class="slider-owl">
     </div>
-
 </div>
-<?php $images = $this->basePath('assets') . '/images/test/'; ?>
-<?php $this->inlineScript()->captureStart();
+
+<script type='application/json' id='bestSellerJSON'>
+    <?php echo $this->bestSeller ?>
+</script>
+
+<script type='application/json' id='latestJSON'>
+    <?php echo $this->latest ?>
+</script>
+
+<?php $urlAjax = $this->url('application', array('controller' => 'index'));  
+
+$this->inlineScript()->captureStart();
+
  echo <<<JS
-    var BASE_URL='{$images}';
+   var URL_AJAX = '{$urlAjax}';
 JS;
+
 $this->inlineScript()->captureEnd();
-?>
-<?php $this->inlineScript()->appendFile($this->basePath('/assets/js/dist/index.min.js')); ?>
+$this->inlineScript()->appendFile($this->basePath('/assets/js/dist/index.min.js'));
