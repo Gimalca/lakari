@@ -174,7 +174,7 @@ $this->headlink()
 ------------------------------------------>
 
 <section class="table-layout" id="content">
-    <div class="panel p">
+    <div class="panel panel-default">
         <div class="panel-body pn col-lg-10 col-lg-offset-1 col-md-10 col-lg-offset-1 col-sm-11">
             
             <table class="table admin-form theme-warning tc-checkbox-1 fs13">
@@ -242,10 +242,32 @@ $this->headlink()
                      <?php endforeach; ?> 
                     
                 </tbody>
-            </table>
+                
+            </table>   
+            
         </div>
+        
+           <div class="text-center">
+         <?php
+            // add at the end of the file after the table
+            echo $this->paginationControl(
+                // the paginator object
+                $this->category,
+                // the scrolling style
+                'sliding',
+                // the partial to use to render the control
+                'partial/paginator.phtml',
+                // the route to link to when a user clicks a control link
+                array(
+                    'route' => 'admin', 'controller' => 'category', 'action' => 'list'
+                )
+            );
+        ?>
+            </div>
+        
     </div>
-</section>
+</section>  
+
 
     <?php
     $this->headScript()
