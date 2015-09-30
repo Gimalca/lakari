@@ -31,11 +31,25 @@ class CategoryController extends AbstractActionController {
          
         $add = $this->params()->fromRoute('add', false);
          
-        return new ViewModel(array(
-            'category' => $categories,
-            'categoryForm' => $categoryForm,
-            'add' => $add
-        ));
+     
+     //PAGINATOR   
+     // grab the paginator from the AlbumTable
+     $categoryTableGateway = $this->getService('CategoryTableGateway');
+     $categoryDao = new CategoryDao($categoryTableGateway);
+     
+     $paginator = $categoryDao->fetchAll(true);
+     // set the current page to what has been passed in query string, or to 1 if none set
+     $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     // set the number of items per page to 10
+     $paginator->setItemCountPerPage(3);
+
+     return new ViewModel(array(
+        //'category' => $categories,
+        'categoryForm' => $categoryForm,
+        'add' => $add,
+        'category' => $paginator
+     ));
+        
     }
     
     public function addAction()
