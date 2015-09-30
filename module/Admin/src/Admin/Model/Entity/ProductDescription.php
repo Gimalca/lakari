@@ -117,6 +117,9 @@ class ProductDescription
         $this->meta_tittle = $meta_tittle;
     }
 
-    
+    public function getArrayCopy() {
+        return get_object_vars($this);
+    }
+
 
 }

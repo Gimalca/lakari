@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {actions} from '../actions/cart';
+import {actions} from '../../actions/cart';
 
 class ShoppingCartItem extends React.Component {
 

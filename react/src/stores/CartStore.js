@@ -1,4 +1,5 @@
 'use strict';
+
 import BaseStore from './BaseStore';
 import {constants} from '../constants/actions';
 import {lakariDispatcher as dispatcher} from '../dispatchers/LakariDispatcher';

@@ -292,7 +292,7 @@ ul.dropdown-cart li .item-right{
     float:right;
 }
 ul.dropdown-cart li .item-right button{
-    margin-top:14px;
+    transform: translateY(50%);
 }
 
 .w-full-height {

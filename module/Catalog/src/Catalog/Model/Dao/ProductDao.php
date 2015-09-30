@@ -14,19 +14,21 @@ use Admin\Model\Entity\ProductDescription;
 use Admin\Model\Entity\ProductImage;
 use Catalog\Model\Entity\ProductRelated;
 
-class ProductDao implements IProductDao
-{
+
+class ProductDao implements IProductDao {
 
     protected $tableGateway;
+    private $select;
 
     public function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
     }
 
-    public function getAll()
-    {
+    public function getAll() {
+
         $query = $this->tableGateway->getSql()->select();
+
         $query->join(array(
             'pd' => 'lk_product_description'
                 ), 'pd.product_id = lk_product.product_id');
@@ -89,11 +91,15 @@ class ProductDao implements IProductDao
         return $resultSet;
     }
 
-    public function getImages($productId = null)
+    public function getImages($productId = null, $columns=null)
     {
         $sql = new Sql($this->tableGateway->getAdapter());
         $query = $sql->select();
         $query->from('lk_product_image');
+
+        if ($columns && is_array($columns)) {
+            $query->columns($columns);
+        }
 
         if ($productId) {
             $query->where('product_id = ' . $productId);
@@ -112,7 +118,7 @@ class ProductDao implements IProductDao
         return $images;
     }
 
-    public function getCategories($productId)
+    public function getCategories($productId, $columns)
     {
         $table = $this->getTable('lk_product_has_category');
         $query = $table->getSql()->select();
@@ -120,8 +126,12 @@ class ProductDao implements IProductDao
         if ($productId) {
             $query->where('product_id = ' . $productId);
         }
-        $resultSet = $table->selectWith($query);
 
+        if ($columns && is_array($columns)) {
+            $query->columns($columns);
+        }
+
+        $resultSet = $table->selectWith($query);
 
         $categories = array();
         foreach ($resultSet as $row) {
@@ -137,6 +147,7 @@ class ProductDao implements IProductDao
         // $rowset = $this->tableGateway->select(array('id' => $ide));
 
         $query = $this->tableGateway->getSql()->select();
+
         $query->join(array(
             'pd' => 'lk_product_description'
                 ), 'pd.product_id = lk_product.product_id');
@@ -183,7 +194,6 @@ class ProductDao implements IProductDao
         return $result;
     }
 
-
     public function getProviderId($id)
     {
         $id = (int) $id;
@@ -214,8 +224,148 @@ class ProductDao implements IProductDao
         return $resultSet;
     }
 
-    public function getById($id)
-    {
+
+    public function limit($limit, $offset=null) {
+
+        if ($limit && is_numeric($limit)) {
+            $this->select->limit($limit);
+        }
+
+        if($offset && is_numeric($offset)) {
+            $this->select->offset($offset);
+        }
+        return $this;
+    }
+
+    public function where($id, $where=null) {
+
+        $id = (int) $id;
+        if (is_numeric($id) && $id != 0) {
+            $this->select->where(array(
+                'lk_product.product_id' => $id
+            ));
+        }
+
+        if (isset($where) && is_array($where)) {
+            $this->select->where($where);
+        }
+        return $this;
+    }
+
+    public function orderBy($by) {
+        $this->select->order($by);
+        return $this;
+    }
+
+    public function products($columns) {
+        $this->select = $this->tableGateway->getSql()->select();
+        if ($columns) $this->select->columns($columns);
+        return $this;
+    }
+
+    public function descriptions() {
+
+        $this->select->join(array(
+            'pd' => 'lk_product_description'
+                ), 'pd.product_id = lk_product.product_id');
+        return $this;
+    }
+
+    public function images() {
+        $this->select->join(array(
+            'img' => 'lk_product_image'
+                ), "lk_product.product_id = img.product_id");
+        return $this;
+    }
+
+    public function categories() {
+        $this->select->join(array(
+            'phc' => 'lk_product_has_category'
+                ), "lk_product.product_id = phc.product_id");
+        return $this;
+    }
+
+    public function fetch($callback=null) {
+        $query     = $this->select;
+        //echo $query->getSqlString();die;
+        $resultSet = $this->tableGateway->selectWith($query);
+        $result = $resultSet->buffer()->toArray();
+            if (!is_null($callback) && is_callable($callback)) {
+                $result = array_map($callback, $result);
+            }
+        $this->result = new \ArrayObject($result);
+        return $this;
+    }
+
+    public function withImages($columns, $callback=null) {
+
+        $result = $this->result;
+        $products = new \ArrayObject();
+
+        foreach ($result as $product) {
+            $id = $product['product_id'];
+
+            $images = $this->getImages($id, $columns);
+
+            if (!is_null($callback) && is_callable($callback)) {
+                $images = call_user_func($callback, $images);
+            }
+
+            $product['images'] = $images;
+            $products->append($product);
+        }
+        $this->result = $products;
+        return $this;
+    }
+
+    public function withDescriptions($columns, $callback) {
+        $result = $this->result;
+        $products = new \ArrayObject();
+
+        foreach ($result as $product) {
+            $id = $product['product_id'];
+            $descriptions = $product['productDescription']->getArrayCopy();
+            if (!is_null($callback) && is_callable($callback)) {
+                $descriptions = call_user_func($callback, $descriptions);
+            }
+
+            $product['descriptions'] = $descriptions;
+            $products->append($product);
+        }
+        $this->result = $products;
+        return $this;
+    }
+
+    public function withCategories($columns) {
+        $result = $this->result;
+
+        $products = new \ArrayObject();
+        foreach($result as $product) {
+            $id = $product['product_id'];
+            $categories = $this->getCategories($id, $columns);
+            $product['categories']= $categories;
+            $products->append($product);
+        }
+        $this->result = $products;
+        return $this;
+    }
+
+    public function get() {
+        $result = $this->result->getArrayCopy();
+
+        if (sizeof($result) == 1) {
+            return $result[0];
+        } else {
+            return $result;
+        }
+    }
+
+    public function getJSON() {
+        $result = array_filter($this->get());
+        return \Zend\Json\Json::encode($result);
+    }
+
+    public function getById($id) {
         $id = (int) $id;
 
         $rowset = $this->tableGateway->select(array(
@@ -251,8 +401,6 @@ class ProductDao implements IProductDao
                 'product_id' => $id,
             ));
         }
-
-
 
         return $table->getLastInsertValue();
     }
@@ -306,13 +454,12 @@ class ProductDao implements IProductDao
                 'category_id' => $category,
             );
 
-
             $saved = $table->insert($insertCategories);
         }
-        
+
         return $table->getLastInsertValue();
     }
-    
+
     protected function saveProductProvider($productId, $data = Null, $update = Null)
     {
         $id = (int) $productId;
@@ -332,11 +479,10 @@ class ProductDao implements IProductDao
 
             $saved = $table->insert($insertProvider);
         }
-        
+
         return $table->getLastInsertValue();
     }
-    
-    
+
     protected function saveProductRelated($productId, $data = Null, $update = Null)
     {
         $id = (int) $productId;
@@ -356,10 +502,10 @@ class ProductDao implements IProductDao
 
             $saved = $table->insert($insertRelated);
         }
-        
+
         return $table->getLastInsertValue();
     }
-    
+
 
     protected function saveUrlAlias($productId, $data = NULL, $update = NULL)
     {
@@ -367,7 +513,6 @@ class ProductDao implements IProductDao
         $data['id'] = $id;
 
         $table = $this->getTable('lk_url_alias');
-
 
         if (!$update) {
             $saved = $table->insert($data);
@@ -380,8 +525,6 @@ class ProductDao implements IProductDao
                 'id' => $id
             ));
         }
-
-
 
         return $table->getLastInsertValue();
     }
@@ -411,10 +554,10 @@ class ProductDao implements IProductDao
         );
 
         $data_product_categories = $product->getProductCategories();
-        
+
         $data_product_related = $product->getProductRelated();
         //print_r($data_product_related);die;
-        
+
         $data_product_provider = $product->getProviderId();
         //print_r($data_product_provider);die;
         $data_product_image = $product->getProductImage();
@@ -441,7 +584,7 @@ class ProductDao implements IProductDao
                 $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories);
                 //insert Related
                 $sRelated = $this->saveProductRelated($productId, $data_product_related);
-                
+
 
                 return $productId;
             } else {
@@ -464,7 +607,6 @@ class ProductDao implements IProductDao
                 $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias, 1);
                 // update Categories
                 $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories, 1);
-
                 return $productId;
             } else {
                 throw new \Exception('Form id does not exist');
@@ -487,7 +629,7 @@ class ProductDao implements IProductDao
 
         return $table;
     }
-    
+
     //JOIN de base de datos con productos relacionados
 
     public function getProductRelated()
@@ -498,7 +640,7 @@ class ProductDao implements IProductDao
                 ), 'pr.product_id = lk_product_related.product_id');
         $query->join(array(
             'pro' => 'lk_product'),
-                'pr.related_id = pro.product_id' 
+                'pr.related_id = pro.product_id'
         );
 
         $query->order("lk_product.product_id DESC");
