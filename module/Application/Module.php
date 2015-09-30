@@ -27,7 +27,7 @@ class Module
 
         //Inicializaciones 
 //         $this->initConfig($e);
-         $this->initViewRender($e);
+//         $this->initViewRender($e);
 //         $this->initEnviroment($e);
 
         $app = $e->getApplication()->getEventManager();
@@ -69,9 +69,7 @@ class Module
         $sm = $application->getServiceManager();
         $viewRender = $sm->get('ViewManager')->getRenderer();
         $config = $sm->get('ConfigIni');
-        
-        
-        $viewRender->layout()->form = 'el form funciona';
+       
         $viewRender->headTitle($config['params']['titulo']);
     }
 
