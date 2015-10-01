@@ -318,7 +318,7 @@ class ProductDao implements IProductDao {
         return $this;
     }
 
-    public function withDescriptions($columns, $callback) {
+    public function withDescriptions($columns = null, $callback = null) {
         $result = $this->result;
         $products = new \ArrayObject();
 

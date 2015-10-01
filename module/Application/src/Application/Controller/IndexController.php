@@ -18,6 +18,8 @@ use Catalog\Model\Entity\Product;
 
 
 class IndexController extends AbstractActionController {
+    
+     private $productTable;
 
     public function indexAction() {
 
@@ -31,7 +33,7 @@ class IndexController extends AbstractActionController {
         /* TODO Consulta Para los productos
          * mas vendidos
          */
-
+        $imageC = '';
         $bestSeller = $productDao->products($columns)
             ->limit(10, 16)
             ->fetch(function ($product) use ($path) {
@@ -124,7 +126,7 @@ class IndexController extends AbstractActionController {
 
     public function getDao($service) {
 
-        if (! $this->productTable) {
+        if (!$this->productTable) {
             $sm = $this->getServiceLocator();
             $this->productTable = $sm->get($service);
         }
