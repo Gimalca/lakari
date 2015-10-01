@@ -69,7 +69,7 @@ class Module
         $sm = $application->getServiceManager();
         $viewRender = $sm->get('ViewManager')->getRenderer();
         $config = $sm->get('ConfigIni');
-
+       
         $viewRender->headTitle($config['params']['titulo']);
     }
 

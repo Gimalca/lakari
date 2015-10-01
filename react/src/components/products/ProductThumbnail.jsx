@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
-import {actions} from '../actions/cart';
+import {actions} from '../../actions/cart';
+
+var MIN_DEVICE_WIDTH = 1210;
 
 class ProductThumbnail extends React.Component {
 
@@ -22,32 +24,27 @@ class ProductThumbnail extends React.Component {
             e.preventDefault();
         };
 
-        this.handleClick = (e) => {
+        this.handleClick = (product, e) => {
             e.preventDefault();
-            var expander = $('.product-expander');
-            expander.show();
-            expander.animate({
-                opacity: '0.9',
-                height: "640px"
-            }, 100, function() {
-                // Animation complete.
-                $('html, body').animate({
-                    scrollTop: expander.offset().top - 200 
-                }, 400);
-            });
+            if ($(window).width() < MIN_DEVICE_WIDTH) {
+                console.log('small width');
+                // location change to href
+            } else {
+                actions.expandProduct(product);
+            }
         };
     }
 
     render() {
 
         var product = this.props.product;
+        var image = product.images[0].image;
 
-        return (
-        <div className='col-xs-12 product thumbnail product-thumbnail'> 
+        return (<div className='product thumbnail product-thumbnail'> 
             <div className='caption'>
                 <div className='row'>
                     <div className='product-info col-md-12'>
-                        <h3 className='name'>{product.title}</h3>
+                        <h3 className='name'>{product.description}</h3>
                     </div>
                 </div>
                 <div className='row product-info'>
@@ -70,10 +67,10 @@ class ProductThumbnail extends React.Component {
                     </div>
                 </div>
             </div>
-            <div className='product-image'>
+            <div style={this.props.imageStyle} className='product-image'>
                 <div className='image'>
-                    <a onClick={this.handleClick} href="#">
-                        <img src={product.image} className="img-responsive" />
+                    <a onClick={this.handleClick.bind(this, product)} href="#">
+                        <img src={image} className="img-responsive" />
                     </a>
                     <span className="lnk media-buttons">
                         <ul className="list-inline">

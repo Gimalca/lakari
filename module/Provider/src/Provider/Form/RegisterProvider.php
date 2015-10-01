@@ -9,7 +9,7 @@ use Zend\Form\Element;
 /**
  * Description of Contacto
  *
- * @author Andres
+ * @author PG
  */
 class RegisterProvider extends Form {
 
