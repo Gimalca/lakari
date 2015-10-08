@@ -2,68 +2,25 @@
 import React from 'react';
 import OwlCarousel from '../common/OwlCarousel';
 import {actions} from '../../actions/cart';
-import ProductStore from '../../stores/ProductStore';
 
-class ProductExpander extends React.Component {
+var MIN_DEVICE_WIDTH = 1210;
+
+class ProductDetail extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            product: ProductStore.getSelected()
-        };
-
-        this.onClose = () => {
-
-        var $this = $(React.findDOMNode(this));
-
-        $this.animate({
-                opacity: '0',
-                left: "+=50",
-                height: "0"
-            }, 500, function() {
-                // Animation complete.
-            });
+        this.onClose = (e) => {
+            var $this = $(React.findDOMNode(this));
+            this.props.onClose($this);
         };
 
         this.handleAdd = (e) => {
-            var product = this.state.product;
+            var product = this.props.product;
             actions.addProduct(product); 
         };
-
-        this.handleProductChange = (e) => {
-
-            var $expander = $(React.findDOMNode(this));
-
-            $expander.show();
-            $expander.animate({
-                opacity: '1',
-                height: "640px"
-            }, {
-                duration: 300,
-                complete: function () {
-                    $('html, body').animate({
-                        scrollTop: $expander.offset().top - 200 
-                    }, 300);
-                }
-            });
-
-            this.setState({
-                product: ProductStore.getSelected()
-            });
-
-        };
     }
 
-    componentDidMount() {
-        ProductStore.addChangeListener(this.handleProductChange);
-        $(React.findDOMNode(this)).hide();
-    }
-
-    componentDidUnmount() {
-        ProductStore.removeListener(this.handleProductChange);
-    }
-    
     getCarouselOptions() {
 
         var leftNavigation = '<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
@@ -81,19 +38,30 @@ class ProductExpander extends React.Component {
         return carouselOptions;
     }
 
+    componentDidMount() {
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.product) {
+            var $this = $(React.findDOMNode(this));
+            this.props.onShow($this);
+        }
+    }
+
     render() {
 
-        let product = this.state.product;
+        let product = this.props.product;
 
         if (product) {
 
         let images = product.images.map((img, i) => {
-            return (<img className='img img-responsive expander-img-product' src={img.image} alt='http://placehold.it/800x600' key={i} />);
+            return (<img className='img img-responsive expander-img-product' src={img.image} key={i} />);
         });
 
         let title = product.descriptions.name;
         let description = product.descriptions;
         let carouselOptions = this.getCarouselOptions();
+
         return (<div>
                  <div className='product-expander flex hidden-xs'>
                     <div className='section section-1 col-xs-3 flex flex-vertical'>
@@ -155,7 +123,7 @@ class ProductExpander extends React.Component {
                     </div>
                 </div>
                 <div className='section section-2 col col-xs-9 flex expander-img'>
-                    <OwlCarousel options={carouselOptions}>
+                    <OwlCarousel update={true} options={carouselOptions}>
                         {images}
                     </OwlCarousel>
                     <button onClick={this.onClose} type="button" className="close" aria-hidden="true">
@@ -168,7 +136,11 @@ class ProductExpander extends React.Component {
             return null;
         }
     }
+
+    show() {
+        var $this = $(React.findDOMNode(this));
+        this.props.onShow($this);
+    }
 }
 
-export default ProductExpander;
-
+export default ProductDetail;

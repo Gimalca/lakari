@@ -1,36 +1,20 @@
 
+<?php
+echo $this->headlink() 
+        ->appendStylesheet($this->basePath('assets') . '/css/index.min.css');
+?>
+
 <?php //var_dump($this->products); ?>
 <div class="row outer-bottom-sm">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
-            <!-- ================================== TOP NAVIGATION ================================== -->
-            <div class="side-menu side-menu2 animate-dropdown outer-bottom-xs">
-                <strong>Module:</strong>        Catalog &raquo;
-                <strong>Controller:</strong>    Index &raquo;
-                <strong>Action:</strong>        index
-
-            </div>
-        </div>
-        <div class='col-md-9'>
+        <div class='col-md-12'>
             <!-- ========================================== SECTION – HERO ========================================= -->
 
             <div id="category" class="category-carousel hidden-xs">
-                <div class="item">	
+                <div style='width:80%;margin:0 auto;'class="item">	
                     <div class="image">
                         <img src="<?php echo $this->basePath('assets') ?>/images/banners/cat-banner-1.jpg" alt="" class="img-responsive">
                     </div>
-                    <!--div class="container-fluid">
-                        <div class="caption vertical-top text-left">
-                            <div class="big-text">
-                                Sale
-                            </div>
-
-                            <div class="excerpt hidden-sm hidden-md">
-                                up to 50% off
-                            </div>
-
-                        </div>
-                    </div-->
                 </div>
             </div>
             <!-- ========================================== SECTION – HERO - END ========================================= -->
@@ -119,7 +103,7 @@
 
                                 <?php foreach ($this->products as $product) : ?>
                                   
-                                    <div class="col-sm-6 col-md-4 wow fadeInUp">
+                                    <div class="col-sm-6 col-md-3 wow fadeInUp">
                                         <div class="products">
 
                                             <div class="product">		
@@ -276,4 +260,21 @@
     </div>
 </div>
 
+<div class='row' id='product'>
+</div>
+
+
+<script type="application/json" id='productsJSON'>
+    <?php echo $this->productJSON ?>
+</script>
+
+<?php $urlAjax = $this->url('application', array('controller' => 'index'));  
+
+$this->inlineScript()->captureStart();
+ echo <<<JS
+   var URL_AJAX = '{$urlAjax}';
+JS;
+$this->inlineScript()->captureEnd();
+?>
+<?php $this->inlineScript()->appendFile($this->basePath('/assets/js/dist/catalog.min.js')); ?>
 

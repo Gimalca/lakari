@@ -1,8 +1,7 @@
 'use strict';
+
 import React from 'react';
 import {actions} from '../../actions/cart';
-
-var MIN_DEVICE_WIDTH = 1210;
 
 class ProductThumbnail extends React.Component {
 
@@ -13,7 +12,6 @@ class ProductThumbnail extends React.Component {
             e.preventDefault();
             var product = this.props.product;
             actions.addProduct(product); 
-            $('#cd-cart-trigger').click();
         };
 
         this.onShare = (e) => {
@@ -26,12 +24,7 @@ class ProductThumbnail extends React.Component {
 
         this.handleClick = (product, e) => {
             e.preventDefault();
-            if ($(window).width() < MIN_DEVICE_WIDTH) {
-                console.log('small width');
-                // location change to href
-            } else {
-                actions.expandProduct(product);
-            }
+            this.props.onSelect(product);
         };
     }
 
@@ -86,8 +79,6 @@ class ProductThumbnail extends React.Component {
             </div>
         </div>);
     }
-
 }
 
 export default ProductThumbnail;
-

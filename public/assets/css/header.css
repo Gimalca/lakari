@@ -1,4 +1,3 @@
-/* CSS used here will be applied after bootstrap.css */
 body {
     margin-top: 70px;
 }
@@ -100,7 +99,7 @@ a.dropdown-toggle {
 }
 
 /* Shopping Cart */ 
-#main-nav, #cd-cart {
+#main-nav, .cd-cart {
     position: fixed;
     height: 100%;
     width: 260px;
@@ -112,7 +111,7 @@ a.dropdown-toggle {
     z-index: 20;
 }
 
-#cd-cart {
+.cd-cart {
     right: -100%;
     top: 50px;
     background: #FFF;
@@ -121,38 +120,38 @@ a.dropdown-toggle {
     transition: right 0.3s;
 }
 
-#cd-cart.speed-in {
+.cd-cart.speed-in {
     right: 0;
 }
 
-#cd-cart > * {
+.cd-cart > * {
     padding: 0 1em;
 }
-#cd-cart h2 {
+.cd-cart h2 {
     font-size: 14px;
     font-size: 0.875rem;
     font-weight: bold;
     text-transform: uppercase;
     margin: 1em 0;
 }
-#cd-cart .cd-cart-items {
+.cd-cart .cd-cart-items {
     padding: 0;
 }
-#cd-cart .cd-cart-items li {
+.cd-cart .cd-cart-items li {
     position: relative;
     padding: 1em;
     border-top: 1px solid #e0e6ef;
 }
-#cd-cart .cd-cart-items li:last-child {
+.cd-cart .cd-cart-items li:last-child {
     border-bottom: 1px solid #e0e6ef;
 }
-#cd-cart .cd-qty, #cd-cart .cd-price {
+.cd-cart .cd-qty, #cd-cart .cd-price {
     color: #a5aebc;
 }
-#cd-cart .cd-price {
+.cd-cart .cd-price {
     margin-top: .4em;
 }
-#cd-cart .cd-item-remove {
+.cd-cart .cd-item-remove {
     position: absolute;
     right: 1em;
     top: 50%;
@@ -167,7 +166,7 @@ a.dropdown-toggle {
     border-radius: 50%;
     background: url("../images/cd-remove-item.svg") no-repeat center center;
 }
-#cd-cart .cd-item-remove:hover {
+.cd-cart .cd-item-remove:hover {
     background-color: #e0e6ef;
 }
 
@@ -179,20 +178,20 @@ a.dropdown-toggle {
   white-space: nowrap;
 }
 
-#cd-cart .cd-cart-total {
+.cd-cart .cd-cart-total {
     padding-top: 1em;
     padding-bottom: 1em;
 }
-#cd-cart .cd-cart-total span {
+.cd-cart .cd-cart-total span {
     float: right;
 }
-#cd-cart .cd-cart-total::after {
+.cd-cart .cd-cart-total::after {
     /* clearfix */
     content: '';
     display: table;
     clear: both;
 }
-#cd-cart .checkout-btn {
+.cd-cart .checkout-btn {
     display: inline-block;
     width: 45%;
     height: 50px;
@@ -202,11 +201,11 @@ a.dropdown-toggle {
     background: #6e6e6e;
     text-align: center;
 }
-.no-touch #cd-cart .checkout-btn:hover {
+.no-touch .cd-cart .checkout-btn:hover {
     background: #6e6e6e;
 }
 
-#cd-cart .go-to-cart-btn {
+.cd-cart .go-to-cart-btn {
     display: inline-block;
     width: 45%;
     margin-left: 10px; 
@@ -217,19 +216,20 @@ a.dropdown-toggle {
     text-align: center;
 }
 
-#cd-cart .go-to-cart-btn:hover {
+.cd-cart .go-to-cart-btn:hover {
     background: #abd07e;
 }
 
-#cd-cart .cd-go-to-cart {
+.cd-cart .cd-go-to-cart {
     text-align: center;
     margin: 1em 0;
 }
-#cd-cart .cd-go-to-cart a {
+
+.cd-cart .cd-go-to-cart a {
     text-decoration: underline;
 }
 
-#cd-shadow-layer {
+.shadow-layer {
     position: fixed;
     min-height: 100%;
     width: 100%;
@@ -241,7 +241,7 @@ a.dropdown-toggle {
     display: none;
 }
 
-#cd-shadow-layer.is-visible {
+.shadow-layer.is-visible {
     display: block;
     -webkit-animation: cd-fade-in 0.3s;
     -moz-animation: cd-fade-in 0.3s;
@@ -253,7 +253,7 @@ ul.dropdown-cart{
 }
 ul.dropdown-cart li .item{
     display:block;
-    padding:3px 10px;
+    padding:10px 5px;
     margin: 3px 0;
 }
 ul.dropdown-cart li .item:hover{
@@ -290,9 +290,6 @@ ul.dropdown-cart li .item-left span.item-info span{
 }
 ul.dropdown-cart li .item-right{
     float:right;
-}
-ul.dropdown-cart li .item-right button{
-    transform: translateY(50%);
 }
 
 .w-full-height {
@@ -351,27 +348,26 @@ ul.dropdown-cart li .item-right button{
         transform: translateY(25%);
     }
 
-    #cd-cart > * {
+    .cd-cart > * {
         padding: 0 2em;
     }
-    #cd-cart .cd-cart-items li {
+    .cd-cart .cd-cart-items li {
         padding: 1em 2em;
     }
-    #cd-cart .cd-item-remove {
+    .cd-cart .cd-item-remove {
         right: 2em;
     }
 
-    #main-nav, #cd-cart {
+    #main-nav, .cd-cart {
         width: 350px;
         height: 100%;
     }
 
-    #cd-cart.speed-in {
+    .cd-cart.speed-in {
         top: 100px;
     }
 
     .carousel-indicators {
         display: block;
     }
-}
-
+}.

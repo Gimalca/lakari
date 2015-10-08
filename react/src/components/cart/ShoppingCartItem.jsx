@@ -19,7 +19,7 @@ class ShoppingCartItem extends React.Component {
         return (<span className="item">
             <span className="item-left">
                 <div className='item-img'>
-                    <img className='img-responsive' src={item.image} alt="50x50" />
+                    <img className='img-responsive' src={item.image} alt='50x50' />
                 </div>
                 <span className="item-info">
                     <span style={{maxWidth:'50px'}} >{item.title}</span>

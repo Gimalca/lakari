@@ -1,4 +1,5 @@
 'use strict';
+
 import BaseStore from './BaseStore';
 import {constants} from '../constants/actions';
 import {lakariDispatcher as dispatcher} from '../dispatchers/LakariDispatcher';
@@ -11,7 +12,13 @@ function _selectProduct(product) {
 
 class ProductStore extends BaseStore {
 
-    getSelected() { return _selected; }
+    getSelected() { 
+        return _selected; 
+    }
+
+    isShowing() { 
+        return _selected != null; 
+    }
 }
 
 var _productStore = new ProductStore();
