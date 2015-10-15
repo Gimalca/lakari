@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Json\Json;
 
 use Sales\Form\OrderAddCustomerForm;
+use Sales\Model\Dao\OrderDao;
 use Sales\Model\Entity\Order;
 use Sales\Model\Entity\OrderProduct;
 Use Sales\Form\Validator\OrderAddCustomerValidator;
@@ -46,6 +47,19 @@ class OrderController extends AbstractActionController {
     public function listAction() {
         $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
         $view['orders'] = $orderDao->getAll();
+        
+        
+        $orderTableGateway = $this->getService('OrderTableGateway');
+        $orderDao = new OrderDao($orderTableGateway);
+        
+        $paginator = $orderDao->setAll()->getPaginator();
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        //print_r($paginator);die;
+        $paginator->setItemCountPerPage(3);
+        // var_dump($paginator);die;
+        $view['order'] = $paginator;
 
         return new ViewModel($view);
     }
@@ -290,5 +304,13 @@ class OrderController extends AbstractActionController {
         }, $results->toArray());
 
         return $customers;
+    }
+    
+     public function getService($serviceName)
+    {
+        $sm = $this->getServiceLocator();
+        $service = $sm->get($serviceName);
+
+        return $service;
     }
 }

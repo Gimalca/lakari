@@ -37,11 +37,13 @@ class CategoryController extends AbstractActionController {
      $categoryTableGateway = $this->getService('CategoryTableGateway');
      $categoryDao = new CategoryDao($categoryTableGateway);
      
-     $paginator = $categoryDao->fetchAll(true);
+     $paginator = $categoryDao->setAll()->getPaginator();
      // set the current page to what has been passed in query string, or to 1 if none set
      $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
      // set the number of items per page to 10
      $paginator->setItemCountPerPage(3);
+     
+     //print_r($paginator);die;
 
      return new ViewModel(array(
         //'category' => $categories,

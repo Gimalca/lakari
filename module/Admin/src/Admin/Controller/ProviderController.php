@@ -13,10 +13,12 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\Provider as ProviderForm;
+use Provider\Model\Dao\ProviderDao;
 use Catalog\Model\Dao\CategoryDao;
 use Admin\Form\Validator\ProviderValidator;
 use Provider\Model\Entity\Provider;
 use Admin\Form\Product;
+
 
 
 class ProviderController extends AbstractActionController
@@ -66,9 +68,7 @@ class ProviderController extends AbstractActionController
                 //print_r($messages);die;
                 $providerForm->populateValues($postData);
             }
-        }
-        
-        
+        }       
         
         $cat = $this->getCategorySelect();
         $cat[0] = 'Todas';
@@ -76,13 +76,25 @@ class ProviderController extends AbstractActionController
         $providerForm->get('categories')->setValueOptions($cat);
         $providerForm->get('categories')->setValue(0);
         
+        $providerDao = $this->getServiceDao('Model\Dao\ProviderDao');
+        
+      
+
+        $paginator = $providerDao->setAll()->getPaginator();
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(4);
+
+        
         $view['providers'] = $providerDao->getAll();
         //print_r($provider);die;
         $view['providerForm'] = $providerForm; 
+        $view['provider'] = $paginator;
         
-        return new ViewModel($view );    
-       
+        return new ViewModel($view);    
     }
+    
      private function prepareProviderData($data)
     {
         // print_r($data);die;
@@ -165,12 +177,10 @@ class ProviderController extends AbstractActionController
 
     public function getServiceDao($service)
     {
-       
-            $sm = $this->getServiceLocator();
-            $tableGateway = $sm->get($service);
-      
+        $sm = $this->getServiceLocator();
+        $tableGateway = $sm->get($service);
+
         return $tableGateway;
     }
 
-    
 }
