@@ -1,4 +1,122 @@
- <!-- ============================================== HEADER ============================================== -->
+<div class="modal signUpContent fade" id="ModalLogin" tabindex="-1" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h3 class="modal-title-site text-center"> Ingresar a Lakari </h3>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-group login-username">
+                    <div>
+                        <input name="log" id="login-user" class="form-control input" size="20" placeholder="Usuario" type="text">
+                    </div>
+                </div>
+                <div class="form-group login-password">
+                    <div>
+                        <input name="Password" id="login-password" class="form-control input" size="20" placeholder="Contraseña" type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <div class="checkbox login-remember">
+                            <!--label>
+                              <input name="rememberme" value="forever" checked="checked" type="checkbox">
+                              Recordarme </label-->
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <a href="index-login.php">
+                            <input name="submit" class="btn  btn-block btn-lg btn-primary" value="Ingresar" type="submit">
+                        </a>
+                    </div>
+                </div>
+                <!--userForm--> 
+            
+            </div>
+            <div class="modal-footer">
+                <p class="text-center"> ¿No tienes cuenta? <a data-toggle="modal" data-dismiss="modal" href="#ModalSignup"> Regístrate. </a> <br>
+                    <a href="password.php"> ¿Olvidó contraseña? </a> </p>
+            </div>
+        </div>
+        <!-- /.modal-content --> 
+
+    </div>
+    <!-- /.modal-dialog --> 
+
+</div>
+<!-- /.Modal Login --> 
+
+<!-- Modal Signup start -->
+<div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h3 class="modal-title-site text-center"> Registrarse en Lakari </h3>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo $this->url('account', array('controller' => 'register', 'action' => 'add')) ?>" method="post">
+                <div class="control-group"> <a class="fb_button btn  btn-block btn-lg " href="#"> Vía Facebook </a> </div>
+                <h5 style="padding:10px 0 10px 0;" class="text-center"> O </h5>
+                <div class="form-group reg-username">
+                    <div>
+                         <?php echo $this->formInput($this->registerForm->get('firstname')); ?>
+                    </div>
+                </div>
+                <div class="form-group reg-username">
+                    <div>
+                          <?php echo $this->formInput($this->registerForm->get('lastname')); ?>
+                    </div>
+                </div>
+                <div class="form-group reg-email">
+                    <div>
+                        <?php echo $this->formInput($this->registerForm->get('email')); ?>
+                     
+                    </div>
+                </div>
+                <div class="form-group reg-password">
+                    <div>
+                         <?php echo $this->formInput($this->registerForm->get('password')); ?>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <div>
+                        <div class="checkbox login-remember">
+                            <label>
+                                 <?php echo $this->formInput($this->registerForm->get('rememberme')); ?>
+                                
+                                Recordarme 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <a href="registro.php">
+                            <input name="submit" class="btn btn-block btn-lg btn-primary" value="Registrar" type="submit">
+                        </a>
+                    </div>
+                </div>
+                <?php echo $this->formInput($this->registerForm->get('csrf')); ?>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <p class="text-center"> ¿Ya eres miembro? <a data-toggle="modal" data-dismiss="modal" href="#ModalLogin"> Ingresar </a> </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.ModalSignup End --> 
+ 
+
+
+<!-- ============================================== HEADER ============================================== -->
 
 <nav class="navbar top-navbar navbar-fixed-top" role="navigation">
 
@@ -30,6 +148,7 @@
         <li><a class="navbar-link" href="#">Iluminación</a></li>
         <li><a class="navbar-link" href="#">Utensilios</a></li>
         <li><a class="navbar-link" href="#">Servicios</a></li>
+        <li><a class="navbar-link" href="#" data-toggle="modal" data-target="#ModalLogin">Login</a></li>
 
       </ul>
 

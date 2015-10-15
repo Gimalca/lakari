@@ -91,6 +91,8 @@ class CustomerDao {
     }
 
     public function savedCustomer($data) {
+        
+        //print_r($data);die;
          return $this->tableGateway->insert($data);
     }
     

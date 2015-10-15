@@ -20,7 +20,7 @@ use Catalog\Model\Entity\Product;
 class IndexController extends AbstractActionController {
 
     public function indexAction() {
-
+       
         $productDao = $this->getDao('Admin\Model\Dao\ProductDao');
         $columns = array('product_id', 'model', 'image', 'description', 'price');
 
