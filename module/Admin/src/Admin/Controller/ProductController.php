@@ -49,8 +49,22 @@ class ProductController extends AbstractActionController
     {
         $productDao = $this->getProductDao();
         
+        //PAGINATOR   
+        // grab the paginator from the AlbumTable
+        $productTableGateway = $this->getService('ProductTableGateway');
+        $productDao = new ProductDao($productTableGateway);
+
+        $paginator = $productDao->setAll()->getPaginator();
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        //print_r($paginator);die;
+        $paginator->setItemCountPerPage(3);
+        // var_dump($paginator);die;
+        
           return new ViewModel(array(
-            'products' => $productDao->getAll(),
+            //'products' => $productDao->getAll(),
+            'products' => $paginator
           
         ));
         
@@ -529,5 +543,13 @@ class ProductController extends AbstractActionController
         }, $results->toArray());
 
         return $products; 
+    }
+    
+    public function getService($serviceName)
+    {
+        $sm = $this->getServiceLocator();
+        $service = $sm->get($serviceName);
+        
+        return $service;
     }
 }

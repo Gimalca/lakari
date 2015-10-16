@@ -22,7 +22,7 @@ class IndexController extends AbstractActionController {
      private $productTable;
 
     public function indexAction() {
-
+       
         $productDao = $this->getDao('Admin\Model\Dao\ProductDao');
         $columns = array('product_id', 'model', 'image', 'description', 'price');
 

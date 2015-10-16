@@ -8,6 +8,7 @@ use Zend\View\Model\ViewModel;
 use Sales\Form\CustomerForm;
 use Sales\Form\Validator\CustomerValidator;
 use Sales\Model\Entity\Customer;
+use Sales\Model\Dao\CustomerDao;
 //Others Libs
 use Zend\Http\PhpEnvironment\RemoteAddress;
 
@@ -38,12 +39,25 @@ class CustomerController extends AbstractActionController
             $customerForm = new CustomerForm;
             $view['form'] = $customerForm;
         }
-
-
+       
         //Fordward ADD ACTION si no se redirige
         $add = $this->params()->fromRoute('add', false);
+        //var_dump($add);die;
         $view['add'] = $add;
-       // print_r($view);die;
+//       print_r($view);die;
+        
+        $customerTableGateway = $this->getService('CustomerTableGateway');
+        $customerDao = new CustomerDao($customerTableGateway);
+         
+        $paginator = $customerDao->setAll()->getPaginator();
+        //print_r($paginator);die;
+     // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     // set the number of items per page to 10
+        $paginator->setItemCountPerPage(3);
+        $view['customer'] = $paginator;
+        //print_r($view);die;
+        
         return new ViewModel($view);
     }
 

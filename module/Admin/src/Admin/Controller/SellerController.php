@@ -9,6 +9,7 @@ use Zend\Http\PhpEnvironment\RemoteAddress;
 use Sales\Form\SellerForm;
 use Sales\Form\Validator\SellerValidator;
 use Sales\Model\Entity\Seller;
+use Sales\Model\Dao\SellerDao;
 
 class SellerController extends AbstractActionController
 {
@@ -20,8 +21,9 @@ class SellerController extends AbstractActionController
 
     public function listAction()
     {
-        //Get Resulset DB CUSTOMER Table
-        $sellerDao = $this->getServiceDao('Model\Dao\sellerDao');
+        //Get Resulset DB CUSTOMER Table 
+        $sellerTableGateway = $this->getService('SellerTableGateway');
+        $sellerDao = new SellerDao($sellerTableGateway);
         $view['sellers'] = $sellerDao->getAll();
 
         //Get Form Seller
@@ -35,6 +37,17 @@ class SellerController extends AbstractActionController
         //Fordward ADD ACTION 
         $add = $this->params()->fromRoute('add', false);
         $view['add'] = $add;
+        
+       
+      
+
+        $paginator = $sellerDao->fetchAll(true);
+        // set the current page to what has been passed in query string, or to 1 if none set
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(0);
+        
+        $view['seller'] = $paginator;
 
         return new ViewModel($view);
     }
@@ -162,17 +175,6 @@ class SellerController extends AbstractActionController
         //$cat = $this->getCategorySelect();
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public function deleteAction()
     {
         return new ViewModel();
@@ -183,12 +185,12 @@ class SellerController extends AbstractActionController
         return new ViewModel();
     }
 
-    public function getServiceDao($service)
+    public function getService($serviceName)
     {
         $sm = $this->getServiceLocator();
-        $tableGateway = $sm->get($service);
+        $service = $sm->get($serviceName);
 
-        return $tableGateway;
+        return $service;
     }
 
 }

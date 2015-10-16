@@ -157,6 +157,25 @@ $this->headlink()
                 </tbody>
             </table>
         </div>
+        
+        <div class="text-center">
+         <?php
+            // add at the end of the file after the table
+            echo $this->paginationControl(
+                // the paginator object
+                $this->products,
+                // the scrolling style
+                'sliding',
+                // the partial to use to render the control
+                'partial/paginator.phtml',
+                // the route to link to when a user clicks a control link
+                array(
+                    'route' => 'admin', 'controller' => 'product', 'action' => 'list'
+                )
+            );
+        ?>
+        </div>
+        
     </div>
 
 </section>

@@ -21,30 +21,77 @@ class CategoryDao
 {
 
     protected $tableGateway;
+    private $query;
 
     public function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
-    }
-
-    public function getAll()
+    
+    }   
+        public function getAll()
     {
         $query = $this->tableGateway->getSql()->select();
-        $query->join(array(
-            'cd' => 'lk_category_description'
-        ),  'cd.category_id = lk_category.category_id');
+        
+        //$query->columns(array('*','categoryid' => 'category_id'));
+        $query->join(array('cd' => 'lk_category_description'),  
+                           'lk_category.category_id = cd.category_id ',
+                           array('name', 'description')
+                );
+   
+        $query->order("lk_category.category_id DESC");
+        
+        return  $this->tableGateway->selectWith($query);       
+    }
+    
+
+    public function setAll()
+    {
+        $query = $this->tableGateway->getSql()->select();
+        
+        //$query->columns(array('*','categoryid' => 'category_id'));
+        $query->join(array('cd' => 'lk_category_description'),  
+                           'lk_category.category_id = cd.category_id ',
+                           array('name', 'description')
+                
+                );
+        
         
         $query->order("lk_category.category_id DESC");
-        //$query->getSqlString(); die;
-        //print_r($query);die;
-        $resultSet = $this->tableGateway->selectWith($query);
-        //$result = $resultSet->toArray();
-        //print_r($result);die;
         
-        return $resultSet;
+        $this->query = $query;
+        
+        return $this;
        
     }
     
+    public function getResulSet()
+    {    
+        return  $this->tableGateway->selectWith($this->query);  
+    }
+
+
+    public function getPaginator()
+    {   
+         $select = $this->query ;
+         //$select = $this->tableGateway->getSql()->select();
+        // create a new result set based on the Album entity
+        $resultSetPrototype = $this->tableGateway->getResultSetPrototype();
+        // create a new pagination adapter object
+        $paginatorAdapter = new DbSelect(
+                // our configured select object
+                $select,
+                // the adapter to run it against
+                $this->tableGateway->getAdapter(),
+                // the result set to hydrate
+                $resultSetPrototype
+        );
+        
+        $paginator = new Paginator($paginatorAdapter);
+        
+        return $paginator;
+    }
+
+
     public function getCategories($categories)
     {     
         $query = $this->tableGateway->getSql()->select();
@@ -107,10 +154,9 @@ class CategoryDao
      {
          if ($paginated) {
              // create a new Select object for the table album
-             $select = new Select('lk_category');
+             $select = $this->tableGateway->getSql()->select();
              // create a new result set based on the Album entity
-             $resultSetPrototype = new ResultSet();
-             $resultSetPrototype->setArrayObjectPrototype(new Category());
+             $resultSetPrototype = $this->tableGateway->getResultSetPrototype();
              // create a new pagination adapter object
              $paginatorAdapter = new DbSelect(
                  // our configured select object

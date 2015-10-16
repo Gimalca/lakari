@@ -8,6 +8,10 @@ namespace Catalog\Model\Dao;
  * @author Pedro
  */
 use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Paginator\Adapter\DbSelect;
+ use Zend\Paginator\Paginator;
 use Zend\Db\TableGateway\TableGateway;
 use Catalog\Model\Entity\Product;
 use Admin\Model\Entity\ProductDescription;
@@ -19,25 +23,29 @@ class ProductDao implements IProductDao {
 
     protected $tableGateway;
     private $select;
+    private $query;
 
     public function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
     }
-
+     
     public function getAll() {
 
         $query = $this->tableGateway->getSql()->select();
 
-        $query->join(array(
-            'pd' => 'lk_product_description'
-                ), 'pd.product_id = lk_product.product_id');
-        $query->join(array(
-            'url' => 'lk_url_alias'
-                ), "lk_product.product_id = url.id");
-        $query->join(array(
-            'img' => 'lk_product_image'
-                ), "lk_product.product_id = img.product_id");
+        $query->join(array('pd' => 'lk_product_description'),
+                           'lk_product.product_id = pd.product_id',
+                           array('name', 'description')
+                );
+        $query->join(array('url' => 'lk_url_alias'),
+                            'lk_product.product_id = url.id',
+                            array('id', 'keyword')
+                );
+        $query->join(array('img' => 'lk_product_image'),
+                            'lk_product.product_id = img.product_id',
+                            array('tittle', 'image')
+                );
         $query->where(array(
             'url.type' => 'product',
             'img.sort_order' => 1
@@ -50,6 +58,63 @@ class ProductDao implements IProductDao {
         //var_dump($resultSet->current()); die;
 
         return $resultSet;
+    }
+    
+    public function setAll()
+    {
+        $query = $this->tableGateway->getSql()->select();
+
+        $query->join(array('pd' => 'lk_product_description'),
+                           'lk_product.product_id = pd.product_id',
+                           array('name')
+                );
+        $query->join(array('url' => 'lk_url_alias'),
+                            'lk_product.product_id = url.id',
+                            array('id', 'keyword')
+                );
+        $query->join(array('img' => 'lk_product_image'),
+                            'lk_product.product_id = img.product_id',
+                            array('tittle')
+                );
+        $query->where(array(
+            'url.type' => 'product',
+            'img.sort_order' => 1
+        ));
+
+        $query->order("lk_product.product_id DESC");
+        // echo $query->getSqlString();die;
+        
+        $this->query = $query;
+        
+        return $this;
+    }
+
+        public function getResulSet() 
+    {
+        return  $this->tableGateway->selectWith($this->query);  
+    }
+
+
+    public function getPaginator() 
+    {
+        
+         $select = $this->query ;
+         //$select = $this->tableGateway->getSql()->select();
+        // create a new result set based on the Album entity
+        $resultSetPrototype = $this->tableGateway->getResultSetPrototype();
+        // create a new pagination adapter object
+        $paginatorAdapter = new DbSelect(
+                // our configured select object
+                $select,
+                // the adapter to run it against
+                $this->tableGateway->getAdapter(),
+                // the result set to hydrate
+                $resultSetPrototype
+        );
+        
+        $paginator = new Paginator($paginatorAdapter);
+        
+        return $paginator;
     }
 
     public function getProductsByCategory($categoryId)
@@ -651,5 +716,29 @@ class ProductDao implements IProductDao {
 
         return $resultSet;
     }
+    
+        public function fetchAll($paginated=false)
+     {
+            if ($paginated) {
+            $select = $this->tableGateway->getSql()->select();
+            // create a new result set based on the Album entity
+            $resultSetPrototype = $this->tableGateway->getResultSetPrototype();
+            // create a new pagination adapter object
+            $paginatorAdapter = new DbSelect(
+                    // our configured select object
+                    $select,
+                    // the adapter to run it against
+                    $this->tableGateway->getAdapter(),
+                    // the result set to hydrate
+                    $resultSetPrototype
+            );
+            //echo $paginatorAdapter->count();die;
+            $paginator = new Paginator($paginatorAdapter);
+            return $paginator;
+        }
+        $resultSet = $this->tableGateway->selectWith($select);
 
+        //print_r($resultSet);die;
+        return $resultSet;
+    }
 }
