@@ -18,7 +18,7 @@ use Catalog\Model\Entity\Product;
 
 
 class IndexController extends AbstractActionController {
-    
+
      private $productTable;
 
     public function indexAction() {
@@ -40,7 +40,7 @@ class IndexController extends AbstractActionController {
                 $product['id'] = $product['product_id'];
                 return $product;
             })
-            ->withImages($imageC, function ($images) use ($path) {
+            ->withImages(null, function ($images) use ($path) {
                 return array_map(function ($image) use ($path) {
                     $image->setBasePath($path);
                     return $image;
@@ -60,7 +60,7 @@ class IndexController extends AbstractActionController {
                 $product['id'] = $product['product_id'];
                 return $product;
             })
-            ->withImages($imageC, function ($images) use ($path) {
+            ->withImages(null, function ($images) use ($path) {
                 return array_map(function ($image) use ($path) {
                     $image->setBasePath($path);
                     return $image;
