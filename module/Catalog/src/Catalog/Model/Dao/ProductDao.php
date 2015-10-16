@@ -29,7 +29,7 @@ class ProductDao implements IProductDao {
     {
         $this->tableGateway = $tableGateway;
     }
-     
+
     public function getAll() {
 
         $query = $this->tableGateway->getSql()->select();
@@ -59,7 +59,7 @@ class ProductDao implements IProductDao {
 
         return $resultSet;
     }
-    
+
     public function setAll()
     {
         $query = $this->tableGateway->getSql()->select();
@@ -83,21 +83,21 @@ class ProductDao implements IProductDao {
 
         $query->order("lk_product.product_id DESC");
         // echo $query->getSqlString();die;
-        
+
         $this->query = $query;
-        
+
         return $this;
     }
 
-        public function getResulSet() 
+        public function getResulSet()
     {
-        return  $this->tableGateway->selectWith($this->query);  
+        return  $this->tableGateway->selectWith($this->query);
     }
 
 
-    public function getPaginator() 
+    public function getPaginator()
     {
-        
+
          $select = $this->query ;
          //$select = $this->tableGateway->getSql()->select();
         // create a new result set based on the Album entity
@@ -111,9 +111,9 @@ class ProductDao implements IProductDao {
                 // the result set to hydrate
                 $resultSetPrototype
         );
-        
+
         $paginator = new Paginator($paginatorAdapter);
-        
+
         return $paginator;
     }
 
@@ -322,7 +322,7 @@ class ProductDao implements IProductDao {
         return $this;
     }
 
-    public function products($columns) {
+    public function products($columns=null) {
         $this->select = $this->tableGateway->getSql()->select();
         if ($columns) $this->select->columns($columns);
         return $this;
@@ -716,7 +716,7 @@ class ProductDao implements IProductDao {
 
         return $resultSet;
     }
-    
+
         public function fetchAll($paginated=false)
      {
             if ($paginated) {
