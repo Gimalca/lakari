@@ -64,12 +64,14 @@ class IndexController extends AbstractActionController {
             $basePath = $sm->get('viewhelpermanager')->get('basePath');
             $path = $basePath('assets/images/products/catalog/');
 
+            $columns = array('product_id', 'model', 'image', 'description', 'price');
+
             $product = $this->getProductDao()->products($columns)
-                ->descriptions($descriptionC)
+                ->descriptions()
                 ->where($id)
                 ->fetch()
                 ->withDescriptions()
-                ->withImages($imageC, function ($images) use ($path) {
+                ->withImages(null, function ($images) use ($path) {
                     return array_map(function ($image) use ($path) {
                         $image->setBasePath($path);
                         return $image;
