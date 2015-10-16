@@ -46,10 +46,22 @@ export var actions = {
             error
         });
     },
-    toggleCart: () => {
-        dispatcher.handleServerAction({
-            actionType: constants.TOGGLE_CART,
+    showCart: () => {
+        dispatcher.handleViewAction({
+            actionType: constants.SHOW_CART,
             null
+        });
+    },
+    hideCart: () => {
+        dispatcher.handleViewAction({
+            actionType: constants.HIDE_CART,
+            null
+        });
+    },
+    toggleOverlay: (state) => {
+        dispatcher.handleViewAction({
+            actionType: constants.TOGGLE_OVERLAY,
+            state
         });
     }
 }

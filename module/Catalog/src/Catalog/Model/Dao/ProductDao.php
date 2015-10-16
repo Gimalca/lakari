@@ -183,7 +183,7 @@ class ProductDao implements IProductDao {
         return $images;
     }
 
-    public function getCategories($productId, $columns)
+    public function getCategories($productId, $columns=null)
     {
         $table = $this->getTable('lk_product_has_category');
         $query = $table->getSql()->select();

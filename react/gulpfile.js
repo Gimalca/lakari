@@ -12,15 +12,14 @@ var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
  
 gulp.task('build', function () {
-
   browserify({
-    entries: ['src/index.jsx'],
+    entries: ['src/catalog.jsx'],
     extensions: ['.jsx'],
     debug: true
   })
   .transform(babelify)
   .bundle()
-  .pipe(source('index.min.js'))
+  .pipe(source('catalog.min.js'))
   .pipe(buffer())
   .pipe(uglify())
   .pipe(gulp.dest('../public/assets/js/dist'));

@@ -15,6 +15,7 @@ import {actions} from '../../actions/cart';
          }
 
          this.handleProductChange = (e) => {
+
              this.setState({
                 quantity : CartStore.getProducts().length,
                 isShowing: CartStore.isShowing()
@@ -22,7 +23,15 @@ import {actions} from '../../actions/cart';
          };
 
          this.handleClick = (e) => {
-             actions.toggleCart();
+             var isShowing = this.state.isShowing;
+
+             if (isShowing) {
+                 actions.hideCart();
+                actions.toggleOverlay(false);
+             } else {
+                actions.showCart();
+                actions.toggleOverlay(true);
+             }
          };
      }
 

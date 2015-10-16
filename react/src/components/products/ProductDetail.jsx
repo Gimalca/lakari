@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import OwlCarousel from '../common/OwlCarousel';
+import ProductStore from '../../stores/ProductStore';
 import {actions} from '../../actions/cart';
 
 var MIN_DEVICE_WIDTH = 1210;
@@ -10,14 +11,29 @@ class ProductDetail extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            selected: ProductStore.getSelected(),
+            isFixed: ProductStore.isFixed()
+        };
+
         this.onClose = (e) => {
             var $this = $(React.findDOMNode(this));
+            actions.toggleOverlay(false);
             this.props.onClose($this);
         };
 
         this.handleAdd = (e) => {
-            var product = this.props.product;
+            var product = this.state.selected;
             actions.addProduct(product); 
+        };
+
+        this.onChange = () => {
+
+            this.setState({
+                selected: ProductStore.getSelected(),
+                isFixed: ProductStore.isFixed()
+            });
+            this.appear();
         };
     }
 
@@ -39,18 +55,16 @@ class ProductDetail extends React.Component {
     }
 
     componentDidMount() {
+        ProductStore.addChangeListener(this.onChange);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.product) {
-            var $this = $(React.findDOMNode(this));
-            this.props.onShow($this);
-        }
+    componentWillUnMount() {
+        ProductStore.removeChangeListener(this.onChange); 
     }
 
     render() {
 
-        let product = this.props.product;
+        let product = this.state.selected;
 
         if (product) {
 
@@ -61,9 +75,10 @@ class ProductDetail extends React.Component {
         let title = product.descriptions.name;
         let description = product.descriptions;
         let carouselOptions = this.getCarouselOptions();
+        let expanderClass = 'product-expander flex hidden-xs'  + (this.state.isFixed ? ' expander-fixed' : '');
 
         return (<div>
-                 <div className='product-expander flex hidden-xs'>
+                 <div className={expanderClass}>
                     <div className='section section-1 col-xs-3 flex flex-vertical'>
                         <div className='product-resume flex-grow'>
                         <label className='product-title'>{title}</label>
@@ -137,7 +152,7 @@ class ProductDetail extends React.Component {
         }
     }
 
-    show() {
+    appear() {
         var $this = $(React.findDOMNode(this));
         this.props.onShow($this);
     }

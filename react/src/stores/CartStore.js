@@ -18,9 +18,12 @@ function _removeProduct(product) {
     _cartItems.splice(_cartItems.indexOf(product), 1);
 }
 
-function _toggleCart() {
-    console.log('toggle');
-    return _isShowing = !_isShowing;
+function _showCart() {
+    return _isShowing = true;
+}
+
+function _hideCart() {
+    return _isShowing = false;
 }
 
 class CartStore extends BaseStore {
@@ -46,9 +49,14 @@ _cartStore.dispatchToken = dispatcher.register(payload => {
             _removeProduct(payload.action.product);
             _cartStore.emitChange();
             break;
-        case constants.TOGGLE_CART:
-            _toggleCart();
+        case constants.SHOW_CART:
+            _showCart();
             _cartStore.emitChange();
+            break;
+        case constants.HIDE_CART:
+            _hideCart();
+            _cartStore.emitChange();
+            break;
         default:
     }
     return true;

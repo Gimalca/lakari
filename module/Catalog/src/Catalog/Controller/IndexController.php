@@ -13,16 +13,13 @@ namespace Catalog\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
-{
+class IndexController extends AbstractActionController {
 
     protected $productTable;
     protected $urlAliasTable;
 
+    public function indexAction() {
 
-
-    public function indexAction()
-    {
         //$params = $this->params()->fromRoute();
         //var_dump($params);
         $productDao = $this->getProductDao();
@@ -56,19 +53,46 @@ class IndexController extends AbstractActionController
         ));
     }
 
-    public function detailAction()
-    {
-        $url = $this->params()->fromRoute('product');
-        $id = $this->getUrlAliasDao()->getKeywordId($url);
+    public function detailAction() {
 
-        $product = $this->getProductDao()->getProductById($id->id);
-        //var_dump($product);die;
-        return new ViewModel(array(
-            'product' => $product,
-        ));
+        $url = $this->params()->fromRoute('product');
+        $id = $this->getUrlAliasDao()->getKeywordId($url)->id;
+
+        if ($this->getRequest()->isXmlHttpRequest()) {
+
+            $sm = $this->getServiceLocator();
+            $basePath = $sm->get('viewhelpermanager')->get('basePath');
+            $path = $basePath('assets/images/products/catalog/');
+
+            $product = $this->getProductDao()->products($columns)
+                ->descriptions($descriptionC)
+                ->where($id)
+                ->fetch()
+                ->withDescriptions()
+                ->withImages($imageC, function ($images) use ($path) {
+                    return array_map(function ($image) use ($path) {
+                        $image->setBasePath($path);
+                        return $image;
+                    }, $images->getArrayCopy());
+                })
+                ->getJSON();
+
+            $response = $this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($product);
+            return $response;
+        } else {
+
+            $product = $this->getProductDao()->getProductById($id);
+            //var_dump($product);die;
+            return new ViewModel(array(
+                'product' => $product,
+            ));
+        }
     }
-    public function categoryListAction()
-    {
+
+    public function categoryListAction() {
+
         $url = $this->params()->fromRoute('category');
         $id = $this->getUrlAliasDao()->getKeywordId($url);
 

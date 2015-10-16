@@ -12,7 +12,7 @@ class ShoppingCart extends React.Component {
 
         this.state = {
             isShowing: CartStore.isShowing(),
-            products: CartStore.getProducts()
+            products: CartStore.getProducts(),
         };
 
         this.handleProductChange = (e) => {
@@ -31,15 +31,10 @@ class ShoppingCart extends React.Component {
         CartStore.removeListener(this.handleProductChange);
     }
 
-    handleClick(e) {
-        actions.toggleCart();
-    }
-
     render() {
 
         var total = 0; 
         let products = this.state.products;
-
         let items = products.map( (product, i) => {
             total += parseInt(product.price, 10);
             return (<li key={i}> 
@@ -48,10 +43,8 @@ class ShoppingCart extends React.Component {
         });
 
         var cartClass   = 'cd-cart' + (this.state.isShowing ? ' speed-in' : '');
-        var shadowLayer = 'shadow-layer' + (this.state.isShowing ? ' is-visible':'');
 
         return (<div>
-        <div onClick={this.handleClick} className={shadowLayer}></div>
         <div className={cartClass}>
             <div className='w-full-height w-horizontal-centered'>
                 <div className='scrollable'>

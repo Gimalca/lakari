@@ -1,5 +1,5 @@
 body {
-    font-family: "Champagne-Limousines-Bold", sans-serif;
+    font-family: "Abel", sans-serif;
 }
 /* index */
 .slider-owl .item{
@@ -94,10 +94,18 @@ span.count {
     min-width: 1170px;
     margin: 0 auto;
     border-sizing: border-box;
-    box-shadow: 2px 1px 5px #6e6e6e;
-    border: 1px solid #e6e6e6;
     color: #000;
     display: none;
+}
+
+.expander-fixed {
+    background-color: #FFF;
+    position: fixed;
+    margin-top: 40px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
 }
 
 .section {
@@ -241,6 +249,133 @@ span.count {
 
 .tweets-btn:hover {
     color: #659FCB;
+}
+
+/* thumbs */
+.grid_element {
+  position: relative;
+  text-align: center;
+  vertical-align: top;
+  display: inline-block;
+}
+
+div.product_photo {
+  text-decoration: none;
+  float: left;
+  margin: 0 auto;
+  width: 100%;
+  margin-bottom: 1em;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image {
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+    .product-image {
+        height: 300px; 
+    }
+}
+
+.element_info {
+  width: 100%;
+  margin: 0;
+  float: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.prod_name_grid {
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+  float: left;
+  text-align:center;
+}
+
+.name {
+  color: #525252;
+  width: 100%;
+  padding-bottom: 0.7em;
+  padding-top: 0;
+  border: none;
+  margin: 0;
+  font-size: 3.36px;
+  line-height: 1.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.prizes {
+  text-align: center;
+  margin: 0.7em auto;
+  width: 70%;
+  display: block;
+  color: #97b994;
+}
+
+.prod_name_grid .name {
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #525252;
+  text-align: center;
+}
+
+a, a:hover {
+  background: transparent;
+  color: #525252;
+  text-decoration: none;
+}
+
+.prod_name_grid .prizes {
+  font-size: 1em;
+}
+
+.quicklook {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -100%;
+  opacity: 0.8;
+  -moz-transition: color, background, bottom 1s;
+  -webkit-transition: color, background, bottom 1s;
+  transition: color, background, bottom 1s;
+}
+
+.product_photo:hover .quicklook {
+  bottom: 0;
+  -moz-transition: color, background, bottom 0.8s;
+  -webkit-transition: color, background, bottom 0.8s;
+  transition: color, background, bottom 0.8s;
+}
+
+.quicklook span {
+  background: url(http://www.zarahome.com/wcsstore/ZaraHomeStorefrontAssetStore/itxstandard/images/bg_quicklook.png?t=20151006225712) repeat left top;
+  padding: 0 1.5em;
+  margin: 0 auto;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  width: auto;
+  color: #FFFFFF;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.quicklook:hover {
+  opacity: 1;
+}
+
+.range {
+  display: block;
+  transform: translateY(-50%);
 }
 /* General */
 
