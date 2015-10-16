@@ -35,7 +35,7 @@ class RegisterForm extends Form
                 'id' => 'firstname',
                 'class' => 'form-control input',
                 'placeholder' => 'Nombre',
-                
+
                 'required' => true,
                 'autofocus' => true,
             ),
@@ -56,7 +56,7 @@ class RegisterForm extends Form
             'name' => 'email',
             'type' => 'email',
             'attributes' => array(
-                
+
                 'id' => 'firstname',
                 'class' => 'form-control input',
                 'placeholder' => 'Email',
@@ -64,31 +64,32 @@ class RegisterForm extends Form
                 'autofocus' => true,
             ),
         ));
-       
+
             $this->add(array(
             'type' => 'Zend\Form\Element\Password',
             'name' => 'password',
-           'attributes' => array(              
+           'attributes' => array(
                 'id' => 'password',
                 'class' => 'form-control ',
                 'placeholder' => 'enter password',
                 'required' => true,
                 'autofocus' => true,
-        
+
             ),
         ));
-            $this->add(array(
-            'type' => 'Zend\Form\Element\checkbox',
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Checkbox',
             'name' => 'rememberme',
-           'attributes' => array(              
+            'attributes' => array(
                 'id' => 'password',
                 'value' => 1,
                 'checked' => 'checked'
             ),
         ));
-        
+
         // Crear y configurar el elemento confirmarPassword:
-      
+
          $this->add(array(
             'name' => 'csrf',
             'type' => 'Zend\Form\Element\Csrf',
