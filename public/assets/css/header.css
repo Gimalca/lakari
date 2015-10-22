@@ -239,6 +239,9 @@ ul {
   }
   .navbar-primary .navbar-wrapper {
     height: auto;
+    position: relative;
+    z-index: 25;
+    background: #FFF;
   }
   .navbar-primary.sticky {
     width: 100%;
@@ -246,7 +249,6 @@ ul {
     top: 0;
     left: 0;
     z-index: 25;
-    background: #FFF;
   }
   .navbar-primary.sticky .navbar-wrapper {
     height: 50px;
@@ -359,6 +361,7 @@ ul {
     font-size: 1.1em;
     border-bottom: 1px solid #f1f1f2;
     color: #000;
+    background: #FFF;
   }
   .primary-links .extra-links .nav-dropdown-toggle {
     margin: 0;
@@ -451,6 +454,7 @@ ul {
 .cart-trigger {
     position: relative;
 }
+
 /* Shopping Cart */ 
 #main-nav, .cd-cart {
     position: fixed;
@@ -461,7 +465,7 @@ ul {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    z-index: 60;
+    z-index: 23;
 }
 
 .cd-cart {
