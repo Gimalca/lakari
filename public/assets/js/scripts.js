@@ -406,5 +406,29 @@ $(document).ready(function () {
         
     });
 
-
 })(jQuery);
+
+/* Header */
+$(function(){
+
+    var $navbar = $('.navbar-primary'); 
+    var $mobile = $('.mobile-menu-icon');
+    var $menu = $('.primary-links');
+
+    $(window).on('scroll', function (evt) {
+        setTimeout(function () {
+            if ($(window).scrollTop() > $navbar.height()) {
+                $navbar.addClass('sticky');
+            } else {
+                $navbar.removeClass('sticky');
+            }
+        }, 17); 
+    });
+
+    $mobile.click(function(evt){
+        evt.preventDefault();
+        $(this).toggleClass('open');
+        $menu.toggleClass('navbar-expanded');
+    });
+
+});

@@ -30,25 +30,23 @@ body {
 }
 
 .basket-item-count {
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px;
-  height: 21px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  height: 10px;
   position: absolute;
-  left: 40px;
-  top: -10px;
-  width: 21px;
-  background: #f1c40f;
-  color: #fff;
-  font-size: 13px;
+  left: 10px;
+  top: -5px;
+  width: 10px;
   text-align: center;
-  }
+}
 
 span.count {
   position: absolute;
-  top: 50%;
-  left: 7px;
-  transform: translateY(-50%);
+  top: -3px;
+  left: 3px;
+  font-size: 0.8em;
+  color: #000;
 }
 
 @media screen and (min-width: 768px) {
@@ -345,16 +343,16 @@ a, a:hover {
   transform: translateX(-50%);
   bottom: -100%;
   opacity: 0.8;
-  -moz-transition: color, background, bottom 1s;
-  -webkit-transition: color, background, bottom 1s;
-  transition: color, background, bottom 1s;
+  -moz-transition: color, background, bottom 0.3s;
+  -webkit-transition: color, background, bottom 0.3s;
+  transition: color, background, bottom 0.3s;
 }
 
 .product_photo:hover .quicklook {
   bottom: 0;
-  -moz-transition: color, background, bottom 0.8s;
-  -webkit-transition: color, background, bottom 0.8s;
-  transition: color, background, bottom 0.8s;
+  -moz-transition: color, background, bottom 0.3s;
+  -webkit-transition: color, background, bottom 0.3s;
+  transition: color, background, bottom 0.3s;
 }
 
 .quicklook span {
