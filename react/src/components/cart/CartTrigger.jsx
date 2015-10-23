@@ -27,10 +27,8 @@ import {actions} from '../../actions/cart';
 
              if (isShowing) {
                  actions.hideCart();
-                actions.toggleOverlay(false);
              } else {
                 actions.showCart();
-                actions.toggleOverlay(true);
              }
          };
      }

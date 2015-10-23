@@ -1,4 +1,5 @@
 'use strict';
+
 import React from 'react';
 import OwlCarousel from '../common/OwlCarousel';
 import ProductStore from '../../stores/ProductStore';
@@ -131,7 +132,7 @@ class ProductDetail extends React.Component {
                               </button>
                             </div>
                             <div className="btn-group" role="group">
-                              <button type="button" className="btn btn-flat btn-confirm"> Comprar</button>
+                              <button onClick={this.handleAdd} type="button" className="btn btn-flat btn-confirm"> Comprar</button>
                               </div>
                             </div>
                         </div>
