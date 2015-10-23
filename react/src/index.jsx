@@ -17,7 +17,7 @@ var topProducts  = document.getElementById('slider-products');
 
 
 React.render(<CartTrigger />, cartTrigger);
-React.render(<ShoppingCart />, shoppingCart);
+//React.render(<ShoppingCart />, shoppingCart);
 //React.render(<Overlay />, overlay);
 
 var bestSeller = JSON.parse(document.getElementById('bestSellerJSON').textContent);

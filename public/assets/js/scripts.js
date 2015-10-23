@@ -414,6 +414,7 @@ $(function(){
     var $navbar = $('.navbar-primary'); 
     var $mobile = $('.mobile-menu-icon');
     var $menu = $('.primary-links');
+    var $trigger = $('#cd-cart-trigger');
 
     $(window).on('scroll', function (evt) {
         setTimeout(function () {
@@ -430,5 +431,9 @@ $(function(){
         $(this).toggleClass('open');
         $menu.toggleClass('navbar-expanded');
     });
+
+$trigger.click(function (evt) {
+    $('.cart').toggleClass('open');
+  });
 
 });
