@@ -2,7 +2,9 @@
 return array(
     'controllers' => array(
         'invokables' => array(
+            'Account\Controller\Index' => 'Account\Controller\IndexController',
             'Account\Controller\Register' => 'Account\Controller\RegisterController',
+            'Account\Controller\Login' => 'Account\Controller\LoginController',
           
         ),
     ),
@@ -15,12 +17,12 @@ return array(
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
+                        'id' => '[a-zA-Z0-9_-]*'
                     ),
                     'defaults' => array(
                         '__NAMESPACE__' => 'Account\Controller',
-                        'controller' => 'Register',
-                        'action' => 'add',
+                        'controller' => 'Index',
+                        'action' => 'index',
                     ),
                 ),
             ),

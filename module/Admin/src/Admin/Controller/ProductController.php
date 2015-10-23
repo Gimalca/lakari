@@ -102,6 +102,7 @@ class ProductController extends AbstractActionController
            
             $this->productForm->setInputFilter(new ProductValidator($this->getServiceLocator()));
             $this->productForm->setData($postData);
+//            var_dump($this->productForm);die;
             
             if ($this->productForm->isValid()) {
                 $productData = $this->productForm->getData();
