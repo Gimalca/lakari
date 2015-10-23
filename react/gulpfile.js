@@ -13,13 +13,13 @@ var rename = require('gulp-rename');
  
 gulp.task('build', function () {
   browserify({
-    entries: ['src/catalog.jsx'],
+    entries: ['src/index.jsx'],
     extensions: ['.jsx'],
     debug: true
   })
   .transform(babelify)
   .bundle()
-  .pipe(source('catalog.min.js'))
+  .pipe(source('index.min.js'))
   .pipe(buffer())
   .pipe(uglify())
   .pipe(gulp.dest('../public/assets/js/dist'));

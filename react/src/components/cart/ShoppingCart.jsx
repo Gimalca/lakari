@@ -37,31 +37,24 @@ class ShoppingCart extends React.Component {
         let products = this.state.products;
         let items = products.map( (product, i) => {
             total += parseInt(product.price, 10);
-            return (<li key={i}> 
-                        <ShoppingCartItem item={product} />
-                    </li>);
+            return (<ShoppingCartItem item={product} key={i} />);
         });
 
-        var cartClass   = 'cd-cart' + (this.state.isShowing ? ' speed-in' : '');
+        var cartClass   = 'cart' + (this.state.isShowing ? ' open' : '');
 
-        return (<div>
-        <div className={cartClass}>
-            <div className='w-full-height w-horizontal-centered'>
-                <div className='scrollable'>
-                    <ul className="cd-cart-items dropdown-cart">
-                        {items}
-                    </ul> 
-                </div>
+        return (<div className={cartClass}>
+            <span className='arrow'></span>
+            <span className='close'>Close</span>
+            { items.length > 0 ? <div className='items'>{items}</div>: 'Empty Bag'}
+            <div className='subtotal'>
+                <span>Subtotal:</span>
+                <span>{total} €</span>
             </div>
-            <div className='cd-cart-checkout w-horizontal-centered'>
-                <div className="cd-cart-total">
-                    <p>{'Total = $' + total}</p>
-                </div>
-                <a href="#0" className="checkout-btn">Checkout</a>
-                <a href="#0" className='go-to-cart-btn'>Go to cart page</a>
+            <div className='checkout-buttons'>
+                <a href='#' className='confirm'>Confirmar</a>
             </div>
-        </div>
-    </div>);
+        </div>);
+
     }
 }
 

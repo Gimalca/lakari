@@ -27,10 +27,8 @@ import {actions} from '../../actions/cart';
 
              if (isShowing) {
                  actions.hideCart();
-                actions.toggleOverlay(false);
              } else {
                 actions.showCart();
-                actions.toggleOverlay(true);
              }
          };
      }
@@ -50,16 +48,15 @@ import {actions} from '../../actions/cart';
             display: amount > 0? 'block': 'none'
          };
 
-         return (<button onClick={this.handleClick} className="btn btn-success btn-product" type="button"> 
+         return (<a className='cart-trigger' onClick={this.handleClick}> 
                     <span >
                     { this.state.isShowing ? 
                         <i className="fa fa-times"></i> : <i className="fa fa-shopping-cart"></i> }
                     </span>
-                    <span className="visible-xs navbar-link "> Carrito de Compras</span>
                     <div style={styles} className="basket-item-count">
                         <span className="count">{amount}</span>
                     </div>
-                </button>);
+                </a>);
     }
 
  }
