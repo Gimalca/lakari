@@ -78,7 +78,7 @@ class RegisterForm extends Form
             ),
         ));
             $this->add(array(
-            'type' => 'Zend\Form\Element\checkbox',
+            'type' => 'Zend\Form\Element\Checkbox',
             'name' => 'rememberme',
            'attributes' => array(              
                 'id' => 'password',

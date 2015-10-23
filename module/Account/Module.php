@@ -3,21 +3,61 @@ namespace Account;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
+use Account\Form\LoginForm;
 use Account\Form\RegisterForm;
+use Account\Model\LoginAccount;
+use Zend\ModuleManager\ModuleManager;
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
         $this->initRegister($e);
+    }
+    
+    public function init(ModuleManager $moduleManager) 
+    {
+        $events = $moduleManager->getEventManager();
+        $sharedEvents = $events->getSharedManager();
+        $sharedEvents->attach(array(__NAMESPACE__, 'Application','Account'), 'dispatch', array($this, 'initAuth'), 100);
+    }
+    
+    public function initAuth(MvcEvent $e)
+    {
         
+        $app = $e->getApplication();
+        $routerMatch = $e->getRouteMatch();
+        $controller = $routerMatch->getParam('controller');
+        $action = $routerMatch->getParam('action');
+       
+        $sm = $app->getServiceManager();
+        $auth = $sm->get('Account\Model\LoginAccount');
+        
+       
+        if($controller === 'Account\Controller\Index' && !$auth->isLoggedIn()){       
+            $controller = $e->getTarget();
+            return $controller->redirect()->toRoute('account', array('controller' => 'register', 'action' => 'add'));
+        }
+        
+        
+        if($auth->isLoggedIn()){
+            
+            $viewModel = $e->getViewModel();
+            $viewModel->userIdentity = $auth->getIdentity();
+            
+        }
     }
     
     protected function initRegister($e)
     {
         $viewModel = $e->getViewModel();
         $viewModel->registerForm= new RegisterForm();
+    }
+    
+        protected function initLogin($e)
+    {
+        $viewModel = $e->getViewModel();
+        $viewModel->loginForm= new LoginForm();
     }
 
     public function getConfig()
@@ -47,7 +87,10 @@ class Module
                     $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
                     return $transport;
                 },
-                                  
+                'Account\Model\LoginAccount' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new LoginAccount($dbAdapter);
+                }               
             )
         );
     }

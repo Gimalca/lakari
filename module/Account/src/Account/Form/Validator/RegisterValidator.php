@@ -143,7 +143,10 @@ class RegisterValidator extends InputFilter
             )
         ));
      
-       
+        $this->add(array(
+            'name' => 'rememberme',
+            'required' => false,
+        ));
     }
 
 }
