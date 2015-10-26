@@ -31,12 +31,12 @@ class ProductThumbnail extends React.Component {
     render() {
 
         var product = this.props.product;
-        var image = product.images.length > 0 ? product.images[0].image: product.image;
+        var image = product.image;
 
         return (<div className="grid_element">
                         <div className="product_photo">
                             <a href='#'>
-                            <img className='product-image img-responsive' src="http://placehold.it/270x300" onerror="if (this.src != 'error.jpg') this.src ='http://placehold.it/270x300';"/>
+                            <img className='product-image img-responsive' src={image} />
                             </a>
                             <div className="quicklook">
                             <a onClick={this.handleClick.bind(this, product)} href='#'><span>QUICK LOOK</span></a>
