@@ -20,7 +20,7 @@ class ProductDetail extends React.Component {
         this.onClose = (e) => {
             var $this = $(React.findDOMNode(this));
             actions.toggleOverlay(false);
-            this.props.onClose($this);
+            this.props.onClose($this, this.state.isFixed);
         };
 
         this.handleAdd = (e) => {
@@ -34,7 +34,7 @@ class ProductDetail extends React.Component {
                 selected: ProductStore.getSelected(),
                 isFixed: ProductStore.isFixed()
             });
-            this.appear();
+            this.appear(this.state.isFixed);
         };
     }
 
@@ -153,9 +153,9 @@ class ProductDetail extends React.Component {
         }
     }
 
-    appear() {
+    appear(isFixed) {
         var $this = $(React.findDOMNode(this));
-        this.props.onShow($this);
+        this.props.onShow($this, isFixed);
     }
 }
 
