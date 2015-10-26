@@ -49,6 +49,10 @@ a {
   -o-transition: all 0.2s linear 0s;
   transition: all 0.2s linear 0s;
 }
+@media (min-width: 1200px)
+.container {
+    width: 1600px;
+}
 body {
   font-size: 13px;
   color: #666666;
@@ -56,7 +60,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
 }
 ul {
   margin: 0;
@@ -2560,15 +2564,15 @@ a {
   margin-top: 4px;
 }
 .cart {
-  margin-top: 5px;
-  opacity: 1;
-  -webkit-transition: all 0.2s linear 0s;
+  /* margin-top: 5px; */
+  /* opacity: 1; */
+  /* -webkit-transition: all 0.2s linear 0s; */
   -moz-transition: all 0.2s linear 0s;
   -o-transition: all 0.2s linear 0s;
-  transition: all 0.2s linear 0s;
-  width: 100%;
-  z-index: 666;
-  left: 0px;
+  /* transition: all 0.2s linear 0s; */
+  /* width: 100%; */
+  /* z-index: 666; */
+  /* left: 0px; */
 }
 .cart .action {
   float: left;

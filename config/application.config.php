@@ -11,6 +11,7 @@ if ( getenv('APPLICATION_ENV')  == 'development') {
     $appConfig = array(
         'modules' => array(
             'Application',
+            'Account',
             'Catalog',
             'Admin',
             'Provider',
@@ -36,6 +37,7 @@ if ( getenv('APPLICATION_ENV')  == 'development') {
         'modules' => array(
             'Application',
             'Catalog',
+            'Account',
             'Admin',
             'Provider',
             'Sales',
