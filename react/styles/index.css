@@ -370,6 +370,7 @@ a, a:hover {
 .range {
   display: block;
   transform: translateY(-50%);
+  color: #A8C2A5;
 }
 /* General */
 

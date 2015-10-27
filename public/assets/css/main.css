@@ -5188,3 +5188,8 @@ a {
 .help-block {
  color:   #a94442; 
 }
+.prod_name_grid .range{
+  color:#A8C2A5;
+  font-size: 15px;
+  /* font-weight: 600; */
+}
