@@ -21,11 +21,12 @@ echo $this->headlink()
 
 
             <!-- ========================================== Filtros ========================================= -->
-            <div class="clearfix filters-container m-t-10">
+            <div class="clearfix col-md-6 col-xs-12 pull-right filters-container m-t-10">
                 <div class="row">
-                    <div class="col col-sm-6 col-md-2">
+                    <div class="col col-sm-6 col-md-3">
                         <div class="filter-tabs">
                             <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
+                                <li><a  id='product-mode'  href="#"><i class="icon fa fa-anchor"></i>Modal</a></li>
                                 <li class="active">
                                     <a data-toggle="tab" href="#grid-container"><i class="icon fa fa-th-list"></i>Grid</a>
                                 </li>
@@ -79,7 +80,7 @@ echo $this->headlink()
                             </div><!-- /.lbl-cnt -->
                         </div><!-- /.col -->
                     </div><!-- /.col -->
-                    <div class="col col-sm-6 col-md-4 text-right">
+                    <div class="col col-sm-6 col-md-3 text-right">
                         <div class="pagination-container">
                             <ul class="list-inline list-unstyled">
                                 <li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
@@ -89,9 +90,10 @@ echo $this->headlink()
                                 <li><a href="#">4</a></li>	
                                 <li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
                             </ul><!-- /.list-inline -->
-                        </div><!-- /.pagination-container -->		</div><!-- /.col -->
+                        </div><!-- /.pagination-container -->		
+                    </div><!-- /.col -->
                 </div><!-- /.row -->
-                        <button id='product-mode' class='btn btn-primary'>Cambiar Modal</button>
+                      
             </div>
             <!-- ========================================== Filtros END ========================================= -->
 
