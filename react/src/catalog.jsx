@@ -21,31 +21,42 @@ React.render(<Overlay />, overlay);
 
 var $expander = $('#product-expander');
 
-function expanderClose(expander) {
-    console.log('close')
-    expander.animate({
-        opacity: '0',
-        left: "+=50",
-        height: "0"
-    }, 500, function() {
-        // Animation complete.
-    });
+function expanderClose(expander, isFixed) {
+    console.log(isFixed)
+    if (!isFixed) {
+        expander.animate({
+            opacity: '0',
+            left: "+=50",
+            height: "0"
+        }, 500, function() {
+            // Animation complete.
+        });
+    } else {
+        expander.hide();
+    }
 }
 
-function expanderShow(expander) {
-        
-    expander.animate({
-        opacity: '1',
-        height: "640px",
-        display: 'block'
-    }, {
-        duration: 300,
-        complete: function () {
-            $('html, body').animate({
-                scrollTop: expander.offset().top - 200 
-            }, 300);
-        }
-    });
+function expanderShow(expander, isFixed) {
+    console.log(isFixed) 
+    if (!isFixed) {
+        expander.show();
+        expander.animate({
+            opacity: '1',
+            height: "640px",
+            display: 'block'
+        }, {
+            duration: 300,
+            complete: function () {
+                $('html, body').animate({
+                    scrollTop: expander.offset().top - 200 
+                }, 300);
+            }
+        });
+    } else {
+        expander.show();
+        $(expander).css('opacity', 1);
+        $(expander).height('auto');
+    }
 }
 
 React.render(<ProductDetail onClose={expanderClose} onShow={expanderShow} />, document.getElementById('product-expander'));
