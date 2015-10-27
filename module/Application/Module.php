@@ -59,26 +59,28 @@ class Module
 
     //Adicionales
 
-//    protected function initConfig($e)
-//    {
-//        $application = $e->getApplication();
-//        $services = $application->getServiceManager();
-//        $services->setFactory('ConfigIni', function ($services) {
-//            $reader = new Ini();
-//            $data = $reader->fromFile(__DIR__ . '/config/config.ini');
-//            return $data;
-//        });
-//    }
 
-//    protected function initViewRender($e)
-//    {
-//        $application = $e->getApplication();
-//        $sm = $application->getServiceManager();
-//        $viewRender = $sm->get('ViewManager')->getRenderer();
-//        $config = $sm->get('ConfigIni');
-//
-//        $viewRender->headTitle($config['params']['titulo']);
-//    }
+    protected function initConfig($e)
+    {
+        $application = $e->getApplication();
+        $services = $application->getServiceManager();
+        $services->setFactory('ConfigIni', function ($services) {
+            $reader = new Ini();
+            $data = $reader->fromFile(__DIR__ . '/config/config.ini');
+            return $data;
+        });
+    }
+
+    protected function initViewRender($e)
+    {
+        $application = $e->getApplication();
+        $sm = $application->getServiceManager();
+        $viewRender = $sm->get('ViewManager')->getRenderer();
+        $config = $sm->get('ConfigIni');
+       
+        $viewRender->headTitle($config['params']['titulo']);
+    }
+
 
     public function initLayout($e)
     {

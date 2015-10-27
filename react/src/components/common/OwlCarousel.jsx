@@ -100,7 +100,8 @@ const OwlCarousel = React.createClass({
     },
 
     componentWillReceiveProps(nextProps) {
-        $(React.findDOMNode(this)).data('owlCarousel').destroy();
+        if (nextProps.update)
+            $(React.findDOMNode(this)).data('owlCarousel').destroy();
     },
 
     componentDidUpdate(prevProps, prevState) {
@@ -109,6 +110,10 @@ const OwlCarousel = React.createClass({
 
     componentWillUnmount() {
         $(React.findDOMNode(this)).data('owlCarousel').destroy();
+    },
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.update;
     },
 
     render() {

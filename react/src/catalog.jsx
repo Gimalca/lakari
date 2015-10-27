@@ -1,23 +1,62 @@
 'use strict';
+
 import React from 'react';
-import ShoppingCart from './components/ShoppingCart';
-import CartTrigger from './components/CartTrigger';
-import ProductThumbnail from './components/ProductThumbnail';
+import ShoppingCart from './components/cart/ShoppingCart';
+import CartTrigger from './components/cart/CartTrigger';
+import Overlay from './components/common/Overlay';
+import ProductDetail from './components/products/ProductDetail';
+import ProductService from './services/products';
 
 // Añadir a las vistas que interactuan 
-// con el carrito de compra mientras se arma 
+// con el carrito de compra mientras no 
 // un template con react router
+
 var shoppingCart = document.getElementById('cd-cart');
 var cartTrigger  = document.getElementById('cd-cart-trigger');
+var overlay      = document.getElementById('cd-overlay');
 
 React.render(<CartTrigger />, cartTrigger);
 React.render(<ShoppingCart />, shoppingCart);
+React.render(<Overlay />, overlay);
 
-var item =  { 
-        id: '1',
-        price: '649.99', 
-        title: 'Jarra joven', 
-        image: BASE_URL + 'yes_thumbs_vase-443x500-430x480.jpg'
-};
+var $expander = $('#product-expander');
 
-React.render(<ProductThumbnail product={item} />, document.getElementById('product'));
+function expanderClose(expander, isFixed) {
+    console.log(isFixed)
+    if (!isFixed) {
+        expander.animate({
+            opacity: '0',
+            left: "+=50",
+            height: "0"
+        }, 500, function() {
+            // Animation complete.
+        });
+    } else {
+        expander.hide();
+    }
+}
+
+function expanderShow(expander, isFixed) {
+    console.log(isFixed) 
+    if (!isFixed) {
+        expander.show();
+        expander.animate({
+            opacity: '1',
+            height: "640px",
+            display: 'block'
+        }, {
+            duration: 300,
+            complete: function () {
+                $('html, body').animate({
+                    scrollTop: expander.offset().top - 200 
+                }, 300);
+            }
+        });
+    } else {
+        expander.show();
+        $(expander).css('opacity', 1);
+        $(expander).height('auto');
+    }
+}
+
+React.render(<ProductDetail onClose={expanderClose} onShow={expanderShow} />, document.getElementById('product-expander'));

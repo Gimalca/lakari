@@ -19,8 +19,10 @@ use Catalog\Model\Entity\Product;
 
 class IndexController extends AbstractActionController {
 
+     private $productTable;
+
     public function indexAction() {
-       
+
         $productDao = $this->getDao('Admin\Model\Dao\ProductDao');
         $columns = array('product_id', 'model', 'image', 'description', 'price');
 
@@ -31,18 +33,13 @@ class IndexController extends AbstractActionController {
         /* TODO Consulta Para los productos
          * mas vendidos
          */
-
+        $imageC = '';
         $bestSeller = $productDao->products($columns)
-            ->limit(10, 16)
+            ->limit(10)
             ->fetch(function ($product) use ($path) {
                 $product['id'] = $product['product_id'];
+                $product['image'] = $path . $product['image'];
                 return $product;
-            })
-            ->withImages($imageC, function ($images) use ($path) {
-                return array_map(function ($image) use ($path) {
-                    $image->setBasePath($path);
-                    return $image;
-                }, $images->getArrayCopy());
             })
             ->getJSON();
 
@@ -53,16 +50,11 @@ class IndexController extends AbstractActionController {
          */
 
         $newProducts = $productDao->products($columns)
-            ->limit(10, 25)
+            ->limit(10, 10)
             ->fetch(function ($product) use ($path) {
                 $product['id'] = $product['product_id'];
+                $product['image'] = $path . $product['image'];
                 return $product;
-            })
-            ->withImages($imageC, function ($images) use ($path) {
-                return array_map(function ($image) use ($path) {
-                    $image->setBasePath($path);
-                    return $image;
-                }, $images->getArrayCopy());
             })
             ->getJSON();
 
@@ -124,7 +116,7 @@ class IndexController extends AbstractActionController {
 
     public function getDao($service) {
 
-        if (! $this->productTable) {
+        if (!$this->productTable) {
             $sm = $this->getServiceLocator();
             $this->productTable = $sm->get($service);
         }

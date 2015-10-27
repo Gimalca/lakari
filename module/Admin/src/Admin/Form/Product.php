@@ -37,6 +37,13 @@ class Product extends Form {
                 'id' => 'productId',               
             ),
         ));
+//        $this->add(array(
+//            'name' => 'provider_id',
+//            'attributes' => array(
+//                'type' => 'hidden',               
+//                'id' => 'productId',               
+//            ),
+//        ));
         
         $this->add(array(
             'name' => 'provider',
@@ -99,6 +106,17 @@ class Product extends Form {
 //                'target_element' =>  $inputImage
 //            )
 //        ));
+       
+       $this->add(array(
+           'name' => 'image',
+           'attributes' => array(
+               'type' => 'File',
+               'id' => 'image',   
+               'placeholder' => 'Imagen',
+               'required' => true,
+              
+           ),
+       ));
        
        $this->add(array(
            'name' => 'productImage',
@@ -165,7 +183,6 @@ class Product extends Form {
                 'id' => 'productQuantity',
                 'class' => 'form-control gui-input',
                 'placeholder' => 'productQuantity',
-                'required' => true,  
                 'number' => true
                 ),
         ));
@@ -336,7 +353,7 @@ class Product extends Form {
                 'class' => 'form-control gui-input',
                 'style' => 'width: 100%',
                 'multiple' => true,
-                'required' => false,
+               
             ),
             
         ));

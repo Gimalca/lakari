@@ -1,14 +1,10 @@
+<?php
+echo $this->headlink() 
+        ->appendStylesheet($this->basePath('assets') . '/css/index.min.css');
+?>
 <div class="row single-product outer-bottom-sm ">
-    <div class="col-md-3 sidebar">
-         <div class="side-menu side-menu2 animate-dropdown outer-bottom-xs">
-                <strong>Module:</strong>        Catalog &raquo;
-                <strong>Controller:</strong>    Index &raquo;
-                <strong>Action:</strong>        index
-                <?php //var_dump($this->product); ?>
-            </div>
-    </div><!-- /.sidebar -->
   
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="row  wow fadeInUp">
                             <div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
                                 <div class="product-item-holder size-big single-product-gallery small-gallery">

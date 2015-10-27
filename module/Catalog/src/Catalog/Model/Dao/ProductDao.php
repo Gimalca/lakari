@@ -29,7 +29,7 @@ class ProductDao implements IProductDao {
     {
         $this->tableGateway = $tableGateway;
     }
-     
+
     public function getAll() {
 
         $query = $this->tableGateway->getSql()->select();
@@ -59,7 +59,7 @@ class ProductDao implements IProductDao {
 
         return $resultSet;
     }
-    
+
     public function setAll()
     {
         $query = $this->tableGateway->getSql()->select();
@@ -72,32 +72,32 @@ class ProductDao implements IProductDao {
                             'lk_product.product_id = url.id',
                             array('id', 'keyword')
                 );
-        $query->join(array('img' => 'lk_product_image'),
-                            'lk_product.product_id = img.product_id',
-                            array('tittle')
-                );
+//        $query->join(array('img' => 'lk_product_image'),
+//                            'lk_product.product_id = img.product_id',
+//                            array('tittle')
+//                );
         $query->where(array(
             'url.type' => 'product',
-            'img.sort_order' => 1
+ //           'img.sort_order' => 1
         ));
 
         $query->order("lk_product.product_id DESC");
         // echo $query->getSqlString();die;
-        
+
         $this->query = $query;
-        
+
         return $this;
     }
 
-        public function getResulSet() 
+        public function getResulSet()
     {
-        return  $this->tableGateway->selectWith($this->query);  
+        return  $this->tableGateway->selectWith($this->query);
     }
 
 
-    public function getPaginator() 
+    public function getPaginator()
     {
-        
+
          $select = $this->query ;
          //$select = $this->tableGateway->getSql()->select();
         // create a new result set based on the Album entity
@@ -111,9 +111,9 @@ class ProductDao implements IProductDao {
                 // the result set to hydrate
                 $resultSetPrototype
         );
-        
+
         $paginator = new Paginator($paginatorAdapter);
-        
+
         return $paginator;
     }
 
@@ -128,13 +128,13 @@ class ProductDao implements IProductDao {
                 ), 'phc.product_id = lk_product.product_id');
         $query->join(array(
             'c' => 'lk_category'
-                ), 'c.category_id = phc.category_id');
+                ), 'c.category_id = phc.category_id', array('category_id'));
         /* $query->join(array(
           'cd' => 'lk_category_description'
-          ),  'c.category_id = cd.category_id'); */
+          ),  'c.category_id = cd.category_id'); 
         $query->join(array(
             'pm' => 'lk_product_image'
-                ), 'pm.product_id = lk_product.product_id');
+                ), 'pm.product_id = lk_product.product_id');*/
         $query->join(array(
             'url' => 'lk_url_alias'
                 ), 'lk_product.product_id = url.id');
@@ -142,7 +142,7 @@ class ProductDao implements IProductDao {
         $query->where(array(
             'c.category_id' => $categoryId,
             'url.type' => 'product',
-            'pm.sort_order' => 1
+            //'pm.sort_order' => 1
         ));
 
         $query->order("lk_product.product_id DESC");
@@ -183,7 +183,7 @@ class ProductDao implements IProductDao {
         return $images;
     }
 
-    public function getCategories($productId, $columns)
+    public function getCategories($productId, $columns=null)
     {
         $table = $this->getTable('lk_product_has_category');
         $query = $table->getSql()->select();
@@ -204,6 +204,52 @@ class ProductDao implements IProductDao {
         }
 
         return $categories;
+    }
+    public function getRelated($productId)
+    {
+        $table = $this->getTable('lk_product_related');
+        $query = $table->getSql()->select();
+
+        if ($productId) {
+            $query->where('product_id = ' . $productId);
+        }
+
+        $resultSet = $table->selectWith($query);
+
+        $related = array();
+        foreach ($resultSet as $row) {
+            $related[] = $row->related_id;
+        }
+
+        return $related;
+    }
+    
+    public function getSeoUrlByProduct($id)
+    {
+          $id = (int) $id;
+        // $rowset = $this->tableGateway->select(array('id' => $ide));
+
+        $query = $this->tableGateway->getSql()->select();
+        $query->join(array(
+            'url' => 'lk_url_alias'
+                ), "lk_product.product_id = url.id");
+        $query->where(array(
+            "url.type = 'product'"
+        ));
+        $query->where(array(
+            'lk_product.product_id' => $id
+        ));
+        // echo $query->getSqlString();die;
+
+        $rowset = $this->tableGateway->selectWith($query);
+        //var_dump($rowset);die;
+
+        $row = $rowset->current();
+        
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
     }
 
     public function getProductById($id)
@@ -237,9 +283,11 @@ class ProductDao implements IProductDao {
 
         $images = $this->getImages($id);
         $categories = $this->getCategories($id);
+        $related = $this->getRelated($id);
 
         $row->setProductImage($images);
         $row->setProductCategories($categories);
+        $row->setProductRelated($related);
 
 
         if (!$row) {
@@ -322,7 +370,7 @@ class ProductDao implements IProductDao {
         return $this;
     }
 
-    public function products($columns) {
+    public function products($columns=null) {
         $this->select = $this->tableGateway->getSql()->select();
         if ($columns) $this->select->columns($columns);
         return $this;
@@ -383,7 +431,7 @@ class ProductDao implements IProductDao {
         return $this;
     }
 
-    public function withDescriptions($columns, $callback) {
+    public function withDescriptions($columns = null, $callback = null) {
         $result = $this->result;
         $products = new \ArrayObject();
 
@@ -598,10 +646,11 @@ class ProductDao implements IProductDao {
     {
 
         $productId = (int) $product->getProductId();
-        // print_r($product);die;
+        //print_r($product);die;
         $data_product = array(
-            'provider_id' => $product->getProvider_id(),
+            'provider_id' => $product->getProviderId(),
             'model' => $product->getModel(),
+            'image' => $product->getImage(),
             'sku' => $product->getSku(),
             'isbn' => $product->getIsbn(),
             'price' => $product->getPrice(),
@@ -660,8 +709,8 @@ class ProductDao implements IProductDao {
             if ($this->getById($productId)) {
 
                 $data_product['date_modified'] = date("Y-m-d H:i:s");
-                //print_r($data_product);die;
-                $this->tableGateway->update($data_product, array(
+                $data = array_filter($data_product);
+                $this->tableGateway->update($data, array(
                     'product_id' => $productId,
                 ));
                 // update Product Description
@@ -671,8 +720,12 @@ class ProductDao implements IProductDao {
                 // update Url Alias
                 $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias, 1);
                 // update Categories
-                $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories, 1);
+                $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories, 1); 
+                //insert Related
+                $sRelated = $this->saveProductRelated($productId, $data_product_related, 1);
+
                 return $productId;
+                
             } else {
                 throw new \Exception('Form id does not exist');
             }
@@ -716,7 +769,7 @@ class ProductDao implements IProductDao {
 
         return $resultSet;
     }
-    
+
         public function fetchAll($paginated=false)
      {
             if ($paginated) {

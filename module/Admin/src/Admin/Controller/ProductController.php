@@ -59,7 +59,7 @@ class ProductController extends AbstractActionController
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         // set the number of items per page to 10
         //print_r($paginator);die;
-        $paginator->setItemCountPerPage(3);
+        $paginator->setItemCountPerPage(10);
         // var_dump($paginator);die;
         
           return new ViewModel(array(
@@ -80,7 +80,7 @@ class ProductController extends AbstractActionController
         
         $providers = $this->getProvider();
         //print_r($provider);die;
-        array_unshift($providers, null);
+        //array_unshift($providers, null);
         $this->productForm->get('provider')->setValueOptions($providers);
         
         $related = $this->getProductSelect();
@@ -98,7 +98,7 @@ class ProductController extends AbstractActionController
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-           //print_r($postData);die;
+          // print_r($postData);die;
            
             $this->productForm->setInputFilter(new ProductValidator($this->getServiceLocator()));
             $this->productForm->setData($postData);
@@ -109,7 +109,7 @@ class ProductController extends AbstractActionController
                 //print_r($productData);die;         
                 $productEntity = new Product();
                 $productEntity->exchangeArrayForm($productData);
-                //var_dump($productEntity);die;
+               // var_dump($productEntity);die;
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProduct($productEntity);
                 
@@ -118,7 +118,7 @@ class ProductController extends AbstractActionController
                   return $this->redirect()->toRoute('admin', array(
                       'controller' => 'provider', 
                       'action' => 'productlist',
-                      'id' => $postData['provider_id']
+                      'id' => $postData['provider']
                   ));
                 }
                
@@ -149,14 +149,29 @@ class ProductController extends AbstractActionController
         
         $id = (int) $this->params()->fromRoute('id', 0);
         
-        if ( $request->isPost()) {
+        if ($request->isPost()) {
             
             $postData = array_merge_recursive(
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-            //print_r($postData); die;
-            $this->productForm->setInputFilter(new ProductValidator());
+           
+            //print_r($postData);
+            $productDao = $this->getProductDao();
+            $seoUrl = $productDao->getSeoUrlByProduct($postData['productId']);
+            
+            $productValidator = new ProductValidator($this->getServiceLocator());
+            
+            if(!$postData['image']['tmp_name']){
+               $productValidator->remove('image');
+               $postData['image'] = null;
+            }  
+            
+            if($seoUrl->getUrlAlias()->keyword == $postData['productSeoUrl']){  
+                $productValidator->remove('productSeoUrl');
+            }
+           
+            $this->productForm->setInputFilter($productValidator);
             $this->productForm->setData($postData);
             
             if ($this->productForm->isValid()) {
@@ -175,6 +190,7 @@ class ProductController extends AbstractActionController
                 
             }else {
                 $messages = $this->productForm->getMessages();
+                //print_r($messages);die;
                 $this->productForm->populateValues($postData);
             }
             
@@ -190,18 +206,28 @@ class ProductController extends AbstractActionController
         
         $productDao = $this->getProductDao();
         $productData = $productDao->getProductById($id);
-        
-       
         //print_r($productData); die;
+         $providers = $this->getProvider();
+        //print_r($provider);die;
+       //echo array_unshift($providers, null);die;
+        $this->productForm->get('provider')->setValueOptions($providers);
+        
+        $related = $this->getProductSelect();
+//        //print_r($related);die;
+        $this->productForm->get('related_id')->setValueOptions($related);
+        
         $cat = $this->getCategorySelect();
         $this->productForm->get('productCategories')->setValueOptions($cat);
         
+        $this->productForm->get('image')->setAttribute('required', false);
+        
         $productFormData = new ArrayObject;
         $productFormData['productId']           = $productData->getProductId();
-        $productFormData['provider_id']           = $productData->getProvider_id();
+        $productFormData['provider']            = $productData->getProviderid();
+        //$productFormData['image']            = $productData->getImage();
         $productFormData['productName']         = $productData->getProductDescription()->getName();
-        $productFormData['productDescription']  = $productData->getProductDescription()->getDescription();
         $productFormData['productModel']        = $productData->getModel();
+        $productFormData['productDescription']  = $productData->getProductDescription()->getDescription();
         $productFormData['productSku']          = $productData->getSku();
         $productFormData['productIsbn']         = $productData->getIsbn();
         $productFormData['productPrice']        = $productData->getPrice();
@@ -211,8 +237,9 @@ class ProductController extends AbstractActionController
         $productFormData['productMetaDescription']   = $productData->getProductDescription()->getMeta_Description();
         $productFormData['productMetaKeywords']   = $productData->getProductDescription()->getMeta_Keyword();
         $productFormData['productSeoUrl']       = $productData->getUrlAlias()->keyword;
+        $productFormData['related_id']       = $productData->getProductRelated();
         
-        $productFormData['productQuantity']       = array(50);
+        //$productFormData['productQuantity']       = array(50);
         $productFormData['productStock']          = 1;
         $productFormData['productStockStatus']    = 1;
         
@@ -224,6 +251,7 @@ class ProductController extends AbstractActionController
         //$this->productForm->bind($contact);
         $this->productForm->setData($productFormData);
         $view['productForm'] = $this->productForm;
+        $view['image'] = $productData->getImage();
         $view['productImage'] = $imageData;
         $view['productModel'] = $productData->getModel();
         
@@ -324,9 +352,7 @@ class ProductController extends AbstractActionController
             $response->setContent(\Zend\Json\Json::encode(array('response' => $id)));
             
         }
-        
-        
-        
+  
         return $response;
     }
 
@@ -407,13 +433,14 @@ class ProductController extends AbstractActionController
         
         $categoryDao = $this->getCategoryDao();
         $results = $categoryDao->getAll();
-        
+        //$ver = $results->toArray();
+        //print_r($ver);
         $result = array();
         foreach ($results as $cat) {
            //$result[] = $row->getArrayCopy();
            $result[$cat->category_id] = $cat->name;
         }
-    
+        
        return $result;
         
     }

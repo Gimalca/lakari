@@ -4,7 +4,6 @@ import {lakariDispatcher as dispatcher} from '../dispatchers/LakariDispatcher';
 import {constants} from '../constants/actions';
 
 export var actions = {
-
     addProduct: (product) => {
         dispatcher.handleViewAction({
             actionType: constants.ADD_PRODUCT,
@@ -30,26 +29,39 @@ export var actions = {
         });
     },
     expandProduct: (product) => {
-
         dispatcher.handleViewAction({
             actionType: constants.EXPAND_PRODUCT,
             product
         });
-
-        $.get(URL_AJAX + '/index/expander',
-              {id:product.id}, null, 'json')
-        .then(function (response) {
-            dispatcher.handleServerAction({
-                actionType: constants.EXPAND_PRODUCT_RESPONSE,
-                product : response
-            });
-        })
-        .fail(function (error) {
-            dispatcher.handleServerAction({
-                actionType: constants.EXPAND_PRODUCT_ERROR,
-                error
-            });
-        })
-        .done();
+    },
+    expandProductResult: (product) => {
+        dispatcher.handleServerAction({
+            actionType: constants.EXPAND_PRODUCT_RESPONSE,
+            product : product
+        });
+    },
+    expandProductError: (error) => {
+        dispatcher.handleServerAction({
+            actionType: constants.EXPAND_PRODUCT_ERROR,
+            error
+        });
+    },
+    showCart: () => {
+        dispatcher.handleViewAction({
+            actionType: constants.SHOW_CART,
+            null
+        });
+    },
+    hideCart: () => {
+        dispatcher.handleViewAction({
+            actionType: constants.HIDE_CART,
+            null
+        });
+    },
+    toggleOverlay: (state) => {
+        dispatcher.handleViewAction({
+            actionType: constants.TOGGLE_OVERLAY,
+            state
+        });
     }
 }
