@@ -5,7 +5,7 @@ import {constants} from '../constants/actions';
 import {lakariDispatcher as dispatcher} from '../dispatchers/LakariDispatcher';
 
 var _selected = null;
-var _isFixed = false;
+var _isFixed = true;
 
 /* Catalogo sin React */ 
 $(document).on('EXPAND_PRODUCT', function (e, product){
