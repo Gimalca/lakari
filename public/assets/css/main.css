@@ -507,7 +507,7 @@ img[src="assets/images/blank.gif"] {
   margin-top: 5px !important;
 }
 a {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .show-theme-options:hover,
 .show-theme-options:focus {
@@ -521,14 +521,14 @@ a {
 }
 .top-bar .cnt-account ul > li a:hover,
 .top-bar .cnt-account ul > li a:focus {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .top-bar .cnt-block ul li a .caret {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .top-bar .cnt-block ul li .dropdown-menu li a:hover,
 .top-bar .cnt-block ul li .dropdown-menu li a:focus {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .main-header .top-search-holder .contact-row .icon {
   color: #12cca7;
@@ -616,7 +616,7 @@ a {
   background: #abd07e;
 }
 .copyright-bar .copyright a {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .blog-slider-container .blog-slider .blog-post-info .name a:hover,
 .blog-slider-container .blog-slider .blog-post-info .name a:focus {
@@ -625,16 +625,16 @@ a {
 .footer .links-social .social-icons a:hover,
 .footer .links-social .social-icons a:focus,
 .footer .links-social .social-icons a.active {
-  background: #12cca7;
+  background: #A8C2A5;
 }
 .latest-tweet .re-twitter .comment a {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .latest-tweet .re-twitter .comment .icon .fa-stack-2x {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .footer .contact-information .media .icon .fa-stack-2x {
-  color: #12cca7;
+  color: #A8C2A5;
 }
 .footer .contact-information .media .media-body a:hover,
 .footer .contact-information .media .media-body a:focus {
@@ -2926,7 +2926,7 @@ a {
   border-bottom: 1px solid #292929;
 }
 .footer .footer-bottom .module-body ul li a {
-  font-size: 12px;
+  font-size: 16px;
   line-height: 36px;
   color: #666666;
   position: relative;
