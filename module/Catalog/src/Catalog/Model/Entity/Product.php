@@ -41,9 +41,8 @@ class Product
     private $productCategories;
     private $productRelated;
     private $productProvider;
-               
 
- function exchangeArray($data = NULL)
+    function exchangeArray($data = NULL)
     {
         $this->product_id = (isset($data['product_id'])) ? $data['product_id'] : null;
         $this->provider_id = (isset($data['provider_id'])) ? $data['provider_id'] : null;
@@ -59,7 +58,7 @@ class Product
         $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
         $this->date_modified = (isset($data['date_modified'])) ? $data['date_modified'] : null;
-        
+
         $this->productCategories = (isset($data['category_id'])) ? $data['category_id'] : null;
 
         $this->productDescription = new ProductDescription();
@@ -69,9 +68,9 @@ class Product
         $this->productDescription->setMeta_description((isset($data['meta_description'])) ? $data['meta_description'] : null);
         $this->productDescription->setMeta_keyword((isset($data['meta_keyword'])) ? $data['meta_keyword'] : null);
         $this->productDescription->setMeta_tittle((isset($data['meta_tittle'])) ? $data['meta_tittle'] : null);
-        
+
         $this->productRelated = (isset($data['related_id'])) ? $data['related_id'] : null;
-        
+
         $this->productProvider = (isset($data['provider_id'])) ? $data['provider_id'] : null;
 
         $this->productImage = (isset($data['image'])) ? $data['image'] : null;
@@ -79,11 +78,11 @@ class Product
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['keyword'])) ? $data['keyword'] : null;
     }
-    
+
     function exchangeArrayForm($data = NULL)
     {
         $this->product_id = (isset($data['productId'])) ? $data['productId'] : null;
-        $this->provider_id = (isset($data['provider_id'])) ? $data['provider_id'] : null;
+        $this->provider_id = (isset($data['provider'])) ? $data['provider'] : null;
         $this->model = (isset($data['productModel'])) ? $data['productModel'] : null;
         $this->sku = (isset($data['productSku'])) ? $data['productSku'] : null;
         $this->isbn = (isset($data['productIsbn'])) ? $data['productIsbn'] : null;
@@ -97,7 +96,7 @@ class Product
         $this->date_added = (isset($data['date_added'])) ? $data['date_added'] : null;
         $this->date_modified = (isset($data['date_modified'])) ? $data['date_modified'] : null;
         $this->productCategories = (isset($data['productCategories'])) ? $data['productCategories'] : null;
-        
+
         $this->productDescription = new ProductDescription();
         $this->productDescription->setName((isset($data['productName'])) ? $data['productName'] : null);
         $this->productDescription->setLanguage_id((isset($data['language_id'])) ? $data['language_id'] : null);
@@ -105,31 +104,32 @@ class Product
         $this->productDescription->setMeta_description((isset($data['productMetaDescription'])) ? $data['productMetaDescription'] : null);
         $this->productDescription->setMeta_keyword((isset($data['productMetaKeywords'])) ? $data['productMetaKeywords'] : null);
         $this->productDescription->setMeta_tittle((isset($data['productMetaTittle'])) ? $data['productMetaTittle'] : null);
-        
-        if ($data['productImage']){
-         $images = new \ArrayObject(); $i=1;
-         foreach ($data['productImage'] as $image){
-             //list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
-             //echo $image['tmp_name'].'<br/>';
-             $explo = explode('img_', $image['tmp_name']);
-             //print_r($explo);
-             $img = 'img_'. $explo[1];
-             $productImage = new ProductImage();
-             $productImage->image = $img;
-             $productImage->sort_order = $i++;
-             $images->append($productImage);
-         }
+
+        if ($data['productImage']) {
+            $images = new \ArrayObject();
+            $i = 1;
+            foreach ($data['productImage'] as $image) {
+                //list($nameRoot, $nameImage) = explode("\\", $image['tmp_name']);
+                //echo $image['tmp_name'].'<br/>';
+                $explo = explode('img_', $image['tmp_name']);
+                //print_r($explo);
+                $img = 'img_' . $explo[1];
+                $productImage = new ProductImage();
+                $productImage->image = $img;
+                $productImage->sort_order = $i++;
+                $images->append($productImage);
+            }
         } //die;
         $this->productImage = (isset($images)) ? $images : null;
-        
+
         $this->productRelated = (isset($data['related_id'])) ? $data['related_id'] : null;
 
-    
+
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['productSeoUrl'])) ? $data['productSeoUrl'] : null;
         $this->urlAlias->type = 'product';
     }
-    
+
     function setProductModel($model)
     {
         $this->productModel = $model;
@@ -139,7 +139,8 @@ class Product
     {
         return $this->product_id;
     }
-    function getProvider_id()
+
+    function getProviderid()
     {
         return $this->provider_id;
     }
@@ -148,6 +149,7 @@ class Product
     {
         return $this->model;
     }
+
     function getSku()
     {
         return $this->sku;
@@ -163,7 +165,7 @@ class Product
         return $this->minimum;
     }
 
-        function getQuantity()
+    function getQuantity()
     {
         return $this->quantity;
     }
@@ -187,12 +189,12 @@ class Product
     {
         return $this->status;
     }
-   
+
     public function getProductCategories()
     {
         return $this->productCategories;
     }
-    
+
     public function setProductCategories($productCategories)
     {
         $this->productCategories = $productCategories;
@@ -227,7 +229,6 @@ class Product
     {
         return $this->productImage;
     }
-    
 
     function setProductDescription(ProductDescription $productDescription)
     {
@@ -243,22 +244,25 @@ class Product
     {
         $this->urlAlias = $urlAlias;
     }
+
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
     }
-    
-    function getProductRelated() {
+
+    function getProductRelated()
+    {
         return $this->productRelated;
     }
 
-    function setRelated_id($related_id) {
-        $this->related_id = $related_id;
+    function setProductRelated($related_id)
+    {
+        $this->productRelated = $related_id;
     }
 
-        
-    public function getArrayCopy() {
+    public function getArrayCopy()
+    {
         return get_object_vars($this);
     }
-    
+
 }

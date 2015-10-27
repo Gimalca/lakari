@@ -205,6 +205,52 @@ class ProductDao implements IProductDao {
 
         return $categories;
     }
+    public function getRelated($productId)
+    {
+        $table = $this->getTable('lk_product_related');
+        $query = $table->getSql()->select();
+
+        if ($productId) {
+            $query->where('product_id = ' . $productId);
+        }
+
+        $resultSet = $table->selectWith($query);
+
+        $related = array();
+        foreach ($resultSet as $row) {
+            $related[] = $row->related_id;
+        }
+
+        return $related;
+    }
+    
+    public function getSeoUrlByProduct($id)
+    {
+          $id = (int) $id;
+        // $rowset = $this->tableGateway->select(array('id' => $ide));
+
+        $query = $this->tableGateway->getSql()->select();
+        $query->join(array(
+            'url' => 'lk_url_alias'
+                ), "lk_product.product_id = url.id");
+        $query->where(array(
+            "url.type = 'product'"
+        ));
+        $query->where(array(
+            'lk_product.product_id' => $id
+        ));
+        // echo $query->getSqlString();die;
+
+        $rowset = $this->tableGateway->selectWith($query);
+        //var_dump($rowset);die;
+
+        $row = $rowset->current();
+        
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
 
     public function getProductById($id)
     {
@@ -237,9 +283,11 @@ class ProductDao implements IProductDao {
 
         $images = $this->getImages($id);
         $categories = $this->getCategories($id);
+        $related = $this->getRelated($id);
 
         $row->setProductImage($images);
         $row->setProductCategories($categories);
+        $row->setProductRelated($related);
 
 
         if (!$row) {
@@ -598,9 +646,9 @@ class ProductDao implements IProductDao {
     {
 
         $productId = (int) $product->getProductId();
-        // print_r($product);die;
+        //print_r($product);die;
         $data_product = array(
-            'provider_id' => $product->getProvider_id(),
+            'provider_id' => $product->getProviderId(),
             'model' => $product->getModel(),
             'sku' => $product->getSku(),
             'isbn' => $product->getIsbn(),
@@ -671,8 +719,12 @@ class ProductDao implements IProductDao {
                 // update Url Alias
                 $sUrlAlias = $this->saveUrlAlias($productId, $data_product_urlAlias, 1);
                 // update Categories
-                $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories, 1);
+                $sUrlAlias = $this->saveProductCategories($productId, $data_product_categories, 1); 
+                //insert Related
+                $sRelated = $this->saveProductRelated($productId, $data_product_related, 1);
+
                 return $productId;
+                
             } else {
                 throw new \Exception('Form id does not exist');
             }

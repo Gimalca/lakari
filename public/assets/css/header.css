@@ -23,6 +23,7 @@ ul {
 .img-responsive {
   max-width: 100%;
   height: auto;
+  margin: 0 auto;
 }
 
 .navbar-container {
