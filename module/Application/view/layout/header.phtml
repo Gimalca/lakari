@@ -1,68 +1,243 @@
- <!-- ============================================== HEADER ============================================== -->
 
-<nav class="navbar top-navbar navbar-fixed-top" role="navigation">
+<div class="modal signUpContent fade" id="ModalLogin" tabindex="-1" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <form action="<?php echo $this->url('account', array('controller' => 'login')) ?>" method="post">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h3 class="modal-title-site text-center"> Ingresar a LakariHome </h3>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-group login-username">
+                    <div>
+                        <?php echo $this->formInput($this->registerForm->get('email')); ?>
+                    </div>
+                </div>
+                <div class="form-group login-password">
+                    <div>
+                        <?php echo $this->formInput($this->registerForm->get('password')); ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <div class="checkbox login-remember">
+                           <label>
+                                 <?php echo $this->formInput($this->registerForm->get('rememberme')); ?>
+                                
+                                Recordarme 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                       <input name="submit" class="btn  btn-block btn-lg btn-primary" value="Ingresar" type="submit">
+                    </div>
+                </div>
+                <!--userForm--> 
+            
+            </div>
+                 <?php echo $this->formInput($this->registerForm->get('csrf')); ?>
+            <div class="modal-footer">
+                <p class="text-center"> ¿No tienes cuenta? <a data-toggle="modal" data-dismiss="modal" href="#ModalSignup"> Regístrate. </a> <br>
+                    <a href="password.php"> ¿Olvidó contraseña? </a> </p>
+            </div>
+                </form>
+        </div>
+        <!-- /.modal-content --> 
 
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    </div>
+    <!-- /.modal-dialog --> 
 
-      <button type="button" class="button-navbar-toggle navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar top-bar-icon"></span>
-        <span class="icon-bar middle-bar"></span>
-        <span class="icon-bar bottom-bar"></span>
-      </button>
+</div>
+<!-- /.Modal Login -->  
 
-        <div class="lakari-brand navbar-brand">
-            <div class="lakari-logo">
-                <img class="img-responsive" src="<?php echo $this->basePath('assets/images') ?>/lakari-logo.png" alt="Lakari">
+<!-- Modal Signup start -->
+<div class="modal signUpContent fade" id="ModalSignup" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h3 class="modal-title-site text-center"> Registrarse en Lakari </h3>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo $this->url('account', array('controller' => 'register', 'action' => 'add')) ?>" method="post">
+                <div class="control-group"> <a class="fb_button btn  btn-block btn-lg " href="#"> Vía Facebook </a> </div>
+                <h5 style="padding:10px 0 10px 0;" class="text-center"> O </h5>
+                <div class="form-group reg-username">
+                    <div>
+                         <?php echo $this->formInput($this->registerForm->get('firstname')); ?>
+                    </div>
+                </div>
+                <div class="form-group reg-username">
+                    <div>
+                          <?php echo $this->formInput($this->registerForm->get('lastname')); ?>
+                    </div>
+                </div>
+                <div class="form-group reg-email">
+                    <div>
+                        <?php echo $this->formInput($this->registerForm->get('email')); ?>
+                     
+                    </div>
+                </div>
+                <div class="form-group reg-password">
+                    <div>
+                         <?php echo $this->formInput($this->registerForm->get('password')); ?>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <div>
+                        <div class="checkbox login-remember">
+                            <label>
+                                 <?php echo $this->formInput($this->registerForm->get('rememberme')); ?>
+                                
+                                Recordarme 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <a href="registro.php">
+                            <input name="submit" class="btn btn-block btn-lg btn-primary" value="Registrar" type="submit">
+                        </a>
+                    </div>
+                </div>
+                <?php echo $this->formInput($this->registerForm->get('csrf')); ?>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <p class="text-center"> ¿Ya eres miembro? <a data-toggle="modal" data-dismiss="modal" href="#ModalLogin"> Ingresar </a> </p>
             </div>
         </div>
+
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navbar-collapse-1">
-     
-      <ul class="nav navbar-nav navbar-left">
+</div>
+<!-- /.ModalSignup End --> 
+ 
 
-        <li><a class="navbar-link" href="#">Muebles</a></li>
-        <li><a class="navbar-link" href="#">Griferias</a></li>
-        <li><a class="navbar-link" href="#">Iluminación</a></li>
-        <li><a class="navbar-link" href="#">Utensilios</a></li>
-        <li><a class="navbar-link" href="#">Servicios</a></li>
 
-      </ul>
+<!-- ============================================== HEADER ============================================== -->
 
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-            <form class="navbar-search navbar-form navbar-right" role="search">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-search fa-fw"></i>
-                    </span>
-                    <input class="form-control" type="password" placeholder="Busqueda">
-                </div>
-            </form>
-        </li>
-<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i><span class="caret"></span><label class="visible-xs navbar-link">  Cuenta</label></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Perfil</a></li>
-            <li><a href="#">Idioma</a></li>
-            <li><a href="#">Favoritos</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Salir</a></li>
-          </ul>
-        </li>
-        <li>
-            <div class="navbar-form navbar-right">
-                <div id='cd-cart-trigger'> </div>           
+<header class='header'>
+  <nav class='navbar navbar-primary'>
+    <div class='navbar-container'>
+      <div class='navbar-wrapper'>
+        <div class='logo-wrapper'>
+            <div class='logo-container'>
+                <a href="<?php echo $this->basePath ?>"><img alt="LakariHome Logo" class=" img-responsive" src="<?php echo $this->basePath('assets/images/lakarihome-logo-280x66.jpg') ?>" /></a>
             </div>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+        </div>
+        <div class='primary-links'>
+          <ul class='main-links'>
+            <li><a href='#'>Contactos</a></li>
+            <li><a href='#'>Vende en Lákari</a></li>
+<li><a class="navbar-link" href="#" data-toggle="modal" data-target="#ModalLogin">Login</a></li>
+          </ul>
+          <ul class='extra-links'>
+            <li class='nav-dropdown nav-dropdown-toggle'>
+                <a class='' href='#'>Productos
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                  <ul class='nav-dropdown-menu'>
+                      <li>
+                        <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'muebles'])?>'>
+                          <div class='image-nav'>
+                            <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/muebles.png') ?>' />
+                          </div>
+                          <h3 class='extra-nav-title'>Muebles</h3>
+                        </a>
+                    </li>
+                      <li>
+                        <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'griferias'])?>'>
+                           <div class='image-nav'>
+                             <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/griferia120x85.png') ?>' />
+                          </div>
+                          <h3 class='extra-nav-title'>Griferias</h3>
+                        </a>
+                    </li>
+                      <li>
+                        <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'iluminacion'])?>'>
+                          <div class='image-nav'>
+                          <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/iluminacion120x85.png') ?>' /></div>
+                          <h3 class='extra-nav-title'>Iluminación</h3>
+                        </a>
+                    </li>
+                      <li>
+                        <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'utensilios'])?>'>
+                          <div class='image-nav'>
+                          <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/utensilios120x85.png') ?>' /></div>
+                          <h3 class='extra-nav-title'>Utensilios</h3>
+                        </a>
+                    </li>
+                  </ul>
+            </li>
+            <li class='nav-dropdown nav-dropdown-toggle'>
+                <a class='' href='#'>Inspiración
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class='nav-dropdown-menu'>
+                    <li>
+                        <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'salas'])?>'>
+                        <div class='image-nav'>
+                             <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/salas120x85.png') ?>' />
+                          </div>
+                          <h3 class='extra-nav-title'>Salas</h3>
+                      </a>
+                  </li>
+                    <li>
+                        <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'cuartos'])?>'>
+                         <div class='image-nav'>
+                             <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/cuartos120x85.png') ?>' />
+                          </div>
+                          <h3 class='extra-nav-title'>Cuartos</h3>
+                      </a>
+                  </li>
+                    <li>
+                    <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'baños'])?>'>
+                         <div class='image-nav'>
+                             <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/banos120x85.png') ?>' />
+                          </div>
+                          <h3 class='extra-nav-title'>Baños</h3>
+                      </a>
+                  </li>
+                    <li>
+                    <a href='<?php echo $this->url('catalog/categoria', ['action' => 'categoryList', 'category' => 'cocinas']); ?>'>
+                         <div class='image-nav'>
+                             <img class="img-responsive" src='<?php echo $this->basePath('assets/images/navbar/cocina120x85.png') ?>' />
+                          </div>
+                          <h3 class='extra-nav-title'>Cocinas</h3>
+                      </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href='#'>Servicios</a>
+            </li>
+          </ul>
+        </div>       
+        <ul class='secondary-links'>
+          <li class='mobile-toggle'>     
+              <div class='mobile-menu-icon'>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>        
+          </li>
+          <li><a><i class="fa fa-facebook-official"></i></a></li>
+          <li><a><i class="fa fa-instagram"></i></a></li>
+          <li><a><i class="fa fa-twitter"></i></a></li>
+          <li><a><i class="fa fa-pinterest-p"></i></a></li>
+          <li id='cd-cart-trigger'><a><i class="fa fa-shopping-cart"></i></a></li>
+        </ul>   
 
-<!-- ============================================== HEADER : END ============================================== -->
-
+      </div>
+        <!-- Cart -->
+        <div id='cd-cart'></div>
+        <!-- Cart -->
+    </div>
+  </nav>
+</header>

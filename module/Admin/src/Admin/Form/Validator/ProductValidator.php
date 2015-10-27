@@ -98,10 +98,54 @@ class ProductValidator extends InputFilter
         //$rename->setUseUploadName(true);
         $rename->setRandomize(true);
         $rename->setOverwrite(true);
+        
               
         $productImage->getFilterChain()->attach($rename);       
         $this->add($productImage );
        
+        
+        $this->add(array(
+            'name' => 'image',
+            'validators' => array(
+                array(
+                    'name' => 'filesize',
+                    'options' => array(
+                        'max' => 2097152, // 2 MB
+                        ),
+                    ),
+                array(
+                    'name' => 'filemimetype',
+                    'options' => array(
+                        'mimeType' => 'image/png,image/x-png,image/jpg,image/jpeg,image/gif',
+                        )
+                ),
+                array(
+                    'name' => 'fileimagesize',
+                    'options' => array(
+                        'maxWidth' => 2000,
+                        'maxHeight' => 2000
+                        )
+                ),
+            ),
+            
+            'filters' => array(
+            // the filter below will save the uploaded file under
+            // <app-path>/data/images/photos/<tmp_name>_<random-data>
+                array(
+                    'name' => 'filerenameupload',
+                    'options' => array(
+                    // Notice: Make sure that the folder below is existing on your system
+                    //         otherwise this filter will not pass and you will get strange
+                    //         error message reporting that the required field is empty
+                        'target' => './public/assets/images/products/catalog/',
+                        'randomize' => true,
+                        'useUploadExtension' => true,
+                        'UseUploadName' => true,
+                        'Overwrite' => true,
+                        ),
+                 ),
+            ),
+        ));
         
         $this->add(array(
             'name' => 'productName',

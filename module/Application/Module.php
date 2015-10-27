@@ -10,11 +10,16 @@
 
 namespace Application;
 
+use Zend\Mvc\I18n\Translator;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-//Adicionales Pakage
-use Zend\Config\Reader\Ini;
+
+use Zend\ServiceManager\ServiceManager;
+use Zend\Mail\Transport\Smtp;
+use Zend\Mail\Transport\SmtpOptions;
+
 use Zend\Validator\AbstractValidator;
+
 
 class Module
 {
@@ -33,6 +38,8 @@ class Module
         $app = $e->getApplication()->getEventManager();
         $app->attach('dispatch', array($this, 'initLayout'), -100);
     }
+    
+    
 
     public function getConfig()
     {
@@ -51,6 +58,7 @@ class Module
     }
 
     //Adicionales
+
 
     protected function initConfig($e)
     {
@@ -72,6 +80,7 @@ class Module
        
         $viewRender->headTitle($config['params']['titulo']);
     }
+
 
     public function initLayout($e)
     {
@@ -110,32 +119,48 @@ class Module
 //        }
     }
 
-    protected function initEnviroment($e)
+//    protected function initEnviroment($e)
+//    {
+//
+//        error_reporting(E_ALL | E_STRICT);
+//        ini_set("display_errors", TRUE);
+//
+//        $application = $e->getApplication();
+//        $config = $application->getServiceManager()->get('ConfigIni');
+//
+//        $timeZone = (string) $config['params']['timezone'];
+//
+//        if (empty($timeZone)) {
+//            $timeZone = 'America/Caracas';
+//        }
+//        date_default_timezone_set($timeZone);
+//
+//        //Translator Formulario
+//        $serviceManager = $e->getApplication()->getServiceManager();
+//        $translator = $serviceManager->get('translator');
+//
+//        $locale = $config['application']['locale'];
+//        $translator->setLocale(\Locale::acceptFromHttp($locale));
+//        $translator->addTranslationFile(
+//                'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
+//        );
+//        AbstractValidator::setDefaultTranslator($translator);
+//    }
+    
+    public function getServiceConfig()
     {
-
-        error_reporting(E_ALL | E_STRICT);
-        ini_set("display_errors", TRUE);
-
-        $application = $e->getApplication();
-        $config = $application->getServiceManager()->get('ConfigIni');
-
-        $timeZone = (string) $config['params']['timezone'];
-
-        if (empty($timeZone)) {
-            $timeZone = 'America/Caracas';
-        }
-        date_default_timezone_set($timeZone);
-
-        //Translator Formulario
-        $serviceManager = $e->getApplication()->getServiceManager();
-        $translator = $serviceManager->get('translator');
-
-        $locale = $config['application']['locale'];
-        $translator->setLocale(\Locale::acceptFromHttp($locale));
-        $translator->addTranslationFile(
-                'phpArray', __DIR__ . '/language/formValidator/es.php', 'default', 'es_ES'
+        return array(
+            'factories' => array(
+                'Mailer' => function ($sm) {
+                    $config = $sm->get('Config');      
+                    //print_r($config);die;
+                    $transport = new Smtp();
+                    $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
+                    return $transport;
+                },
+                                  
+            )
         );
-        AbstractValidator::setDefaultTranslator($translator);
     }
 
 }

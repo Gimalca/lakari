@@ -18,7 +18,7 @@ use Catalog\Model\Entity\Product;
 
 
 class IndexController extends AbstractActionController {
-    
+
      private $productTable;
 
     public function indexAction() {
@@ -35,16 +35,11 @@ class IndexController extends AbstractActionController {
          */
         $imageC = '';
         $bestSeller = $productDao->products($columns)
-            ->limit(10, 16)
+            ->limit(10)
             ->fetch(function ($product) use ($path) {
                 $product['id'] = $product['product_id'];
+                $product['image'] = $path . $product['image'];
                 return $product;
-            })
-            ->withImages($imageC, function ($images) use ($path) {
-                return array_map(function ($image) use ($path) {
-                    $image->setBasePath($path);
-                    return $image;
-                }, $images->getArrayCopy());
             })
             ->getJSON();
 
@@ -55,16 +50,11 @@ class IndexController extends AbstractActionController {
          */
 
         $newProducts = $productDao->products($columns)
-            ->limit(10, 25)
+            ->limit(10, 10)
             ->fetch(function ($product) use ($path) {
                 $product['id'] = $product['product_id'];
+                $product['image'] = $path . $product['image'];
                 return $product;
-            })
-            ->withImages($imageC, function ($images) use ($path) {
-                return array_map(function ($image) use ($path) {
-                    $image->setBasePath($path);
-                    return $image;
-                }, $images->getArrayCopy());
             })
             ->getJSON();
 

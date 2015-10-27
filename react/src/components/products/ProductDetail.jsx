@@ -1,69 +1,43 @@
 'use strict';
+
 import React from 'react';
 import OwlCarousel from '../common/OwlCarousel';
-import {actions} from '../../actions/cart';
 import ProductStore from '../../stores/ProductStore';
+import {actions} from '../../actions/cart';
 
-class ProductExpander extends React.Component {
+var MIN_DEVICE_WIDTH = 1210;
+
+class ProductDetail extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            product: ProductStore.getSelected()
+            selected: ProductStore.getSelected(),
+            isFixed: ProductStore.isFixed()
         };
 
-        this.onClose = () => {
-
-        var $this = $(React.findDOMNode(this));
-
-        $this.animate({
-                opacity: '0',
-                left: "+=50",
-                height: "0"
-            }, 500, function() {
-                // Animation complete.
-            });
+        this.onClose = (e) => {
+            var $this = $(React.findDOMNode(this));
+            actions.toggleOverlay(false);
+            this.props.onClose($this, this.state.isFixed);
         };
 
         this.handleAdd = (e) => {
-            var product = this.state.product;
+            var product = this.state.selected;
             actions.addProduct(product); 
         };
 
-        this.handleProductChange = (e) => {
-
-            var $expander = $(React.findDOMNode(this));
-
-            $expander.show();
-            $expander.animate({
-                opacity: '1',
-                height: "640px"
-            }, {
-                duration: 300,
-                complete: function () {
-                    $('html, body').animate({
-                        scrollTop: $expander.offset().top - 200 
-                    }, 300);
-                }
-            });
+        this.onChange = () => {
 
             this.setState({
-                product: ProductStore.getSelected()
+                selected: ProductStore.getSelected(),
+                isFixed: ProductStore.isFixed()
             });
-
+            this.appear(this.state.isFixed);
         };
     }
 
-    componentDidMount() {
-        ProductStore.addChangeListener(this.handleProductChange);
-        $(React.findDOMNode(this)).hide();
-    }
-
-    componentDidUnmount() {
-        ProductStore.removeListener(this.handleProductChange);
-    }
-    
     getCarouselOptions() {
 
         var leftNavigation = '<a class="left carousel-control" role="button"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
@@ -81,21 +55,31 @@ class ProductExpander extends React.Component {
         return carouselOptions;
     }
 
+    componentDidMount() {
+        ProductStore.addChangeListener(this.onChange);
+    }
+
+    componentWillUnMount() {
+        ProductStore.removeChangeListener(this.onChange); 
+    }
+
     render() {
 
-        let product = this.state.product;
+        let product = this.state.selected;
 
         if (product) {
 
         let images = product.images.map((img, i) => {
-            return (<img className='img img-responsive expander-img-product' src={img.image} alt='http://placehold.it/800x600' key={i} />);
+            return (<img className='img img-responsive expander-img-product' src={img.image} key={i} />);
         });
 
         let title = product.descriptions.name;
         let description = product.descriptions;
         let carouselOptions = this.getCarouselOptions();
+        let expanderClass = 'product-expander flex hidden-xs'  + (this.state.isFixed ? ' expander-fixed' : '');
+
         return (<div>
-                 <div className='product-expander flex hidden-xs'>
+                 <div className={expanderClass}>
                     <div className='section section-1 col-xs-3 flex flex-vertical'>
                         <div className='product-resume flex-grow'>
                         <label className='product-title'>{title}</label>
@@ -148,14 +132,14 @@ class ProductExpander extends React.Component {
                               </button>
                             </div>
                             <div className="btn-group" role="group">
-                              <button type="button" className="btn btn-flat btn-confirm"> Comprar</button>
+                              <button onClick={this.handleAdd} type="button" className="btn btn-flat btn-confirm"> Comprar</button>
                               </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className='section section-2 col col-xs-9 flex expander-img'>
-                    <OwlCarousel options={carouselOptions}>
+                    <OwlCarousel update={true} options={carouselOptions}>
                         {images}
                     </OwlCarousel>
                     <button onClick={this.onClose} type="button" className="close" aria-hidden="true">
@@ -168,7 +152,11 @@ class ProductExpander extends React.Component {
             return null;
         }
     }
+
+    appear(isFixed) {
+        var $this = $(React.findDOMNode(this));
+        this.props.onShow($this, isFixed);
+    }
 }
 
-export default ProductExpander;
-
+export default ProductDetail;

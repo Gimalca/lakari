@@ -50,12 +50,12 @@ class Module implements AutoloaderProviderInterface
     {
         return array(
             'factories' => array(
-                'Mailer' => function ($sm) {
-                    $config = $sm->get('Config');                  
-                    $transport = new Smtp();
-                    $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
-                    return $transport;
-                },
+//                'Mailer' => function ($sm) {
+//                    $config = $sm->get('Config');                  
+//                    $transport = new Smtp();
+//                    $transport->setOptions(new SmtpOptions($config['mail']['transport']['options']));
+//                    return $transport;
+//                },
                         
                 'Model\Dao\ProviderDao' => function ($sm) {
                     $tableGateway = $sm->get('ProviderTableGateway');

@@ -35,6 +35,11 @@ class Customer {
     public $date_added;
 
     //put your code here
+    
+     public function __construct(Array $data = array())
+    {
+        $this->exchangeArray($data);
+    }
 
     public function  exchangeArray($data = null)
     {

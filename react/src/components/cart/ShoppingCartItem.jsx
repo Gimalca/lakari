@@ -15,21 +15,33 @@ class ShoppingCartItem extends React.Component {
 
     render() {
         let item = this.props.item;
+        let image = item.images[0].image ? item.images[0].image: item.image; 
+        let description = item.description;
 
-        return (<span className="item">
-            <span className="item-left">
-                <div className='item-img'>
-                    <img className='img-responsive' src={item.image} alt="50x50" />
+        return (<div className='item'>
+            <div className='item-image'>
+                <img height='68px' width='68px' src={image} alt='image' />
+            </div>
+            <div className='item-description'>
+                <div className='description-row'>
+                    <span className='name'>{description}</span>
+                    <span onClick={this.handleRemove.bind(this, item)} className='times'>
+                        <p>&times;</p>
+                    </span>
                 </div>
-                <span className="item-info">
-                    <span style={{maxWidth:'50px'}} >{item.title}</span>
-                    <span>{item.price + ' $'}</span>
+                <div className='description-row'>
+                <span className='quantity'>
+                    <label className='quantity-label'>QTY</label>
+                    <input className='input-quantity' type='text' readOnly value='1' />
+                    <div className='control-quantity'>
+                        <span className='up'>&nbsp;</span>
+                        <span className='down'>&nbsp;</span>
+                    </div>
                 </span>
-            </span>
-            <span className="item-right">
-                <button onClick={this.handleRemove.bind(this, item)} className="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>);
+                <span className='price'>{item.price + '€'}</span>
+                </div>
+            </div>
+        </div>);
     }
 }
 

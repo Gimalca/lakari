@@ -1,15 +1,43 @@
 'use strict';
 
-import React from 'react';
+import ProductStore from '../../stores/ProductStore';
 import ProductThumbnail from './ProductThumbnail';
-import ProductExpander from './ProductExpander';
 import OwlCarousel from '../common/OwlCarousel';
-
+import ProductDetail from './ProductDetail';
+import ProductService from '../../services/products';
+import {actions} from '../../actions/cart';
+import colors from '../common/colors';
+import React from 'react';
 
 class TopProducts extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            selected: ProductStore.getSelected()
+        };
+
+        this.handleSelectProduct = (product) => {
+            actions.expandProduct(product);
+        };
+
+        this.handleProductChange = (e) => {
+
+            this.setState({
+                selected: ProductStore.getSelected()
+            });
+
+            React.findDOMNode(this.refs.expander).show();
+        };
+    }
+
+    componentDidMount() {
+        ProductStore.addChangeListener(this.handleProductChange);
+    }
+
+    componentWillUnmount() {
+        ProductStore.removeListener(this.handleProductChange);
     }
 
     getCarouselOptions() {
@@ -31,63 +59,79 @@ class TopProducts extends React.Component {
             singleItem: false,
             itemsScaleUp: true
         };
+
         return carouselOptions;
+    }
+
+   handleExpanderShow($expander) {
+
+        $expander.show();
+        $expander.animate({
+            opacity: '1',
+            height: "640px"
+        }, {
+            duration: 300,
+            complete: function () {
+                $('html, body').animate({
+                    scrollTop: $expander.offset().top - 200 
+                }, 300);
+            }
+        });
+    }
+
+     handleExpanderClose($expander) {
+
+        $expander.animate({
+            opacity: '0',
+            left: "+=50",
+            height: "0"
+        }, 500, function() {
+            // Animation complete.
+        });
+
     }
 
     render() {
 
-        var topSeller = this.thumbNail(this.props.best);
-        var topNew = this.thumbNail(this.props.news);
+        var topSeller = this.thumbnail(this.props.best);
+        var topNew = this.thumbnail(this.props.news);
+
         let carouselOptions = this.getCarouselOptions(); 
+        let selected = this.state.selected;
+
         return (<div>
                     <div className='row'>
                         <h3 className='main-title'> Los mas Vendidos </h3>
                         <div className='col-md-12' >
-                        <OwlCarousel options={carouselOptions}>{topSeller}</OwlCarousel>
+                        <OwlCarousel update={false} options={carouselOptions}>{topSeller}</OwlCarousel>
                         </div>
                     </div>
                     <div className='row hidden-xs'>
-                        <ProductExpander  />
+                        <ProductDetail 
+                        ref='expander'
+                        onClose={this.handleExpanderClose} 
+                        onShow={this.handleExpanderShow}
+                        product={selected} />
                     </div>
                     <div className='row'>
                         <h3 className='main-title'> Los mas Nuevos </h3>
                         <div className='col-md-12' >
-                        <OwlCarousel options={carouselOptions}>{topNew}</OwlCarousel>
+                        <OwlCarousel update={false} options={carouselOptions}>{topNew}</OwlCarousel>
                         </div>
                     </div>
                 </div>);
     }
 
-    getColors() {
-
-        const colors = [
-            '#FFEFC1',
-            '#DFEABF',
-            '#E7B4B0',
-            '#A5C1CF',
-            '#E6665B',
-            '#C5D5D4',
-            '#F9EFB3',
-            '#AACDDC',
-            '#FFBE7B',
-            '#C77B8D'
-        ];
-
-        return  colors;
-    }
-
-    randomColor(colors) {
+    randomColor() {
         var random = Math.floor(Math.random() * colors.length); 
         return colors[random];
     }
 
-    thumbNail(products) {
-
-        let colors = this.getColors();
+    thumbnail(products) {
 
         return products.map((item, i) => {
-            var style = {backgroundColor: this.randomColor(colors)}; 
-            return <ProductThumbnail key={i} product={item} imageStyle={style} />
+            var style = {backgroundColor: this.randomColor()}; 
+            return <ProductThumbnail onSelect={this.handleSelectProduct} key={i} product={item} imageStyle={style} />
         });
     }
 }

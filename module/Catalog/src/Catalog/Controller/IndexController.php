@@ -13,54 +13,100 @@ namespace Catalog\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
-{
+class IndexController extends AbstractActionController {
 
     protected $productTable;
     protected $urlAliasTable;
-    
-    
 
-    public function indexAction()
-    {
+    public function indexAction() {
+
         //$params = $this->params()->fromRoute();
-        //var_dump($params); 
-        
+        //var_dump($params);
+        $productDao = $this->getProductDao();
+
         $images = $this->getProductDao()->getImages();
+
+        $sm = $this->getServiceLocator();
+        $basePath = $sm->get('viewhelpermanager')->get('basePath');
+        $path = $basePath('assets/images/products/catalog/');
+
+        $products = $productDao->products()
+            ->limit(null, 16)
+            ->fetch(function ($product) use ($path) {
+                $product['id'] = $product['product_id'];
+                return $product;
+            })
+            ->withImages(null, function ($images) use ($path) {
+                return array_map(function ($image) use ($path) {
+                    $image->setBasePath($path);
+                    return $image;
+                }, $images->getArrayCopy());
+            })
+            ->getJSON();
+
         //var_dump($image);die;
         return new ViewModel(array(
             'products' => $this->getProductDao()->getAll(),
             'products2' => $this->getProductDao()->getAll(),
             'images' => $images,
+            'productJSON' => $products
         ));
     }
 
-    public function detailAction()
-    {
+    public function detailAction() {
+
         $url = $this->params()->fromRoute('product');
-        $id = $this->getUrlAliasDao()->getKeywordId($url);
-       
-        $product = $this->getProductDao()->getProductById($id->id);
-        
-        //var_dump($product);die;
-        return new ViewModel(array(
-            'product' => $product,
-        ));
+        $id = $this->getUrlAliasDao()->getKeywordId($url)->id;
+
+        if ($this->getRequest()->isXmlHttpRequest()) {
+
+            $sm = $this->getServiceLocator();
+            $basePath = $sm->get('viewhelpermanager')->get('basePath');
+            $path = $basePath('assets/images/products/catalog/');
+
+            $columns = array('product_id', 'model', 'image', 'description', 'price');
+
+            $product = $this->getProductDao()->products($columns)
+                ->descriptions()
+                ->where($id)
+                ->fetch()
+                ->withDescriptions()
+                ->withImages(null, function ($images) use ($path) {
+                    return array_map(function ($image) use ($path) {
+                        $image->setBasePath($path);
+                        return $image;
+                    }, $images->getArrayCopy());
+                })
+                ->getJSON();
+
+            $response = $this->getResponse();
+            $response->setStatusCode(200);
+            $response->setContent($product);
+            return $response;
+        } else {
+
+            $product = $this->getProductDao()->getProductById($id);
+            //var_dump($product);die;
+            return new ViewModel(array(
+                'product' => $product,
+            ));
+        }
     }
-    public function categoryListAction()
-    {   
+
+    public function categoryListAction() {
+
         $url = $this->params()->fromRoute('category');
         $id = $this->getUrlAliasDao()->getKeywordId($url);
- 
+
         $products = $this->getProductDao()->getProductsByCategory($id->id);
         //$products = $this->getProductDao()->getAll(),;
-        //var_dump($product);die;
+        //var_dump($products->current());die;
         $modelView = new ViewModel(array(
             'products' => $products,
         ));
          $modelView->setTemplate('catalog/index/index');
-         
-        return $modelView; 
+
+        return $modelView;
     }
 
     public function getProductDao()
@@ -71,6 +117,7 @@ class IndexController extends AbstractActionController
         }
         return $this->productTable;
     }
+
     public function getUrlAliasDao()
     {
         if (!$this->urlAliasTable) {

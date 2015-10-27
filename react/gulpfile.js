@@ -12,7 +12,6 @@ var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
  
 gulp.task('build', function () {
-
   browserify({
     entries: ['src/index.jsx'],
     extensions: ['.jsx'],

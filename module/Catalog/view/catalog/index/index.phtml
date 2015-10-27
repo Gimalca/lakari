@@ -1,36 +1,20 @@
 
+<?php
+echo $this->headlink() 
+        ->appendStylesheet($this->basePath('assets') . '/css/index.min.css');
+?>
+
 <?php //var_dump($this->products); ?>
 <div class="row outer-bottom-sm">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
-            <!-- ================================== TOP NAVIGATION ================================== -->
-            <div class="side-menu side-menu2 animate-dropdown outer-bottom-xs">
-                <strong>Module:</strong>        Catalog &raquo;
-                <strong>Controller:</strong>    Index &raquo;
-                <strong>Action:</strong>        index
-
-            </div>
-        </div>
-        <div class='col-md-9'>
+        <div class='col-md-12'>
             <!-- ========================================== SECTION – HERO ========================================= -->
 
             <div id="category" class="category-carousel hidden-xs">
-                <div class="item">	
+                <div style='width:80%;margin:0 auto;'class="item">	
                     <div class="image">
                         <img src="<?php echo $this->basePath('assets') ?>/images/banners/cat-banner-1.jpg" alt="" class="img-responsive">
                     </div>
-                    <!--div class="container-fluid">
-                        <div class="caption vertical-top text-left">
-                            <div class="big-text">
-                                Sale
-                            </div>
-
-                            <div class="excerpt hidden-sm hidden-md">
-                                up to 50% off
-                            </div>
-
-                        </div>
-                    </div-->
                 </div>
             </div>
             <!-- ========================================== SECTION – HERO - END ========================================= -->
@@ -107,6 +91,7 @@
                             </ul><!-- /.list-inline -->
                         </div><!-- /.pagination-container -->		</div><!-- /.col -->
                 </div><!-- /.row -->
+                        <button id='product-mode' class='btn btn-primary'>Cambiar Modal</button>
             </div>
             <!-- ========================================== Filtros END ========================================= -->
 
@@ -115,73 +100,35 @@
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active " id="grid-container">
                         <div class="category-product  inner-top-vs">
-                            <div class="row">
-
+                            <div class='row' id='product-expander'></div>
+                            <div style='margin-top: 25px;' class="row">
                                 <?php foreach ($this->products as $product) : ?>
-                                  
-                                    <div class="col-sm-6 col-md-4 wow fadeInUp">
-                                        <div class="products">
-
-                                            <div class="product">		
-                                                <div class="product-image">
-                                                    <div class="image">
-                                                        <a href="<?php echo $this->basePath().'/catalogo/'.$product->getUrlAlias()->keyword;?>">
-                                                            <img class=" img-responsive"  src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>" data-echo="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>" alt="">
-                                                        </a>
-                                                    </div><!-- /.image -->			
-                                                    <!--div class="tag new"><span>nuevo</span></div-->                        		   
-                                                </div><!-- /.product-image -->
-
-
-                                                <div class="product-info text-left">
-                                                    <h3 class="name"><a href="#">
-                                                        <?php echo $product->getProductDescription()->getName();?>
-                                                        </a></h3>
-                                                    <div class="rating rateit-small"></div>
-                                                    <div class="description"></div>
-
-                                                    <div class="product-price">	
-                                                        <span class="price">
-                                                            <?php echo $product->getPrice() ?>				
-                                                        </span>
-                                                        <!--span class="price-before-discount">$ </span-->
-
-                                                    </div><!-- /.product-price -->
-
-                                                </div><!-- /.product-info -->
-                                                <div class="cart clearfix animate-effect">
-                                                    <div class="action">
-                                                        <ul class="list-unstyled">
-                                                            <li class="add-cart-button btn-group">
-                                                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-                                                                    <i class="fa fa-shopping-cart"></i>													
-                                                                </button>
-                                                                <button class="btn btn-primary" type="button">Comprar</button>
-
-                                                            </li>
-
-                                                            <li class="lnk wishlist">
-                                                                <a class="add-to-cart" href="#" title="Wishlist">
-                                                                    <i class="icon fa fa-heart"></i>
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="lnk">
-                                                                <a class="add-to-cart" href="#" title="Compare">
-                                                                    <i class="fa fa-retweet"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div><!-- /.action -->
-                                                </div><!-- /.cart -->
-                                            </div><!-- /.product -->
-
-                                        </div><!-- /.products -->
-                                    </div><!-- /.item -->
-  
+                                    <div style='padding:0 3px;' class='col col-xs-12 col-sm-6 col-md-3 wow fadeInUp'>
+                                        <div class="grid_element">
+                                            <div class="product_photo">
+                                                <a href='<?php echo $this->basePath() . '/catalogo/' . $product->getUrlAlias()->keyword;?>'>
+                                                    <img class='product-image img-responsive' src="<?php echo $this->basePath('assets') ?>/images/products/catalog/<?php echo $product->getImage();?>">
+                                                </a>
+                                                <div class="quicklook">
+                                                    <a class='quicklook-trigger' href='<?php echo $this->basePath() . '/catalogo/' . $product->getUrlAlias()->keyword;?>'><span>QUICK LOOK</span></a>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <!-- photo-->
+                                        <div class="element_info">
+                                            <div class="prod_name_grid">
+                                                <a class="name pointer" href="">
+                                                    <?php echo $product->getProductDescription()->getName();?>
+                                                </a>
+                                                <div class="prizes">
+                                                    <span class="range"><?php echo $product->getPrice() ?>&nbsp;$&nbsp;
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach; ?>    
-                                
-                                
                             </div><!-- /.row -->
                         </div><!-- /.category-product -->
 
@@ -276,4 +223,24 @@
     </div>
 </div>
 
+<?php   
+
+$this->inlineScript()->captureStart();
+ echo <<<JS
+
+    $(document).on('click', '.quicklook-trigger', function (e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        $.get(href, function (product) {
+            $(document).trigger('EXPAND_PRODUCT', product);
+        }, 'json');
+    });
+    
+    $('#product-mode').click(function (evt) {
+        $(document).trigger('FIXED_PRODUCT', evt);
+    });
+JS;
+$this->inlineScript()->captureEnd();
+?>
+<?php $this->inlineScript()->appendFile($this->basePath('/assets/js/dist/catalog.min.js')); ?>
 
