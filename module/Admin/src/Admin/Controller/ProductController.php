@@ -20,7 +20,7 @@ use Catalog\Model\Dao\ProductDao;
 use Catalog\Model\Entity\Product;
 use Catalog\Model\Dao\CategoryDao;
 use Caralog\Model\Entity\UrlAlias;
-use Catalog\Model\Dao\urlAliasDao;
+use Catalog\Model\Dao\UrlAliasDao;
 use Admin\Model\Entity\Category;
 use Admin\Model\Entity\ProductImage;
 use Zend\ViewModel\JsonModel;
@@ -48,8 +48,8 @@ class ProductController extends AbstractActionController
     public function listAction()
     {
         $productDao = $this->getProductDao();
-        
-        //PAGINATOR   
+
+        //PAGINATOR
         // grab the paginator from the AlbumTable
         $productTableGateway = $this->getService('ProductTableGateway');
         $productDao = new ProductDao($productTableGateway);
@@ -61,68 +61,68 @@ class ProductController extends AbstractActionController
         //print_r($paginator);die;
         $paginator->setItemCountPerPage(10);
         // var_dump($paginator);die;
-        
+
           return new ViewModel(array(
             //'products' => $productDao->getAll(),
             'products' => $paginator
-          
+
         ));
-        
+
     }
 
     public function addAction()
     {
         $cat = $this->getCategorySelect();
-        
+
         $this->productForm = new ProductForm();
-        
+
         $this->productForm->get('productCategories')->setValueOptions($cat);
-        
+
         $providers = $this->getProvider();
         //print_r($provider);die;
         //array_unshift($providers, null);
         $this->productForm->get('provider')->setValueOptions($providers);
-        
+
         $related = $this->getProductSelect();
 //        //print_r($related);die;
         $this->productForm->get('related_id')->setValueOptions($related);
-        
-      
+
+
         //print_r($provider);die;
 //        $this->productForm->get('provider_id')->setValueOptions($provider);
-        
+
         if ($this->request->isPost()) {
-            
-         
+
+
            $postData = array_merge_recursive(
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
           // print_r($postData);die;
-           
+
             $this->productForm->setInputFilter(new ProductValidator($this->getServiceLocator()));
             $this->productForm->setData($postData);
 //            var_dump($this->productForm);die;
-            
+
             if ($this->productForm->isValid()) {
                 $productData = $this->productForm->getData();
-                //print_r($productData);die;         
+                //print_r($productData);die;
                 $productEntity = new Product();
                 $productEntity->exchangeArrayForm($productData);
                // var_dump($productEntity);die;
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProduct($productEntity);
-                
+
                 if($saved){
-                   
+
                   return $this->redirect()->toRoute('admin', array(
-                      'controller' => 'provider', 
+                      'controller' => 'provider',
                       'action' => 'productlist',
                       'id' => $postData['provider']
                   ));
                 }
-               
-                
+
+
             } else {
                 //$messages = $this->productForm->getMessages();
 //                  echo 'error filter';
@@ -130,8 +130,8 @@ class ProductController extends AbstractActionController
                  $this->productForm->populateValues($postData);
             }
         }
-        
-        
+
+
         return new ViewModel(array(
             'productForm' => $this->productForm
         ));
@@ -139,71 +139,71 @@ class ProductController extends AbstractActionController
 
 
 
-    public function editAction() 
+    public function editAction()
     {
         $request = $this->getRequest();
         $response = $this->getResponse();
-        
+
         $this->productForm = new ProductForm();
         $this->productForm->setAttribute('action', '/admin/product/edit');
-        
+
         $id = (int) $this->params()->fromRoute('id', 0);
-        
+
         if ($request->isPost()) {
-            
+
             $postData = array_merge_recursive(
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-           
+
             //print_r($postData);
             $productDao = $this->getProductDao();
             $seoUrl = $productDao->getSeoUrlByProduct($postData['productId']);
-            
+
             $productValidator = new ProductValidator($this->getServiceLocator());
-            
+
             if(!$postData['image']['tmp_name']){
                $productValidator->remove('image');
                $postData['image'] = null;
-            }  
-            
-            if($seoUrl->getUrlAlias()->keyword == $postData['productSeoUrl']){  
+            }
+
+            if($seoUrl->getUrlAlias()->keyword == $postData['productSeoUrl']){
                 $productValidator->remove('productSeoUrl');
             }
-           
+
             $this->productForm->setInputFilter($productValidator);
             $this->productForm->setData($postData);
-            
+
             if ($this->productForm->isValid()) {
                 $productData = $this->productForm->getData();
-                
+
                 $productEntity = new Product();
                 $productEntity->exchangeArrayForm($productData);
                 //var_dump($productEntity);die;
                 $productDao = $this->getProductDao();
                 $productId = $productDao->saveProduct($productEntity);
-                
+
                 if ($productId) {
                     $view['update'] = 1;
                     $id = $productId;
                 }
-                
+
             }else {
                 $messages = $this->productForm->getMessages();
                 //print_r($messages);die;
                 $this->productForm->populateValues($postData);
             }
-            
-           
+
+
         }
-         
-        
-        
+
+
+
         if (!$id) {
             return $this->redirect()->toRoute('admin', array('controller' => 'product', 'action' => 'list'));
         }
-        
-        
+
+
         $productDao = $this->getProductDao();
         $productData = $productDao->getProductById($id);
         //print_r($productData); die;
@@ -211,16 +211,16 @@ class ProductController extends AbstractActionController
         //print_r($provider);die;
        //echo array_unshift($providers, null);die;
         $this->productForm->get('provider')->setValueOptions($providers);
-        
+
         $related = $this->getProductSelect();
 //        //print_r($related);die;
         $this->productForm->get('related_id')->setValueOptions($related);
-        
+
         $cat = $this->getCategorySelect();
         $this->productForm->get('productCategories')->setValueOptions($cat);
-        
+
         $this->productForm->get('image')->setAttribute('required', false);
-        
+
         $productFormData = new ArrayObject;
         $productFormData['productId']           = $productData->getProductId();
         $productFormData['provider']            = $productData->getProviderid();
@@ -238,15 +238,15 @@ class ProductController extends AbstractActionController
         $productFormData['productMetaKeywords']   = $productData->getProductDescription()->getMeta_Keyword();
         $productFormData['productSeoUrl']       = $productData->getUrlAlias()->keyword;
         $productFormData['related_id']       = $productData->getProductRelated();
-        
+
         //$productFormData['productQuantity']       = array(50);
         $productFormData['productStock']          = 1;
         $productFormData['productStockStatus']    = 1;
-        
-       
+
+
         $imageData = $productData->getProductImage();
-       
-           
+
+
         //print_r($imageData); die;
         //$this->productForm->bind($contact);
         $this->productForm->setData($productFormData);
@@ -254,43 +254,43 @@ class ProductController extends AbstractActionController
         $view['image'] = $productData->getImage();
         $view['productImage'] = $imageData;
         $view['productModel'] = $productData->getModel();
-        
+
         return new ViewModel($view);
-      
+
     }
-    
+
     public function deleteAction(){
-        
+
         $request = $this->getRequest();
         $response = $this->getResponse();
-        
+
         $id = $request->getPost('id');
         $productDao = $this->getProductDao();
         $delete = $productDao->deleteProduct($id);
         //print_r($delete);die;
         if ($delete){
-                
+
             if ($request->isXmlHttpRequest()){
-                
+
                 $response->setStatusCode(200);
                 $response->setContent(\Zend\Json\Json::encode(array('response' => $delete)));
             }
-            
+
         }else{
-            
+
                 $response->setStatusCode(400);
                 $response->setContent(\Zend\Json\Json::encode(array('response' => $delete)));
-            
+
             }
-        
+
         return $response;
-        
+
     }
 
     public function statusAction(){
         $request = $this->getRequest();
         $response = $this->getResponse();
-        
+
         $status = $request->getPost('status');
         $id = $request->getPost('id');
 
@@ -310,8 +310,8 @@ class ProductController extends AbstractActionController
         }
 
         if ($update){
-                
-                           
+
+
                 $response->setStatusCode(200);
                 $response->setContent(\Zend\Json\Json::encode(array(
                     'response' => $update,
@@ -319,52 +319,52 @@ class ProductController extends AbstractActionController
                     'statusName' => $statusName
                     )
                 ));
-           
+
         }else{
-            
+
                 $response->setStatusCode(400);
                 $response->setContent(\Zend\Json\Json::encode(array('response' => $update)));
-            
+
             }
-        
+
         return $response;
-        
+
     }
-    
-    
+
+
     public function deleteImageAction() {
         $id = (int) $this->params()->fromRoute('id', 0);
-        
+
 
 
         $request = $this->getRequest();
         $response = $this->getResponse();
-        
+
         $productDao = $this->getProductDao();
         $delete = $productDao->deleteProductImage($id);
-        
+
         if ($delete){
           $this->getResponse()->setStatusCode(200);
           $response->setContent(\Zend\Json\Json::encode(array('response' => $id)));
         }else{
-            
+
             $this->getResponse()->setStatusCode(400);
             $response->setContent(\Zend\Json\Json::encode(array('response' => $id)));
-            
+
         }
-  
+
         return $response;
     }
 
 
-    
+
     public function addImageAction() {
-    
+
         $request = $this->getRequest();
         $response = $this->getResponse();
-    
+
         if ( $request->isPost()) {
-    
+
             $postData = array_merge_recursive(
                 $this->request->getPost()->toArray(),
                 $request->getFiles()->toArray()
@@ -373,12 +373,12 @@ class ProductController extends AbstractActionController
             $productImageForm = new ProductImageForm();
             $productImageForm->setInputFilter(new ProductImageValidator());
             $productImageForm->setData($postData);
-    
+
             if ($productImageForm->isValid()) {
-    
-    
+
+
                 $data = $productImageForm->getData();
-                 
+
                 $images = new \ArrayObject(); $i=0;
                 foreach ($data['productImage'] as $image){
                     $explo = explode('img_', $image['tmp_name']);
@@ -391,7 +391,7 @@ class ProductController extends AbstractActionController
                 $productId = $postData['productId'];
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProductImage($productId, $images);
-                 
+
                 if($saved){
                     $response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
                     $response->setStatusCode(200);
@@ -400,37 +400,37 @@ class ProductController extends AbstractActionController
                         //'response' => true,
                         //'path' => $image['tmp_name'],
                         'id'   => $saved,
-                         
+
                     )));
                 }else {
                     $response->setStatusCode(400);
                 }
-                 
-                 
+
+
             } else {
                 $response->setStatusCode(400);
                 $messages = $productImageForm->getMessages();
                 $response->setContent(\Zend\Json\Json::encode($messages));
-                
-                 
+
+
             }
-    
-    
+
+
         }
-    
-    
-    
+
+
+
         //         $response->setContent(\Zend\Json\Json::encode(array(
         //             'response' => true,
         //             'url' => 'img_1430604273_554549f1dca6f.jpg'
         //         )));
-    
-    
+
+
         return $response;
     }
-    
+
     public function getCategorySelect() {
-        
+
         $categoryDao = $this->getCategoryDao();
         $results = $categoryDao->getAll();
         //$ver = $results->toArray();
@@ -440,11 +440,11 @@ class ProductController extends AbstractActionController
            //$result[] = $row->getArrayCopy();
            $result[$cat->category_id] = $cat->name;
         }
-        
+
        return $result;
-        
+
     }
-    
+
     public function seoAction(){
         $request = $this->getRequest();
         $response = $this->getResponse();
@@ -455,19 +455,13 @@ class ProductController extends AbstractActionController
         $seoExist = $urlDao->getAll($seo);
         $keyword = $seoExist->toArray();
 
-        if (empty($keyword)){   
-                
-                $response->setStatusCode(200);
-                $response->setContent(\Zend\Json\Json::encode('true'));
-           
-        }else{
-                
-                $response->setStatusCode(200);
-                $response->setContent(\Zend\Json\Json::encode('Este SEO ya existe, por favor seleccione otro'));
-            }
-        
+        $response->setStatusCode(200);
+        if (empty($keyword)) {
+            $response->setContent(\Zend\Json\Json::encode('true'));
+        } else {
+            $response->setContent(\Zend\Json\Json::encode('Este SEO ya existe, por favor seleccione otro'));
+        }
         return $response;
-        
     }
 
     public function getProductDao()
@@ -484,27 +478,27 @@ class ProductController extends AbstractActionController
         if (! $this->urlAliasDao) {
             $sm = $this->getServiceLocator();
             $tableGateway = $sm->get('UrlAliasTableGateway');
-            $this->urlAliasDao = new UrlAliasDao($tableGateway); 
+            $this->urlAliasDao = new UrlAliasDao($tableGateway);
         }
         return $this->urlAliasDao;
     }
-    
+
     public function getCategoryDao()
     {
         if (! $this->categoryDao) {
-            $sm = $this->getServiceLocator();       
+            $sm = $this->getServiceLocator();
             $tableGateway = $sm->get('CategoryTableGateway');
-            $this->categoryDao = new CategoryDao($tableGateway);                
+            $this->categoryDao = new CategoryDao($tableGateway);
         }
         return $this->categoryDao;
     }
-    
+
     public function getProviderDao()
     {
         if (!isset($this->providerDao)) {
-            $sm = $this->getServiceLocator();       
+            $sm = $this->getServiceLocator();
             $tableGateway = $sm->get('ProviderTableGateway');
-            $this->providerDao = new ProviderDao($tableGateway);                
+            $this->providerDao = new ProviderDao($tableGateway);
         }
         return $this->providerDao;
     }
@@ -522,9 +516,9 @@ class ProductController extends AbstractActionController
         //print_r($result);die;
        return $result;
     }
-    
-     private function getProvider() 
-    {       
+
+     private function getProvider()
+    {
         $providerDao = $this->getProviderDao();
         $results = $providerDao->getAll();
 
@@ -535,7 +529,7 @@ class ProductController extends AbstractActionController
         }
         return $result;
     }
-    
+
     public function getProductRelated()
     {
         $productDao = $this->getProductDao();
@@ -553,7 +547,7 @@ class ProductController extends AbstractActionController
 
         return $products;
     }
-    
+
     public function getProductId()
     {
        $productDao = $this->getProductDao();
@@ -569,14 +563,14 @@ class ProductController extends AbstractActionController
 
         }, $results->toArray());
 
-        return $products; 
+        return $products;
     }
-    
+
     public function getService($serviceName)
     {
         $sm = $this->getServiceLocator();
         $service = $sm->get($serviceName);
-        
+
         return $service;
     }
 }
