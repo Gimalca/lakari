@@ -44,6 +44,7 @@ class Product
 
     function exchangeArray($data = NULL)
     {
+       
         $this->product_id = (isset($data['product_id'])) ? $data['product_id'] : null;
         $this->provider_id = (isset($data['provider_id'])) ? $data['provider_id'] : null;
         $this->model = (isset($data['model'])) ? $data['model'] : null;
@@ -73,7 +74,7 @@ class Product
 
         $this->productProvider = (isset($data['provider_id'])) ? $data['provider_id'] : null;
 
-        $this->productImage = (isset($data['image'])) ? $data['image'] : null;
+        $this->productImage = (isset($data['productImage'])) ? $data['productImage'] : null;
 
         $this->urlAlias = New UrlAlias;
         $this->urlAlias->keyword = (isset($data['keyword'])) ? $data['keyword'] : null;
@@ -87,7 +88,7 @@ class Product
         $this->sku = (isset($data['productSku'])) ? $data['productSku'] : null;
         $this->isbn = (isset($data['productIsbn'])) ? $data['productIsbn'] : null;
         $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
-        $this->image = (isset($data['image'])) ? $data['image'] : null;
+        
         $this->price = (isset($data['productPrice'])) ? $data['productPrice'] : null;
         $this->date_available = (isset($data['date_available'])) ? $data['date_available'] : null;
         $this->minimum = (isset($data['productMinimum'])) ? $data['productMinimum'] : null;
@@ -105,6 +106,12 @@ class Product
         $this->productDescription->setMeta_keyword((isset($data['productMetaKeywords'])) ? $data['productMetaKeywords'] : null);
         $this->productDescription->setMeta_tittle((isset($data['productMetaTittle'])) ? $data['productMetaTittle'] : null);
 
+       if (isset($data['image'])) {
+        $exploImage = explode('/', $data['image']['tmp_name']);
+        $image = $exploImage[6];
+       }
+        $this->image = (isset($image)) ? $image : null;
+        
         if ($data['productImage']) {
             $images = new \ArrayObject();
             $i = 1;
@@ -228,6 +235,10 @@ class Product
     function getProductImage()
     {
         return $this->productImage;
+    }
+    function setImage($image)
+    {
+        $this->image = $image;
     }
 
     function setProductDescription(ProductDescription $productDescription)

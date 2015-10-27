@@ -3122,6 +3122,7 @@ a {
 .category-carousel {
   text-align: center;
   cursor: default;
+  display: none;
 }
 .category-carousel .item {
   background-color: #FFFFFF;

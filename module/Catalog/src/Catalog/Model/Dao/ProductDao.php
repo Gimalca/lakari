@@ -72,13 +72,13 @@ class ProductDao implements IProductDao {
                             'lk_product.product_id = url.id',
                             array('id', 'keyword')
                 );
-        $query->join(array('img' => 'lk_product_image'),
-                            'lk_product.product_id = img.product_id',
-                            array('tittle')
-                );
+//        $query->join(array('img' => 'lk_product_image'),
+//                            'lk_product.product_id = img.product_id',
+//                            array('tittle')
+//                );
         $query->where(array(
             'url.type' => 'product',
-            'img.sort_order' => 1
+ //           'img.sort_order' => 1
         ));
 
         $query->order("lk_product.product_id DESC");
@@ -128,13 +128,13 @@ class ProductDao implements IProductDao {
                 ), 'phc.product_id = lk_product.product_id');
         $query->join(array(
             'c' => 'lk_category'
-                ), 'c.category_id = phc.category_id');
+                ), 'c.category_id = phc.category_id', array('category_id'));
         /* $query->join(array(
           'cd' => 'lk_category_description'
-          ),  'c.category_id = cd.category_id'); */
+          ),  'c.category_id = cd.category_id'); 
         $query->join(array(
             'pm' => 'lk_product_image'
-                ), 'pm.product_id = lk_product.product_id');
+                ), 'pm.product_id = lk_product.product_id');*/
         $query->join(array(
             'url' => 'lk_url_alias'
                 ), 'lk_product.product_id = url.id');
@@ -142,7 +142,7 @@ class ProductDao implements IProductDao {
         $query->where(array(
             'c.category_id' => $categoryId,
             'url.type' => 'product',
-            'pm.sort_order' => 1
+            //'pm.sort_order' => 1
         ));
 
         $query->order("lk_product.product_id DESC");
@@ -650,6 +650,7 @@ class ProductDao implements IProductDao {
         $data_product = array(
             'provider_id' => $product->getProviderId(),
             'model' => $product->getModel(),
+            'image' => $product->getImage(),
             'sku' => $product->getSku(),
             'isbn' => $product->getIsbn(),
             'price' => $product->getPrice(),
@@ -708,8 +709,8 @@ class ProductDao implements IProductDao {
             if ($this->getById($productId)) {
 
                 $data_product['date_modified'] = date("Y-m-d H:i:s");
-                //print_r($data_product);die;
-                $this->tableGateway->update($data_product, array(
+                $data = array_filter($data_product);
+                $this->tableGateway->update($data, array(
                     'product_id' => $productId,
                 ));
                 // update Product Description

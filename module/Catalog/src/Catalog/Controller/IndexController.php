@@ -100,7 +100,7 @@ class IndexController extends AbstractActionController {
 
         $products = $this->getProductDao()->getProductsByCategory($id->id);
         //$products = $this->getProductDao()->getAll(),;
-        //var_dump($product);die;
+        //var_dump($products->current());die;
         $modelView = new ViewModel(array(
             'products' => $products,
         ));

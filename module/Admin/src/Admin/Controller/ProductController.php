@@ -98,7 +98,7 @@ class ProductController extends AbstractActionController
                $this->request->getPost()->toArray(),
                $this->request->getFiles()->toArray()
            );
-           //print_r($postData);die;
+          // print_r($postData);die;
            
             $this->productForm->setInputFilter(new ProductValidator($this->getServiceLocator()));
             $this->productForm->setData($postData);
@@ -109,7 +109,7 @@ class ProductController extends AbstractActionController
                 //print_r($productData);die;         
                 $productEntity = new Product();
                 $productEntity->exchangeArrayForm($productData);
-                //var_dump($productEntity);die;
+               // var_dump($productEntity);die;
                 $productDao = $this->getProductDao();
                 $saved = $productDao->saveProduct($productEntity);
                 
@@ -156,11 +156,16 @@ class ProductController extends AbstractActionController
                $this->request->getFiles()->toArray()
            );
            
-            //print_r($postData);die;
+            //print_r($postData);
             $productDao = $this->getProductDao();
             $seoUrl = $productDao->getSeoUrlByProduct($postData['productId']);
             
             $productValidator = new ProductValidator($this->getServiceLocator());
+            
+            if(!$postData['image']['tmp_name']){
+               $productValidator->remove('image');
+               $postData['image'] = null;
+            }  
             
             if($seoUrl->getUrlAlias()->keyword == $postData['productSeoUrl']){  
                 $productValidator->remove('productSeoUrl');
@@ -175,7 +180,7 @@ class ProductController extends AbstractActionController
                 $productEntity = new Product();
                 $productEntity->exchangeArrayForm($productData);
                 //var_dump($productEntity);die;
-                //$productDao = $this->getProductDao();
+                $productDao = $this->getProductDao();
                 $productId = $productDao->saveProduct($productEntity);
                 
                 if ($productId) {
@@ -185,7 +190,7 @@ class ProductController extends AbstractActionController
                 
             }else {
                 $messages = $this->productForm->getMessages();
-                print_r($messages);die;
+                //print_r($messages);die;
                 $this->productForm->populateValues($postData);
             }
             
@@ -214,9 +219,12 @@ class ProductController extends AbstractActionController
         $cat = $this->getCategorySelect();
         $this->productForm->get('productCategories')->setValueOptions($cat);
         
+        $this->productForm->get('image')->setAttribute('required', false);
+        
         $productFormData = new ArrayObject;
         $productFormData['productId']           = $productData->getProductId();
         $productFormData['provider']            = $productData->getProviderid();
+        //$productFormData['image']            = $productData->getImage();
         $productFormData['productName']         = $productData->getProductDescription()->getName();
         $productFormData['productModel']        = $productData->getModel();
         $productFormData['productDescription']  = $productData->getProductDescription()->getDescription();
@@ -243,6 +251,7 @@ class ProductController extends AbstractActionController
         //$this->productForm->bind($contact);
         $this->productForm->setData($productFormData);
         $view['productForm'] = $this->productForm;
+        $view['image'] = $productData->getImage();
         $view['productImage'] = $imageData;
         $view['productModel'] = $productData->getModel();
         
