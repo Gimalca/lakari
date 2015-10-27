@@ -1,12 +1,13 @@
 <?php
 namespace Account;
 
-use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
 use Account\Form\LoginForm;
 use Account\Form\RegisterForm;
 use Account\Model\LoginAccount;
+use Zend\Mail\Transport\Smtp;
+use Zend\Mail\Transport\SmtpOptions;
 use Zend\ModuleManager\ModuleManager;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
