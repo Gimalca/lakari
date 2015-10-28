@@ -13,16 +13,16 @@ var rename = require('gulp-rename');
  
 gulp.task('build', function () {
   browserify({
-    entries: ['src/index.jsx'],
+    entries: ['src/orderCart.jsx'],
     extensions: ['.jsx'],
     debug: true
   })
   .transform(babelify)
   .bundle()
-  .pipe(source('index.min.js'))
+  .pipe(source('bundle.min.js'))
   .pipe(buffer())
   .pipe(uglify())
-  .pipe(gulp.dest('../public/assets/js/dist'));
+  .pipe(gulp.dest('../public/assets_admin/js/dist'));
 });
 
 gulp.task('css', function () {
@@ -30,7 +30,7 @@ gulp.task('css', function () {
     gulp.src('styles/**/*.css')
         .pipe(minifyCSS())
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
-        .pipe(concat('index.min.css'))
+        .pipe(concat('bundle.min.css'))
         .pipe(gulp.dest('../public/assets/css'));
 });
  
