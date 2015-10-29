@@ -22,7 +22,7 @@ React.render(<Overlay />, overlay);
 var $expander = $('#product-expander');
 
 function expanderClose(expander, isFixed) {
-    console.log(isFixed)
+
     if (!isFixed) {
         expander.animate({
             opacity: '0',
@@ -37,7 +37,7 @@ function expanderClose(expander, isFixed) {
 }
 
 function expanderShow(expander, isFixed) {
-    console.log(isFixed) 
+
     if (!isFixed) {
         expander.show();
         expander.animate({

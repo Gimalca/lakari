@@ -47,11 +47,11 @@ class OrderController extends AbstractActionController {
     public function listAction() {
         $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
         $view['orders'] = $orderDao->getAll();
-        
-        
+
+
         $orderTableGateway = $this->getService('OrderTableGateway');
         $orderDao = new OrderDao($orderTableGateway);
-        
+
         $paginator = $orderDao->setAll()->getPaginator();
         // set the current page to what has been passed in query string, or to 1 if none set
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -198,7 +198,7 @@ class OrderController extends AbstractActionController {
                 $orderProduct = new OrderProduct($mixedData);
                 $orderDao = $this->getServiceDao('Model\Dao\OrderDao');
                 $saved    = $orderDao->saveOrderProduct($orderProduct);
-                $product['product_id'] = $saved;
+                $product['order_product_id'] = $saved;
 
                 $response = $this->getResponse();
 
@@ -305,7 +305,7 @@ class OrderController extends AbstractActionController {
 
         return $customers;
     }
-    
+
      public function getService($serviceName)
     {
         $sm = $this->getServiceLocator();

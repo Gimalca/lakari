@@ -68,7 +68,7 @@ class Cart extends React.Component {
 
             return (<tr key={i}>
                      <td className='col-xs-2 romove-item'> 
-                    <a onClick={this.removeFromKart.bind(this, i, product.product_id)} title='cancel' className='icon'> 
+                    <a onClick={this.removeFromKart.bind(this, i, product.order_product_id)} title='cancel' className='icon'> 
                         <i className='fa fa-trash-o'> </i>
                     </a>
                      </td> 

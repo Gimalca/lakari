@@ -38,7 +38,7 @@ class OrderDao {
         //var_dump($resultSet->toArray());die;
         return $resultSet;
     }
-    
+
     public function setAll()
     {
         $query = $this->tableGateway->getSql()->select();
@@ -50,15 +50,15 @@ class OrderDao {
         return $this;
     }
 
-        public function getResulSet() 
+        public function getResulSet()
     {
-        return  $this->tableGateway->selectWith($this->query);  
+        return  $this->tableGateway->selectWith($this->query);
     }
 
 
-    public function getPaginator() 
+    public function getPaginator()
     {
-        
+
          $select = $this->query ;
          //$select = $this->tableGateway->getSql()->select();
         // create a new result set based on the Album entity
@@ -72,9 +72,9 @@ class OrderDao {
                 // the result set to hydrate
                 $resultSetPrototype
         );
-        
+
         $paginator = new Paginator($paginatorAdapter);
-        
+
         return $paginator;
     }
 
@@ -118,7 +118,7 @@ class OrderDao {
         $sql = $this->getTable('lk_order_product')->getSql();
 
         $query = $sql->select()
-            ->columns(array('order_product_id as product_id','name','price', 'quantity'), true)
+            ->columns(array('order_product_id','name','price', 'quantity'), true)
             ->join(array('pro' => 'lk_product'),
                 'pro.product_id = lk_order_product.product_id')
             ->join(array('pi' => 'lk_product_image'),
